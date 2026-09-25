@@ -1,35 +1,86 @@
 {
- "format": "teloa.market-catalog-entry/v1",
- "id": "teloa.mcp-composio",
- "kind": "connector",
- "delivery": "managed",
- "version": "1.0.1",
- "upstream": null,
- "connector": {
-  "serverName": "composio",
-  "title": {"zh-CN": "Composio MCP（1500+ 应用集成）", "en": "Composio MCP (1500+ App Integrations)"},
-  "summary": {"zh-CN": "Composio 官方远程 MCP，支持 1500+ 应用集成，OAuth 连接由 Composio 平台托管。当前不可用：官方端点（mcp.composio.dev）实测时重定向至无效页面（HTTP 404），需等待官方更新端点文档后重新接入。", "en": "Composio official remote MCP with 1500+ app integrations. Currently unavailable: the official endpoint (mcp.composio.dev) redirected to an invalid page (HTTP 404) during verification; re-integration pending updated official endpoint documentation."},
-  "categories": ["自动化", "集成"],
-  "auth": {
-   "kind": "oauth",
-   "reason": "Composio 远程端点实测时返回 HTTP 404（mcp.composio.dev 重定向至无效路径）。在官方确认可用端点格式前，该连接器标记为不支持。"
+  "format": "teloa.market-catalog-entry/v1",
+  "id": "teloa.mcp-composio",
+  "kind": "connector",
+  "delivery": "managed",
+  "version": "1.0.1",
+  "taxonomy": {
+    "functions": [
+      "automation"
+    ],
+    "industries": [
+      "general"
+    ]
   },
-  "recipe": {
-   "transport": "streamable-http",
-   "url": "https://mcp.composio.dev/mcp"
+  "upstream": null,
+  "connector": {
+    "serverName": "composio",
+    "title": {
+      "zh-CN": "Composio MCP（1500+ 应用集成）",
+      "en": "Composio MCP (1500+ App Integrations)"
+    },
+    "summary": {
+      "zh-CN": "Composio 官方远程 MCP，支持 1500+ 应用集成，OAuth 连接由 Composio 平台托管。当前不可用：官方端点（mcp.composio.dev）实测时重定向至无效页面（HTTP 404），需等待官方更新端点文档后重新接入。",
+      "en": "Composio official remote MCP with 1500+ app integrations. Currently unavailable: the official endpoint (mcp.composio.dev) redirected to an invalid page (HTTP 404) during verification; re-integration pending updated official endpoint documentation."
+    },
+    "auth": {
+      "kind": "oauth",
+      "reason": "Composio 远程端点实测时返回 HTTP 404（mcp.composio.dev 重定向至无效路径）。在官方确认可用端点格式前，该连接器标记为不支持。"
+    },
+    "recipe": {
+      "transport": "streamable-http",
+      "url": "https://mcp.composio.dev/mcp"
+    },
+    "tools": [
+      {
+        "name": "execute_action",
+        "description": {
+          "zh-CN": "执行已连接应用的操作",
+          "en": "Execute an action on a connected app"
+        },
+        "readOnly": false
+      },
+      {
+        "name": "list_tools",
+        "description": {
+          "zh-CN": "列出可用的应用工具",
+          "en": "List available app tools"
+        },
+        "readOnly": true
+      }
+    ],
+    "upstreamUrl": "https://docs.composio.dev/mcp"
   },
-  "tools": [
-   {"name": "execute_action", "description": {"zh-CN": "执行已连接应用的操作", "en": "Execute an action on a connected app"}, "readOnly": false},
-   {"name": "list_tools", "description": {"zh-CN": "列出可用的应用工具", "en": "List available app tools"}, "readOnly": true}
-  ],
-  "upstreamUrl": "https://docs.composio.dev/mcp"
- },
- "modifications": [],
- "license": {"spdx": "LicenseRef-Composio-Terms", "files": ["LICENSE"]},
- "compatibility": {"status": "unsupported", "teloa": ">=0.2.0-alpha.6", "dsh": "0.1.7-rc.1", "conditions": [
-  {"zh-CN": "官方端点（mcp.composio.dev）实测时重定向至无效页面（HTTP 404），当前无法建立连接", "en": "Official endpoint (mcp.composio.dev) redirected to invalid page (HTTP 404) during probe; connection cannot be established"},
-  {"zh-CN": "待官方更新端点文档后重新评估接入方式", "en": "Will be re-evaluated after official endpoint documentation is updated"}
- ]},
- "requires": {"tools": [], "network": true, "runtimes": []},
- "review": {"status": "approved", "reviewedAt": "2026-09-25", "reviewer": "Teloa"}
+  "modifications": [],
+  "license": {
+    "spdx": "LicenseRef-Composio-Terms",
+    "files": [
+      "LICENSE"
+    ]
+  },
+  "compatibility": {
+    "status": "unsupported",
+    "teloa": ">=0.2.0-alpha.6",
+    "dsh": "0.1.7-rc.1",
+    "conditions": [
+      {
+        "zh-CN": "官方端点（mcp.composio.dev）实测时重定向至无效页面（HTTP 404），当前无法建立连接",
+        "en": "Official endpoint (mcp.composio.dev) redirected to invalid page (HTTP 404) during probe; connection cannot be established"
+      },
+      {
+        "zh-CN": "待官方更新端点文档后重新评估接入方式",
+        "en": "Will be re-evaluated after official endpoint documentation is updated"
+      }
+    ]
+  },
+  "requires": {
+    "tools": [],
+    "network": true,
+    "runtimes": []
+  },
+  "review": {
+    "status": "approved",
+    "reviewedAt": "2026-09-25",
+    "reviewer": "Teloa"
+  }
 }

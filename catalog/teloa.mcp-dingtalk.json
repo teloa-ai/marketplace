@@ -1,45 +1,133 @@
 {
- "format": "teloa.market-catalog-entry/v1",
- "id": "teloa.mcp-dingtalk",
- "kind": "connector",
- "delivery": "managed",
- "version": "1.0.1",
- "upstream": null,
- "connector": {
-  "serverName": "dingtalk",
-  "title": {"zh-CN": "钉钉（企业通讯与协作）", "en": "DingTalk (Enterprise Communication)"},
-  "summary": {"zh-CN": "钉钉官方 MCP，通过应用 Client ID/Secret 访问钉钉通讯录、部门管理、机器人消息、日程等功能。需在钉钉开放平台创建企业内部应用并授权对应权限。数据经由 dingtalk.com 传输。", "en": "DingTalk official MCP for contacts, department management, robot messages, calendar and more via App Client ID/Secret. Create an enterprise internal app on DingTalk Open Platform and grant the required scopes. Data passes through dingtalk.com."},
-  "categories": ["通讯", "协作"],
-  "auth": {
-   "kind": "secret",
-   "vars": [
-    {"target": "env", "envVarName": "DINGTALK_Client_ID", "label": {"zh-CN": "钉钉应用 Client ID（开放平台 → 应用详情 → AppKey）", "en": "DingTalk App Client ID (Open Platform → App Details → AppKey)"}, "required": true},
-    {"target": "env", "envVarName": "DINGTALK_Client_Secret", "label": {"zh-CN": "钉钉应用 Client Secret（开放平台 → 应用详情 → AppSecret）", "en": "DingTalk App Client Secret (Open Platform → App Details → AppSecret)"}, "required": true}
-   ]
+  "format": "teloa.market-catalog-entry/v1",
+  "id": "teloa.mcp-dingtalk",
+  "kind": "connector",
+  "delivery": "managed",
+  "version": "1.0.1",
+  "taxonomy": {
+    "functions": [
+      "communication"
+    ],
+    "industries": [
+      "general"
+    ]
   },
-  "recipe": {
-   "transport": "stdio",
-   "package": "dingtalk-mcp",
-   "version": "1.1.21",
-   "integrity": "sha512-TLBqO4xxC0A4IfoV40+iP3/Jg1BSxvrrCg41JyERiUC2+pXLO1oVf2nXbOAZFv8eeZbTvIJecCKXaASbKPRYZw==",
-   "bin": "dist/cli.js",
-   "args": []
+  "upstream": null,
+  "connector": {
+    "serverName": "dingtalk",
+    "title": {
+      "zh-CN": "钉钉（企业通讯与协作）",
+      "en": "DingTalk (Enterprise Communication)"
+    },
+    "summary": {
+      "zh-CN": "钉钉官方 MCP，通过应用 Client ID/Secret 访问钉钉通讯录、部门管理、机器人消息、日程等功能。需在钉钉开放平台创建企业内部应用并授权对应权限。数据经由 dingtalk.com 传输。",
+      "en": "DingTalk official MCP for contacts, department management, robot messages, calendar and more via App Client ID/Secret. Create an enterprise internal app on DingTalk Open Platform and grant the required scopes. Data passes through dingtalk.com."
+    },
+    "auth": {
+      "kind": "secret",
+      "vars": [
+        {
+          "target": "env",
+          "envVarName": "DINGTALK_Client_ID",
+          "label": {
+            "zh-CN": "钉钉应用 Client ID（开放平台 → 应用详情 → AppKey）",
+            "en": "DingTalk App Client ID (Open Platform → App Details → AppKey)"
+          },
+          "required": true
+        },
+        {
+          "target": "env",
+          "envVarName": "DINGTALK_Client_Secret",
+          "label": {
+            "zh-CN": "钉钉应用 Client Secret（开放平台 → 应用详情 → AppSecret）",
+            "en": "DingTalk App Client Secret (Open Platform → App Details → AppSecret)"
+          },
+          "required": true
+        }
+      ]
+    },
+    "recipe": {
+      "transport": "stdio",
+      "package": "dingtalk-mcp",
+      "version": "1.1.21",
+      "integrity": "sha512-TLBqO4xxC0A4IfoV40+iP3/Jg1BSxvrrCg41JyERiUC2+pXLO1oVf2nXbOAZFv8eeZbTvIJecCKXaASbKPRYZw==",
+      "bin": "dist/cli.js",
+      "args": []
+    },
+    "tools": [
+      {
+        "name": "send_robot_message",
+        "description": {
+          "zh-CN": "通过群机器人发送消息",
+          "en": "Send a message via group robot"
+        },
+        "readOnly": false
+      },
+      {
+        "name": "get_user_info",
+        "description": {
+          "zh-CN": "查询成员信息",
+          "en": "Get user info"
+        },
+        "readOnly": true
+      },
+      {
+        "name": "list_departments",
+        "description": {
+          "zh-CN": "列出部门",
+          "en": "List departments"
+        },
+        "readOnly": true
+      },
+      {
+        "name": "create_todo",
+        "description": {
+          "zh-CN": "创建钉钉待办",
+          "en": "Create a DingTalk todo item"
+        },
+        "readOnly": false
+      },
+      {
+        "name": "list_calendar_events",
+        "description": {
+          "zh-CN": "列出日程事件",
+          "en": "List calendar events"
+        },
+        "readOnly": true
+      }
+    ],
+    "upstreamUrl": "https://open.dingtalk.com/document/ai-dev/dingtalk-server-api-mcp-overview"
   },
-  "tools": [
-   {"name": "send_robot_message", "description": {"zh-CN": "通过群机器人发送消息", "en": "Send a message via group robot"}, "readOnly": false},
-   {"name": "get_user_info", "description": {"zh-CN": "查询成员信息", "en": "Get user info"}, "readOnly": true},
-   {"name": "list_departments", "description": {"zh-CN": "列出部门", "en": "List departments"}, "readOnly": true},
-   {"name": "create_todo", "description": {"zh-CN": "创建钉钉待办", "en": "Create a DingTalk todo item"}, "readOnly": false},
-   {"name": "list_calendar_events", "description": {"zh-CN": "列出日程事件", "en": "List calendar events"}, "readOnly": true}
-  ],
-  "upstreamUrl": "https://open.dingtalk.com/document/ai-dev/dingtalk-server-api-mcp-overview"
- },
- "modifications": [],
- "license": {"spdx": "MIT", "files": ["LICENSE"]},
- "compatibility": {"status": "needs-configuration", "teloa": ">=0.2.0-alpha.6", "dsh": "0.1.7-rc.1", "conditions": [
-  {"zh-CN": "需要在钉钉开放平台创建企业内部应用并为对应功能模块完成授权配置", "en": "Requires creating an enterprise internal app on DingTalk Open Platform and configuring the required scopes"},
-  {"zh-CN": "数据经由 dingtalk.com 平台传输", "en": "Data passes through dingtalk.com"}
- ]},
- "requires": {"tools": [], "network": true, "runtimes": []},
- "review": {"status": "approved", "reviewedAt": "2026-09-25", "reviewer": "Teloa"}
+  "modifications": [],
+  "license": {
+    "spdx": "MIT",
+    "files": [
+      "LICENSE"
+    ]
+  },
+  "compatibility": {
+    "status": "needs-configuration",
+    "teloa": ">=0.2.0-alpha.6",
+    "dsh": "0.1.7-rc.1",
+    "conditions": [
+      {
+        "zh-CN": "需要在钉钉开放平台创建企业内部应用并为对应功能模块完成授权配置",
+        "en": "Requires creating an enterprise internal app on DingTalk Open Platform and configuring the required scopes"
+      },
+      {
+        "zh-CN": "数据经由 dingtalk.com 平台传输",
+        "en": "Data passes through dingtalk.com"
+      }
+    ]
+  },
+  "requires": {
+    "tools": [],
+    "network": true,
+    "runtimes": []
+  },
+  "review": {
+    "status": "approved",
+    "reviewedAt": "2026-09-25",
+    "reviewer": "Teloa"
+  }
 }

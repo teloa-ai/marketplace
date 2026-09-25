@@ -1,36 +1,91 @@
 {
- "format": "teloa.market-catalog-entry/v1",
- "id": "teloa.mcp-greptile",
- "kind": "connector",
- "delivery": "managed",
- "version": "1.0.0",
- "upstream": null,
- "connector": {
-  "serverName": "greptile",
-  "title": {"zh-CN": "Greptile（代码库语义搜索）", "en": "Greptile (Codebase Semantic Search)"},
-  "summary": {"zh-CN": "Greptile 官方远程 MCP，通过 API Key 对代码库进行语义搜索和问答。需在 Greptile 平台索引目标代码库。数据经由 greptile.com 传输。", "en": "Greptile official remote MCP for semantic search and Q&A over codebases via API Key. Index your codebase on Greptile first. Data passes through greptile.com."},
-  "categories": ["代码", "开发"],
-  "auth": {
-   "kind": "secret",
-   "vars": [
-    {"target": "bearer", "label": {"zh-CN": "Greptile API Key（在 greptile.com 账户中获取）", "en": "Greptile API Key (obtain from greptile.com account)"}, "required": true}
-   ]
+  "format": "teloa.market-catalog-entry/v1",
+  "id": "teloa.mcp-greptile",
+  "kind": "connector",
+  "delivery": "managed",
+  "version": "1.0.0",
+  "taxonomy": {
+    "functions": [
+      "dev-tools"
+    ],
+    "industries": [
+      "general"
+    ]
   },
-  "recipe": {
-   "transport": "streamable-http",
-   "url": "https://api.greptile.com/v2/mcp"
+  "upstream": null,
+  "connector": {
+    "serverName": "greptile",
+    "title": {
+      "zh-CN": "Greptile（代码库语义搜索）",
+      "en": "Greptile (Codebase Semantic Search)"
+    },
+    "summary": {
+      "zh-CN": "Greptile 官方远程 MCP，通过 API Key 对代码库进行语义搜索和问答。需在 Greptile 平台索引目标代码库。数据经由 greptile.com 传输。",
+      "en": "Greptile official remote MCP for semantic search and Q&A over codebases via API Key. Index your codebase on Greptile first. Data passes through greptile.com."
+    },
+    "auth": {
+      "kind": "secret",
+      "vars": [
+        {
+          "target": "bearer",
+          "label": {
+            "zh-CN": "Greptile API Key（在 greptile.com 账户中获取）",
+            "en": "Greptile API Key (obtain from greptile.com account)"
+          },
+          "required": true
+        }
+      ]
+    },
+    "recipe": {
+      "transport": "streamable-http",
+      "url": "https://api.greptile.com/v2/mcp"
+    },
+    "tools": [
+      {
+        "name": "search",
+        "description": {
+          "zh-CN": "在代码库中进行语义搜索",
+          "en": "Semantic search across the codebase"
+        },
+        "readOnly": true
+      },
+      {
+        "name": "query",
+        "description": {
+          "zh-CN": "对代码库提问并获得解答",
+          "en": "Ask questions about the codebase and get answers"
+        },
+        "readOnly": true
+      }
+    ],
+    "upstreamUrl": "https://docs.greptile.com/integrations/mcp"
   },
-  "tools": [
-   {"name": "search", "description": {"zh-CN": "在代码库中进行语义搜索", "en": "Semantic search across the codebase"}, "readOnly": true},
-   {"name": "query", "description": {"zh-CN": "对代码库提问并获得解答", "en": "Ask questions about the codebase and get answers"}, "readOnly": true}
-  ],
-  "upstreamUrl": "https://docs.greptile.com/integrations/mcp"
- },
- "modifications": [],
- "license": {"spdx": "LicenseRef-Greptile-Terms", "files": ["LICENSE"]},
- "compatibility": {"status": "needs-configuration", "teloa": ">=0.2.0-alpha.6", "dsh": "0.1.7-rc.1", "conditions": [
-  {"zh-CN": "数据经由 greptile.com 平台传输", "en": "Data passes through greptile.com"}
- ]},
- "requires": {"tools": [], "network": true, "runtimes": []},
- "review": {"status": "approved", "reviewedAt": "2026-09-25", "reviewer": "Teloa"}
+  "modifications": [],
+  "license": {
+    "spdx": "LicenseRef-Greptile-Terms",
+    "files": [
+      "LICENSE"
+    ]
+  },
+  "compatibility": {
+    "status": "needs-configuration",
+    "teloa": ">=0.2.0-alpha.6",
+    "dsh": "0.1.7-rc.1",
+    "conditions": [
+      {
+        "zh-CN": "数据经由 greptile.com 平台传输",
+        "en": "Data passes through greptile.com"
+      }
+    ]
+  },
+  "requires": {
+    "tools": [],
+    "network": true,
+    "runtimes": []
+  },
+  "review": {
+    "status": "approved",
+    "reviewedAt": "2026-09-25",
+    "reviewer": "Teloa"
+  }
 }

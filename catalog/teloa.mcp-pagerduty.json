@@ -1,38 +1,107 @@
 {
- "format": "teloa.market-catalog-entry/v1",
- "id": "teloa.mcp-pagerduty",
- "kind": "connector",
- "delivery": "managed",
- "version": "1.0.0",
- "upstream": null,
- "connector": {
-  "serverName": "pagerduty",
-  "title": {"zh-CN": "PagerDuty（事件响应）", "en": "PagerDuty (Incident Response)"},
-  "summary": {"zh-CN": "PagerDuty 官方远程 MCP，通过 API Key 查询和管理告警、事件与值班排班。数据经由 pagerduty.com 传输。", "en": "PagerDuty official remote MCP for querying and managing alerts, incidents and on-call schedules via API Key. Data passes through pagerduty.com."},
-  "categories": ["监控", "DevOps"],
-  "auth": {
-   "kind": "secret",
-   "vars": [
-    {"target": "bearer", "label": {"zh-CN": "PagerDuty API Key（在账户 API Access Keys 中生成）", "en": "PagerDuty API Key (generate in account API Access Keys)"}, "required": true}
-   ]
+  "format": "teloa.market-catalog-entry/v1",
+  "id": "teloa.mcp-pagerduty",
+  "kind": "connector",
+  "delivery": "managed",
+  "version": "1.0.0",
+  "taxonomy": {
+    "functions": [
+      "cloud-ops"
+    ],
+    "industries": [
+      "general"
+    ]
   },
-  "recipe": {
-   "transport": "streamable-http",
-   "url": "https://mcp.pagerduty.com/mcp"
+  "upstream": null,
+  "connector": {
+    "serverName": "pagerduty",
+    "title": {
+      "zh-CN": "PagerDuty（事件响应）",
+      "en": "PagerDuty (Incident Response)"
+    },
+    "summary": {
+      "zh-CN": "PagerDuty 官方远程 MCP，通过 API Key 查询和管理告警、事件与值班排班。数据经由 pagerduty.com 传输。",
+      "en": "PagerDuty official remote MCP for querying and managing alerts, incidents and on-call schedules via API Key. Data passes through pagerduty.com."
+    },
+    "auth": {
+      "kind": "secret",
+      "vars": [
+        {
+          "target": "bearer",
+          "label": {
+            "zh-CN": "PagerDuty API Key（在账户 API Access Keys 中生成）",
+            "en": "PagerDuty API Key (generate in account API Access Keys)"
+          },
+          "required": true
+        }
+      ]
+    },
+    "recipe": {
+      "transport": "streamable-http",
+      "url": "https://mcp.pagerduty.com/mcp"
+    },
+    "tools": [
+      {
+        "name": "list_incidents",
+        "description": {
+          "zh-CN": "列出当前 Incident",
+          "en": "List current incidents"
+        },
+        "readOnly": true
+      },
+      {
+        "name": "get_incident",
+        "description": {
+          "zh-CN": "获取 Incident 详情",
+          "en": "Get incident details"
+        },
+        "readOnly": true
+      },
+      {
+        "name": "acknowledge_incident",
+        "description": {
+          "zh-CN": "确认 Incident",
+          "en": "Acknowledge an incident"
+        },
+        "readOnly": false
+      },
+      {
+        "name": "list_services",
+        "description": {
+          "zh-CN": "列出服务",
+          "en": "List services"
+        },
+        "readOnly": true
+      }
+    ],
+    "upstreamUrl": "https://developer.pagerduty.com/docs/mcp"
   },
-  "tools": [
-   {"name": "list_incidents", "description": {"zh-CN": "列出当前 Incident", "en": "List current incidents"}, "readOnly": true},
-   {"name": "get_incident", "description": {"zh-CN": "获取 Incident 详情", "en": "Get incident details"}, "readOnly": true},
-   {"name": "acknowledge_incident", "description": {"zh-CN": "确认 Incident", "en": "Acknowledge an incident"}, "readOnly": false},
-   {"name": "list_services", "description": {"zh-CN": "列出服务", "en": "List services"}, "readOnly": true}
-  ],
-  "upstreamUrl": "https://developer.pagerduty.com/docs/mcp"
- },
- "modifications": [],
- "license": {"spdx": "LicenseRef-PagerDuty-Terms", "files": ["LICENSE"]},
- "compatibility": {"status": "needs-configuration", "teloa": ">=0.2.0-alpha.6", "dsh": "0.1.7-rc.1", "conditions": [
-  {"zh-CN": "数据经由 pagerduty.com 平台传输", "en": "Data passes through pagerduty.com"}
- ]},
- "requires": {"tools": [], "network": true, "runtimes": []},
- "review": {"status": "approved", "reviewedAt": "2026-09-25", "reviewer": "Teloa"}
+  "modifications": [],
+  "license": {
+    "spdx": "LicenseRef-PagerDuty-Terms",
+    "files": [
+      "LICENSE"
+    ]
+  },
+  "compatibility": {
+    "status": "needs-configuration",
+    "teloa": ">=0.2.0-alpha.6",
+    "dsh": "0.1.7-rc.1",
+    "conditions": [
+      {
+        "zh-CN": "数据经由 pagerduty.com 平台传输",
+        "en": "Data passes through pagerduty.com"
+      }
+    ]
+  },
+  "requires": {
+    "tools": [],
+    "network": true,
+    "runtimes": []
+  },
+  "review": {
+    "status": "approved",
+    "reviewedAt": "2026-09-25",
+    "reviewer": "Teloa"
+  }
 }
