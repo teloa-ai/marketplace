@@ -8,7 +8,7 @@ Browse and search online: **https://market.teloa.ai** · 在线浏览与搜索�
 
 This is the source of the Teloa official marketplace catalog. It lists resources that Teloa has reviewed, whose licenses are clear, and whose versions are pinned. In the Teloa marketplace you can search them, inspect their origin, and add them. The catalog will later move to a separate public repository with the same layout.
 
-**Current status:** Teloa-authored skills, solutions and connectors ship pinned inside each Teloa release. Upstream entries (`catalog/upstream/`) are pinned to a fixed source and fetched file by file when you add them. A signed online index (`index.json` + Ed25519 `index.json.sig`) is published to `https://market.teloa.ai/index.json`; the app can refresh its browse list from it (opt-in, disabled by default in this phase) and falls back to the bundled snapshot whenever download or signature verification fails.
+**Current status:** Teloa-authored skills, solutions and connectors ship pinned inside each Teloa release. Upstream entries (`catalog/upstream/`) are pinned to a fixed source and fetched file by file when you add them. A signed online index (`index.json` + Ed25519 `index.json.sig`) is published to `https://market.teloa.ai/index.json`; the app can refresh its browse list from it (opt-in, disabled by default in this phase) and falls back to the bundled snapshot whenever download or signature verification fails. The online index is published in two frozen formats side by side: `index.json` (v1, skills / solutions / connectors only) and `v2/index.json` (v2, all entry types). Each keeps its own signature. An older format stays published until the last app version that reads it is no longer supported; that date will be recorded here.
 
 ### Layout
 
@@ -52,7 +52,7 @@ See [SUBMITTING.md](SUBMITTING.md) to contribute.
 
 这里是 Teloa 官方市场目录的源。目录收录经过 Teloa 审核、许可清楚、版本固定的资源，在 Teloa 市场里可以直接搜索、查看来源并添加安装。本目录将来迁到独立的公开仓库，结构保持不变。
 
-**当前状态：** Teloa 自有的技能、方案与连接器随 Teloa 发行一起固定。上游条目（`catalog/upstream/`）固定到确定的来源，添加时逐文件拉取核对。签名在线索引（`index.json` 与 Ed25519 签名 `index.json.sig`）发布在 `https://market.teloa.ai/index.json`；应用可据此刷新浏览列表（本期默认关闭，需显式开启），下载或验签失败时退回随版本打包的快照。
+**当前状态：** Teloa 自有的技能、方案与连接器随 Teloa 发行一起固定。上游条目（`catalog/upstream/`）固定到确定的来源，添加时逐文件拉取核对。签名在线索引（`index.json` 与 Ed25519 签名 `index.json.sig`）发布在 `https://market.teloa.ai/index.json`；应用可据此刷新浏览列表（本期默认关闭，需显式开启），下载或验签失败时退回随版本打包的快照。在线索引按格式版本并行发布：`index.json`（v1，只含技能 / 方案 / 连接器）与 `v2/index.json`（v2，全部类型），各自签名。旧格式至少保留到读取它的应用版本停止支持，停止支持日期记录在此处。
 
 ### 目录结构
 
