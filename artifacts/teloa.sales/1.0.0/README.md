@@ -86,10 +86,10 @@ The following connectors and skills are optional and **not declared as required 
 
 ## 已验证范围 / Verified scope
 
-- 本方案标注为 `content-only`：**尚未真实模型验收**。待按 `examples/*-input.md` 建任务、产出结构与 `*-expected.md` 一致后更新状态
+- 2026-09-25 已用真实模型（DeepSeek deepseek-flash，隔离宿主）验收：从市场添加、加载到业务、岗位上岗后，三个任务模板（客户研究简报、方案书草案、会后跟进与报价核对）按 `examples/*-input.md` 建任务，产出结构与 `*-expected.md` 一致、事实逐条指向来源，未对外发送、未做承诺或决定；兼容状态已改为 `verified`，验收记录见 `docs/superpowers/reviews/2026-09-25-首批方案扩充真实模型验收.md`
 - 检索、消息与 CRM 连接尚未在本版本中进行端到端验收
 
-- This solution is marked `content-only`: **not yet accepted with a real model**. Status will be updated after tasks built from `examples/*-input.md` produce output matching `*-expected.md`
+- Verified with a real model (DeepSeek deepseek-flash on an isolated host) on 2026-09-25: after adding from the market, loading into a business and taking the role, all three task templates (customer research brief, proposal draft, meeting follow-up with quote verification) were run from `examples/*-input.md`; the output matched the structure of `*-expected.md` with facts traced to sources, nothing was sent externally and no commitments or decisions were made; compatibility is now `verified` (record: `docs/superpowers/reviews/2026-09-25-首批方案扩充真实模型验收.md`)
 - Search, messaging and CRM connections have not been end-to-end tested in this version
 
 ---

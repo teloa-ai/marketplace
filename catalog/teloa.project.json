@@ -78,13 +78,13 @@
     ]
   },
   "compatibility": {
-    "status": "content-only",
+    "status": "verified",
     "teloa": ">=0.2.0-alpha.6",
     "dsh": "0.1.7-rc.1",
     "conditions": [
       {
-        "zh-CN": "尚未真实模型验收；四个任务模板附合成样例，验收通过后更新状态。",
-        "en": "Not yet verified with a real model; all four task templates ship with synthetic samples, and the status will be updated after verification."
+        "zh-CN": "2026-09-25 已用真实模型（DeepSeek deepseek-flash，隔离宿主）验证：从市场添加、加载到业务、项目协调员上岗后，四个任务模板（周状态报告、会议纪要、风险台账、里程碑核对）按合成样例产出结构与期望一致，每条状态、日期指向来源文件，计划变更与对外承诺只列待确认、未代为决定。",
+        "en": "Verified with a real model (DeepSeek deepseek-flash, isolated host) on 2026-09-25: added from the market, loaded into a business, project coordinator on duty; all four templates (status report, meeting minutes, risk register, milestone check) matched the expected structure on synthetic samples, every status and date traced to its source; plan changes and external commitments were left as open items."
       },
       {
         "zh-CN": "项目管理工具与即时通讯连接为可选项，本版不内置。",

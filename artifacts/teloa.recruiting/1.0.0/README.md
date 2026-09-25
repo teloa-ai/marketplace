@@ -76,13 +76,11 @@ Optional, **not bundled in this package**, added and authorized separately:
 
 ## 已验证范围 / Verified scope
 
-- 本版本**尚未真实模型验收**；`examples/` 目录提供三个任务模板的合成输入与期望产出结构，供验收时对照
+- 2026-09-25 已用真实模型（DeepSeek deepseek-flash，隔离宿主）验收：从市场添加、加载到业务、岗位上岗后，三个任务模板（JD 起草、简历初筛对照、面试纲要与记录）按 `examples/*-input.md` 建任务，产出结构与 `*-expected.md` 一致、事实逐条指向来源，未对外发送、未做承诺或决定；兼容状态已改为 `verified`，验收记录见 `docs/superpowers/reviews/2026-09-25-首批方案扩充真实模型验收.md`
 - 外部连接（日历、IM、招聘系统）未在本版本中进行端到端验收
-- 本方案标注为 `content-only`，待完成真实模型验收后更新状态
 
-- This version has **not yet been accepted with a real model**; `examples/` provides synthetic inputs and expected output structures for the three task templates
+- Verified with a real model (DeepSeek deepseek-flash on an isolated host) on 2026-09-25: after adding from the market, loading into a business and taking the role, all three task templates (JD draft, resume screening checklist, interview guide with notes) were run from `examples/*-input.md`; the output matched the structure of `*-expected.md` with facts traced to sources, nothing was sent externally and no commitments or decisions were made; compatibility is now `verified` (record: `docs/superpowers/reviews/2026-09-25-首批方案扩充真实模型验收.md`)
 - External connections (calendar, IM, recruiting systems) have not been verified end to end
-- The solution is marked `content-only` until real-model acceptance is complete
 
 ---
 

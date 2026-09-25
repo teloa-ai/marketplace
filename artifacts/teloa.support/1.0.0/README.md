@@ -74,10 +74,10 @@ All of these require application credentials or API keys.
 
 ## 已验证范围 / Verified scope
 
-- 本方案**尚未真实模型验收**，标注为 `content-only`；三个任务模板均附合成样例（`examples/`），验收通过后更新状态
+- 2026-09-25 已用真实模型（DeepSeek deepseek-flash，隔离宿主）验收：从市场添加、加载到业务、岗位上岗后，三个任务模板（工单分诊与回复草案、FAQ 沉淀、升级摘要）按 `examples/*-input.md` 建任务，产出结构与 `*-expected.md` 一致、事实逐条指向来源，未对外发送、未做承诺或决定；兼容状态已改为 `verified`，验收记录见 `docs/superpowers/reviews/2026-09-25-首批方案扩充真实模型验收.md`
 - 连接器搭配（飞书、钉钉、语雀、Notion、Zapier）未做端到端验收
 
-- This solution has **not yet been verified with a real model** and is marked `content-only`; all three task templates ship with synthetic samples in `examples/`, and the status will be updated after verification
+- Verified with a real model (DeepSeek deepseek-flash on an isolated host) on 2026-09-25: after adding from the market, loading into a business and taking the role, all three task templates (ticket triage with reply drafts, FAQ distillation, escalation summary) were run from `examples/*-input.md`; the output matched the structure of `*-expected.md` with facts traced to sources, nothing was sent externally and no commitments or decisions were made; compatibility is now `verified` (record: `docs/superpowers/reviews/2026-09-25-首批方案扩充真实模型验收.md`)
 - Connector pairings (Feishu, DingTalk, Yuque, Notion, Zapier) have not been verified end to end
 
 ---

@@ -81,13 +81,13 @@
     ]
   },
   "compatibility": {
-    "status": "content-only",
+    "status": "verified",
     "teloa": ">=0.2.0-alpha.6",
     "dsh": "0.1.7-rc.1",
     "conditions": [
       {
-        "zh-CN": "本版本尚未真实模型验收；examples/ 提供三个任务模板的合成输入与期望产出结构。",
-        "en": "Not yet accepted with a real model; examples/ provides synthetic inputs and expected outputs for the three task templates."
+        "zh-CN": "2026-09-25 已用真实模型（DeepSeek deepseek-flash，隔离宿主）验证：对账差异清单、报销合规核对、月结清单三个模板按合成样例产出结构与期望一致，勾稽差额（200.00 / 1,000.00）与报销不符合项（6 条）与期望完全相同；对账差异清单两轮中有一轮把一笔单边未达归错侧并如实报「勾稽不平」后停止，分类结果仍需本人逐条复核。",
+        "en": "Verified with a real model (DeepSeek deepseek-flash, isolated host) on 2026-09-25: reconciliation differences, expense policy check and month-end checklist matched the expected structure on synthetic samples; tie-out differences (200.00 / 1,000.00) and the six expense findings matched exactly. In one of two reconciliation runs a one-sided item landed on the wrong side and the run reported an unbalanced tie-out and stopped; classifications need line-by-line review by the owner."
       },
       {
         "zh-CN": "Stripe、飞书、钉钉等连接为可选项，本版不内置。",

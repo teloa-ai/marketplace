@@ -77,13 +77,13 @@
     ]
   },
   "compatibility": {
-    "status": "content-only",
+    "status": "verified",
     "teloa": ">=0.2.0-alpha.6",
     "dsh": "0.1.7-rc.1",
     "conditions": [
       {
-        "zh-CN": "尚未真实模型验收；按 examples 中的输入建任务、产出与期望结构一致后再更新状态。",
-        "en": "Not yet accepted with a real model; status will be updated after tasks built from the examples produce the expected structure."
+        "zh-CN": "2026-09-25 已用真实模型（DeepSeek deepseek-flash，隔离宿主）验证：研究简报、多源对比、知识库条目三个模板按合成样例产出结构与期望一致，关键事实逐条标注来源与位置，分歧并列不裁定，未写入知识库或外部系统。",
+        "en": "Verified with a real model (DeepSeek deepseek-flash, isolated host) on 2026-09-25: research brief, source comparison and knowledge-base article matched the expected structure on synthetic samples; facts carry source and location, disagreements are listed without adjudication, nothing written to any knowledge base or external system."
       },
       {
         "zh-CN": "检索连接器与知识库写入连接为可选项，本版不内置。",
