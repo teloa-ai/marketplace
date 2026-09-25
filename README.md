@@ -39,7 +39,7 @@ This is the source of the Teloa official marketplace catalog. It lists resources
 ### How Teloa uses it
 
 1. Maintainers run `pnpm build:market-catalog`. The script validates every entry and generates the backend snapshot; its digest is pinned in code and ships with the release.
-2. Maintainers run `pnpm publish:market-index`. The script writes `dist-market/index.json`, signs it with the Ed25519 private key (local `.runtime/teloa/market-signing/`, or the `TELOA_MARKET_SIGNING_KEY` secret in CI), and regenerates the catalog table below.
+2. Maintainers run `pnpm publish:market-index`. The script writes `dist-market/index.json`, signs it with the Ed25519 private key (local `.runtime/teloa/market-signing/`, or the `TELOA_MARKET_SIGNING_KEY` secret in CI), and regenerates the catalog table below. Before a release, `TELOA_MARKET_SIGNING_KEY=<production key> pnpm check:market-index -- --production` verifies that the public key built into the app matches the production key and is not the development key.
 3. On start, Teloa checks the snapshot digest and every file's bytes. Any mismatch disables the whole catalog rather than trusting part of it. An online index is only adopted after its signature and structure verify.
 4. When you click "Add to my skills", Teloa stores that entry as your pinned skill content, which you then install and enable as usual. Adding still verifies every file against the entry's fixed source.
 5. Catalog updates never change a version you already installed.
@@ -83,7 +83,7 @@ See [SUBMITTING.md](SUBMITTING.md) to contribute.
 ### 与 Teloa 的关系
 
 1. 维护者运行 `pnpm build:market-catalog`，脚本校验全部条目并生成后端快照，快照摘要写进代码随版本发布。
-2. 维护者运行 `pnpm publish:market-index`，脚本生成 `dist-market/index.json`，用 Ed25519 私钥（本机 `.runtime/teloa/market-signing/`，CI 用 Secret `TELOA_MARKET_SIGNING_KEY`）签名，并重新生成下方分类总表。
+2. 维护者运行 `pnpm publish:market-index`，脚本生成 `dist-market/index.json`，用 Ed25519 私钥（本机 `.runtime/teloa/market-signing/`，CI 用 Secret `TELOA_MARKET_SIGNING_KEY`）签名，并重新生成下方分类总表。发布前用 `TELOA_MARKET_SIGNING_KEY=<生产私钥> pnpm check:market-index -- --production` 核对应用内置公钥与生产私钥匹配且不是开发公钥。
 3. Teloa 启动时核对快照摘要和每个文件的字节，任何不一致都会让整个目录停用，不会部分放行。在线索引只在签名与结构都通过后才采用。
 4. 你在市场里点「添加到我的技能」，Teloa 把该条目固定保存为你的技能内容，之后照常安装、启用。添加时仍按条目的固定来源逐文件核对。
 5. 目录更新不会改动你已安装的版本。
