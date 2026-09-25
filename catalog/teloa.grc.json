@@ -3,13 +3,13 @@
   "id": "teloa.grc",
   "kind": "solution",
   "delivery": "install",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "taxonomy": {
     "functions": [
       "security"
     ],
     "industries": [
-      "security/grc"
+      "cyber-security/grc"
     ]
   },
   "upstream": null,

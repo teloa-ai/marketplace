@@ -3,13 +3,13 @@
   "id": "teloa.appsec",
   "kind": "solution",
   "delivery": "install",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "taxonomy": {
     "functions": [
       "security"
     ],
     "industries": [
-      "security/appsec"
+      "cyber-security/appsec"
     ]
   },
   "upstream": null,
