@@ -50,14 +50,14 @@
       }
     },
     {
-      "id": "document-research",
+      "id": "research-brief",
       "kind": "skill",
       "title": "资料研究与可追溯简报",
       "version": "1.0.0",
       "required": true,
       "source": {
         "kind": "local",
-        "path": "skills/document-research/SKILL.md"
+        "path": "skills/research-brief/SKILL.md"
       },
       "localized": {
         "title": {
@@ -206,7 +206,7 @@
     {
       "kind": "role-skill",
       "from": "research-collaborator",
-      "to": "document-research"
+      "to": "research-brief"
     },
     {
       "kind": "role-skill",

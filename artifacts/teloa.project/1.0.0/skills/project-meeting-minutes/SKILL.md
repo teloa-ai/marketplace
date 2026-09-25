@@ -1,5 +1,5 @@
 ---
-name: meeting-minutes
+name: project-meeting-minutes
 description: 从项目会议的录音转写或文字记录中提取纪要与待办，严格区分原文决议、行动事项与缺席确认，并把涉及计划、范围、日期变更的决议单独标出。适用于项目例会、评审会、干系人会议的记录整理。
 ---
 

@@ -12,7 +12,7 @@
   "output": "可追溯研究简报：来源清单与信息截止日期、关键事实（含来源与检索日期）、推断（含依据）、分歧与待核实事项、下一步核验建议",
   "skills": [
     {
-      "id": "document-research",
+      "id": "research-brief",
       "title": "资料研究与可追溯简报",
       "version": "1.0.0"
     }

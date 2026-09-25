@@ -92,14 +92,14 @@
       }
     },
     {
-      "id": "meeting-minutes",
+      "id": "sales-meeting-minutes",
       "kind": "skill",
       "title": "客户会议纪要与跟进事项",
       "version": "1.0.0",
       "required": true,
       "source": {
         "kind": "local",
-        "path": "skills/meeting-minutes/SKILL.md"
+        "path": "skills/sales-meeting-minutes/SKILL.md"
       },
       "localized": {
         "title": {
@@ -216,7 +216,7 @@
     {
       "kind": "role-skill",
       "from": "bd-collaborator",
-      "to": "meeting-minutes"
+      "to": "sales-meeting-minutes"
     },
     {
       "kind": "role-skill",

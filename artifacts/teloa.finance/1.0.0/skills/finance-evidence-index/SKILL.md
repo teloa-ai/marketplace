@@ -1,5 +1,5 @@
 ---
-name: evidence-index
+name: finance-evidence-index
 description: 建立和维护财务单据与证据索引，将已提供的发票、合同、付款回单、审批记录等与账目条目或对账差异项关联，统计覆盖状态并列出无单据条目。只做索引与覆盖统计，不判断单据真伪，不做会计处理。
 ---
 

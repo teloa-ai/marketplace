@@ -50,14 +50,14 @@
       }
     },
     {
-      "id": "weekly-report",
+      "id": "project-weekly-report",
       "kind": "skill",
       "title": "项目周状态报告",
       "version": "1.0.0",
       "required": true,
       "source": {
         "kind": "local",
-        "path": "skills/weekly-report/SKILL.md"
+        "path": "skills/project-weekly-report/SKILL.md"
       },
       "localized": {
         "title": {
@@ -71,14 +71,14 @@
       }
     },
     {
-      "id": "meeting-minutes",
+      "id": "project-meeting-minutes",
       "kind": "skill",
       "title": "项目会议纪要与待办提取",
       "version": "1.0.0",
       "required": true,
       "source": {
         "kind": "local",
-        "path": "skills/meeting-minutes/SKILL.md"
+        "path": "skills/project-meeting-minutes/SKILL.md"
       },
       "localized": {
         "title": {
@@ -92,14 +92,14 @@
       }
     },
     {
-      "id": "risk-register",
+      "id": "project-risk-register",
       "kind": "skill",
       "title": "项目风险台账",
       "version": "1.0.0",
       "required": true,
       "source": {
         "kind": "local",
-        "path": "skills/risk-register/SKILL.md"
+        "path": "skills/project-risk-register/SKILL.md"
       },
       "localized": {
         "title": {
@@ -248,17 +248,17 @@
     {
       "kind": "role-skill",
       "from": "project-coordinator",
-      "to": "weekly-report"
+      "to": "project-weekly-report"
     },
     {
       "kind": "role-skill",
       "from": "project-coordinator",
-      "to": "meeting-minutes"
+      "to": "project-meeting-minutes"
     },
     {
       "kind": "role-skill",
       "from": "project-coordinator",
-      "to": "risk-register"
+      "to": "project-risk-register"
     },
     {
       "kind": "role-skill",

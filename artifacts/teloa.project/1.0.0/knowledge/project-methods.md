@@ -57,9 +57,9 @@
 
 | 本方案技能 | 来源方案 | 来源版本 | 来源技能 | 主要改动 |
 |---|---|---|---|---|
-| weekly-report | teloa.office | 1.0.0 | weekly-report | 增加里程碑栏目、整体状态三档判定、对外承诺标注、管理层简报结构 |
-| meeting-minutes | teloa.office | 1.0.0 | meeting-minutes | 增加计划变更专栏、上次待办闭环、风险与问题栏目、对外承诺标注 |
-| risk-register | teloa.grc | 1.0.0 | risk-register | 风险来源、评分参考与字段从信息安全改为项目进度/范围/资源/质量/外部依赖；增加触发条件、影响对象与变更清单 |
+| project-weekly-report | teloa.office | 1.0.0 | weekly-report | 增加里程碑栏目、整体状态三档判定、对外承诺标注、管理层简报结构 |
+| project-meeting-minutes | teloa.office | 1.0.0 | meeting-minutes | 增加计划变更专栏、上次待办闭环、风险与问题栏目、对外承诺标注 |
+| project-risk-register | teloa.grc | 1.0.0 | risk-register | 风险来源、评分参考与字段从信息安全改为项目进度/范围/资源/质量/外部依赖；增加触发条件、影响对象与变更清单 |
 | milestone-check | 本方案新写 | 1.0.0 | — | — |
 
 ## 外部来源索引

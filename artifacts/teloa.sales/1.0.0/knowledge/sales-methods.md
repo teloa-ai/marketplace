@@ -33,7 +33,7 @@
 | 本包技能 | 来源 | 调整 |
 |---|---|---|
 | customer-research | 改自 teloa.marketing 1.0.0 `skills/topic-research/SKILL.md` | 「品牌材料 → 选题方向」改为「客户材料 → 拜访前简报」；增加个人信息边界、检索日期、切入点对应表、不出现价格与承诺。复制后独立演进 |
-| meeting-minutes | 复制自 teloa.office 1.0.0 `skills/meeting-minutes/SKILL.md` | 分类改为客户需求 / 异议 / 我方承诺 / 跟进事项；增加商务承诺复核标注与「客户口头表示同意」规则；相对日期换算方法保持一致。复制后独立演进 |
+| sales-meeting-minutes | 复制自 teloa.office 1.0.0 `skills/meeting-minutes/SKILL.md` | 分类改为客户需求 / 异议 / 我方承诺 / 跟进事项；增加商务承诺复核标注与「客户口头表示同意」规则；相对日期换算方法保持一致。复制后独立演进 |
 | quote-verification | 改自 teloa.office 1.0.0 `skills/table-verification/SKILL.md` | 四步核对改为价格表对照 / 数量与折扣 / 合计与税 / 缺失与覆盖；增加不作定价建议边界。复制后独立演进 |
 | proposal-draft | 本包新写 | — |
 

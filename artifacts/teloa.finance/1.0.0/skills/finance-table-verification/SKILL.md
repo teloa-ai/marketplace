@@ -1,5 +1,5 @@
 ---
-name: table-verification
+name: finance-table-verification
 description: 对已提供的电子表格或数据表进行逐项核查，输出包含合计差异、单位与币种冲突、借贷方向与含税口径问题的清单。适用于财务对账、报销汇总、月结多表比对等需要系统性发现数据问题的场景。
 ---
 

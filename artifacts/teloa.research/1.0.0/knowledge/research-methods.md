@@ -32,7 +32,7 @@
 
 | 本包技能 | 来源 | 调整 |
 |---|---|---|
-| document-research | 复制自 teloa.office 1.0.0 `skills/document-research/SKILL.md` | 补充检索来源记录、检索日期、检索无结果处理与「何时停下来找人」；其余方法一致。复制后独立演进，不随源方案更新 |
+| research-brief | 复制自 teloa.office 1.0.0 `skills/document-research/SKILL.md` | 补充检索来源记录、检索日期、检索无结果处理与「何时停下来找人」；其余方法一致。复制后独立演进，不随源方案更新 |
 | source-compare | 本包新写 | — |
 | kb-article | 本包新写 | — |
 | glossary | 本包新写 | — |

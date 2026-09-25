@@ -113,14 +113,14 @@
       }
     },
     {
-      "id": "table-verification",
+      "id": "finance-table-verification",
       "kind": "skill",
       "title": "表格核对（对照、差异、口径问题清单）",
       "version": "1.0.0",
       "required": true,
       "source": {
         "kind": "local",
-        "path": "skills/table-verification/SKILL.md"
+        "path": "skills/finance-table-verification/SKILL.md"
       },
       "localized": {
         "title": {
@@ -134,14 +134,14 @@
       }
     },
     {
-      "id": "evidence-index",
+      "id": "finance-evidence-index",
       "kind": "skill",
       "title": "单据与证据索引",
       "version": "1.0.0",
       "required": true,
       "source": {
         "kind": "local",
-        "path": "skills/evidence-index/SKILL.md"
+        "path": "skills/finance-evidence-index/SKILL.md"
       },
       "localized": {
         "title": {
@@ -242,12 +242,12 @@
     {
       "kind": "role-skill",
       "from": "reconciliation-collaborator",
-      "to": "table-verification"
+      "to": "finance-table-verification"
     },
     {
       "kind": "role-skill",
       "from": "reconciliation-collaborator",
-      "to": "evidence-index"
+      "to": "finance-evidence-index"
     },
     {
       "kind": "role-work",

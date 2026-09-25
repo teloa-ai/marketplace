@@ -13,7 +13,7 @@
   "output": "项目周状态报告草案：首部注明期间、信息截止、来源与整体状态判定依据；按报告类型输出对应结构；发送前需负责人确认",
   "skills": [
     {
-      "id": "weekly-report",
+      "id": "project-weekly-report",
       "title": "项目周状态报告",
       "version": "1.0.0"
     }

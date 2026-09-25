@@ -1,5 +1,5 @@
 ---
-name: risk-register
+name: project-risk-register
 description: 建立和维护项目风险台账，对每条风险登记描述、触发条件、影响、可能性与影响评分、应对建议与状态，输出台账更新草案与摘要。适用于项目例会后、阶段评审前或收到新风险材料时的台账维护。
 ---
 
