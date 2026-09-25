@@ -83,8 +83,8 @@
     "dsh": "0.1.7-rc.1",
     "conditions": [
       {
-        "zh-CN": "尚未真实模型验收；三个任务模板附合成样例，验收通过后更新状态。",
-        "en": "Not yet verified with a real model; all three task templates ship with synthetic samples, and the status will be updated after verification."
+        "zh-CN": "尚未真实模型验收；四个任务模板附合成样例，验收通过后更新状态。",
+        "en": "Not yet verified with a real model; all four task templates ship with synthetic samples, and the status will be updated after verification."
       },
       {
         "zh-CN": "项目管理工具与即时通讯连接为可选项，本版不内置。",

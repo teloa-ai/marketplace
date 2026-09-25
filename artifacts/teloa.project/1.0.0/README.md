@@ -62,10 +62,10 @@ The following connectors and skills are **optional**, not declared in this packa
 
 ## 已验证范围 / Verified scope
 
-- 本方案**尚未真实模型验收**，标注为 `content-only`；三个任务模板均附合成样例（`examples/`），验收通过后更新状态
+- 本方案**尚未真实模型验收**，标注为 `content-only`；四个任务模板均附合成样例（`examples/`），验收通过后更新状态
 - 连接器搭配（Linear、Atlassian、飞书、钉钉）未做端到端验收
 
-- This solution has **not yet been verified with a real model** and is marked `content-only`; all three task templates ship with synthetic samples in `examples/`, and the status will be updated after verification
+- This solution has **not yet been verified with a real model** and is marked `content-only`; all four task templates ship with synthetic samples in `examples/`, and the status will be updated after verification
 - Connector pairings (Linear, Atlassian, Feishu, DingTalk) have not been verified end to end
 
 ---

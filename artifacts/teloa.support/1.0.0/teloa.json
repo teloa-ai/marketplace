@@ -113,14 +113,14 @@
       }
     },
     {
-      "id": "brand-fact-check",
+      "id": "reply-fact-check",
       "kind": "skill",
       "title": "回复事实与措辞核对",
       "version": "1.0.0",
       "required": true,
       "source": {
         "kind": "local",
-        "path": "skills/brand-fact-check/SKILL.md"
+        "path": "skills/reply-fact-check/SKILL.md"
       },
       "localized": {
         "title": {
@@ -221,7 +221,7 @@
     {
       "kind": "role-skill",
       "from": "support-knowledge-collaborator",
-      "to": "brand-fact-check"
+      "to": "reply-fact-check"
     },
     {
       "kind": "role-work",

@@ -50,7 +50,7 @@
 
 | 本方案技能 | 来源方案 | 来源版本 | 来源技能 | 主要改动 |
 |---|---|---|---|---|
-| brand-fact-check | teloa.marketing | 1.0.0 | brand-fact-check | 核对对象从营销稿件改为回复草案与 FAQ；素材权利核查改为承诺性措辞与个人信息扫描；增加答非所问检查 |
+| reply-fact-check | teloa.marketing | 1.0.0 | brand-fact-check | 核对对象从营销稿件改为回复草案与 FAQ；素材权利核查改为承诺性措辞与个人信息扫描；增加答非所问检查 |
 | ticket-triage | 本方案新写 | 1.0.0 | — | — |
 | reply-draft | 本方案新写 | 1.0.0 | — | — |
 | faq-distill | 本方案新写 | 1.0.0 | — | — |

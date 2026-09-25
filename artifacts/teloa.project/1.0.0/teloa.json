@@ -155,6 +155,27 @@
       }
     },
     {
+      "id": "meeting-minutes-task",
+      "kind": "work-template",
+      "title": "整理项目会议纪要与待办",
+      "version": "1.0.0",
+      "required": true,
+      "source": {
+        "kind": "local",
+        "path": "workflows/meeting-minutes-task.json"
+      },
+      "localized": {
+        "title": {
+          "original": "整理项目会议纪要与待办",
+          "defaultLocale": "en",
+          "locales": {
+            "zh-CN": "整理项目会议纪要与待办",
+            "en": "Prepare project meeting minutes and action items"
+          }
+        }
+      }
+    },
+    {
       "id": "risk-register-task",
       "kind": "work-template",
       "title": "更新项目风险台账",
@@ -252,6 +273,11 @@
     {
       "kind": "role-work",
       "from": "project-coordinator",
+      "to": "meeting-minutes-task"
+    },
+    {
+      "kind": "role-work",
+      "from": "project-coordinator",
       "to": "risk-register-task"
     },
     {
@@ -267,6 +293,7 @@
   ],
   "entrypoints": [
     "status-report-task",
+    "meeting-minutes-task",
     "milestone-check-task",
     "risk-register-task"
   ],
