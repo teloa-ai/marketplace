@@ -69,10 +69,14 @@
   ]
  },
  "compatibility": {
-  "status": "content-only",
+  "status": "verified",
   "teloa": ">=0.2.0-alpha.6",
   "dsh": "0.1.7-rc.1",
   "conditions": [
+   {
+    "zh-CN": "2026-09-25 已用真实模型验证代码审计：对合成样例给出带行号、CWE、置信度与修复验证方法的发现。",
+    "en": "Code audit verified with a real model on 2026-09-25: findings on a synthetic sample include line numbers, CWE, confidence and fix verification."
+   },
    {
     "zh-CN": "只做静态分析与计划；主动测试需另行授权的隔离环境。",
     "en": "Static analysis and planning only; active testing needs a separately authorised isolated environment."

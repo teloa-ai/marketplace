@@ -1,7 +1,7 @@
 {
   "format": "teloa.business-package/v2",
   "id": "soc-operations",
-  "title": "安全运营（SOC T1/T2）",
+  "title": "安全运营（SOC T1/T2/T3）",
   "version": "1.0.0",
   "domain": "security",
   "scope": "SOC",
@@ -417,11 +417,11 @@
   ],
   "localized": {
     "title": {
-      "original": "安全运营（SOC T1/T2）",
+      "original": "安全运营（SOC T1/T2/T3）",
       "defaultLocale": "en",
       "locales": {
-        "zh-CN": "安全运营（SOC T1/T2）",
-        "en": "Security operations (SOC T1/T2)"
+        "zh-CN": "安全运营（SOC T1/T2/T3）",
+        "en": "Security operations (SOC T1/T2/T3)"
       }
     },
     "description": {

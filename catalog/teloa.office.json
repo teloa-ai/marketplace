@@ -68,10 +68,14 @@
   ]
  },
  "compatibility": {
-  "status": "content-only",
+  "status": "verified",
   "teloa": ">=0.2.0-alpha.6",
   "dsh": "0.1.7-rc.1",
   "conditions": [
+   {
+    "zh-CN": "2026-09-25 已用真实模型验证：从市场添加、加载到业务、办公协作员上岗后，按会议纪要模板交付结构化纪要与待办。",
+    "en": "Verified with a real model on 2026-09-25: added from the market, loaded into a business, and the office collaborator delivered structured minutes and action items from the meeting-minutes template."
+   },
    {
     "zh-CN": "云盘、邮件与日历连接为可选项，本版不内置。",
     "en": "Cloud drive, mail and calendar connections are optional and not bundled in this version."

@@ -78,8 +78,12 @@
   "dsh": "0.1.7-rc.1",
   "conditions": [
    {
-    "zh-CN": "上传告警即可研判；实时研判与调查需要你自己的 SIEM/EDR 只读连接，本方案不含任何厂商凭据。",
-    "en": "Uploaded alerts work now; live triage needs your own read-only SIEM/EDR connection, and no vendor credentials are included."
+    "zh-CN": "2026-09-25 已用真实模型验证上传告警的 T1 分诊：给出判定、严重度、置信度、证据缺口与升级建议。",
+    "en": "T1 triage of uploaded alerts verified with a real model on 2026-09-25: classification, severity, confidence, evidence gaps and escalation."
+   },
+   {
+    "zh-CN": "实时研判与调查需要你自己的 SIEM/EDR 只读连接，本方案不含任何厂商凭据。",
+    "en": "Live triage and investigation need your own read-only SIEM/EDR connection; no vendor credentials are included."
    }
   ]
  },
