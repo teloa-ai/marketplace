@@ -38,11 +38,15 @@ A Teloa official solution for daily office document organization, meeting minute
 
 ---
 
-## 已验证范围
+## 已验证范围 / Verified scope
 
-- 上传文件后的纪要提取、简报起草、表格核对均为第一版验证范围
-- 外部连接（云盘、邮件、日历）尚未在本版本中进行端到端验收
-- 本方案标注为 `content-only`，待完成真实模型验收后更新状态
+- 2026-09-25 已用真实模型（DeepSeek deepseek-flash，隔离宿主）验收：从市场添加、加载到业务、办公协作员上岗后，按「会议纪要与待办提取」模板从转写文本交付结构化纪要与待办，已决事项带转写来源，Owner/截止日期只取原文、未知留空并列入待确认，未执行文字稿里的发送指令；兼容状态为 `verified`，验收记录见 `docs/superpowers/reviews/2026-09-25-首批行业方案一期验收.md`
+- 资料研究简报、周报与决策简报、表格核对三类任务随方案内容入库，尚未逐一做真实模型验收
+- 外部连接（云盘、邮件、日历）为可选项，本版不内置，未做端到端验收
+
+- Verified with a real model (DeepSeek deepseek-flash on an isolated host) on 2026-09-25: after adding from the market, loading into a business and taking the office collaborator role, the "meeting minutes and action items" template delivered structured minutes and action items from a transcript; decisions cite the transcript, owners and due dates come only from the source text (blank and listed as pending when absent), and no send instruction inside the transcript was executed; compatibility is `verified` (record: `docs/superpowers/reviews/2026-09-25-首批行业方案一期验收.md`)
+- Research briefs, weekly/decision briefs and table verification ship as solution content and have not yet been individually verified with a real model
+- External connections (cloud drive, mail, calendar) are optional, not bundled in this version, and not verified end to end
 
 ---
 
