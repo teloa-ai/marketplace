@@ -4,6 +4,14 @@
   "kind": "skill",
   "delivery": "upstream",
   "version": "1.0.0",
+  "taxonomy": {
+    "functions": [
+      "automation"
+    ],
+    "industries": [
+      "general"
+    ]
+  },
   "skill": {
     "name": "t-trading",
     "title": {
@@ -13,10 +21,7 @@
     "summary": {
       "zh-CN": "基于技术指标提供 A 股和加密货币短线交易分析和建议。用于短线交易策略制定。",
       "en": "基于维加斯通道EMA多层通道与斐波那契回撤，提供A股和加密货币短线交易的多维度结构化技术分析和明确操作建议。"
-    },
-    "categories": [
-      "自动化聚合"
-    ]
+    }
   },
   "upstream": {
     "kind": "clawhub",

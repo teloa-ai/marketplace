@@ -4,6 +4,14 @@
   "kind": "skill",
   "delivery": "upstream",
   "version": "1.0.6",
+  "taxonomy": {
+    "functions": [
+      "dev-tools"
+    ],
+    "industries": [
+      "general"
+    ]
+  },
   "skill": {
     "name": "resume-assistant",
     "title": {
@@ -13,10 +21,7 @@
     "summary": {
       "zh-CN": "协助求职者打磨、定制和评分简历。用于简历优化和求职准备。",
       "en": "Assist job seekers by polishing, customizing, scoring, and exporting resumes with detailed checklist reviews and multi-format support."
-    },
-    "categories": [
-      "项目研发"
-    ]
+    }
   },
   "upstream": {
     "kind": "clawhub",

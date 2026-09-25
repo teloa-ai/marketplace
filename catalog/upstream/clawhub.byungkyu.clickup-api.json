@@ -4,6 +4,14 @@
   "kind": "skill",
   "delivery": "upstream",
   "version": "1.2.3",
+  "taxonomy": {
+    "functions": [
+      "office-docs"
+    ],
+    "industries": [
+      "general"
+    ]
+  },
   "skill": {
     "name": "clickup-api",
     "title": {
@@ -13,10 +21,7 @@
     "summary": {
       "zh-CN": "集成 ClickUp API，访问任务、列表、文件夹、工作空间和成员管理，支持 Webhook。用于管理工作项、追踪项目进度或集成 ClickUp 工作流。",
       "en": "ClickUp API integration with managed OAuth. Access tasks, lists, folders, spaces, workspaces, users, and manage webhooks. Use this skill when users want to manage work items, track projects, or integrate with ClickUp workflows. For other third party apps, use the api-gateway skill (https://clawhub.a"
-    },
-    "categories": [
-      "日程邮件"
-    ]
+    }
   },
   "upstream": {
     "kind": "clawhub",

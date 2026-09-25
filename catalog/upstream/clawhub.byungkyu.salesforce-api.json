@@ -4,6 +4,14 @@
   "kind": "skill",
   "delivery": "upstream",
   "version": "1.2.5",
+  "taxonomy": {
+    "functions": [
+      "office-docs"
+    ],
+    "industries": [
+      "general"
+    ]
+  },
   "skill": {
     "name": "salesforce-api",
     "title": {
@@ -13,10 +21,7 @@
     "summary": {
       "zh-CN": "集成 Salesforce API，管理客户、销售机会、案例和自定义对象。用于 CRM 自动化和销售流程管理。",
       "en": "Salesforce CRM API integration with managed OAuth. Install only if you need Salesforce CRM administration. Connect with the narrowest Salesforce permissions available, prefer sandbox orgs for destructive or batch work, verify the intended connection ID before each request, and revoke unused connecti"
-    },
-    "categories": [
-      "日程邮件"
-    ]
+    }
   },
   "upstream": {
     "kind": "clawhub",

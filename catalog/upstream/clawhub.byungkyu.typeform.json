@@ -4,6 +4,14 @@
   "kind": "skill",
   "delivery": "upstream",
   "version": "1.2.3",
+  "taxonomy": {
+    "functions": [
+      "office-docs"
+    ],
+    "industries": [
+      "general"
+    ]
+  },
   "skill": {
     "name": "typeform",
     "title": {
@@ -13,10 +21,7 @@
     "summary": {
       "zh-CN": "集成 Typeform API，创建和管理表单、问卷和调查。用于数据收集和用户反馈。",
       "en": "Typeform API integration with managed OAuth. Create forms, manage responses, and access insights. Use this skill when users want to interact with Typeform surveys and responses. For other third party apps, use the api-gateway skill (https://clawhub.ai/byungkyu/api-gateway). Calls run through the `ma"
-    },
-    "categories": [
-      "日程邮件"
-    ]
+    }
   },
   "upstream": {
     "kind": "clawhub",

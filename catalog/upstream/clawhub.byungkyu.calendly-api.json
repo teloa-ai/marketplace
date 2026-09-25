@@ -4,6 +4,14 @@
   "kind": "skill",
   "delivery": "upstream",
   "version": "1.2.5",
+  "taxonomy": {
+    "functions": [
+      "office-docs"
+    ],
+    "industries": [
+      "general"
+    ]
+  },
   "skill": {
     "name": "calendly-api",
     "title": {
@@ -13,10 +21,7 @@
     "summary": {
       "zh-CN": "集成 Calendly API，管理活动类型、已排期事件、受邀者和可用性，支持 Webhook。用于查看日程数据、检查空闲时段、预订会议或集成日程工作流。",
       "en": "Calendly API integration with managed OAuth. Access event types, scheduled events, invitees, availability, and manage webhooks. Use this skill when users want to view scheduling data, check availability, book meetings, or integrate with Calendly workflows. For other third party apps, use the api-gat"
-    },
-    "categories": [
-      "日程邮件"
-    ]
+    }
   },
   "upstream": {
     "kind": "clawhub",

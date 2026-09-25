@@ -4,6 +4,14 @@
   "kind": "skill",
   "delivery": "upstream",
   "version": "3.20.7",
+  "taxonomy": {
+    "functions": [
+      "automation"
+    ],
+    "industries": [
+      "general"
+    ]
+  },
   "skill": {
     "name": "planning-with-files",
     "title": {
@@ -13,10 +21,7 @@
     "summary": {
       "zh-CN": "基于文件的持久化规划工具，维护任务计划、调查结果和进度追踪。用于复杂多步骤工作管理。",
       "en": "Persistent file-based planning for multi-step AI-agent work. Keeps task_plan.md, findings.md, and progress.md on disk; lifecycle hooks inject selected project planning context. Automatic recovery reads project planning files only. Explicit session-catchup.py --metadata reads same-project local agent"
-    },
-    "categories": [
-      "自动化聚合"
-    ]
+    }
   },
   "upstream": {
     "kind": "clawhub",

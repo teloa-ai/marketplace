@@ -4,6 +4,14 @@
   "kind": "skill",
   "delivery": "upstream",
   "version": "1.2.3",
+  "taxonomy": {
+    "functions": [
+      "office-docs"
+    ],
+    "industries": [
+      "general"
+    ]
+  },
   "skill": {
     "name": "woocommerce",
     "title": {
@@ -13,10 +21,7 @@
     "summary": {
       "zh-CN": "集成 WooCommerce REST API，访问产品、订单、客户和优惠券。用于电商管理和销售自动化。",
       "en": "WooCommerce REST API integration with managed OAuth. Access products, orders, customers, coupons, shipping, taxes, reports, webhooks, payment gateways, store settings, and system status tools. All write operations require explicit user approval. Payment gateway and settings modifications change stor"
-    },
-    "categories": [
-      "日程邮件"
-    ]
+    }
   },
   "upstream": {
     "kind": "clawhub",

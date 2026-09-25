@@ -4,6 +4,14 @@
   "kind": "skill",
   "delivery": "upstream",
   "version": "1.0.2",
+  "taxonomy": {
+    "functions": [
+      "office-docs"
+    ],
+    "industries": [
+      "general"
+    ]
+  },
   "skill": {
     "name": "word-docx",
     "title": {
@@ -13,10 +21,7 @@
     "summary": {
       "zh-CN": "创建、检查和编辑 Word 文档，支持样式、编号和格式。用于文档编写和排版。",
       "en": "Create, inspect, and edit Microsoft Word documents and DOCX files with reliable styles, numbering, tracked changes, tables, sections, and compatibility check..."
-    },
-    "categories": [
-      "文档知识"
-    ]
+    }
   },
   "upstream": {
     "kind": "clawhub",

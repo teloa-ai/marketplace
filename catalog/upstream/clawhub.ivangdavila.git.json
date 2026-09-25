@@ -4,6 +4,14 @@
   "kind": "skill",
   "delivery": "upstream",
   "version": "1.0.12",
+  "taxonomy": {
+    "functions": [
+      "dev-tools"
+    ],
+    "industries": [
+      "general"
+    ]
+  },
   "skill": {
     "name": "git",
     "title": {
@@ -13,10 +21,7 @@
     "summary": {
       "zh-CN": "管理 Git 仓库的提交、分支、合并和变基操作，解决冲突和恢复历史。用于代码版本管理和团队协作。",
       "en": "Commits, branches, merges, and rebases Git repositories, resolves conflicts, and recovers lost history. Use when the work touches a repo, commit, branch, merge, rebase, stash, tag, or submodule; when Git refuses a command — index.lock exists, push rejected as non-fast-forward, detached HEAD, dubious"
-    },
-    "categories": [
-      "项目研发"
-    ]
+    }
   },
   "upstream": {
     "kind": "clawhub",

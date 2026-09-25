@@ -4,6 +4,14 @@
   "kind": "skill",
   "delivery": "upstream",
   "version": "1.0.0",
+  "taxonomy": {
+    "functions": [
+      "automation"
+    ],
+    "industries": [
+      "general"
+    ]
+  },
   "skill": {
     "name": "china-stock-analysis",
     "title": {
@@ -13,10 +21,7 @@
     "summary": {
       "zh-CN": "分析中国 A 股和港股价格走势，提供投资建议。用于股票研究和投资决策。",
       "en": "Analyze Chinese stock prices (A-shares, HK stocks) and provide investment recommendations. Use when the user asks about stock analysis for Chinese companies,..."
-    },
-    "categories": [
-      "自动化聚合"
-    ]
+    }
   },
   "upstream": {
     "kind": "clawhub",

@@ -4,6 +4,14 @@
   "kind": "skill",
   "delivery": "upstream",
   "version": "1.2.3",
+  "taxonomy": {
+    "functions": [
+      "office-docs"
+    ],
+    "industries": [
+      "general"
+    ]
+  },
   "skill": {
     "name": "pipedrive-api",
     "title": {
@@ -13,10 +21,7 @@
     "summary": {
       "zh-CN": "集成 Pipedrive API，管理销售管道、交易、联系人和活动。用于销售流程管理和客户追踪。",
       "en": "Pipedrive API integration with managed OAuth. Manage deals, persons, organizations, activities, and pipelines. Use this skill when users want to interact with Pipedrive CRM. For other third party apps, use the api-gateway skill (https://clawhub.ai/byungkyu/api-gateway). Calls run through the `maton`"
-    },
-    "categories": [
-      "日程邮件"
-    ]
+    }
   },
   "upstream": {
     "kind": "clawhub",

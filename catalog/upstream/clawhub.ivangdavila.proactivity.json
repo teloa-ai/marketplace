@@ -4,6 +4,14 @@
   "kind": "skill",
   "delivery": "upstream",
   "version": "1.0.1",
+  "taxonomy": {
+    "functions": [
+      "dev-tools"
+    ],
+    "industries": [
+      "general"
+    ]
+  },
   "skill": {
     "name": "proactivity",
     "title": {
@@ -13,10 +21,7 @@
     "summary": {
       "zh-CN": "主动式 AI 代理，预测用户需求、持续推进工作并通过学习改进。用于自动化工作流和智能协助。",
       "en": "Anticipates needs, keeps work moving, and improves through use so the agent gets more proactive over time."
-    },
-    "categories": [
-      "项目研发"
-    ]
+    }
   },
   "upstream": {
     "kind": "clawhub",

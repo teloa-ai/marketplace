@@ -4,6 +4,14 @@
   "kind": "skill",
   "delivery": "upstream",
   "version": "1.0.0",
+  "taxonomy": {
+    "functions": [
+      "content-design"
+    ],
+    "industries": [
+      "general"
+    ]
+  },
   "skill": {
     "name": "eno",
     "title": {
@@ -13,10 +21,7 @@
     "summary": {
       "zh-CN": "前端项目分析工具，用于评估架构和技术栈。用于代码审查和技术评估。",
       "en": "This skill should be used when the user needs to analyze frontend project architecture evaluate tech stack choices review component design patterns assess bu..."
-    },
-    "categories": [
-      "设计创作"
-    ]
+    }
   },
   "upstream": {
     "kind": "clawhub",

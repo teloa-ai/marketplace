@@ -4,6 +4,14 @@
   "kind": "skill",
   "delivery": "upstream",
   "version": "1.0.0",
+  "taxonomy": {
+    "functions": [
+      "office-docs"
+    ],
+    "industries": [
+      "general"
+    ]
+  },
   "skill": {
     "name": "self-improving-proactive-agent",
     "title": {
@@ -13,10 +21,7 @@
     "summary": {
       "zh-CN": "结合自我改进和主动性的统一 AI 技能，从纠正中学习并保持内部状态。用于高级代理自动化。",
       "en": "A unified OpenClaw skill that merges self-improvement and proactivity: learn from corrections, maintain active state, recover context fast, and keep work mov..."
-    },
-    "categories": [
-      "办公协作"
-    ]
+    }
   },
   "upstream": {
     "kind": "clawhub",

@@ -4,6 +4,14 @@
   "kind": "skill",
   "delivery": "upstream",
   "version": "1.2.23",
+  "taxonomy": {
+    "functions": [
+      "office-docs"
+    ],
+    "industries": [
+      "general"
+    ]
+  },
   "skill": {
     "name": "api-gateway",
     "title": {
@@ -13,10 +21,7 @@
     "summary": {
       "zh-CN": "通过 Maton 网关调用已连接的第三方应用 API，网关自动注入凭据。用于读取邮箱、查询 CRM、创建工单、更新表格等操作。需通过 Maton 网关授权，数据经其服务器中转。",
       "en": "Call third-party APIs through the Maton gateway, which injects the credential for an app the user has already connected. Use this skill when the user names a connected app and a concrete action in it - read a mailbox, query a CRM, file an issue, update a spreadsheet, etc."
-    },
-    "categories": [
-      "日程邮件"
-    ]
+    }
   },
   "upstream": {
     "kind": "clawhub",

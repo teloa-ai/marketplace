@@ -4,6 +4,14 @@
   "kind": "skill",
   "delivery": "upstream",
   "version": "1.2.6",
+  "taxonomy": {
+    "functions": [
+      "office-docs"
+    ],
+    "industries": [
+      "general"
+    ]
+  },
   "skill": {
     "name": "klaviyo",
     "title": {
@@ -13,10 +21,7 @@
     "summary": {
       "zh-CN": "集成 Klaviyo API，管理用户档案、列表、分段、营销活动和自动化工作流。用于电商邮件营销和客户关系管理。",
       "en": "Klaviyo API integration with managed OAuth. Access profiles, lists, segments, campaigns, flows, events, metrics, templates, catalogs, webhooks, tags, coupons, images, forms, reviews, and account settings. Use this skill when users want to manage email marketing, customer data, or integrate with Klav"
-    },
-    "categories": [
-      "日程邮件"
-    ]
+    }
   },
   "upstream": {
     "kind": "clawhub",

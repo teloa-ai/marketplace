@@ -4,6 +4,14 @@
   "kind": "skill",
   "delivery": "upstream",
   "version": "1.0.0",
+  "taxonomy": {
+    "functions": [
+      "content-design"
+    ],
+    "industries": [
+      "general"
+    ]
+  },
   "skill": {
     "name": "ocr-local",
     "title": {
@@ -13,10 +21,7 @@
     "summary": {
       "zh-CN": "使用 Tesseract.js 进行本地 OCR 文字识别，支持中文、无需 API 密钥。用于图像文字提取。",
       "en": "Extract text from images using Tesseract.js OCR (100% local, no API key required). Supports Chinese (simplified/traditional) and English."
-    },
-    "categories": [
-      "设计创作"
-    ]
+    }
   },
   "upstream": {
     "kind": "clawhub",

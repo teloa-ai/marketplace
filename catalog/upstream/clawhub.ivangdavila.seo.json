@@ -4,6 +4,14 @@
   "kind": "skill",
   "delivery": "upstream",
   "version": "1.0.6",
+  "taxonomy": {
+    "functions": [
+      "data-research"
+    ],
+    "industries": [
+      "general"
+    ]
+  },
   "skill": {
     "name": "seo",
     "title": {
@@ -13,10 +21,7 @@
     "summary": {
       "zh-CN": "网站 SEO 审计、关键词研究和竞争对手分析。用于搜索引擎优化和内容改进。",
       "en": "Improves Google rankings with search engine optimization (SEO): audits, keyword research, content optimization, technical fixes, schema, and links. Not for paid search ads (PPC/SEM) or app store optimization. Use when organic traffic or rankings drop, pages are not indexed or get deindexed, crawl er"
-    },
-    "categories": [
-      "搜索研究"
-    ]
+    }
   },
   "upstream": {
     "kind": "clawhub",

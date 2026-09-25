@@ -4,6 +4,14 @@
   "kind": "skill",
   "delivery": "upstream",
   "version": "1.0.0",
+  "taxonomy": {
+    "functions": [
+      "automation"
+    ],
+    "industries": [
+      "general"
+    ]
+  },
   "skill": {
     "name": "interview-simulator",
     "title": {
@@ -13,10 +21,7 @@
     "summary": {
       "zh-CN": "模拟技术和行为面试，根据职位和经验级别量身定制。用于面试准备和求职技能提升。",
       "en": "Simulates mock interviews for any role and experience level with tailored technical, behavioral, and case questions plus detailed feedback and scoring."
-    },
-    "categories": [
-      "自动化聚合"
-    ]
+    }
   },
   "upstream": {
     "kind": "clawhub",

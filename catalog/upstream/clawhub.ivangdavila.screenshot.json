@@ -4,6 +4,14 @@
   "kind": "skill",
   "delivery": "upstream",
   "version": "1.0.1",
+  "taxonomy": {
+    "functions": [
+      "dev-tools"
+    ],
+    "industries": [
+      "general"
+    ]
+  },
   "skill": {
     "name": "screenshot",
     "title": {
@@ -13,10 +21,7 @@
     "summary": {
       "zh-CN": "捕获、检查和对比屏幕、窗口和网页截图。用于可视化验证和问题诊断。",
       "en": "Capture, inspect, and compare screenshots of screens, windows, regions, web pages, simulators, and CI runs with the right tool, wait strategy, viewport, and..."
-    },
-    "categories": [
-      "项目研发"
-    ]
+    }
   },
   "upstream": {
     "kind": "clawhub",

@@ -4,6 +4,14 @@
   "kind": "skill",
   "delivery": "upstream",
   "version": "1.0.2",
+  "taxonomy": {
+    "functions": [
+      "data-research"
+    ],
+    "industries": [
+      "general"
+    ]
+  },
   "skill": {
     "name": "excel-xlsx",
     "title": {
@@ -13,10 +21,7 @@
     "summary": {
       "zh-CN": "创建、检查和编辑 Excel 工作簿，支持公式、日期和类型转换。用于电子表格处理和数据管理。",
       "en": "Create, inspect, and edit Microsoft Excel workbooks and XLSX files with reliable formulas, dates, types, formatting, recalculation, and template preservation..."
-    },
-    "categories": [
-      "数据分析"
-    ]
+    }
   },
   "upstream": {
     "kind": "clawhub",

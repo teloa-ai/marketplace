@@ -4,6 +4,14 @@
   "kind": "skill",
   "delivery": "upstream",
   "version": "1.2.3",
+  "taxonomy": {
+    "functions": [
+      "office-docs"
+    ],
+    "industries": [
+      "general"
+    ]
+  },
   "skill": {
     "name": "google-play",
     "title": {
@@ -13,10 +21,7 @@
     "summary": {
       "zh-CN": "集成 Google Play 开发者 API，管理应用版本、订阅、应用内商品和应用列表。用于 Android 应用发布和管理。",
       "en": "Google Play Developer API (Android Publisher) integration with managed OAuth. Manage apps, subscriptions, in-app purchases, and reviews. Use this skill when users want to interact with Google Play Console programmatically. For other third party apps, use the api-gateway skill (https://clawhub.ai/byu"
-    },
-    "categories": [
-      "日程邮件"
-    ]
+    }
   },
   "upstream": {
     "kind": "clawhub",

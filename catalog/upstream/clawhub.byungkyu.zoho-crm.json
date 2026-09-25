@@ -4,6 +4,14 @@
   "kind": "skill",
   "delivery": "upstream",
   "version": "1.2.3",
+  "taxonomy": {
+    "functions": [
+      "business-ops"
+    ],
+    "industries": [
+      "general"
+    ]
+  },
   "skill": {
     "name": "zoho-crm",
     "title": {
@@ -13,10 +21,7 @@
     "summary": {
       "zh-CN": "集成 Zoho CRM API，管理客户、线索、交易和其他 CRM 对象。用于客户关系管理和销售协作。",
       "en": "Zoho CRM API integration with managed OAuth. Manage leads, contacts, accounts, deals, and other CRM records. Use this skill when users want to read, create, update, or delete CRM records, search contacts, manage sales pipelines, access organization settings, manage users, or retrieve module metadata"
-    },
-    "categories": [
-      "销售客服CRM"
-    ]
+    }
   },
   "upstream": {
     "kind": "clawhub",

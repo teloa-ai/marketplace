@@ -4,6 +4,14 @@
   "kind": "skill",
   "delivery": "upstream",
   "version": "1.2.3",
+  "taxonomy": {
+    "functions": [
+      "office-docs"
+    ],
+    "industries": [
+      "general"
+    ]
+  },
   "skill": {
     "name": "google-meet",
     "title": {
@@ -13,10 +21,7 @@
     "summary": {
       "zh-CN": "集成 Google Meet API，创建会议室、查看会议记录和管理参与者。用于视频会议的自动化和数据管理。",
       "en": "Google Meet API integration with managed OAuth. Create meeting spaces, list conference records, and manage meeting participants. Use this skill when users want to interact with Google Meet. For other third party apps, use the api-gateway skill (https://clawhub.ai/byungkyu/api-gateway). Calls run thr"
-    },
-    "categories": [
-      "日程邮件"
-    ]
+    }
   },
   "upstream": {
     "kind": "clawhub",

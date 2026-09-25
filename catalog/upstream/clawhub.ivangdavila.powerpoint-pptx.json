@@ -4,6 +4,14 @@
   "kind": "skill",
   "delivery": "upstream",
   "version": "1.0.1",
+  "taxonomy": {
+    "functions": [
+      "content-design"
+    ],
+    "industries": [
+      "general"
+    ]
+  },
   "skill": {
     "name": "powerpoint-pptx",
     "title": {
@@ -13,10 +21,7 @@
     "summary": {
       "zh-CN": "创建、检查和编辑 PowerPoint 演示文稿，支持布局、过渡和主题。用于演示文稿制作和编辑。",
       "en": "Create, inspect, and edit Microsoft PowerPoint presentations and PPTX decks with reliable layouts, templates, placeholders, notes, charts, and visual QA. Use..."
-    },
-    "categories": [
-      "设计创作"
-    ]
+    }
   },
   "upstream": {
     "kind": "clawhub",

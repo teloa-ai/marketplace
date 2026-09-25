@@ -4,6 +4,14 @@
   "kind": "skill",
   "delivery": "upstream",
   "version": "1.1.3",
+  "taxonomy": {
+    "functions": [
+      "content-design"
+    ],
+    "industries": [
+      "general"
+    ]
+  },
   "skill": {
     "name": "smart-weekly-report",
     "title": {
@@ -13,10 +21,7 @@
     "summary": {
       "zh-CN": "根据职业角色和工作内容自动生成结构化周报，包含问题分析和计划。用于工作总结和汇报。",
       "en": "根据您的职业角色和本周工作内容，自动提炼关键信息，生成结构化、专业且具有洞察力的周报，包括问题分析与下周计划。"
-    },
-    "categories": [
-      "设计创作"
-    ]
+    }
   },
   "upstream": {
     "kind": "clawhub",

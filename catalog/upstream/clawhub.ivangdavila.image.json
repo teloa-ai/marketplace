@@ -4,6 +4,14 @@
   "kind": "skill",
   "delivery": "upstream",
   "version": "1.0.4",
+  "taxonomy": {
+    "functions": [
+      "data-research"
+    ],
+    "industries": [
+      "general"
+    ]
+  },
   "skill": {
     "name": "image",
     "title": {
@@ -13,10 +21,7 @@
     "summary": {
       "zh-CN": "创建、检查和优化图像文件，支持格式转换和图像处理。用于视觉资产管理和图像编辑。",
       "en": "Create, inspect, process, and optimize image files and visual assets with reliable format choice, resizing, compression, color-profile, metadata, and platfor..."
-    },
-    "categories": [
-      "数据分析"
-    ]
+    }
   },
   "upstream": {
     "kind": "clawhub",

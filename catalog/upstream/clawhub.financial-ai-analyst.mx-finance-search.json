@@ -4,6 +4,14 @@
   "kind": "skill",
   "delivery": "upstream",
   "version": "1.0.9",
+  "taxonomy": {
+    "functions": [
+      "data-research"
+    ],
+    "industries": [
+      "general"
+    ]
+  },
   "skill": {
     "name": "mx-finance-search",
     "title": {
@@ -13,10 +21,7 @@
     "summary": {
       "zh-CN": "基于东方财富数据库的自然语言财经搜索，覆盖公告、研报、新闻和交易所动态。用于热点追踪、舆情监控、投资决策。需自备东方财富 API 密钥。",
       "en": "基于东方财富数据库，支持自然语言搜索全网最新公告、研报、财经新闻、交易所动态及官方政策等，覆盖全球市场标的，可用于热点捕捉、舆情监控、研报速览、公告精读及投资决策等场景。Natural language search for financial information, covering authoritativ..."
-    },
-    "categories": [
-      "搜索研究"
-    ]
+    }
   },
   "upstream": {
     "kind": "clawhub",

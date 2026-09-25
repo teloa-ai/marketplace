@@ -4,6 +4,14 @@
   "kind": "skill",
   "delivery": "upstream",
   "version": "1.0.2",
+  "taxonomy": {
+    "functions": [
+      "dev-tools"
+    ],
+    "industries": [
+      "general"
+    ]
+  },
   "skill": {
     "name": "capability-evolver-pro",
     "title": {
@@ -13,10 +21,7 @@
     "summary": {
       "zh-CN": "AI 代理自改进元技能，分析运行日志检测错误模式和性能回归。用于持续改进代理性能。",
       "en": "Meta-skill for AI agent self-improvement. Analyzes runtime logs to detect error patterns, regressions, and inefficiencies, then generates structured improvem..."
-    },
-    "categories": [
-      "项目研发"
-    ]
+    }
   },
   "upstream": {
     "kind": "clawhub",

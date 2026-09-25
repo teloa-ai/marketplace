@@ -4,6 +4,14 @@
   "kind": "skill",
   "delivery": "upstream",
   "version": "1.2.8",
+  "taxonomy": {
+    "functions": [
+      "office-docs"
+    ],
+    "industries": [
+      "general"
+    ]
+  },
   "skill": {
     "name": "google-workspace-admin",
     "title": {
@@ -13,10 +21,7 @@
     "summary": {
       "zh-CN": "集成 Google Workspace Admin SDK，管理用户、群组、设备和组织单位等企业资源。用于企业用户和权限管理。",
       "en": "Google Workspace Admin SDK integration with managed OAuth. This is a write-capable administrative integration for users, groups, organizational units, roles, and domain settings. Only connect with a least-privileged Google admin account, restrict OAuth scopes to the specific resources needed, and re"
-    },
-    "categories": [
-      "日程邮件"
-    ]
+    }
   },
   "upstream": {
     "kind": "clawhub",

@@ -4,6 +4,14 @@
   "kind": "skill",
   "delivery": "upstream",
   "version": "1.1.5",
+  "taxonomy": {
+    "functions": [
+      "content-design"
+    ],
+    "industries": [
+      "general"
+    ]
+  },
   "skill": {
     "name": "ai-ppt-generator",
     "title": {
@@ -13,10 +21,7 @@
     "summary": {
       "zh-CN": "使用百度文库 AI 生成 PPT 演示文稿，智能选择模板并根据内容自动排版。用于快速演示文稿创建。",
       "en": "Generate PPT with Baidu Wenku AI. Smart template selection based on content."
-    },
-    "categories": [
-      "设计创作"
-    ]
+    }
   },
   "upstream": {
     "kind": "clawhub",

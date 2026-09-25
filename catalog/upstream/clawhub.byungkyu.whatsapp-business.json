@@ -4,6 +4,14 @@
   "kind": "skill",
   "delivery": "upstream",
   "version": "1.2.6",
+  "taxonomy": {
+    "functions": [
+      "communication"
+    ],
+    "industries": [
+      "general"
+    ]
+  },
   "skill": {
     "name": "whatsapp-business",
     "title": {
@@ -13,10 +21,7 @@
     "summary": {
       "zh-CN": "集成 WhatsApp Business API，发送消息、管理模板和处理客户对话。用于客户沟通和支持自动化。",
       "en": "WhatsApp Business API integration with managed OAuth. Send messages, manage templates, and handle conversations. Use this skill when users want to interact with WhatsApp Business. For other third party apps, use the api-gateway skill (https://clawhub.ai/byungkyu/api-gateway). Calls run through the `"
-    },
-    "categories": [
-      "沟通消息"
-    ]
+    }
   },
   "upstream": {
     "kind": "clawhub",

@@ -4,6 +4,14 @@
   "kind": "skill",
   "delivery": "upstream",
   "version": "1.0.0",
+  "taxonomy": {
+    "functions": [
+      "content-design"
+    ],
+    "industries": [
+      "general"
+    ]
+  },
   "skill": {
     "name": "x-search",
     "title": {
@@ -13,10 +21,7 @@
     "summary": {
       "zh-CN": "使用 xAI API 搜索 X（Twitter）上的帖子。用于社交媒体监控和内容发现。",
       "en": "Search X (Twitter) posts using the xAI API. Use when the user wants to find tweets, search X/Twitter, look up what people are saying on X, or find social med..."
-    },
-    "categories": [
-      "营销内容"
-    ]
+    }
   },
   "upstream": {
     "kind": "clawhub",

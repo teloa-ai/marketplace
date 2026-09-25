@@ -4,6 +4,14 @@
   "kind": "skill",
   "delivery": "upstream",
   "version": "1.2.4",
+  "taxonomy": {
+    "functions": [
+      "office-docs"
+    ],
+    "industries": [
+      "general"
+    ]
+  },
   "skill": {
     "name": "monday",
     "title": {
@@ -13,10 +21,7 @@
     "summary": {
       "zh-CN": "集成 monday.com API，管理项目、任务、团队和工作流。用于工作管理和团队协作。",
       "en": "Monday.com API integration with managed OAuth. Manage boards, items, columns, groups, and workspaces using GraphQL, and read account context through the `me` and `users` queries. Use this skill when users want to create, update, or query Monday.com boards and items, manage tasks, or automate workflo"
-    },
-    "categories": [
-      "日程邮件"
-    ]
+    }
   },
   "upstream": {
     "kind": "clawhub",

@@ -4,6 +4,14 @@
   "kind": "skill",
   "delivery": "upstream",
   "version": "1.0.1",
+  "taxonomy": {
+    "functions": [
+      "data-research"
+    ],
+    "industries": [
+      "general"
+    ]
+  },
   "skill": {
     "name": "market-research",
     "title": {
@@ -13,10 +21,7 @@
     "summary": {
       "zh-CN": "进行市场研究，包括市场规模评估、竞争对手分析和定价研究。用于商业决策和市场验证。",
       "en": "Research markets with sizing, segmentation, competitor mapping, pricing checks, and demand validation that turn fuzzy ideas into decision-ready evidence. Use..."
-    },
-    "categories": [
-      "搜索研究"
-    ]
+    }
   },
   "upstream": {
     "kind": "clawhub",

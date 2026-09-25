@@ -4,6 +4,14 @@
   "kind": "skill",
   "delivery": "upstream",
   "version": "1.2.9",
+  "taxonomy": {
+    "functions": [
+      "office-docs"
+    ],
+    "industries": [
+      "general"
+    ]
+  },
   "skill": {
     "name": "google-drive",
     "title": {
@@ -13,10 +21,7 @@
     "summary": {
       "zh-CN": "集成 Google Drive API，访问、创建和管理云端文件和文件夹。用于文件存储、共享和版本管理。",
       "en": "Google Drive API integration with managed OAuth. List, search, create, and manage files and folders. Use this skill when users ask to find, read, share, organize, upload, or download files and folders in their own Google Drive — for example \"find my Q3 budget sheet\", \"share this folder with alice@\","
-    },
-    "categories": [
-      "日程邮件"
-    ]
+    }
   },
   "upstream": {
     "kind": "clawhub",

@@ -4,6 +4,14 @@
   "kind": "skill",
   "delivery": "upstream",
   "version": "1.2.3",
+  "taxonomy": {
+    "functions": [
+      "office-docs"
+    ],
+    "industries": [
+      "general"
+    ]
+  },
   "skill": {
     "name": "zoho-mail",
     "title": {
@@ -13,10 +21,7 @@
     "summary": {
       "zh-CN": "集成 Zoho Mail API，收发邮件、管理文件夹和标签。用于企业邮件管理。",
       "en": "Zoho Mail API integration with managed OAuth. Send, receive, and manage emails, folders, and labels. Use this skill when users want to send emails, read messages, manage folders, or work with email labels in Zoho Mail. For other third party apps, use the api-gateway skill (https://clawhub.ai/byungky"
-    },
-    "categories": [
-      "日程邮件"
-    ]
+    }
   },
   "upstream": {
     "kind": "clawhub",

@@ -4,6 +4,14 @@
   "kind": "skill",
   "delivery": "upstream",
   "version": "1.0.2",
+  "taxonomy": {
+    "functions": [
+      "data-research"
+    ],
+    "industries": [
+      "general"
+    ]
+  },
   "skill": {
     "name": "data-analysis",
     "title": {
@@ -13,10 +21,7 @@
     "summary": {
       "zh-CN": "数据分析和可视化工具，支持数据库查询、报表生成和表格自动化。用于数据分析和商业智能。",
       "en": "Data analysis and visualization. Query databases, generate reports, automate spreadsheets, and turn raw data into clear, actionable insights. Use when (1) yo..."
-    },
-    "categories": [
-      "数据分析"
-    ]
+    }
   },
   "upstream": {
     "kind": "clawhub",
