@@ -4,12 +4,12 @@
   "title": "用户反馈归类与主题统计",
   "version": "1.0.0",
   "domain": "growth",
-  "description": "将用户反馈导出清洗去重后逐条标注模块、类型、情绪与严重程度，归并为主题并统计条数与占比，每个主题附反馈 ID 与脱敏原文摘录；安全、数据泄露与法律类内容单列需立即转交。不给优先级、不起草回复。",
+  "description": "先为每条原始反馈写一行标注（模块、类型、情绪、严重程度、主题、是否重复及指向），再只由标注表推出去重数、有效条数与主题条数占比，统计与标注表逐项可对账；每个主题附反馈 ID 与脱敏原文摘录，安全、数据泄露与法律类内容单列需立即转交。不给优先级、不起草回复。",
   "requirements": [
     "反馈导出：每条含 ID、日期、渠道、原文（已上传）",
     "产品模块清单、既有主题表、用户分层字段（可选）"
   ],
-  "output": "反馈归类结果：首部注明时间范围、渠道、原始与有效条数算式；主题统计表（条数、占比、反馈 ID）；需立即转交表；主题摘录（脱敏）；逐条标注表；去重与无效清单；需负责人确认事项",
+  "output": "反馈归类结果：首部注明时间范围与渠道；逐条标注表（每条原始反馈一行，含重复指向）；由标注表推出的原始、去重、无效与有效条数算式和主题统计表（条数、占比、反馈 ID）及对账行；需立即转交表；主题摘录（脱敏）；需负责人确认事项",
   "skills": [
     {
       "id": "growth-feedback-cluster",
@@ -27,11 +27,11 @@
       }
     },
     "description": {
-      "original": "将用户反馈导出清洗去重后逐条标注模块、类型、情绪与严重程度，归并为主题并统计条数与占比，每个主题附反馈 ID 与脱敏原文摘录；安全、数据泄露与法律类内容单列需立即转交。不给优先级、不起草回复。",
+      "original": "先为每条原始反馈写一行标注（模块、类型、情绪、严重程度、主题、是否重复及指向），再只由标注表推出去重数、有效条数与主题条数占比，统计与标注表逐项可对账；每个主题附反馈 ID 与脱敏原文摘录，安全、数据泄露与法律类内容单列需立即转交。不给优先级、不起草回复。",
       "defaultLocale": "en",
       "locales": {
-        "zh-CN": "将用户反馈导出清洗去重后逐条标注模块、类型、情绪与严重程度，归并为主题并统计条数与占比，每个主题附反馈 ID 与脱敏原文摘录；安全、数据泄露与法律类内容单列需立即转交。不给优先级、不起草回复。",
-        "en": "Clean and deduplicate a user feedback export, tag each item with module, type, sentiment, and severity, merge into themes with counts and shares, and attach feedback IDs and redacted verbatim excerpts per theme; security, data exposure, and legal items are listed separately for immediate hand-off. No prioritization and no reply drafting."
+        "zh-CN": "先为每条原始反馈写一行标注（模块、类型、情绪、严重程度、主题、是否重复及指向），再只由标注表推出去重数、有效条数与主题条数占比，统计与标注表逐项可对账；每个主题附反馈 ID 与脱敏原文摘录，安全、数据泄露与法律类内容单列需立即转交。不给优先级、不起草回复。",
+        "en": "First write one tagging row per raw feedback item (module, type, sentiment, severity, theme, and whether it duplicates another item), then derive duplicate, valid, and per-theme counts and shares only from that table so every figure reconciles with it; attach feedback IDs and redacted verbatim excerpts per theme, and list security, data exposure, and legal items separately for immediate hand-off. No prioritization and no reply drafting."
       }
     },
     "requirements": [
@@ -53,11 +53,11 @@
       }
     ],
     "output": {
-      "original": "反馈归类结果：首部注明时间范围、渠道、原始与有效条数算式；主题统计表（条数、占比、反馈 ID）；需立即转交表；主题摘录（脱敏）；逐条标注表；去重与无效清单；需负责人确认事项",
+      "original": "反馈归类结果：首部注明时间范围与渠道；逐条标注表（每条原始反馈一行，含重复指向）；由标注表推出的原始、去重、无效与有效条数算式和主题统计表（条数、占比、反馈 ID）及对账行；需立即转交表；主题摘录（脱敏）；需负责人确认事项",
       "defaultLocale": "en",
       "locales": {
-        "zh-CN": "反馈归类结果：首部注明时间范围、渠道、原始与有效条数算式；主题统计表（条数、占比、反馈 ID）；需立即转交表；主题摘录（脱敏）；逐条标注表；去重与无效清单；需负责人确认事项",
-        "en": "Feedback clustering result: header with time range, channels, and raw-to-valid count arithmetic; theme table with counts, shares, and feedback IDs; immediate hand-off table; redacted theme excerpts; per-item tagging table; deduplicated and invalid lists; items needing the owner's confirmation"
+        "zh-CN": "反馈归类结果：首部注明时间范围与渠道；逐条标注表（每条原始反馈一行，含重复指向）；由标注表推出的原始、去重、无效与有效条数算式和主题统计表（条数、占比、反馈 ID）及对账行；需立即转交表；主题摘录（脱敏）；需负责人确认事项",
+        "en": "Feedback clustering result: header with time range and channels; per-item tagging table (one row per raw item, with duplicate pointers); raw, duplicate, invalid, and valid count arithmetic and theme table (counts, shares, feedback IDs) derived from that table, with a reconciliation line; immediate hand-off table; redacted theme excerpts; items needing the owner's confirmation"
       }
     }
   }
