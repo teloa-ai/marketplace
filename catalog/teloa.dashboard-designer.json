@@ -1,0 +1,91 @@
+{
+  "format": "teloa.market-catalog-entry/v1",
+  "id": "teloa.dashboard-designer",
+  "kind": "skill",
+  "delivery": "builtin",
+  "version": "1.0.0",
+  "taxonomy": {
+    "functions": [
+      "data-research"
+    ],
+    "industries": [
+      "general"
+    ]
+  },
+  "skill": {
+    "name": "teloa-dashboard-designer",
+    "title": {
+      "zh-CN": "看板设计",
+      "en": "Dashboard designer"
+    },
+    "summary": {
+      "zh-CN": "把业务数据做成看板时自动使用：读字段、试跑只读 SQL，生成组件与看板草案，由你在业务页预览确认。",
+      "en": "Used automatically when turning business data into a dashboard: reads fields, trial-runs read-only SQL and drafts widgets and a dashboard for you to preview and confirm on the Business page."
+    }
+  },
+  "upstream": {
+    "ecosystem": "teloa",
+    "author": "Teloa",
+    "repository": {
+      "host": "github.com",
+      "owner": "teloa-ai",
+      "repo": "teloa"
+    },
+    "commit": "0462a09fe9ee9b833985f65fb8daa0a2a7062c24",
+    "path": "marketplace/artifacts/teloa.dashboard-designer/1.0.0",
+    "license": "Apache-2.0",
+    "files": [
+      {
+        "path": "LICENSE",
+        "gitBlob": "34325c0c902611499994ed6900ccd949f1bf8bb3",
+        "size": 11349
+      },
+      {
+        "path": "SKILL.md",
+        "gitBlob": "b04fb707777399d776da944c5db7b477058edd1e",
+        "size": 9682
+      }
+    ]
+  },
+  "modifications": [
+    {
+      "zh-CN": "Teloa 自编技能，无外部上游；upstream 指向本仓库工件目录。",
+      "en": "Authored by Teloa with no external upstream; upstream points to this repository's artifact directory."
+    }
+  ],
+  "license": {
+    "spdx": "Apache-2.0",
+    "files": [
+      "LICENSE"
+    ]
+  },
+  "compatibility": {
+    "status": "verified",
+    "teloa": ">=0.2.0-alpha.6",
+    "dsh": "0.1.7-rc.1",
+    "conditions": [
+      {
+        "zh-CN": "只在本人普通会话中提供，同事执行任务时不可见。",
+        "en": "Available only in your own ordinary conversations; not visible to colleagues running tasks."
+      },
+      {
+        "zh-CN": "草案须由本人在「业务 → 看板 → 待确认」预览并确认后才生效。",
+        "en": "Drafts take effect only after you preview and confirm them under Business → Dashboards → Pending."
+      }
+    ]
+  },
+  "requires": {
+    "tools": [
+      "teloa_business_definitions_directory",
+      "teloa_business_sql_trial",
+      "teloa_business_definitions_draft"
+    ],
+    "network": false,
+    "runtimes": []
+  },
+  "review": {
+    "status": "approved",
+    "reviewedAt": "2026-09-26",
+    "reviewer": "Teloa"
+  }
+}
