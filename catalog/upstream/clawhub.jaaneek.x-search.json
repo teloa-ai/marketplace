@@ -1,0 +1,86 @@
+{
+  "format": "teloa.market-catalog-entry/v1",
+  "id": "clawhub.jaaneek.x-search",
+  "kind": "skill",
+  "delivery": "upstream",
+  "version": "1.0.0",
+  "skill": {
+    "name": "x-search",
+    "title": {
+      "zh-CN": "X（Twitter）搜索",
+      "en": "X Search"
+    },
+    "summary": {
+      "zh-CN": "使用 xAI API 搜索 X（Twitter）上的帖子。用于社交媒体监控和内容发现。",
+      "en": "Search X (Twitter) posts using the xAI API. Use when the user wants to find tweets, search X/Twitter, look up what people are saying on X, or find social med..."
+    },
+    "categories": [
+      "营销内容"
+    ]
+  },
+  "upstream": {
+    "kind": "clawhub",
+    "owner": "jaaneek",
+    "slug": "x-search",
+    "version": "1.0.0",
+    "files": [
+      {
+        "path": "SKILL.md",
+        "sha256": "71d70639d3b5610459c524c95d7cbaad7ff631e75cb3d2a60d2f40f08129a3dc",
+        "size": 1931
+      },
+      {
+        "path": "skill-card.md",
+        "sha256": "f041957f968c2276636c559adb0c4b900f05048c8aa27a62fbe012694d072b93",
+        "size": 2082
+      }
+    ]
+  },
+  "origin": {
+    "marketplace": "clawhub",
+    "installs": 16321,
+    "installsLabel": "1.6 万",
+    "countedAt": "2026-09-25"
+  },
+  "alternatives": [],
+  "unsupportedComponents": [
+    {
+      "kind": "scripts",
+      "count": 2
+    }
+  ],
+  "modifications": [
+    {
+      "zh-CN": "移植时需处理：strip 2 script file(s) (method remains text-portable)",
+      "en": "Strip before porting: strip 2 script file(s) (method remains text-portable)"
+    }
+  ],
+  "license": {
+    "spdx": "MIT-0",
+    "files": []
+  },
+  "compatibility": {
+    "status": "unsupported",
+    "teloa": ">=0.2.0-alpha.6",
+    "dsh": "0.1.7-rc.1",
+    "conditions": [
+      {
+        "zh-CN": "需自备 xAI API 密钥，搜索请求经 xAI 服务器处理。Teloa 暂不支持为技能安全注入密钥，暂不可添加。",
+        "en": "Requires your own xAI API key; search requests are processed through xAI's servers. Teloa cannot yet inject secrets into skills safely, so this skill can't be added yet."
+      }
+    ]
+  },
+  "requires": {
+    "tools": [
+      "bash",
+      "python"
+    ],
+    "network": true,
+    "runtimes": []
+  },
+  "review": {
+    "status": "approved",
+    "reviewedAt": "2026-09-25",
+    "reviewer": "Teloa 内容安全审查（逐文件）"
+  }
+}

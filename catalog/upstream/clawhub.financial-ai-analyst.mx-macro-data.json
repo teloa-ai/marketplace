@@ -1,0 +1,85 @@
+{
+  "format": "teloa.market-catalog-entry/v1",
+  "id": "clawhub.financial-ai-analyst.mx-macro-data",
+  "kind": "skill",
+  "delivery": "upstream",
+  "version": "1.0.12",
+  "skill": {
+    "name": "mx-macro-data",
+    "title": {
+      "zh-CN": "全球宏观数据助手",
+      "en": "Global Macro Database Assistant"
+    },
+    "summary": {
+      "zh-CN": "基于东方财富数据库的宏观经济数据查询，涵盖 GDP、物价、金融、贸易等数据。用于宏观经济研究和市场分析。需自备东方财富 API 密钥。",
+      "en": "基于东方财富数据库，支持自然语言查询全球宏观经济数据，涵盖国民经济核算、价格指数、货币金融、财政收支、对外贸易、就业民生、产业运行等多个领域，适配各类宏观经济研究、市场分析、政策解读等多元专业场景需求。返回结果包含数据说明及 csv 文件。Natural language query for macroecono..."
+    },
+    "categories": [
+      "数据分析"
+    ]
+  },
+  "upstream": {
+    "kind": "clawhub",
+    "owner": "financial-ai-analyst",
+    "slug": "mx-macro-data",
+    "version": "1.0.12",
+    "files": [
+      {
+        "path": "SKILL.md",
+        "sha256": "2a86e1520737b927ba488f81ace80420f894abc7ebf64df46a563dc5f4843497",
+        "size": 13171
+      },
+      {
+        "path": "skill-card.md",
+        "sha256": "306c6d33331bcc35b0d8e22d2c60d57a9df6d403defcd57ac0230f3db7c865b2",
+        "size": 2639
+      }
+    ]
+  },
+  "origin": {
+    "marketplace": "clawhub",
+    "installs": 16956,
+    "installsLabel": "1.7 万",
+    "countedAt": "2026-09-25"
+  },
+  "alternatives": [],
+  "unsupportedComponents": [
+    {
+      "kind": "scripts",
+      "count": 1
+    }
+  ],
+  "modifications": [
+    {
+      "zh-CN": "移植时需处理：strip 1 script file(s) (method remains text-portable)",
+      "en": "Strip before porting: strip 1 script file(s) (method remains text-portable)"
+    }
+  ],
+  "license": {
+    "spdx": "MIT-0",
+    "files": []
+  },
+  "compatibility": {
+    "status": "unsupported",
+    "teloa": ">=0.2.0-alpha.6",
+    "dsh": "0.1.7-rc.1",
+    "conditions": [
+      {
+        "zh-CN": "需自备东方财富 API 密钥，数据请求经东方财富服务器处理。Teloa 暂不支持为技能安全注入密钥，暂不可添加。",
+        "en": "Requires your own East Money API key; data requests are processed through East Money's servers. Teloa cannot yet inject secrets into skills safely, so this skill can't be added yet."
+      }
+    ]
+  },
+  "requires": {
+    "tools": [
+      "python"
+    ],
+    "network": true,
+    "runtimes": []
+  },
+  "review": {
+    "status": "approved",
+    "reviewedAt": "2026-09-25",
+    "reviewer": "Teloa 内容安全审查（逐文件）"
+  }
+}
