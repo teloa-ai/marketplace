@@ -1,0 +1,77 @@
+{
+ "format": "teloa.market-catalog-entry/v1",
+ "id": "teloa.mcp-context7",
+ "kind": "connector",
+ "delivery": "managed",
+ "version": "1.0.0",
+ "upstream": null,
+ "connector": {
+  "serverName": "context7",
+  "title": {
+   "zh-CN": "Context7（官方文档 MCP）",
+   "en": "Context7 (Official Docs MCP)"
+  },
+  "summary": {
+   "zh-CN": "Context7 官方远程 MCP，可为 2000+ 主流库和框架提供版本精确的官方文档与代码示例。无需 API 密钥，数据经 context7.com 服务传输。",
+   "en": "Context7 official remote MCP providing version-accurate docs and code examples for 2000+ popular libraries. No API key required. Data passes through context7.com."
+  },
+  "categories": [
+   "文档",
+   "代码"
+  ],
+  "auth": {
+   "kind": "none"
+  },
+  "recipe": {
+   "transport": "streamable-http",
+   "url": "https://mcp.context7.com/mcp"
+  },
+  "tools": [
+   {
+    "name": "resolve-library-id",
+    "description": {
+     "zh-CN": "将库名解析为 Context7 兼容的库 ID",
+     "en": "Resolve a library name to a Context7-compatible library ID"
+    },
+    "readOnly": true
+   },
+   {
+    "name": "get-library-docs",
+    "description": {
+     "zh-CN": "获取指定库的官方文档与代码示例",
+     "en": "Get official docs and code examples for a specified library"
+    },
+    "readOnly": true
+   }
+  ],
+  "upstreamUrl": "https://context7.com"
+ },
+ "modifications": [],
+ "license": {
+  "spdx": "MIT",
+  "files": [
+   "LICENSE"
+  ]
+ },
+ "compatibility": {
+  "status": "verified",
+  "teloa": ">=0.2.0-alpha.6",
+  "dsh": "0.1.7-rc.1",
+  "conditions": [
+   {
+    "zh-CN": "数据经由 context7.com 平台传输；中国大陆访问 context7.com 可用性未验证",
+    "en": "Data passes through context7.com; availability from mainland China is unverified"
+   }
+  ]
+ },
+ "requires": {
+  "tools": [],
+  "network": true,
+  "runtimes": []
+ },
+ "review": {
+  "status": "approved",
+  "reviewedAt": "2026-09-25",
+  "reviewer": "Teloa"
+ }
+}

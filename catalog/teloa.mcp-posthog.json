@@ -1,0 +1,37 @@
+{
+ "format": "teloa.market-catalog-entry/v1",
+ "id": "teloa.mcp-posthog",
+ "kind": "connector",
+ "delivery": "managed",
+ "version": "1.0.0",
+ "upstream": null,
+ "connector": {
+  "serverName": "posthog",
+  "title": {"zh-CN": "PostHog（产品分析）", "en": "PostHog (Product Analytics)"},
+  "summary": {"zh-CN": "PostHog 官方远程 MCP，通过 Personal API Key 查询漏斗、留存和用户行为数据。数据经由 posthog.com 传输。", "en": "PostHog official remote MCP for querying funnels, retention and user behavior data via Personal API Key. Data passes through posthog.com."},
+  "categories": ["分析", "产品"],
+  "auth": {
+   "kind": "secret",
+   "vars": [
+    {"target": "bearer", "label": {"zh-CN": "PostHog Personal API Key（在账户设置中生成）", "en": "PostHog Personal API Key (generate in account settings)"}, "required": true}
+   ]
+  },
+  "recipe": {
+   "transport": "streamable-http",
+   "url": "https://mcp.posthog.com/mcp"
+  },
+  "tools": [
+   {"name": "query_insight", "description": {"zh-CN": "查询分析数据（漏斗、趋势等）", "en": "Query analytics data (funnels, trends, etc.)"}, "readOnly": true},
+   {"name": "list_projects", "description": {"zh-CN": "列出 PostHog 项目", "en": "List PostHog projects"}, "readOnly": true},
+   {"name": "get_events", "description": {"zh-CN": "获取事件数据", "en": "Get event data"}, "readOnly": true}
+  ],
+  "upstreamUrl": "https://posthog.com/docs/mcp"
+ },
+ "modifications": [],
+ "license": {"spdx": "MIT", "files": ["LICENSE"]},
+ "compatibility": {"status": "needs-configuration", "teloa": ">=0.2.0-alpha.6", "dsh": "0.1.7-rc.1", "conditions": [
+  {"zh-CN": "数据经由 posthog.com 平台传输", "en": "Data passes through posthog.com"}
+ ]},
+ "requires": {"tools": [], "network": true, "runtimes": []},
+ "review": {"status": "approved", "reviewedAt": "2026-09-25", "reviewer": "Teloa"}
+}

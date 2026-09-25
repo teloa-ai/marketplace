@@ -1,0 +1,29 @@
+{
+ "format": "teloa.market-catalog-entry/v1",
+ "id": "teloa.mcp-notion-remote",
+ "kind": "connector",
+ "delivery": "managed",
+ "version": "1.0.0",
+ "upstream": null,
+ "connector": {
+  "serverName": "notion_remote",
+  "title": {"zh-CN": "Notion 远程（OAuth，下一版本支持）", "en": "Notion Remote (OAuth, Supported in Next Version)"},
+  "summary": {"zh-CN": "Notion 官方推荐的远程 MCP 模式，仅支持 OAuth 认证。DSH rc.1 尚不支持 MCP OAuth，下一版本将支持。如需现在访问 Notion，请使用本地 Bearer Token 条目（teloa.mcp-notion）。", "en": "Notion's officially recommended remote MCP mode, which requires OAuth authentication only. DSH rc.1 does not support MCP OAuth; support is coming in the next version. To access Notion now, use the local Bearer Token entry (teloa.mcp-notion) instead."},
+  "categories": ["知识管理", "协作"],
+  "auth": {"kind": "oauth", "reason": "需要 OAuth 授权，Teloa 下一版本支持"},
+  "recipe": {
+   "transport": "streamable-http",
+   "url": "https://mcp.notion.com/mcp"
+  },
+  "tools": [],
+  "upstreamUrl": "https://developers.notion.com/docs/mcp"
+ },
+ "modifications": [],
+ "license": {"spdx": "MIT", "files": ["LICENSE"]},
+ "compatibility": {"status": "unsupported", "teloa": ">=0.2.0-alpha.6", "dsh": "0.1.7-rc.1", "conditions": [
+  {"zh-CN": "需要 OAuth 授权，Teloa 下一版本支持", "en": "Requires OAuth authorization; supported in Teloa's next version"},
+  {"zh-CN": "替代方案：使用 teloa.mcp-notion（本地 Bearer Token 模式）", "en": "Alternative: use teloa.mcp-notion (local Bearer Token mode)"}
+ ]},
+ "requires": {"tools": [], "network": true, "runtimes": []},
+ "review": {"status": "approved", "reviewedAt": "2026-09-25", "reviewer": "Teloa"}
+}

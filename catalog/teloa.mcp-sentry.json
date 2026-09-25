@@ -1,0 +1,37 @@
+{
+ "format": "teloa.market-catalog-entry/v1",
+ "id": "teloa.mcp-sentry",
+ "kind": "connector",
+ "delivery": "managed",
+ "version": "1.0.0",
+ "upstream": null,
+ "connector": {
+  "serverName": "sentry",
+  "title": {"zh-CN": "Sentry（错误监控）", "en": "Sentry (Error Monitoring)"},
+  "summary": {"zh-CN": "Sentry 官方远程 MCP，通过 Auth Token 查询项目 Issue、事件和性能数据。需生成 Sentry Auth Token。数据经由 sentry.io 传输。", "en": "Sentry official remote MCP for querying project issues, events and performance data via Auth Token. Data passes through sentry.io."},
+  "categories": ["监控", "DevOps"],
+  "auth": {
+   "kind": "secret",
+   "vars": [
+    {"target": "bearer", "label": {"zh-CN": "Sentry Auth Token（在账户设置中生成）", "en": "Sentry Auth Token (generate in account settings)"}, "required": true}
+   ]
+  },
+  "recipe": {
+   "transport": "streamable-http",
+   "url": "https://mcp.sentry.dev/mcp"
+  },
+  "tools": [
+   {"name": "get_issues", "description": {"zh-CN": "获取项目 Issue 列表", "en": "Get project issues"}, "readOnly": true},
+   {"name": "get_issue_details", "description": {"zh-CN": "获取 Issue 详情与堆栈信息", "en": "Get issue details and stack trace"}, "readOnly": true},
+   {"name": "get_projects", "description": {"zh-CN": "列出可访问的项目", "en": "List accessible projects"}, "readOnly": true}
+  ],
+  "upstreamUrl": "https://docs.sentry.io/product/sentry-basics/integrations/mcp/"
+ },
+ "modifications": [],
+ "license": {"spdx": "MIT", "files": ["LICENSE"]},
+ "compatibility": {"status": "needs-configuration", "teloa": ">=0.2.0-alpha.6", "dsh": "0.1.7-rc.1", "conditions": [
+  {"zh-CN": "数据经由 sentry.io 平台传输", "en": "Data passes through sentry.io"}
+ ]},
+ "requires": {"tools": [], "network": true, "runtimes": []},
+ "review": {"status": "approved", "reviewedAt": "2026-09-25", "reviewer": "Teloa"}
+}

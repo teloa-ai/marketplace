@@ -1,0 +1,39 @@
+{
+ "format": "teloa.market-catalog-entry/v1",
+ "id": "teloa.mcp-stripe",
+ "kind": "connector",
+ "delivery": "managed",
+ "version": "1.0.0",
+ "upstream": null,
+ "connector": {
+  "serverName": "stripe",
+  "title": {"zh-CN": "Stripe（支付）", "en": "Stripe (Payments)"},
+  "summary": {"zh-CN": "Stripe 官方远程 MCP，通过受限 API 密钥查询客户、支付、订阅等数据。建议使用权限最小化的受限密钥。数据经由 stripe.com 传输。", "en": "Stripe official remote MCP for querying customers, payments and subscriptions via restricted API key. Use a least-privilege restricted key. Data passes through stripe.com."},
+  "categories": ["支付", "电商"],
+  "auth": {
+   "kind": "secret",
+   "vars": [
+    {"target": "bearer", "label": {"zh-CN": "Stripe 受限 API 密钥（建议使用只读受限密钥）", "en": "Stripe restricted API key (recommend read-only restricted key)"}, "required": true}
+   ]
+  },
+  "recipe": {
+   "transport": "streamable-http",
+   "url": "https://mcp.stripe.com"
+  },
+  "tools": [
+   {"name": "list_customers", "description": {"zh-CN": "列出 Stripe 客户", "en": "List Stripe customers"}, "readOnly": true},
+   {"name": "get_payment_intent", "description": {"zh-CN": "获取支付意向详情", "en": "Get payment intent details"}, "readOnly": true},
+   {"name": "list_subscriptions", "description": {"zh-CN": "列出订阅信息", "en": "List subscriptions"}, "readOnly": true},
+   {"name": "create_customer", "description": {"zh-CN": "创建客户", "en": "Create a customer"}, "readOnly": false},
+   {"name": "create_payment_link", "description": {"zh-CN": "创建支付链接", "en": "Create a payment link"}, "readOnly": false}
+  ],
+  "upstreamUrl": "https://docs.stripe.com/building-with-llms/mcp"
+ },
+ "modifications": [],
+ "license": {"spdx": "MIT", "files": ["LICENSE"]},
+ "compatibility": {"status": "needs-configuration", "teloa": ">=0.2.0-alpha.6", "dsh": "0.1.7-rc.1", "conditions": [
+  {"zh-CN": "数据经由 stripe.com 平台传输", "en": "Data passes through stripe.com"}
+ ]},
+ "requires": {"tools": [], "network": true, "runtimes": []},
+ "review": {"status": "approved", "reviewedAt": "2026-09-25", "reviewer": "Teloa"}
+}

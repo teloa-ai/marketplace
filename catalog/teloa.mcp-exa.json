@@ -1,0 +1,38 @@
+{
+ "format": "teloa.market-catalog-entry/v1",
+ "id": "teloa.mcp-exa",
+ "kind": "connector",
+ "delivery": "managed",
+ "version": "1.0.0",
+ "upstream": null,
+ "connector": {
+  "serverName": "exa",
+  "title": {"zh-CN": "Exa 网络搜索", "en": "Exa Web Search"},
+  "summary": {"zh-CN": "Exa AI 官方 MCP 服务，提供语义网络搜索、网页抓取与 AI Agent 执行能力。需要 EXA_API_KEY。", "en": "Exa AI's official MCP service providing semantic web search, web crawling, and AI agent execution. Requires EXA_API_KEY."},
+  "categories": ["网络", "搜索"],
+  "auth": {"kind": "secret", "vars": [
+   {"target": "env", "envVarName": "EXA_API_KEY", "label": {"zh-CN": "Exa API Key（从 exa.ai 控制台获取）", "en": "Exa API Key (get from exa.ai console)"}, "required": true}
+  ]},
+  "recipe": {
+   "transport": "stdio",
+   "package": "exa-mcp-server",
+   "version": "3.4.1",
+   "integrity": "sha512-X6g4J9eTEShMgBZ7WsUFDqe/GdEi2S2vxGPRjuMx0VGpivvjvQpC15C4sQUJsPLfAzf5fFNxvdLqAdFj6P/pQ==",
+   "bin": "dist/stdio.cjs",
+   "args": []
+  },
+  "tools": [
+   {"name": "web_search_exa", "description": {"zh-CN": "使用 Exa 进行语义网络搜索", "en": "Perform semantic web search using Exa"}, "readOnly": true},
+   {"name": "web_fetch_exa", "description": {"zh-CN": "抓取并提取指定 URL 的网页内容", "en": "Crawl and extract content from a specified URL"}, "readOnly": true},
+   {"name": "agent_run", "description": {"zh-CN": "运行 Exa AI Agent 执行复杂任务", "en": "Run Exa AI Agent for complex tasks"}, "readOnly": false}
+  ],
+  "upstreamUrl": "https://github.com/exa-labs/exa-mcp-server"
+ },
+ "modifications": [],
+ "license": {"spdx": "MIT", "files": ["LICENSE"]},
+ "compatibility": {"status": "needs-configuration", "teloa": ">=0.2.0-alpha.6", "dsh": "0.1.7-rc.1", "conditions": [
+  {"zh-CN": "需要 Exa API Key", "en": "Requires Exa API Key"}
+ ]},
+ "requires": {"tools": [], "network": true, "runtimes": ["Node.js 18+"]},
+ "review": {"status": "approved", "reviewedAt": "2026-09-25", "reviewer": "Teloa"}
+}

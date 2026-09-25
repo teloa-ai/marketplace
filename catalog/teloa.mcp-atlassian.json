@@ -1,0 +1,115 @@
+{
+ "format": "teloa.market-catalog-entry/v1",
+ "id": "teloa.mcp-atlassian",
+ "kind": "connector",
+ "delivery": "managed",
+ "version": "1.0.0",
+ "upstream": null,
+ "connector": {
+  "serverName": "atlassian",
+  "title": {
+   "zh-CN": "Atlassian（Jira & Confluence）",
+   "en": "Atlassian (Jira & Confluence)"
+  },
+  "summary": {
+   "zh-CN": "Atlassian 官方 MCP，通过 API Token 连接 Jira 和 Confluence，支持查询 Issue、搜索文档。需要 Atlassian 组织管理员生成 API Token。数据经由 atlassian.com 传输。",
+   "en": "Atlassian official MCP connecting Jira and Confluence via API Token. Requires org admin to generate an API Token. Data passes through atlassian.com."
+  },
+  "categories": [
+   "项目管理",
+   "文档"
+  ],
+  "auth": {
+   "kind": "secret",
+   "vars": [
+    {
+     "target": "bearer",
+     "label": {
+      "zh-CN": "Atlassian API Token（需组织管理员生成）",
+      "en": "Atlassian API Token (requires org admin)"
+     },
+     "required": true
+    }
+   ]
+  },
+  "recipe": {
+   "transport": "streamable-http",
+   "url": "https://mcp.atlassian.com/v1/mcp"
+  },
+  "tools": [
+   {
+    "name": "jira_get_issue",
+    "description": {
+     "zh-CN": "获取 Jira Issue 详情",
+     "en": "Get Jira issue details"
+    },
+    "readOnly": true
+   },
+   {
+    "name": "jira_search_issues",
+    "description": {
+     "zh-CN": "搜索 Jira Issue",
+     "en": "Search Jira issues"
+    },
+    "readOnly": true
+   },
+   {
+    "name": "jira_create_issue",
+    "description": {
+     "zh-CN": "创建 Jira Issue",
+     "en": "Create a Jira issue"
+    },
+    "readOnly": false
+   },
+   {
+    "name": "confluence_search",
+    "description": {
+     "zh-CN": "搜索 Confluence 内容",
+     "en": "Search Confluence content"
+    },
+    "readOnly": true
+   },
+   {
+    "name": "confluence_get_page",
+    "description": {
+     "zh-CN": "获取 Confluence 页面内容",
+     "en": "Get Confluence page content"
+    },
+    "readOnly": true
+   }
+  ],
+  "upstreamUrl": "https://developer.atlassian.com/cloud/jira/platform/mcp/"
+ },
+ "modifications": [],
+ "license": {
+  "spdx": "Apache-2.0",
+  "files": [
+   "LICENSE"
+  ]
+ },
+ "compatibility": {
+  "status": "needs-configuration",
+  "teloa": ">=0.2.0-alpha.6",
+  "dsh": "0.1.7-rc.1",
+  "conditions": [
+   {
+    "zh-CN": "需要 Atlassian 组织管理员账户生成 API Token",
+    "en": "Requires Atlassian org admin account to generate API Token"
+   },
+   {
+    "zh-CN": "数据经由 atlassian.com 平台传输",
+    "en": "Data passes through atlassian.com"
+   }
+  ]
+ },
+ "requires": {
+  "tools": [],
+  "network": true,
+  "runtimes": []
+ },
+ "review": {
+  "status": "approved",
+  "reviewedAt": "2026-09-25",
+  "reviewer": "Teloa"
+ }
+}
