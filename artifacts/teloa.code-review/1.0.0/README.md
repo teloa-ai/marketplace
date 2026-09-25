@@ -62,10 +62,10 @@ The following connectors and skills are **optional**, not declared in this packa
 
 ## 已验证范围 / Verified scope
 
-- 尚未真实模型验收：三个任务模板（PR 评审、发布说明、Issue 分诊）的合成样例与期望产出见 `examples/`，兼容状态为 `content-only`，待隔离宿主真实模型验收后更新；安全修复验证与安全设计评审两项技能沿用 teloa.appsec 的方法，本方案未单独提供样例
+- 2026-09-26 已用真实模型（DeepSeek deepseek-flash，隔离宿主）验收：从市场添加、加载到业务、岗位上岗后，三个任务模板（PR 评审、发布说明、Issue 分诊）按 `examples/*-input.md` 建任务，产出结构与 `*-expected.md` 一致、每条意见指向文件行号或 PR/Issue 编号，未在 PR 或 Issue 上发表、未批准合并、未改标签；PR 评审可能比样例更严（如把鉴权缺失列为阻断），结论仍需负责人确认；兼容状态已改为 `verified`，验收记录见 `docs/superpowers/reviews/2026-09-26-第二批方案真实模型验收.md`；安全修复验证与安全设计评审两项技能沿用 teloa.appsec 的方法，本方案未单独提供样例
 - 连接器与技能搭配未做端到端验收
 
-- Not yet verified with a real model: synthetic samples and expected outputs for the three task templates (PR review, release notes, issue triage) are in `examples/`; compatibility is `content-only` until real-model acceptance on an isolated host; the security fix verification and design review skills reuse the teloa.appsec methods and have no separate samples in this package
+- Verified with a real model (DeepSeek deepseek-flash on an isolated host) on 2026-09-26: after adding from the market, loading into a business and taking the role, all three task templates (PR review, release notes, issue triage) were run from `examples/*-input.md`; the output matched the structure of `*-expected.md` with every comment traced to a file line or PR/issue number, nothing was posted, approved, merged or relabelled; PR reviews can be stricter than the sample (e.g. missing auth listed as blocking), so the owner still confirms the verdict; compatibility is now `verified` (record: `docs/superpowers/reviews/2026-09-26-第二批方案真实模型验收.md`); the security fix verification and design review skills reuse the teloa.appsec methods and have no separate samples in this package
 - Connector and skill pairings have not been verified end to end
 
 ---

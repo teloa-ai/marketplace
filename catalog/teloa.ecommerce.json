@@ -86,13 +86,13 @@
     ]
   },
   "compatibility": {
-    "status": "content-only",
+    "status": "verified",
     "teloa": ">=0.2.0-alpha.6",
     "dsh": "0.1.7-rc.1",
     "conditions": [
       {
-        "zh-CN": "尚未真实模型验收；合成样例与期望产出见方案包 examples 目录。",
-        "en": "Not yet verified with a real model; synthetic samples and expected outputs are in the package examples folder."
+        "zh-CN": "2026-09-26 已用真实模型（DeepSeek deepseek-flash，隔离宿主）验证：从市场添加、加载到业务、电商运营协作员上岗后，四个任务模板（商品文案、活动日历、销量核对、评价分析）按合成样例产出结构与期望一致，无依据表述已删除，冲突与差额均附算式；未报名、未改价、未回复买家。文案两轮都出现「单手就能开」这类事实表外的使用描述，发布前需逐句核对事实编号。",
+        "en": "Verified with a real model (DeepSeek deepseek-flash, isolated host) on 2026-09-26: added from the market, loaded into a business, e-commerce collaborator on duty; all four templates (product copy, campaign calendar, sales verification, review analysis) matched the expected structure, unsupported claims removed and conflicts shown with arithmetic; nothing registered, repriced or replied to. Copy added phrases not in the fact sheet in both runs; check each line before publishing."
       },
       {
         "zh-CN": "搜索与浏览器连接为可选项，本版不内置。",

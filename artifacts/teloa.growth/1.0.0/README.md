@@ -62,10 +62,10 @@ The following connectors and skills are **optional**, not declared in this packa
 
 ## 已验证范围 / Verified scope
 
-- 尚未真实模型验收：四个任务模板（指标口径核对、实验结论整理、用户反馈归类、增长周报）的合成样例与期望产出见 `examples/`，兼容状态为 `content-only`，待隔离宿主真实模型验收后更新
+- 2026-09-26 真实模型（DeepSeek deepseek-flash，隔离宿主）验收未全部通过，兼容状态保持 `content-only`：指标口径核对、实验结论整理、增长周报三个模板产出结构与 `*-expected.md` 一致、数字可复算并指向来源；用户反馈归类两轮都出现计数错误（编出不存在的反馈编号、漏归或错归条目、去重数前后不一），反馈条数与占比须人工复核；验收记录见 `docs/superpowers/reviews/2026-09-26-第二批方案真实模型验收.md`
 - 连接器搭配（PostHog、Exa）未做端到端验收
 
-- Not yet verified with a real model: synthetic samples and expected outputs for the four task templates (metric definition check, experiment readout, feedback clustering, growth weekly report) are in `examples/`; compatibility is `content-only` until real-model acceptance on an isolated host
+- Real-model acceptance (DeepSeek deepseek-flash on an isolated host) on 2026-09-26 did not fully pass, so compatibility stays `content-only`: metric definition check, experiment readout and growth weekly report matched the structure of `*-expected.md` with recomputable, sourced numbers; feedback clustering made counting errors in both runs (an invented feedback ID, items dropped or misassigned, inconsistent duplicate counts), so feedback counts and shares need manual review (record: `docs/superpowers/reviews/2026-09-26-第二批方案真实模型验收.md`)
 - Connector pairings (PostHog, Exa) have not been verified end to end
 
 ---

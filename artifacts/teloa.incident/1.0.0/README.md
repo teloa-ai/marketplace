@@ -60,10 +60,10 @@ The following connectors are **optional**, not declared in this package, and mus
 
 ## 已验证范围 / Verified scope
 
-- 尚未真实模型验收：三个任务模板（分级初判含变更说明、时间线与无责复盘、值班交接）的合成样例与期望产出见 `examples/`，兼容状态为 `content-only`，待隔离宿主真实模型验收后更新
+- 2026-09-26 已用真实模型（DeepSeek deepseek-flash，隔离宿主）验收：从市场添加、加载到业务、岗位上岗后，三个任务模板（分级初判含变更说明、时间线与无责复盘、值班交接）按 `examples/*-input.md` 建任务，产出结构与 `*-expected.md` 一致、每个时间与结论指向来源，回滚、重启、对外公告与等级裁定只列待确认，个人归责表述未写入原因分析；兼容状态已改为 `verified`，验收记录见 `docs/superpowers/reviews/2026-09-26-第二批方案真实模型验收.md`
 - 连接器搭配（Sentry、PagerDuty、GitHub）未做端到端验收
 
-- Not yet verified with a real model: synthetic samples and expected outputs for the three task templates (triage with change notes, timeline and blameless postmortem, on-call handover) are in `examples/`; compatibility is `content-only` until real-model acceptance on an isolated host
+- Verified with a real model (DeepSeek deepseek-flash on an isolated host) on 2026-09-26: after adding from the market, loading into a business and taking the role, all three task templates (triage with change notes, timeline and blameless postmortem, on-call handover) were run from `examples/*-input.md`; the output matched the structure of `*-expected.md` with every time and conclusion traced to sources, rollbacks, restarts, announcements and the final level were left as open items, and blame statements stayed out of the cause analysis; compatibility is now `verified` (record: `docs/superpowers/reviews/2026-09-26-第二批方案真实模型验收.md`)
 - Connector pairings (Sentry, PagerDuty, GitHub) have not been verified end to end
 
 ---

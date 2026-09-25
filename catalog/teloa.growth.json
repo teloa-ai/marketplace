@@ -87,8 +87,8 @@
     "dsh": "0.1.7-rc.1",
     "conditions": [
       {
-        "zh-CN": "尚未真实模型验收；合成样例与期望产出见方案包 examples 目录。",
-        "en": "Not yet verified with a real model; synthetic samples and expected outputs are in the package examples folder."
+        "zh-CN": "2026-09-26 真实模型（DeepSeek deepseek-flash，隔离宿主）验收未全部通过，保持 content-only：指标口径核对、实验结论整理、增长周报三个模板产出结构与期望一致、数字可复算；用户反馈归类两轮都出现计数错误（编出不存在的编号、漏归或错归条目、去重数前后不一），反馈条数与占比须人工复核。",
+        "en": "Real-model acceptance (DeepSeek deepseek-flash, isolated host) on 2026-09-26 did not fully pass, so this stays content-only: metric definition check, experiment readout and weekly report matched the expected structure with recomputable numbers; feedback clustering miscounted in both runs (an invented ID, dropped or misassigned items, inconsistent duplicate counts), so feedback counts and shares need manual review."
       },
       {
         "zh-CN": "产品分析与搜索连接为可选项，本版不内置。",

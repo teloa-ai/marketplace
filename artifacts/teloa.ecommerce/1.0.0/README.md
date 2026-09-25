@@ -64,10 +64,10 @@ The following connectors and skills are **optional**, not declared in this packa
 
 ## 已验证范围 / Verified scope
 
-- 尚未真实模型验收：四个任务模板（商品文案、活动日历、销量核对、评价分析）的合成样例与期望产出见 `examples/`，兼容状态为 `content-only`，待隔离宿主真实模型验收后更新
+- 2026-09-26 已用真实模型（DeepSeek deepseek-flash，隔离宿主）验收：从市场添加、加载到业务、岗位上岗后，四个任务模板（商品文案、活动日历、销量核对、评价分析）按 `examples/*-input.md` 建任务，产出结构与 `*-expected.md` 一致、数字与表述指向事实编号或表格位置，未报名、未改价、未回复买家；文案两轮都出现「单手就能开」这类事实表外的使用描述，发布前需逐句核对事实编号；兼容状态已改为 `verified`，验收记录见 `docs/superpowers/reviews/2026-09-26-第二批方案真实模型验收.md`
 - 连接器搭配（Exa、Playwright）未做端到端验收
 
-- Not yet verified with a real model: synthetic samples and expected outputs for the four task templates (product copy, campaign calendar, sales verification, review analysis) are in `examples/`; compatibility is `content-only` until real-model acceptance on an isolated host
+- Verified with a real model (DeepSeek deepseek-flash on an isolated host) on 2026-09-26: after adding from the market, loading into a business and taking the role, all four task templates (product copy, campaign calendar, sales verification, review analysis) were run from `examples/*-input.md`; the output matched the structure of `*-expected.md` with numbers and claims traced to fact IDs or table cells, nothing was registered, repriced or replied to; in both runs the copy added usage phrases not in the fact sheet (such as one-handed opening), so check every line against fact IDs before publishing; compatibility is now `verified` (record: `docs/superpowers/reviews/2026-09-26-第二批方案真实模型验收.md`)
 - Connector pairings (Exa, Playwright) have not been verified end to end
 
 ---
