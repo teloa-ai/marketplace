@@ -25,6 +25,7 @@
     },
     "auth": {
       "kind": "oauth",
+      "supported": false,
       "reason": "Composio 远程端点实测时返回 HTTP 404（mcp.composio.dev 重定向至无效路径）。在官方确认可用端点格式前，该连接器标记为不支持。"
     },
     "recipe": {
