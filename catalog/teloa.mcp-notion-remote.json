@@ -21,13 +21,13 @@
       "en": "Notion Remote (OAuth)"
     },
     "summary": {
-      "zh-CN": "Notion 官方推荐的远程 MCP 服务，可搜索与读取页面和数据库、创建与更新页面、查询数据源、读写评论。由宿主以 OAuth（动态客户端注册 + PKCE）授权，令牌自动刷新。只用 Notion 集成令牌时请改用本地条目（teloa.mcp-notion）。",
-      "en": "Notion's officially recommended remote MCP service for searching and reading pages and databases, creating and updating pages, querying data sources, and reading or writing comments. Authorized by the host via OAuth (dynamic client registration + PKCE) with automatic token refresh. To use a Notion integration token instead, use the local entry (teloa.mcp-notion)."
+      "zh-CN": "Notion 官方推荐的远程 MCP 服务，可搜索与读取页面和数据库、创建与更新页面、查询数据源、读写评论。OAuth 授权待技术探针实测通过后开放；现阶段只用 Notion 集成令牌时请改用本地条目（teloa.mcp-notion）。",
+      "en": "Notion's officially recommended remote MCP service for searching and reading pages and databases, creating and updating pages, querying data sources, and reading or writing comments. OAuth authorization opens after the technical probe passes; for now, to use a Notion integration token, use the local entry (teloa.mcp-notion)."
     },
     "auth": {
       "kind": "oauth",
-      "supported": true,
-      "scopes": []
+      "supported": false,
+      "reason": "OAuth 授权待技术探针实测（DCR、PKCE 与本机回环回调）通过后开放"
     },
     "recipe": {
       "transport": "streamable-http",
@@ -141,13 +141,13 @@
     ]
   },
   "compatibility": {
-    "status": "needs-configuration",
+    "status": "unsupported",
     "teloa": ">=0.2.0-alpha.6",
     "dsh": "0.1.7-rc.1",
     "conditions": [
       {
-        "zh-CN": "需在 市场 → 连接 页由本人在浏览器中完成 OAuth 授权；服务器部署需在配置文件设置 oauth.publicCallbackUrl",
-        "en": "The owner must complete OAuth authorization in a browser from Market → Connections; server deployments must set oauth.publicCallbackUrl in the config file"
+        "zh-CN": "OAuth 授权待技术探针实测（DCR、PKCE 与本机回环回调）通过后开放；届时需在 市场 → 连接 页由本人在浏览器中完成授权",
+        "en": "OAuth authorization opens after the technical probe (DCR, PKCE and the loopback callback) passes; the owner will then authorize in a browser from Market → Connections"
       },
       {
         "zh-CN": "官方文档确认支持动态客户端注册（token_endpoint_auth_method none）与 PKCE S256；本机回环回调（127.0.0.1）尚未实测",

@@ -21,8 +21,8 @@
       "en": "Supabase Remote (OAuth)"
     },
     "summary": {
-      "zh-CN": "Supabase 官方托管远程 MCP 服务，可查看项目与数据表、执行 SQL、查看日志与安全建议、管理边缘函数。由宿主以 OAuth（动态客户端注册 + PKCE）授权，令牌自动刷新，不需要填写访问令牌。",
-      "en": "Supabase's official hosted remote MCP service for browsing projects and tables, running SQL, reading logs and advisors, and managing Edge Functions. Authorized by the host via OAuth (dynamic client registration + PKCE) with automatic token refresh; no access token needs to be entered."
+      "zh-CN": "Supabase 官方托管远程 MCP 服务，默认以只读模式（read_only=true）连接：可查看项目与数据表、以只读数据库用户执行查询、查看日志与安全建议、查看边缘函数。由宿主以 OAuth（动态客户端注册 + PKCE）授权，令牌自动刷新，不需要填写访问令牌。",
+      "en": "Supabase's official hosted remote MCP service, connected in read-only mode (read_only=true) by default: browse projects and tables, run queries as a read-only database user, read logs and advisors, and view Edge Functions. Authorized by the host via OAuth (dynamic client registration + PKCE) with automatic token refresh; no access token needs to be entered."
     },
     "auth": {
       "kind": "oauth",
@@ -31,7 +31,7 @@
     },
     "recipe": {
       "transport": "streamable-http",
-      "url": "https://mcp.supabase.com/mcp"
+      "url": "https://mcp.supabase.com/mcp?read_only=true"
     },
     "tools": [
       {
@@ -202,12 +202,12 @@
         "en": "Official docs confirm the hosted server uses dynamic client registration by default; the loopback callback (127.0.0.1) has not been tested yet"
       },
       {
-        "zh-CN": "官方未列出 scope 名称（现阶段需授予全部权限）：授权请求不指定 scope，由 Supabase 按默认授予",
-        "en": "The official docs do not list scope names (all scopes are currently required): the authorization request specifies no scope and Supabase grants its default"
+        "zh-CN": "全权限风险：官方未列出 scope 名称，现阶段授权即授予全部权限（含写入）；授权请求不指定 scope。配方默认带 read_only=true（官方参数：以只读 Postgres 用户执行所有查询），只读仅由服务端参数保证，令牌本身仍具全部权限",
+        "en": "Full-permission risk: the official docs list no scope names and authorization currently grants all scopes (including write); the request specifies no scope. The recipe defaults to read_only=true (official parameter: all queries run as a read-only Postgres user); read-only is enforced only by this server parameter and the token itself still carries full permissions"
       },
       {
-        "zh-CN": "建议只连接非生产项目；写操作（执行 SQL、迁移、部署函数）按岗位审批执行",
-        "en": "Prefer non-production projects; write tools (SQL, migrations, function deploys) run under role approval"
+        "zh-CN": "建议只连接非生产项目；只读模式下写操作工具（迁移、部署函数）不可用，需要写入时应另行评估",
+        "en": "Prefer non-production projects; write tools (migrations, function deploys) are unavailable in read-only mode, and enabling writes needs a separate review"
       }
     ]
   },
