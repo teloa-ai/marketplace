@@ -12,15 +12,15 @@ A Teloa official solution for metric definition checks, experiment readouts, use
 
 - **指标口径核对**：按指标词典逐项抄录定义，用原始计数复算仪表盘数字，差异按「报告值 − 复算值」带符号写出并附算式；并列跨来源口径冲突、单位与时间窗口问题、缺失口径；不裁定哪种口径正确
 - **实验结论整理**：抄录实验设计，核对周期、样本量与分流比例，复算各组主指标与护栏指标，逐条对照预设决策规则，结论只写「符合 / 不符合 / 无法判定预设放量条件」；显著性只转录分析平台给出的值，不建议全量或回滚
-- **用户反馈归类**：去重后逐条标注模块、类型、情绪与严重程度，归并主题并统计条数与占比（合计等于有效条数），附脱敏原文摘录；安全、越权、数据泄露等单列「需立即转交」
-- **增长周报**：核心指标表（本周、上周、变化、口径来源；计数写百分比变化，比率写百分点差，口径不一致写「不可比」），实验进展、反馈要点、本周动作与结果、下周计划与需决策事项；原因只取材料原文
+- **用户反馈归类**：先为每条原始反馈写一行标注（模块、类型、情绪、严重程度、主题、是否重复及指向），再只由标注表推出去重数、有效条数与主题条数占比（合计等于有效条数、逐项可对账），附脱敏原文摘录；安全、越权、数据泄露等单列「需立即转交」
+- **增长周报**：核心指标表（本周、上周、变化、口径来源；计数写百分比变化，比率写百分点差，两周分母定义不同才写「不可比」），实验进展、反馈要点、本周动作与结果、下周计划与需决策事项；原因只取材料原文
 
 After you upload files, the product ops analyst can:
 
 - **Metric definition check**: copy each definition from the metric dictionary, recompute dashboard figures from raw counts, and write signed differences as "reported − recomputed" with formulas; list cross-source definition conflicts, unit and time-window issues and missing definitions side by side, without ruling which definition is correct
 - **Experiment readout**: copy the experiment design, check duration, sample size and split ratio, recompute primary and guardrail metrics per group, and check each pre-registered decision rule; the verdict is only "meets / does not meet / cannot determine the pre-set rollout conditions"; significance is transcribed from the analytics platform, and it never recommends shipping or rolling back
-- **User feedback clustering**: after de-duplication, tag each item by module, type, sentiment and severity, group into themes with counts and shares (summing to the valid count), and quote anonymized excerpts; security, unauthorized access and data leak reports are listed separately for immediate hand-off
-- **Growth weekly report**: a core metrics table (this week, last week, change, definition source; counts as percentage change, rates as percentage points, "not comparable" when definitions differ), plus experiment progress, feedback highlights, actions and results, next week's plan and open decisions; causes come only from the materials
+- **User feedback clustering**: first write one tagging row per raw item (module, type, sentiment, severity, theme, and any duplicate pointer), then derive duplicate, valid and per-theme counts and shares only from that table (summing to the valid count and reconcilable item by item), and quote anonymized excerpts; security, unauthorized access and data leak reports are listed separately for immediate hand-off
+- **Growth weekly report**: a core metrics table (this week, last week, change, definition source; counts as percentage change, rates as percentage points, "not comparable" only when the two weeks' denominators differ), plus experiment progress, feedback highlights, actions and results, next week's plan and open decisions; causes come only from the materials
 
 ---
 
@@ -62,10 +62,10 @@ The following connectors and skills are **optional**, not declared in this packa
 
 ## 已验证范围 / Verified scope
 
-- 2026-09-26 真实模型（DeepSeek deepseek-flash，隔离宿主）验收未全部通过，兼容状态保持 `content-only`：指标口径核对、实验结论整理、增长周报三个模板产出结构与 `*-expected.md` 一致、数字可复算并指向来源；用户反馈归类两轮都出现计数错误（编出不存在的反馈编号、漏归或错归条目、去重数前后不一），反馈条数与占比须人工复核；验收记录见 `docs/superpowers/reviews/2026-09-26-第二批方案真实模型验收.md`
+- 2026-09-26 已用真实模型（DeepSeek deepseek-flash，隔离宿主）验收：从市场添加、加载到业务、岗位上岗后，四个任务模板（指标口径核对、实验结论整理、用户反馈归类、增长周报）按 `examples/*-input.md` 建任务各跑两轮，产出结构与 `*-expected.md` 一致、数字可复算并指向来源；反馈归类先写逐条标注表再由其推出统计，两轮去重、有效条数与主题编号均与标注表对账一致；周报激活率按两周同分母的词典口径算出 +1.5 个百分点；口径裁定、实验放量与回滚只列待确认；兼容状态已改为 `verified`，验收记录见 `docs/superpowers/reviews/2026-09-26-第二批方案真实模型验收.md`
 - 连接器搭配（PostHog、Exa）未做端到端验收
 
-- Real-model acceptance (DeepSeek deepseek-flash on an isolated host) on 2026-09-26 did not fully pass, so compatibility stays `content-only`: metric definition check, experiment readout and growth weekly report matched the structure of `*-expected.md` with recomputable, sourced numbers; feedback clustering made counting errors in both runs (an invented feedback ID, items dropped or misassigned, inconsistent duplicate counts), so feedback counts and shares need manual review (record: `docs/superpowers/reviews/2026-09-26-第二批方案真实模型验收.md`)
+- Verified with a real model (DeepSeek deepseek-flash on an isolated host) on 2026-09-26: after adding from the market, loading into a business and taking the role, all four task templates (metric definition check, experiment readout, feedback clustering, growth weekly report) were run twice from `examples/*-input.md`; the output matched the structure of `*-expected.md` with recomputable, sourced numbers; feedback clustering writes a per-item tagging table first and derives the statistics from it, and in both runs the duplicate count, valid count and theme IDs reconciled with that table; the weekly report computed activation as +1.5 percentage points from dictionary values sharing the same denominator definition in both weeks; definition rulings, rollouts and rollbacks were left as open items; compatibility is now `verified` (record: `docs/superpowers/reviews/2026-09-26-第二批方案真实模型验收.md`)
 - Connector pairings (PostHog, Exa) have not been verified end to end
 
 ---
