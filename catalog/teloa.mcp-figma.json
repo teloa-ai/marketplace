@@ -17,16 +17,18 @@
   "connector": {
     "serverName": "figma",
     "title": {
-      "zh-CN": "Figma 远程（OAuth + 白名单，下一版本支持）",
-      "en": "Figma Remote (OAuth + Allowlist, Supported in Next Version)"
+      "zh-CN": "Figma 远程（OAuth，需厂商白名单）",
+      "en": "Figma Remote (OAuth, Vendor Allowlist Required)"
     },
     "summary": {
-      "zh-CN": "Figma 官方远程 MCP 服务，需要 OAuth 认证，且仅允许 Figma 官方认可的 MCP 客户端（需申请加入白名单）。DSH rc.1 不支持 MCP OAuth，且不在允许列表中。下一版本将支持 OAuth，届时还需向 Figma 申请白名单资格。",
-      "en": "Figma's official remote MCP service requiring OAuth and restricting access to Figma-approved MCP clients only (requires applying to join an allowlist). DSH rc.1 does not support MCP OAuth and is not on the approved list. Next version will support OAuth; allowlist approval from Figma will also be needed."
+      "zh-CN": "Figma 官方远程 MCP 服务，使用 OAuth 授权，但只允许 Figma MCP Catalog 所列的客户端连接。Teloa 尚未进入该名单，获批前暂不可添加。",
+      "en": "Figma's official remote MCP service uses OAuth but only allows clients listed in the Figma MCP Catalog. Teloa is not on the list yet, so this connector cannot be added until approval."
     },
     "auth": {
       "kind": "oauth",
-      "reason": "需要 OAuth 授权，Teloa 下一版本支持"
+      "supported": true,
+      "scopes": [],
+      "requiresAllowlist": true
     },
     "recipe": {
       "transport": "streamable-http",
@@ -43,17 +45,17 @@
     ]
   },
   "compatibility": {
-    "status": "unsupported",
+    "status": "needs-configuration",
     "teloa": ">=0.2.0-alpha.6",
     "dsh": "0.1.7-rc.1",
     "conditions": [
       {
-        "zh-CN": "需要 OAuth 授权，Teloa 下一版本支持",
-        "en": "Requires OAuth authorization; supported in Teloa's next version"
+        "zh-CN": "客户端白名单：Figma 只允许 Figma MCP Catalog 所列客户端连接，Teloa 尚未获批（可通过官方等候名单申请），获批前宿主拒绝添加",
+        "en": "Client allowlist: Figma only allows clients listed in the Figma MCP Catalog; Teloa is not approved yet (apply through the official waitlist), and the host refuses to add this connector until then"
       },
       {
-        "zh-CN": "客户端白名单：DSH rc.1 不在 Figma 允许列表，需额外申请白名单资格",
-        "en": "Client allowlist: DSH rc.1 is not on Figma's approved list; additional allowlist approval required"
+        "zh-CN": "官方文档未列出 OAuth scope",
+        "en": "Official docs do not list OAuth scopes"
       }
     ]
   },
@@ -64,7 +66,7 @@
   },
   "review": {
     "status": "approved",
-    "reviewedAt": "2026-09-25",
+    "reviewedAt": "2026-09-26",
     "reviewer": "Teloa"
   }
 }

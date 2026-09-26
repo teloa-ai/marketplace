@@ -17,22 +17,120 @@
   "connector": {
     "serverName": "notion_remote",
     "title": {
-      "zh-CN": "Notion 远程（OAuth，下一版本支持）",
-      "en": "Notion Remote (OAuth, Supported in Next Version)"
+      "zh-CN": "Notion 远程（OAuth）",
+      "en": "Notion Remote (OAuth)"
     },
     "summary": {
-      "zh-CN": "Notion 官方推荐的远程 MCP 模式，仅支持 OAuth 认证。DSH rc.1 尚不支持 MCP OAuth，下一版本将支持。如需现在访问 Notion，请使用本地 Bearer Token 条目（teloa.mcp-notion）。",
-      "en": "Notion's officially recommended remote MCP mode, which requires OAuth authentication only. DSH rc.1 does not support MCP OAuth; support is coming in the next version. To access Notion now, use the local Bearer Token entry (teloa.mcp-notion) instead."
+      "zh-CN": "Notion 官方推荐的远程 MCP 服务，可搜索与读取页面和数据库、创建与更新页面、查询数据源、读写评论。OAuth 授权待技术探针实测通过后开放；现阶段只用 Notion 集成令牌时请改用本地条目（teloa.mcp-notion）。",
+      "en": "Notion's officially recommended remote MCP service for searching and reading pages and databases, creating and updating pages, querying data sources, and reading or writing comments. OAuth authorization opens after the technical probe passes; for now, to use a Notion integration token, use the local entry (teloa.mcp-notion)."
     },
     "auth": {
       "kind": "oauth",
-      "reason": "需要 OAuth 授权，Teloa 下一版本支持"
+      "supported": false,
+      "reason": "OAuth 授权待技术探针实测（DCR、PKCE 与本机回环回调）通过后开放"
     },
     "recipe": {
       "transport": "streamable-http",
       "url": "https://mcp.notion.com/mcp"
     },
-    "tools": [],
+    "tools": [
+      {
+        "name": "notion-search",
+        "description": {
+          "zh-CN": "搜索工作区",
+          "en": "Search the workspace"
+        },
+        "readOnly": true
+      },
+      {
+        "name": "notion-fetch",
+        "description": {
+          "zh-CN": "读取页面、数据库或数据源",
+          "en": "Fetch a page, database or data source"
+        },
+        "readOnly": true
+      },
+      {
+        "name": "notion-query-data-sources",
+        "description": {
+          "zh-CN": "查询数据源",
+          "en": "Query data sources"
+        },
+        "readOnly": true
+      },
+      {
+        "name": "notion-get-comments",
+        "description": {
+          "zh-CN": "读取评论",
+          "en": "Get comments"
+        },
+        "readOnly": true
+      },
+      {
+        "name": "notion-get-teams",
+        "description": {
+          "zh-CN": "列出团队空间",
+          "en": "List teamspaces"
+        },
+        "readOnly": true
+      },
+      {
+        "name": "notion-get-users",
+        "description": {
+          "zh-CN": "列出成员",
+          "en": "List members"
+        },
+        "readOnly": true
+      },
+      {
+        "name": "notion-create-pages",
+        "description": {
+          "zh-CN": "创建页面",
+          "en": "Create pages"
+        },
+        "readOnly": false
+      },
+      {
+        "name": "notion-update-page",
+        "description": {
+          "zh-CN": "更新页面",
+          "en": "Update a page"
+        },
+        "readOnly": false
+      },
+      {
+        "name": "notion-move-pages",
+        "description": {
+          "zh-CN": "移动页面",
+          "en": "Move pages"
+        },
+        "readOnly": false
+      },
+      {
+        "name": "notion-duplicate-page",
+        "description": {
+          "zh-CN": "复制页面",
+          "en": "Duplicate a page"
+        },
+        "readOnly": false
+      },
+      {
+        "name": "notion-create-database",
+        "description": {
+          "zh-CN": "创建数据库",
+          "en": "Create a database"
+        },
+        "readOnly": false
+      },
+      {
+        "name": "notion-create-comment",
+        "description": {
+          "zh-CN": "添加评论",
+          "en": "Add a comment"
+        },
+        "readOnly": false
+      }
+    ],
     "upstreamUrl": "https://developers.notion.com/docs/mcp"
   },
   "modifications": [],
@@ -48,12 +146,24 @@
     "dsh": "0.1.7-rc.1",
     "conditions": [
       {
-        "zh-CN": "需要 OAuth 授权，Teloa 下一版本支持",
-        "en": "Requires OAuth authorization; supported in Teloa's next version"
+        "zh-CN": "OAuth 授权待技术探针实测（DCR、PKCE 与本机回环回调）通过后开放；届时需在 市场 → 连接 页由本人在浏览器中完成授权",
+        "en": "OAuth authorization opens after the technical probe (DCR, PKCE and the loopback callback) passes; the owner will then authorize in a browser from Market → Connections"
       },
       {
-        "zh-CN": "替代方案：使用 teloa.mcp-notion（本地 Bearer Token 模式）",
-        "en": "Alternative: use teloa.mcp-notion (local Bearer Token mode)"
+        "zh-CN": "官方文档确认支持动态客户端注册（token_endpoint_auth_method none）与 PKCE S256；本机回环回调（127.0.0.1）尚未实测",
+        "en": "Official docs confirm dynamic client registration (token_endpoint_auth_method none) and PKCE S256; the loopback callback (127.0.0.1) has not been tested yet"
+      },
+      {
+        "zh-CN": "企业版工作区管理员可限制可连接的 MCP 客户端，新客户端可能被拦截",
+        "en": "Enterprise workspace admins can restrict which MCP clients may connect, so a new client may be blocked"
+      },
+      {
+        "zh-CN": "刷新令牌最长 180 天或连续 30 天未刷新即失效，届时需重新授权",
+        "en": "Refresh tokens expire after at most 180 days or 30 days without a refresh; re-authorization is then required"
+      },
+      {
+        "zh-CN": "替代方案：teloa.mcp-notion（本地 Bearer Token 模式）",
+        "en": "Alternative: teloa.mcp-notion (local Bearer Token mode)"
       }
     ]
   },
@@ -64,7 +174,7 @@
   },
   "review": {
     "status": "approved",
-    "reviewedAt": "2026-09-25",
+    "reviewedAt": "2026-09-26",
     "reviewer": "Teloa"
   }
 }
