@@ -88,7 +88,7 @@ order by 1
 - `pipeline`：必须带 `pipeline:{stageColumn,countColumn,durationColumn?,stages:[…]}`，`stages` 为 1–12 个去重取值。
 - `view-ref`：必须带 `viewRef`（现有视图 id），不得带 `query`。
 
-可选：`thresholds`（≤ 4 条，`{field,op:'gte'|'lte',value,tone:'good'|'warn'|'bad'}`）、`drilldown`（`{kind:'objects',objectType}` 或 `{kind:'tasks'}`）。
+可选：`thresholds`（≤ 4 条，`{field,op:'gte'|'lte',value,tone:'good'|'warn'|'bad'}`）。一期不支持 `drilldown`（点击下钻），写了会被拒收。
 配置里的列名必须是查询结果里的列名（大小写敏感，与 `as` 别名逐字一致）。
 
 ## 图表规范允许键
@@ -125,9 +125,17 @@ order by 1
 - `widgets`：1–12 个去重的组件 id；确认看板时这些组件必须都已生效。
 - `layout`：12 列网格，每个组件恰好放一次，`0≤x<12`、`1≤w≤12`、`x+w≤12`、`1≤h≤12`、`y≥0`，不得重叠。
 - `refresh`：`{kind:'every',seconds}`、`{kind:'hourly',minute}`、`{kind:'daily',time:'09:00',timezone}` 或 `{kind:'cron',expression,timezone}`，时区只能是 `Asia/Shanghai`、`Asia/Singapore`、`UTC`。一般用 600 秒或更长；短于 60 秒必须把顶层 `acknowledgeShortInterval` 设为 `true`，短于 600 秒时要提醒用户这会更频繁地占用外部额度与本机资源。
-- 可选 `filters:{timeRange:{relative}}`，`relative` 取 `last-24h` `last-7d` `last-30d` `next-7d` `next-30d` `overdue`。
+- 一期不支持 `filters`（整页时间范围），写了会被拒收；时间条件直接写进各组件的 SQL（见上文时间窗口写法）。
 
 ## 说明给用户听
 
 - 用业务语言说明每个组件看的是什么、按什么周期刷新，不要把 SQL 或声明原文贴给用户，除非用户要看。
 - 一期看板只有本人可见。
+
+## 一期已知限制
+
+- 业务范围（`scope`，也就是声明的 `domain`）是 1–64 位字母、数字、下划线或连字符组成的键，例如 `SOC`、`quality-mgmt`；中文名是范围的显示名，不能当 `scope` 用。不合规的范围在草案时就会被拒收。
+- 不支持看板 `filters`（整页时间范围）与组件 `drilldown`（点击下钻），声明里写了会被拒收。
+- `now()` 是这次刷新的时刻，不是用户打开看板的时刻：看板显示的是「更新于」那一刻的快照，时间窗口按那一刻计算。
+- 数据来源是 MCP 工具（`mcp-tool`）时一期不分页：工具一次返回的条数超过映射声明的 `pageSize` 会报错，请在工具参数里收窄范围或调大 `pageSize`。
+- SQL 试跑最多返回 50 行；返回里 `truncated` 为 `true` 时说明实际结果更多，`totalRows` 是截断前的行数。
