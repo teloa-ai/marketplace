@@ -3,7 +3,7 @@
   "id": "teloa.mcp-exa",
   "kind": "connector",
   "delivery": "managed",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "taxonomy": {
     "functions": [
       "cloud-ops",
@@ -93,7 +93,7 @@
   },
   "review": {
     "status": "approved",
-    "reviewedAt": "2026-09-25",
+    "reviewedAt": "2026-09-26",
     "reviewer": "Teloa"
   }
 }

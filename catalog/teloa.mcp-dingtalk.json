@@ -3,7 +3,7 @@
   "id": "teloa.mcp-dingtalk",
   "kind": "connector",
   "delivery": "managed",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "taxonomy": {
     "functions": [
       "communication"
@@ -135,7 +135,7 @@
   },
   "review": {
     "status": "approved",
-    "reviewedAt": "2026-09-25",
+    "reviewedAt": "2026-09-26",
     "reviewer": "Teloa"
   }
 }
