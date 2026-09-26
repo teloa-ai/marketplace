@@ -1,0 +1,495 @@
+Teloa Official Marketplace Catalog
+Copyright 2026 Teloa contributors
+
+Catalog metadata, documentation and Teloa-authored artifacts in this repository
+are licensed under the Apache License, Version 2.0 (see LICENSE).
+
+Third-party material keeps its own copyright and license. Every hosted artifact
+directory (artifacts/<type>/<id>/<version>/) ships its own license file.
+Upstream entries are metadata only: their files are fetched from the pinned
+source when added and are not stored in this repository.
+
+LicenseRef-*-Terms identifiers on connectors name the terms of a remote service,
+not a license for content in this repository.
+
+This file is generated from catalog/ by tools/validate.mjs; do not edit by hand.
+
+== Hosted artifacts (64) ==
+
+anthropic.internal-comms@1.0.0  artifacts/skills/anthropic.internal-comms/1.0.0/
+  Attribution: Anthropic (https://github.com/anthropics/skills/tree/33375500bcea98d610eb30ce10ac4e59b89c390d/skills/internal-comms)
+  License: Apache-2.0 (LICENSE.txt)
+
+anthropic.mcp-builder@1.0.0  artifacts/skills/anthropic.mcp-builder/1.0.0/
+  Attribution: Anthropic (https://github.com/anthropics/skills/tree/33375500bcea98d610eb30ce10ac4e59b89c390d/skills/mcp-builder)
+  License: Apache-2.0 (LICENSE.txt)
+
+hermes.grounded-citations@1.0.0  artifacts/skills/hermes.grounded-citations/1.0.0/
+  Attribution: Hermes Agent + Teknium (https://github.com/NousResearch/hermes-agent/tree/130b8f2c5dbca93a81aa396dd2ba44420d78f6f0/skills/research/grounded-citations)
+  License: MIT (LICENSE)
+
+hermes.meeting-action-items@1.0.0  artifacts/skills/hermes.meeting-action-items/1.0.0/
+  Attribution: Ben Barclay (Hermes Agent) (https://github.com/NousResearch/hermes-agent/tree/130b8f2c5dbca93a81aa396dd2ba44420d78f6f0/skills/productivity/meeting-action-items)
+  License: MIT (LICENSE)
+
+openai.security-threat-model@1.0.0  artifacts/skills/openai.security-threat-model/1.0.0/
+  Attribution: OpenAI (https://github.com/openai/skills/tree/49f948faa9258a0c61caceaf225e179651397431/skills/.curated/security-threat-model)
+  License: Apache-2.0 (LICENSE.txt)
+
+openai.skill-creator@1.0.0  artifacts/skills/openai.skill-creator/1.0.0/
+  Attribution: OpenAI (https://github.com/openai/skills/tree/49f948faa9258a0c61caceaf225e179651397431/skills/.system/skill-creator)
+  License: Apache-2.0 (LICENSE.txt)
+
+openclaw.github@1.0.0  artifacts/skills/openclaw.github/1.0.0/
+  Attribution: OpenClaw (https://github.com/openclaw/openclaw/tree/0eecafafa554db9a3647d8dc01a568c01e81707b/skills/github)
+  License: MIT (LICENSE, THIRD_PARTY_NOTICES.md)
+
+teloa.appsec@1.0.1  artifacts/solutions/teloa.appsec/1.0.1/
+  Attribution: Teloa contributors
+  License: Apache-2.0 (LICENSE)
+
+teloa.cn-workspace@1.0.0  artifacts/solutions/teloa.cn-workspace/1.0.0/
+  Attribution: Teloa contributors
+  License: Apache-2.0 (LICENSE)
+
+teloa.code-review@1.0.0  artifacts/solutions/teloa.code-review/1.0.0/
+  Attribution: Teloa contributors
+  License: Apache-2.0 (LICENSE)
+
+teloa.dashboard-designer@1.0.0  artifacts/skills/teloa.dashboard-designer/1.0.0/
+  Attribution: Teloa contributors
+  License: Apache-2.0 (LICENSE)
+
+teloa.detection@1.0.1  artifacts/solutions/teloa.detection/1.0.1/
+  Attribution: Teloa contributors
+  License: Apache-2.0 (LICENSE)
+
+teloa.ecommerce@1.0.0  artifacts/solutions/teloa.ecommerce/1.0.0/
+  Attribution: Teloa contributors
+  License: Apache-2.0 (LICENSE)
+
+teloa.finance@1.0.0  artifacts/solutions/teloa.finance/1.0.0/
+  Attribution: Teloa contributors
+  License: Apache-2.0 (LICENSE)
+
+teloa.grc@1.0.2  artifacts/solutions/teloa.grc/1.0.2/
+  Attribution: Teloa contributors
+  License: Apache-2.0 (LICENSE)
+
+teloa.growth@1.0.0  artifacts/solutions/teloa.growth/1.0.0/
+  Attribution: Teloa contributors
+  License: Apache-2.0 (LICENSE)
+
+teloa.incident@1.0.0  artifacts/solutions/teloa.incident/1.0.0/
+  Attribution: Teloa contributors
+  License: Apache-2.0 (LICENSE)
+
+teloa.marketing@1.0.0  artifacts/solutions/teloa.marketing/1.0.0/
+  Attribution: Teloa contributors
+  License: Apache-2.0 (LICENSE)
+
+teloa.mcp-amap@1.0.1  artifacts/connectors/teloa.mcp-amap/1.0.1/
+  Attribution: Teloa contributors; connects to npm package @amap/amap-maps-mcp-server@0.0.8
+  License: ISC (LICENSE)
+
+teloa.mcp-atlassian@1.0.0  artifacts/connectors/teloa.mcp-atlassian/1.0.0/
+  Attribution: Teloa contributors; connects to https://developer.atlassian.com/cloud/jira/platform/mcp/
+  License: Apache-2.0 (LICENSE)
+
+teloa.mcp-composio@1.0.1  artifacts/connectors/teloa.mcp-composio/1.0.1/
+  Attribution: Teloa contributors; connects to https://docs.composio.dev/mcp
+  License: LicenseRef-Composio-Terms (LICENSE)
+
+teloa.mcp-context7@1.0.0  artifacts/connectors/teloa.mcp-context7/1.0.0/
+  Attribution: Teloa contributors; connects to https://context7.com
+  License: MIT (LICENSE)
+
+teloa.mcp-deepwiki@1.0.0  artifacts/connectors/teloa.mcp-deepwiki/1.0.0/
+  Attribution: Teloa contributors; connects to https://cognition.com/blog/deepwiki-mcp-server
+  License: MIT (LICENSE)
+
+teloa.mcp-dingtalk@1.0.2  artifacts/connectors/teloa.mcp-dingtalk/1.0.2/
+  Attribution: Teloa contributors; connects to npm package dingtalk-mcp@1.1.21
+  License: MIT (LICENSE)
+
+teloa.mcp-exa@1.0.1  artifacts/connectors/teloa.mcp-exa/1.0.1/
+  Attribution: Teloa contributors; connects to npm package exa-mcp-server@3.4.1
+  License: MIT (LICENSE)
+
+teloa.mcp-figma@1.0.0  artifacts/connectors/teloa.mcp-figma/1.0.0/
+  Attribution: Teloa contributors; connects to https://developers.figma.com/docs/figma-mcp-server/
+  License: MIT (LICENSE)
+
+teloa.mcp-github@1.0.0  artifacts/connectors/teloa.mcp-github/1.0.0/
+  Attribution: Teloa contributors; connects to https://github.com/github/github-mcp-server
+  License: MIT (LICENSE)
+
+teloa.mcp-gitlab@1.0.0  artifacts/connectors/teloa.mcp-gitlab/1.0.0/
+  Attribution: Teloa contributors; connects to https://docs.gitlab.com/user/model_context_protocol/mcp_server/
+  License: LicenseRef-GitLab-Terms (LICENSE)
+
+teloa.mcp-greptile@1.0.0  artifacts/connectors/teloa.mcp-greptile/1.0.0/
+  Attribution: Teloa contributors; connects to https://docs.greptile.com/integrations/mcp
+  License: LicenseRef-Greptile-Terms (LICENSE)
+
+teloa.mcp-lark@1.0.1  artifacts/connectors/teloa.mcp-lark/1.0.1/
+  Attribution: Teloa contributors; connects to npm package @larksuiteoapi/lark-mcp@0.5.1
+  License: MIT (LICENSE)
+
+teloa.mcp-linear@1.0.0  artifacts/connectors/teloa.mcp-linear/1.0.0/
+  Attribution: Teloa contributors; connects to https://linear.app/settings/api
+  License: MIT (LICENSE)
+
+teloa.mcp-notion@1.0.1  artifacts/connectors/teloa.mcp-notion/1.0.1/
+  Attribution: Teloa contributors; connects to npm package @notionhq/notion-mcp-server@2.5.2
+  License: MIT (LICENSE)
+
+teloa.mcp-notion-remote@1.0.0  artifacts/connectors/teloa.mcp-notion-remote/1.0.0/
+  Attribution: Teloa contributors; connects to https://developers.notion.com/docs/mcp
+  License: MIT (LICENSE)
+
+teloa.mcp-pagerduty@1.0.0  artifacts/connectors/teloa.mcp-pagerduty/1.0.0/
+  Attribution: Teloa contributors; connects to https://developer.pagerduty.com/docs/mcp
+  License: LicenseRef-PagerDuty-Terms (LICENSE)
+
+teloa.mcp-playwright@1.0.1  artifacts/connectors/teloa.mcp-playwright/1.0.1/
+  Attribution: Teloa contributors; connects to npm package @playwright/mcp@0.0.82
+  License: Apache-2.0 (LICENSE)
+
+teloa.mcp-posthog@1.0.0  artifacts/connectors/teloa.mcp-posthog/1.0.0/
+  Attribution: Teloa contributors; connects to https://posthog.com/docs/mcp
+  License: MIT (LICENSE)
+
+teloa.mcp-sentry@1.0.0  artifacts/connectors/teloa.mcp-sentry/1.0.0/
+  Attribution: Teloa contributors; connects to https://docs.sentry.io/product/sentry-basics/integrations/mcp/
+  License: MIT (LICENSE)
+
+teloa.mcp-slack@1.0.0  artifacts/connectors/teloa.mcp-slack/1.0.0/
+  Attribution: Teloa contributors; connects to https://docs.slack.dev/ai/slack-mcp-server/
+  License: LicenseRef-Slack-Terms (LICENSE)
+
+teloa.mcp-stripe@1.0.0  artifacts/connectors/teloa.mcp-stripe/1.0.0/
+  Attribution: Teloa contributors; connects to https://docs.stripe.com/building-with-llms/mcp
+  License: MIT (LICENSE)
+
+teloa.mcp-supabase-remote@1.0.0  artifacts/connectors/teloa.mcp-supabase-remote/1.0.0/
+  Attribution: Teloa contributors; connects to https://supabase.com/docs/guides/getting-started/mcp
+  License: LicenseRef-Supabase-Terms (LICENSE)
+
+teloa.mcp-yuque@1.0.2  artifacts/connectors/teloa.mcp-yuque/1.0.2/
+  Attribution: Teloa contributors; connects to npm package yuque-mcp@1.0.0
+  License: MIT (LICENSE)
+
+teloa.mcp-zapier@1.0.1  artifacts/connectors/teloa.mcp-zapier/1.0.1/
+  Attribution: Teloa contributors; connects to https://zapier.com/mcp
+  License: LicenseRef-Zapier-Terms (LICENSE)
+
+teloa.office@1.0.0  artifacts/solutions/teloa.office/1.0.0/
+  Attribution: Teloa contributors
+  License: Apache-2.0 (LICENSE)
+
+teloa.project@1.0.0  artifacts/solutions/teloa.project/1.0.0/
+  Attribution: Teloa contributors
+  License: Apache-2.0 (LICENSE)
+
+teloa.recruiting@1.0.0  artifacts/solutions/teloa.recruiting/1.0.0/
+  Attribution: Teloa contributors
+  License: Apache-2.0 (LICENSE)
+
+teloa.research@1.0.0  artifacts/solutions/teloa.research/1.0.0/
+  Attribution: Teloa contributors
+  License: Apache-2.0 (LICENSE)
+
+teloa.role.appsec-auditor@1.0.1  artifacts/roles/teloa.role.appsec-auditor/1.0.1/
+  Attribution: Teloa contributors
+  License: Apache-2.0 (LICENSE)
+
+teloa.role.bd-collaborator@1.0.0  artifacts/roles/teloa.role.bd-collaborator/1.0.0/
+  Attribution: Teloa contributors
+  License: Apache-2.0 (LICENSE)
+
+teloa.role.content-marketer@1.0.0  artifacts/roles/teloa.role.content-marketer/1.0.0/
+  Attribution: Teloa contributors
+  License: Apache-2.0 (LICENSE)
+
+teloa.role.detection-engineer@1.0.1  artifacts/roles/teloa.role.detection-engineer/1.0.1/
+  Attribution: Teloa contributors
+  License: Apache-2.0 (LICENSE)
+
+teloa.role.grc-collaborator@1.0.2  artifacts/roles/teloa.role.grc-collaborator/1.0.2/
+  Attribution: Teloa contributors
+  License: Apache-2.0 (LICENSE)
+
+teloa.role.office-collaborator@1.0.0  artifacts/roles/teloa.role.office-collaborator/1.0.0/
+  Attribution: Teloa contributors
+  License: Apache-2.0 (LICENSE)
+
+teloa.role.project-coordinator@1.0.0  artifacts/roles/teloa.role.project-coordinator/1.0.0/
+  Attribution: Teloa contributors
+  License: Apache-2.0 (LICENSE)
+
+teloa.role.reconciliation-collaborator@1.0.0  artifacts/roles/teloa.role.reconciliation-collaborator/1.0.0/
+  Attribution: Teloa contributors
+  License: Apache-2.0 (LICENSE)
+
+teloa.role.recruiting-collaborator@1.0.0  artifacts/roles/teloa.role.recruiting-collaborator/1.0.0/
+  Attribution: Teloa contributors
+  License: Apache-2.0 (LICENSE)
+
+teloa.role.research-collaborator@1.0.0  artifacts/roles/teloa.role.research-collaborator/1.0.0/
+  Attribution: Teloa contributors
+  License: Apache-2.0 (LICENSE)
+
+teloa.role.soc-t1-analyst@1.0.1  artifacts/roles/teloa.role.soc-t1-analyst/1.0.1/
+  Attribution: Teloa contributors
+  License: Apache-2.0 (LICENSE)
+
+teloa.role.soc-t2-investigator@1.0.1  artifacts/roles/teloa.role.soc-t2-investigator/1.0.1/
+  Attribution: Teloa contributors
+  License: Apache-2.0 (LICENSE)
+
+teloa.role.support-knowledge-collaborator@1.0.0  artifacts/roles/teloa.role.support-knowledge-collaborator/1.0.0/
+  Attribution: Teloa contributors
+  License: Apache-2.0 (LICENSE)
+
+teloa.role.video-editor@1.0.0  artifacts/roles/teloa.role.video-editor/1.0.0/
+  Attribution: Teloa contributors
+  License: Apache-2.0 (LICENSE)
+
+teloa.sales@1.0.0  artifacts/solutions/teloa.sales/1.0.0/
+  Attribution: Teloa contributors
+  License: Apache-2.0 (LICENSE)
+
+teloa.soc@1.0.1  artifacts/solutions/teloa.soc/1.0.1/
+  Attribution: Teloa contributors
+  License: Apache-2.0 (LICENSE)
+
+teloa.support@1.0.0  artifacts/solutions/teloa.support/1.0.0/
+  Attribution: Teloa contributors
+  License: Apache-2.0 (LICENSE)
+
+teloa.video@1.0.0  artifacts/solutions/teloa.video/1.0.0/
+  Attribution: Teloa contributors
+  License: Apache-2.0 (LICENSE)
+
+== Upstream entries, not hosted (55) ==
+
+clawhub.byungkyu.api-gateway@1.2.23
+  Source: ClawHub byungkyu/api-gateway version 1.2.23
+  License: MIT-0
+
+clawhub.byungkyu.calendly-api@1.2.5
+  Source: ClawHub byungkyu/calendly-api version 1.2.5
+  License: MIT-0
+
+clawhub.byungkyu.clickup-api@1.2.3
+  Source: ClawHub byungkyu/clickup-api version 1.2.3
+  License: MIT-0
+
+clawhub.byungkyu.fathom-api@1.2.6
+  Source: ClawHub byungkyu/fathom-api version 1.2.6
+  License: MIT-0
+
+clawhub.byungkyu.gmail@1.2.3
+  Source: ClawHub byungkyu/gmail version 1.2.3
+  License: MIT-0
+
+clawhub.byungkyu.google-drive@1.2.9
+  Source: ClawHub byungkyu/google-drive version 1.2.9
+  License: MIT-0
+
+clawhub.byungkyu.google-meet@1.2.3
+  Source: ClawHub byungkyu/google-meet version 1.2.3
+  License: MIT-0
+
+clawhub.byungkyu.google-play@1.2.3
+  Source: ClawHub byungkyu/google-play version 1.2.3
+  License: MIT-0
+
+clawhub.byungkyu.google-sheets@1.2.3
+  Source: ClawHub byungkyu/google-sheets version 1.2.3
+  License: MIT-0
+
+clawhub.byungkyu.google-slides@1.2.3
+  Source: ClawHub byungkyu/google-slides version 1.2.3
+  License: MIT-0
+
+clawhub.byungkyu.google-workspace-admin@1.2.8
+  Source: ClawHub byungkyu/google-workspace-admin version 1.2.8
+  License: MIT-0
+
+clawhub.byungkyu.klaviyo@1.2.6
+  Source: ClawHub byungkyu/klaviyo version 1.2.6
+  License: MIT-0
+
+clawhub.byungkyu.mailchimp@1.2.3
+  Source: ClawHub byungkyu/mailchimp version 1.2.3
+  License: MIT-0
+
+clawhub.byungkyu.microsoft-excel@1.2.3
+  Source: ClawHub byungkyu/microsoft-excel version 1.2.3
+  License: MIT-0
+
+clawhub.byungkyu.monday@1.2.4
+  Source: ClawHub byungkyu/monday version 1.2.4
+  License: MIT-0
+
+clawhub.byungkyu.outlook-api@1.2.3
+  Source: ClawHub byungkyu/outlook-api version 1.2.3
+  License: MIT-0
+
+clawhub.byungkyu.pipedrive-api@1.2.3
+  Source: ClawHub byungkyu/pipedrive-api version 1.2.3
+  License: MIT-0
+
+clawhub.byungkyu.salesforce-api@1.2.5
+  Source: ClawHub byungkyu/salesforce-api version 1.2.5
+  License: MIT-0
+
+clawhub.byungkyu.typeform@1.2.3
+  Source: ClawHub byungkyu/typeform version 1.2.3
+  License: MIT-0
+
+clawhub.byungkyu.whatsapp-business@1.2.6
+  Source: ClawHub byungkyu/whatsapp-business version 1.2.6
+  License: MIT-0
+
+clawhub.byungkyu.woocommerce@1.2.3
+  Source: ClawHub byungkyu/woocommerce version 1.2.3
+  License: MIT-0
+
+clawhub.byungkyu.xero@1.2.3
+  Source: ClawHub byungkyu/xero version 1.2.3
+  License: MIT-0
+
+clawhub.byungkyu.youtube-api-skill@1.2.3
+  Source: ClawHub byungkyu/youtube-api-skill version 1.2.3
+  License: MIT-0
+
+clawhub.byungkyu.zoho-crm@1.2.3
+  Source: ClawHub byungkyu/zoho-crm version 1.2.3
+  License: MIT-0
+
+clawhub.byungkyu.zoho-mail@1.2.3
+  Source: ClawHub byungkyu/zoho-mail version 1.2.3
+  License: MIT-0
+
+clawhub.cellcog.cellcog@2.0.21
+  Source: ClawHub cellcog/cellcog version 2.0.21
+  License: MIT-0
+
+clawhub.cellcog.image-generation-cellcog@1.0.17
+  Source: ClawHub cellcog/image-generation-cellcog version 1.0.17
+  License: MIT-0
+
+clawhub.financial-ai-analyst.mx-finance-search@1.0.9
+  Source: ClawHub financial-ai-analyst/mx-finance-search version 1.0.9
+  License: MIT-0
+
+clawhub.financial-ai-analyst.mx-macro-data@1.0.12
+  Source: ClawHub financial-ai-analyst/mx-macro-data version 1.0.12
+  License: MIT-0
+
+clawhub.guohongbin-git.skill-finder-cn@1.0.1
+  Source: ClawHub guohongbin-git/skill-finder-cn version 1.0.1
+  License: MIT-0
+
+clawhub.ide-rea.ai-ppt-generator@1.1.5
+  Source: ClawHub ide-rea/ai-ppt-generator version 1.1.5
+  License: MIT-0
+
+clawhub.iswalle.getnote@2.1.0
+  Source: ClawHub iswalle/getnote version 2.1.0
+  License: MIT-0
+
+clawhub.ivangdavila.data-analysis@1.0.2
+  Source: ClawHub ivangdavila/data-analysis version 1.0.2
+  License: MIT-0
+
+clawhub.ivangdavila.excel-xlsx@1.0.2
+  Source: ClawHub ivangdavila/excel-xlsx version 1.0.2
+  License: MIT-0
+
+clawhub.ivangdavila.git@1.0.12
+  Source: ClawHub ivangdavila/git version 1.0.12
+  License: MIT-0
+
+clawhub.ivangdavila.image@1.0.4
+  Source: ClawHub ivangdavila/image version 1.0.4
+  License: MIT-0
+
+clawhub.ivangdavila.market-research@1.0.1
+  Source: ClawHub ivangdavila/market-research version 1.0.1
+  License: MIT-0
+
+clawhub.ivangdavila.memory@1.0.7
+  Source: ClawHub ivangdavila/memory version 1.0.7
+  License: MIT-0
+
+clawhub.ivangdavila.powerpoint-pptx@1.0.1
+  Source: ClawHub ivangdavila/powerpoint-pptx version 1.0.1
+  License: MIT-0
+
+clawhub.ivangdavila.proactivity@1.0.1
+  Source: ClawHub ivangdavila/proactivity version 1.0.1
+  License: MIT-0
+
+clawhub.ivangdavila.screenshot@1.0.1
+  Source: ClawHub ivangdavila/screenshot version 1.0.1
+  License: MIT-0
+
+clawhub.ivangdavila.seo@1.0.6
+  Source: ClawHub ivangdavila/seo version 1.0.6
+  License: MIT-0
+
+clawhub.ivangdavila.word-docx@1.0.2
+  Source: ClawHub ivangdavila/word-docx version 1.0.2
+  License: MIT-0
+
+clawhub.jaaneek.x-search@1.0.0
+  Source: ClawHub jaaneek/x-search version 1.0.0
+  License: MIT-0
+
+clawhub.kennyzir.capability-evolver-pro@1.0.2
+  Source: ClawHub kennyzir/capability-evolver-pro version 1.0.2
+  License: MIT-0
+
+clawhub.lidayan.tushare-data@1.1.19
+  Source: ClawHub lidayan/tushare-data version 1.1.19
+  License: MIT-0
+
+clawhub.othmanadi.planning-with-files@3.20.7
+  Source: ClawHub othmanadi/planning-with-files version 3.20.7
+  License: MIT-0
+
+clawhub.paulshe.china-stock-analysis@1.0.0
+  Source: ClawHub paulshe/china-stock-analysis version 1.0.0
+  License: MIT-0
+
+clawhub.shaw555.ocr-local@1.0.0
+  Source: ClawHub shaw555/ocr-local version 1.0.0
+  License: MIT-0
+
+clawhub.wscats.eno@1.0.0
+  Source: ClawHub wscats/eno version 1.0.0
+  License: MIT-0
+
+clawhub.wscats.interview-simulator@1.0.0
+  Source: ClawHub wscats/interview-simulator version 1.0.0
+  License: MIT-0
+
+clawhub.wscats.resume-assistant@1.0.6
+  Source: ClawHub wscats/resume-assistant version 1.0.6
+  License: MIT-0
+
+clawhub.wscats.smart-weekly-report@1.1.3
+  Source: ClawHub wscats/smart-weekly-report version 1.1.3
+  License: MIT-0
+
+clawhub.wscats.t-trading@1.0.0
+  Source: ClawHub wscats/t-trading version 1.0.0
+  License: MIT-0
+
+clawhub.yueyanc.self-improving-proactive-agent@1.0.0
+  Source: ClawHub yueyanc/self-improving-proactive-agent version 1.0.0
+  License: MIT-0
