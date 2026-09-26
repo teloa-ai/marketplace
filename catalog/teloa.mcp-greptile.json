@@ -20,20 +20,14 @@
       "en": "Greptile (Codebase Semantic Search)"
     },
     "summary": {
-      "zh-CN": "Greptile 官方远程 MCP，通过 API Key 查看已索引的仓库、合并请求与 Greptile 代码评审意见。需在 Greptile 平台接入目标仓库。数据经由 greptile.com 传输。",
-      "en": "Greptile official remote MCP: with an API key, browse indexed repositories, pull/merge requests and Greptile code-review comments. Target repositories must be connected in Greptile. Data transits greptile.com."
+      "zh-CN": "Greptile 官方远程 MCP，查看已索引的仓库、合并请求与 Greptile 代码评审意见（只读）。由宿主以 OAuth（动态客户端注册 + PKCE）授权，只申请 read scope，令牌自动刷新。需在 Greptile 平台接入目标仓库。数据经由 greptile.com 传输。",
+      "en": "Greptile official remote MCP: browse indexed repositories, pull/merge requests and Greptile code-review comments (read-only). Authorized by the host via OAuth (dynamic client registration + PKCE) requesting only the read scope, with automatic token refresh. Target repositories must be connected in Greptile. Data transits greptile.com."
     },
     "auth": {
-      "kind": "secret",
-      "vars": [
-        {
-          "target": "bearer",
-          "label": {
-            "zh-CN": "Greptile API Key（在 greptile.com 账户中获取）",
-            "en": "Greptile API Key (obtain from greptile.com account)"
-          },
-          "required": true
-        }
+      "kind": "oauth",
+      "supported": true,
+      "scopes": [
+        "read"
       ]
     },
     "recipe": {
@@ -97,8 +91,16 @@
     "dsh": "0.1.7-rc.1",
     "conditions": [
       {
+        "zh-CN": "需在 市场 → 连接 页由本人在浏览器中完成 OAuth 授权；服务器部署需在配置文件设置 oauth.publicCallbackUrl",
+        "en": "The owner must complete OAuth authorization in a browser from Market → Connections; server deployments must set oauth.publicCallbackUrl in the config file"
+      },
+      {
+        "zh-CN": "官方设置文档只列 OAuth；授权服务器 auth.greptile.com 支持动态客户端注册与 PKCE S256，本机回环回调（127.0.0.1）尚未实测。只申请 read scope，目录只声明只读工具",
+        "en": "Greptile setup docs list OAuth only; the authorization server auth.greptile.com supports dynamic client registration and PKCE S256, and the loopback callback (127.0.0.1) has not been tested yet. Only the read scope is requested and only read-only tools are declared"
+      },
+      {
         "zh-CN": "数据经由 greptile.com 平台传输",
-        "en": "Data passes through greptile.com"
+        "en": "Data transits the greptile.com platform"
       }
     ]
   },
