@@ -23,34 +23,11 @@
       "en": "Used automatically when turning business data into a dashboard: reads fields, trial-runs read-only SQL and drafts widgets and a dashboard for you to preview and confirm on the Business page."
     }
   },
-  "upstream": {
-    "ecosystem": "teloa",
-    "author": "Teloa",
-    "repository": {
-      "host": "github.com",
-      "owner": "teloa-ai",
-      "repo": "teloa"
-    },
-    "commit": "0462a09fe9ee9b833985f65fb8daa0a2a7062c24",
-    "path": "marketplace/artifacts/teloa.dashboard-designer/1.0.0",
-    "license": "Apache-2.0",
-    "files": [
-      {
-        "path": "LICENSE",
-        "gitBlob": "34325c0c902611499994ed6900ccd949f1bf8bb3",
-        "size": 11349
-      },
-      {
-        "path": "SKILL.md",
-        "gitBlob": "b04fb707777399d776da944c5db7b477058edd1e",
-        "size": 9682
-      }
-    ]
-  },
+  "upstream": null,
   "modifications": [
     {
-      "zh-CN": "Teloa 自编技能，无外部上游；upstream 指向本仓库工件目录。",
-      "en": "Authored by Teloa with no external upstream; upstream points to this repository's artifact directory."
+      "zh-CN": "Teloa 自编内置技能，无外部上游（upstream 为 null），只随发行快照提供，不进在线索引。",
+      "en": "Built-in skill authored by Teloa with no external upstream (upstream is null); shipped only in the release snapshot, not in the online index."
     }
   ],
   "license": {
