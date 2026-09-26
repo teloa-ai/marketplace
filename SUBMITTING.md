@@ -15,6 +15,10 @@
 5. PR 描述写清：用途与适用场景、依赖的工具与是否联网、你如何测试、以后如何升级。
 6. stdio 连接器（npm 包）：工件里随附完整依赖锁定 `package-lock.json`（lockfile v3，根只精确依赖配方包，每个包带 sha512 integrity、只从 `https://registry.npmjs.org/` 取）。缺失时 `pnpm build:market-catalog` 会按配方版本生成；宿主安装时按它 `npm ci --ignore-scripts` 并逐条核对，锁与配方不一致拒绝安装。换依赖树须递增条目版本，在新版本目录重新生成。
 
+### 模型引用
+
+模型引用是内容工件的例外：`delivery: reference` 不提交 `artifacts/`。本地语音示例见 `catalog/teloa.model.sensevoice.json`，使用 `model.form: local-specialist`、`usage: ["speech-to-text"]`、`native: {kind: "dsh-speech", providerId: "sensevoice-local"}`；模型权重许可写在 `model.license`，目录条目源码许可仍用顶层 `license`。DSH 原生准备器维护固定权重版本、摘要、缓存和下载状态，目录不复制这些状态，也不能指定下载命令或任意 provider。目前只开放该已核对的原生绑定；发布新的 OCR、分类等 provider 需要先完成扩展适配、运行和硬件验收。开发者通用模型包及方案模型依赖仍待实施。
+
 ### 不接受的内容
 
 - 可执行脚本（`.py`、`.sh`、`.js` 等），以及带可执行权限的文件、符号链接。
@@ -40,6 +44,10 @@ Contributions are welcome through pull requests. One PR adds one entry or one ne
 4. Pinned upstream source: the full 40-character commit and the Git blob digest of each file taken. Mark every changed file at the top of its body and list each change in `modifications`.
 5. A PR description covering purpose and use cases, required tools and network access, how you tested, and how the entry will be upgraded.
 6. stdio connectors (npm packages): ship the full dependency lock `package-lock.json` in the artifact (lockfile v3, the root depends only on the recipe package at its exact version, every package carries a sha512 integrity and comes from `https://registry.npmjs.org/`). When it is missing, `pnpm build:market-catalog` generates it from the recipe version. The host installs with `npm ci --ignore-scripts` from this lock and checks every entry; a lock that disagrees with the recipe is refused. Changing the dependency tree requires a new entry version with a freshly generated lock.
+
+### Model references
+
+Model references are an exception to content artifacts: `delivery: reference` has no `artifacts/` directory. See `catalog/teloa.model.sensevoice.json` for the local speech example, with `model.form: local-specialist`, `usage: ["speech-to-text"]`, and `native: {kind: "dsh-speech", providerId: "sensevoice-local"}`. Put the weight license in `model.license`; the top-level `license` describes catalog source code. DSH's native preparer owns pinned weight versions, hashes, cache, and download state; the catalog cannot duplicate this state or specify installation commands or arbitrary providers. Only this reviewed native binding is currently accepted. A new OCR or classification provider first needs an extension adapter and runtime/hardware validation. General developer model packages and solution model dependencies remain unimplemented.
 
 ### Not accepted
 
