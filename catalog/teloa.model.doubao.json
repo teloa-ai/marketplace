@@ -77,7 +77,9 @@
         "en": "Volcengine Ark API key"
       },
       "signupUrl": "https://console.volcengine.com/ark"
-    }
+    },
+    "local": null,
+    "variants": null
   },
   "modifications": [],
   "license": {

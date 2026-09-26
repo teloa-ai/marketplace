@@ -86,7 +86,9 @@
         "en": "Model Studio Token Plan API key"
       },
       "signupUrl": "https://bailian.console.aliyun.com"
-    }
+    },
+    "local": null,
+    "variants": null
   },
   "modifications": [],
   "license": {

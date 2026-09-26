@@ -82,7 +82,9 @@
         "en": "xAI API key"
       },
       "signupUrl": "https://console.x.ai"
-    }
+    },
+    "local": null,
+    "variants": null
   },
   "modifications": [],
   "license": {

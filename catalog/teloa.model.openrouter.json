@@ -76,7 +76,9 @@
         "en": "OpenRouter API key"
       },
       "signupUrl": "https://openrouter.ai"
-    }
+    },
+    "local": null,
+    "variants": null
   },
   "modifications": [],
   "license": {

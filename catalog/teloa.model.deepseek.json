@@ -80,7 +80,9 @@
         "en": "DeepSeek API key"
       },
       "signupUrl": "https://platform.deepseek.com"
-    }
+    },
+    "local": null,
+    "variants": null
   },
   "modifications": [],
   "license": {

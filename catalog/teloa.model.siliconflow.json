@@ -76,7 +76,9 @@
         "en": "SiliconFlow API key"
       },
       "signupUrl": "https://cloud.siliconflow.cn"
-    }
+    },
+    "local": null,
+    "variants": null
   },
   "modifications": [],
   "license": {

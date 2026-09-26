@@ -82,7 +82,9 @@
         "en": "Moonshot API key"
       },
       "signupUrl": "https://platform.kimi.com"
-    }
+    },
+    "local": null,
+    "variants": null
   },
   "modifications": [],
   "license": {

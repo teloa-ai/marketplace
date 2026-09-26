@@ -76,7 +76,9 @@
         "en": "Google AI API key"
       },
       "signupUrl": "https://aistudio.google.com"
-    }
+    },
+    "local": null,
+    "variants": null
   },
   "modifications": [],
   "license": {
