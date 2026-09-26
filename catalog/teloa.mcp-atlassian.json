@@ -21,8 +21,8 @@
       "en": "Atlassian (Jira & Confluence)"
     },
     "summary": {
-      "zh-CN": "Atlassian 官方 MCP，通过 API Token 连接 Jira 和 Confluence，支持查询 Issue、搜索文档。需要 Atlassian 组织管理员生成 API Token。数据经由 atlassian.com 传输。",
-      "en": "Atlassian official MCP connecting Jira and Confluence via API Token. Requires org admin to generate an API Token. Data passes through atlassian.com."
+      "zh-CN": "Atlassian 官方 MCP（Rovo MCP 服务），以服务账号 API Key 连接 Jira 和 Confluence，可按 JQL 查询与读取 Issue、创建 Issue、搜索与读取 Confluence 内容。需要组织管理员开启 API Token 认证并创建服务账号 API Key。数据经由 atlassian.com 传输。",
+      "en": "Atlassian official MCP (Rovo MCP server) connecting Jira and Confluence with a service-account API key: query and read issues with JQL, create issues, and search and read Confluence content. An org admin must enable API token authentication and create the service-account API key. Data transits atlassian.com."
     },
     "auth": {
       "kind": "secret",
@@ -30,8 +30,8 @@
         {
           "target": "bearer",
           "label": {
-            "zh-CN": "Atlassian API Token（需组织管理员生成）",
-            "en": "Atlassian API Token (requires org admin)"
+            "zh-CN": "Atlassian 服务账号 API Key（由组织管理员创建；个人 API Token 需 Basic 认证，暂不支持）",
+            "en": "Atlassian service-account API key (created by an org admin; personal API tokens need Basic auth and are not supported yet)"
           },
           "required": true
         }
@@ -43,23 +43,23 @@
     },
     "tools": [
       {
-        "name": "jira_get_issue",
+        "name": "getJiraIssue",
         "description": {
           "zh-CN": "获取 Jira Issue 详情",
-          "en": "Get Jira issue details"
+          "en": "Get a Jira issue"
         },
         "readOnly": true
       },
       {
-        "name": "jira_search_issues",
+        "name": "searchJiraIssuesUsingJql",
         "description": {
-          "zh-CN": "搜索 Jira Issue",
-          "en": "Search Jira issues"
+          "zh-CN": "按 JQL 搜索 Jira Issue",
+          "en": "Search Jira issues with JQL"
         },
         "readOnly": true
       },
       {
-        "name": "jira_create_issue",
+        "name": "createJiraIssue",
         "description": {
           "zh-CN": "创建 Jira Issue",
           "en": "Create a Jira issue"
@@ -67,7 +67,7 @@
         "readOnly": false
       },
       {
-        "name": "confluence_search",
+        "name": "searchConfluence",
         "description": {
           "zh-CN": "搜索 Confluence 内容",
           "en": "Search Confluence content"
@@ -75,10 +75,10 @@
         "readOnly": true
       },
       {
-        "name": "confluence_get_page",
+        "name": "getConfluenceContent",
         "description": {
-          "zh-CN": "获取 Confluence 页面内容",
-          "en": "Get Confluence page content"
+          "zh-CN": "读取 Confluence 页面内容",
+          "en": "Read Confluence page content"
         },
         "readOnly": true
       }
@@ -98,12 +98,16 @@
     "dsh": "0.1.7-rc.1",
     "conditions": [
       {
-        "zh-CN": "需要 Atlassian 组织管理员账户生成 API Token",
-        "en": "Requires Atlassian org admin account to generate API Token"
+        "zh-CN": "需要组织管理员在 Atlassian 管理后台开启 Rovo MCP 服务的 API Token 认证，并创建服务账号 API Key（以 Bearer 传入）",
+        "en": "An org admin must enable API token authentication for the Rovo MCP server in Atlassian Administration and create a service-account API key (sent as Bearer)"
+      },
+      {
+        "zh-CN": "服务端只直接列出常用工具，其余需经发现工具调用；目录声明的工具是否都直接可见待真实租户实测",
+        "en": "The server lists only the most-used tools directly and exposes the rest through discovery; whether every declared tool is directly visible awaits a real-tenant test"
       },
       {
         "zh-CN": "数据经由 atlassian.com 平台传输",
-        "en": "Data passes through atlassian.com"
+        "en": "Data transits the atlassian.com platform"
       }
     ]
   },

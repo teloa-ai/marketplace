@@ -33,7 +33,7 @@
     },
     "tools": [
       {
-        "name": "ask_question",
+        "name": "ask_wiki_question",
         "description": {
           "zh-CN": "对指定公开 GitHub 仓库提问",
           "en": "Ask a question about a public GitHub repository"

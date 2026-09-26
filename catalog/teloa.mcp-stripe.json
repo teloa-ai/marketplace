@@ -20,8 +20,8 @@
       "en": "Stripe (Payments)"
     },
     "summary": {
-      "zh-CN": "Stripe 官方远程 MCP，通过受限 API 密钥查询客户、支付、订阅等数据。建议使用权限最小化的受限密钥。数据经由 stripe.com 传输。",
-      "en": "Stripe official remote MCP for querying customers, payments and subscriptions via restricted API key. Use a least-privilege restricted key. Data passes through stripe.com."
+      "zh-CN": "Stripe 官方远程 MCP，通过 Agent API Key 检索 Stripe API 方法、以只读方式读取客户、支付、订阅等数据，并可调用写入类 API。建议 Agent Key 只授予所需权限。数据经由 stripe.com 传输。",
+      "en": "Stripe official remote MCP: with an agent API key, look up Stripe API methods, read customers, payments, subscriptions and more, and call write APIs. Grant the agent key only the permissions it needs. Data transits stripe.com."
     },
     "auth": {
       "kind": "secret",
@@ -29,8 +29,8 @@
         {
           "target": "bearer",
           "label": {
-            "zh-CN": "Stripe 受限 API 密钥（建议使用只读受限密钥）",
-            "en": "Stripe restricted API key (recommend read-only restricted key)"
+            "zh-CN": "Stripe Agent API Key（带 Agent 标记，建议只授予读取权限）",
+            "en": "Stripe agent API key (with the Agent badge; read-only permissions recommended)"
           },
           "required": true
         }
@@ -42,44 +42,44 @@
     },
     "tools": [
       {
-        "name": "list_customers",
+        "name": "stripe_api_search",
         "description": {
-          "zh-CN": "列出 Stripe 客户",
-          "en": "List Stripe customers"
+          "zh-CN": "按关键词查找 Stripe API 方法",
+          "en": "Find Stripe API methods by keyword"
         },
         "readOnly": true
       },
       {
-        "name": "get_payment_intent",
+        "name": "stripe_api_details",
         "description": {
-          "zh-CN": "获取支付意向详情",
-          "en": "Get payment intent details"
+          "zh-CN": "查看 API 方法的参数说明",
+          "en": "Get parameter details for an API method"
         },
         "readOnly": true
       },
       {
-        "name": "list_subscriptions",
+        "name": "stripe_api_read",
         "description": {
-          "zh-CN": "列出订阅信息",
-          "en": "List subscriptions"
+          "zh-CN": "以 GET 方法读取 Stripe 数据",
+          "en": "Read Stripe data with GET methods"
         },
         "readOnly": true
       },
       {
-        "name": "create_customer",
+        "name": "stripe_api_write",
         "description": {
-          "zh-CN": "创建客户",
-          "en": "Create a customer"
+          "zh-CN": "以 POST/PATCH/PUT/DELETE 方法写入 Stripe 数据",
+          "en": "Write Stripe data with POST/PATCH/PUT/DELETE methods"
         },
         "readOnly": false
       },
       {
-        "name": "create_payment_link",
+        "name": "get_stripe_account_info",
         "description": {
-          "zh-CN": "创建支付链接",
-          "en": "Create a payment link"
+          "zh-CN": "获取账户信息",
+          "en": "Get account information"
         },
-        "readOnly": false
+        "readOnly": true
       }
     ],
     "upstreamUrl": "https://docs.stripe.com/building-with-llms/mcp"
@@ -97,8 +97,12 @@
     "dsh": "0.1.7-rc.1",
     "conditions": [
       {
+        "zh-CN": "2026-10-31 起 Stripe MCP 不再接受完整密钥与不带 Agent 标记的受限密钥，须使用 Agent API Key",
+        "en": "From 2026-10-31 Stripe MCP no longer accepts full secret keys or restricted keys without the Agent badge; use an agent API key"
+      },
+      {
         "zh-CN": "数据经由 stripe.com 平台传输",
-        "en": "Data passes through stripe.com"
+        "en": "Data transits the stripe.com platform"
       }
     ]
   },

@@ -20,8 +20,8 @@
       "en": "PagerDuty (Incident Response)"
     },
     "summary": {
-      "zh-CN": "PagerDuty 官方远程 MCP，通过 API Key 查询和管理告警、事件与值班排班。数据经由 pagerduty.com 传输。",
-      "en": "PagerDuty official remote MCP for querying and managing alerts, incidents and on-call schedules via API Key. Data passes through pagerduty.com."
+      "zh-CN": "PagerDuty 官方远程 MCP，查询事件、服务与值班排班，并可更新事件（如确认）。托管服务的 API Key 须以 Token 头传入，Teloa 目前只支持 Bearer，因此需填写 Scoped OAuth 应用经 client-credentials 获取的访问令牌。数据经由 pagerduty.com 传输。",
+      "en": "PagerDuty official remote MCP: query incidents, services and on-call schedules, and update incidents (e.g. acknowledge). The hosted server expects API keys in a Token header while Teloa only sends Bearer, so enter an access token issued to a Scoped OAuth app via client credentials. Data transits pagerduty.com."
     },
     "auth": {
       "kind": "secret",
@@ -29,8 +29,8 @@
         {
           "target": "bearer",
           "label": {
-            "zh-CN": "PagerDuty API Key（在账户 API Access Keys 中生成）",
-            "en": "PagerDuty API Key (generate in account API Access Keys)"
+            "zh-CN": "PagerDuty OAuth 访问令牌（Scoped OAuth 应用经 client-credentials 获取；REST API Key 不可用）",
+            "en": "PagerDuty OAuth access token (from a Scoped OAuth app via client credentials; REST API keys do not work)"
           },
           "required": true
         }
@@ -42,36 +42,36 @@
     },
     "tools": [
       {
-        "name": "list_incidents",
+        "name": "browse_incidents",
         "description": {
-          "zh-CN": "列出当前 Incident",
-          "en": "List current incidents"
+          "zh-CN": "列出与查看 Incident、告警与备注",
+          "en": "List and view incidents, alerts and notes"
         },
         "readOnly": true
       },
       {
-        "name": "get_incident",
+        "name": "browse_services",
         "description": {
-          "zh-CN": "获取 Incident 详情",
-          "en": "Get incident details"
+          "zh-CN": "列出与查看服务",
+          "en": "List and view services"
         },
         "readOnly": true
       },
       {
-        "name": "acknowledge_incident",
+        "name": "browse_schedules",
         "description": {
-          "zh-CN": "确认 Incident",
-          "en": "Acknowledge an incident"
+          "zh-CN": "查看排班与当前值班",
+          "en": "View schedules and on-call"
+        },
+        "readOnly": true
+      },
+      {
+        "name": "manage_incidents",
+        "description": {
+          "zh-CN": "创建或更新 Incident（含确认、加备注）",
+          "en": "Create or update incidents (including acknowledge and notes)"
         },
         "readOnly": false
-      },
-      {
-        "name": "list_services",
-        "description": {
-          "zh-CN": "列出服务",
-          "en": "List services"
-        },
-        "readOnly": true
       }
     ],
     "upstreamUrl": "https://developer.pagerduty.com/docs/mcp"
@@ -89,8 +89,16 @@
     "dsh": "0.1.7-rc.1",
     "conditions": [
       {
+        "zh-CN": "托管服务的 API Key 只收 Authorization: Token token=…，Teloa 以 Bearer 传入，须改用 Scoped OAuth 应用的访问令牌；令牌过期后需重新填写",
+        "en": "The hosted server accepts API keys only as Authorization: Token token=…; Teloa sends Bearer, so use an access token from a Scoped OAuth app and re-enter it when it expires"
+      },
+      {
+        "zh-CN": "托管服务不支持工具过滤，可用 Scoped OAuth 应用的权限收窄可成功调用的工具",
+        "en": "The hosted server has no tool filtering; narrow what can succeed through the Scoped OAuth app permissions"
+      },
+      {
         "zh-CN": "数据经由 pagerduty.com 平台传输",
-        "en": "Data passes through pagerduty.com"
+        "en": "Data transits the pagerduty.com platform"
       }
     ]
   },

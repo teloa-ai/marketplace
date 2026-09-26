@@ -41,7 +41,7 @@
       "transport": "stdio",
       "package": "@amap/amap-maps-mcp-server",
       "version": "0.0.8",
-      "integrity": "sha512-Kg5rYrexGJM1DaxJpsTcnQ97A42Ec2JVxGXY9GW+VkYdvN/f4i1QFaRDDZZ/3HW5JidAJwqTPVnYo1BpF+xnQ==",
+      "integrity": "sha512-Kg5rYr0azYdN09NP63jUYssKG4Vx8qM92bVIQa8agajjmaasI7J01UK/jGg8Ptima4A8I5RY7ch0m6BaVte5PQ==",
       "bin": "build/index.js",
       "args": []
     },
@@ -55,7 +55,7 @@
         "readOnly": true
       },
       {
-        "name": "maps_regeo",
+        "name": "maps_regeocode",
         "description": {
           "zh-CN": "地理坐标转地址",
           "en": "Convert geographic coordinates to address"

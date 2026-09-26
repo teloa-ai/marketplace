@@ -21,8 +21,8 @@
       "en": "PostHog (Product Analytics)"
     },
     "summary": {
-      "zh-CN": "PostHog 官方远程 MCP，通过 Personal API Key 查询漏斗、留存和用户行为数据。数据经由 posthog.com 传输。",
-      "en": "PostHog official remote MCP for querying funnels, retention and user behavior data via Personal API Key. Data passes through posthog.com."
+      "zh-CN": "PostHog 官方远程 MCP，通过 Personal API Key 以只读方式运行已保存的洞察查询、查看项目与事件及属性结构。配方以官方参数只开放只读会话与三项工具，经单一 exec 工具调用。数据经由 posthog.com 传输。",
+      "en": "PostHog official remote MCP: with a personal API key, read-only access to run saved insight queries, view projects, and explore events and properties. The recipe uses official parameters to open a read-only session limited to three tools, called through a single exec tool. Data transits posthog.com."
     },
     "auth": {
       "kind": "secret",
@@ -30,8 +30,8 @@
         {
           "target": "bearer",
           "label": {
-            "zh-CN": "PostHog Personal API Key（在账户设置中生成）",
-            "en": "PostHog Personal API Key (generate in account settings)"
+            "zh-CN": "PostHog Personal API Key（在账户设置中以 MCP Server 预设生成）",
+            "en": "PostHog personal API key (create it with the MCP Server preset in account settings)"
           },
           "required": true
         }
@@ -39,30 +39,14 @@
     },
     "recipe": {
       "transport": "streamable-http",
-      "url": "https://mcp.posthog.com/mcp"
+      "url": "https://mcp.posthog.com/mcp?readonly=true&tools=insight-query,projects-get,read-data-schema"
     },
     "tools": [
       {
-        "name": "query_insight",
+        "name": "exec",
         "description": {
-          "zh-CN": "查询分析数据（漏斗、趋势等）",
-          "en": "Query analytics data (funnels, trends, etc.)"
-        },
-        "readOnly": true
-      },
-      {
-        "name": "list_projects",
-        "description": {
-          "zh-CN": "列出 PostHog 项目",
-          "en": "List PostHog projects"
-        },
-        "readOnly": true
-      },
-      {
-        "name": "get_events",
-        "description": {
-          "zh-CN": "获取事件数据",
-          "en": "Get event data"
+          "zh-CN": "在只读会话中执行 PostHog 命令（仅限 insight-query、projects-get、read-data-schema）",
+          "en": "Run PostHog commands in a read-only session (insight-query, projects-get, read-data-schema only)"
         },
         "readOnly": true
       }
@@ -82,8 +66,16 @@
     "dsh": "0.1.7-rc.1",
     "conditions": [
       {
+        "zh-CN": "配方带 readonly=true 与 tools= 白名单（官方参数）；只读由服务端保证，密钥本身权限取决于创建时的预设",
+        "en": "The recipe sets readonly=true and a tools= allowlist (official parameters); read-only is enforced server-side and the key keeps whatever its preset grants"
+      },
+      {
+        "zh-CN": "非 Cursor 客户端由服务端给出单一 exec 工具；以 tools 模式运行时服务端说明超过 Teloa 的 4KB 上限会被拒连，故不用该模式",
+        "en": "For clients other than Cursor the server exposes a single exec tool; tools mode sends server instructions beyond Teloa's 4KB limit and would be refused, so it is not used"
+      },
+      {
         "zh-CN": "数据经由 posthog.com 平台传输",
-        "en": "Data passes through posthog.com"
+        "en": "Data transits the posthog.com platform"
       }
     ]
   },

@@ -42,20 +42,28 @@
     },
     "tools": [
       {
-        "name": "run_action",
+        "name": "inspect_zapier_actions",
         "description": {
-          "zh-CN": "执行已配置的 Zapier Action（如发送邮件、创建任务等）",
-          "en": "Execute a configured Zapier Action (e.g. send email, create task)"
-        },
-        "readOnly": false
-      },
-      {
-        "name": "list_actions",
-        "description": {
-          "zh-CN": "列出已配置的 Zapier Actions",
-          "en": "List configured Zapier Actions"
+          "zh-CN": "查看服务器上已启用的 Zapier 动作",
+          "en": "Inspect Zapier actions enabled on the server"
         },
         "readOnly": true
+      },
+      {
+        "name": "execute_zapier_read_action",
+        "description": {
+          "zh-CN": "执行读取类 Zapier 动作（搜索、查询）",
+          "en": "Run a read Zapier action (search, lookup)"
+        },
+        "readOnly": true
+      },
+      {
+        "name": "execute_zapier_write_action",
+        "description": {
+          "zh-CN": "执行写入类 Zapier 动作（发送、创建、更新）",
+          "en": "Run a write Zapier action (send, create, update)"
+        },
+        "readOnly": false
       }
     ],
     "upstreamUrl": "https://zapier.com/mcp"
@@ -79,6 +87,10 @@
       {
         "zh-CN": "数据会经由 zapier.com 平台中转；中国企业数据经境外平台路由涉及数据出境合规，需要负责人自行评估",
         "en": "Data passes through zapier.com; Chinese enterprise data routed via overseas platform involves data export compliance — responsible party must self-evaluate"
+      },
+      {
+        "zh-CN": "工具按 Zapier 新建服务器默认的 agentic 模式核对；改用经典或托管模式时工具清单不同，需另行评估",
+        "en": "Tools were checked against the agentic mode that new Zapier servers default to; classic or managed modes expose different tools and need a separate review"
       }
     ]
   },

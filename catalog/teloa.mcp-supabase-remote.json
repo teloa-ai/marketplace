@@ -27,7 +27,14 @@
     "auth": {
       "kind": "oauth",
       "supported": true,
-      "scopes": []
+      "scopes": [
+        "organizations:read",
+        "projects:read",
+        "database:read",
+        "analytics:read",
+        "edge_functions:read",
+        "environment:read"
+      ]
     },
     "recipe": {
       "transport": "streamable-http",
@@ -91,14 +98,6 @@
         "readOnly": true
       },
       {
-        "name": "apply_migration",
-        "description": {
-          "zh-CN": "应用数据库迁移",
-          "en": "Apply a database migration"
-        },
-        "readOnly": false
-      },
-      {
         "name": "execute_sql",
         "description": {
           "zh-CN": "执行 SQL",
@@ -107,10 +106,10 @@
         "readOnly": false
       },
       {
-        "name": "query_logs",
+        "name": "get_logs",
         "description": {
           "zh-CN": "查询日志",
-          "en": "Query logs"
+          "en": "Get logs"
         },
         "readOnly": true
       },
@@ -147,26 +146,10 @@
         "readOnly": true
       },
       {
-        "name": "deploy_edge_function",
-        "description": {
-          "zh-CN": "部署边缘函数",
-          "en": "Deploy an Edge Function"
-        },
-        "readOnly": false
-      },
-      {
         "name": "list_branches",
         "description": {
           "zh-CN": "列出开发分支",
           "en": "List development branches"
-        },
-        "readOnly": true
-      },
-      {
-        "name": "list_storage_buckets",
-        "description": {
-          "zh-CN": "列出存储桶",
-          "en": "List storage buckets"
         },
         "readOnly": true
       },
@@ -202,12 +185,12 @@
         "en": "Official docs confirm the hosted server uses dynamic client registration by default; the loopback callback (127.0.0.1) has not been tested yet"
       },
       {
-        "zh-CN": "全权限风险：官方未列出 scope 名称，现阶段授权即授予全部权限（含写入）；授权请求不指定 scope。配方默认带 read_only=true（官方参数：以只读 Postgres 用户执行所有查询），只读仅由服务端参数保证，令牌本身仍具全部权限",
-        "en": "Full-permission risk: the official docs list no scope names and authorization currently grants all scopes (including write); the request specifies no scope. The recipe defaults to read_only=true (official parameter: all queries run as a read-only Postgres user); read-only is enforced only by this server parameter and the token itself still carries full permissions"
+        "zh-CN": "授权只申请受保护资源元数据列出的只读 scope（组织、项目、数据库、分析、边缘函数、环境）；服务端是否按 scope 收窄令牌尚未实测，未收窄时令牌仍具全部权限。配方另带 read_only=true（官方参数：以只读 Postgres 用户执行查询，写工具不注册）",
+        "en": "Authorization requests only the read scopes listed in the protected-resource metadata (organizations, projects, database, analytics, edge functions, environment); whether the server narrows the token by scope is untested, and without narrowing the token still carries full permissions. The recipe also sets read_only=true (official parameter: queries run as a read-only Postgres user and write tools are not registered)"
       },
       {
-        "zh-CN": "建议只连接非生产项目；只读模式下写操作工具（迁移、部署函数）不可用，需要写入时应另行评估",
-        "en": "Prefer non-production projects; write tools (migrations, function deploys) are unavailable in read-only mode, and enabling writes needs a separate review"
+        "zh-CN": "建议只连接非生产项目；只读模式下迁移、部署函数等写工具不可用，存储功能组不在默认启用范围",
+        "en": "Prefer non-production projects; write tools such as migrations and function deploys are unavailable in read-only mode, and the storage feature group is not enabled by default"
       }
     ]
   },

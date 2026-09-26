@@ -42,48 +42,56 @@
       "transport": "stdio",
       "package": "@notionhq/notion-mcp-server",
       "version": "2.5.2",
-      "integrity": "sha512-5nPSwHbmAtFCgHw3bIKESmQniGbZEbL26b+Zt6bA7LBxuueMkBPJLgLqFBMbEUE2rVdl6klbTTDJJ3q0J5lDA==",
+      "integrity": "sha512-5nPSwHMnugSGAhSJS5vVIlMao+iTJO9HoWGpCnT8lJNrPy3rZMqs1V/CPiN4MuxF+5EBgRE/f/Tirl6Wfi75Mg==",
       "bin": "bin/cli.mjs",
       "args": []
     },
     "tools": [
       {
-        "name": "search",
+        "name": "API-post-search",
         "description": {
-          "zh-CN": "搜索 Notion 页面和数据库",
-          "en": "Search Notion pages and databases"
+          "zh-CN": "搜索 Notion 页面和数据源",
+          "en": "Search Notion pages and data sources"
         },
         "readOnly": true
       },
       {
-        "name": "get-page",
+        "name": "API-retrieve-a-page",
         "description": {
-          "zh-CN": "获取指定页面内容",
-          "en": "Get specified page content"
+          "zh-CN": "获取指定页面属性",
+          "en": "Get page properties"
         },
         "readOnly": true
       },
       {
-        "name": "create-page",
+        "name": "API-retrieve-page-markdown",
+        "description": {
+          "zh-CN": "以 Markdown 读取页面内容",
+          "en": "Read page content as Markdown"
+        },
+        "readOnly": true
+      },
+      {
+        "name": "API-post-page",
         "description": {
           "zh-CN": "创建新页面",
-          "en": "Create a new page"
+          "en": "Create a page"
         },
         "readOnly": false
       },
       {
-        "name": "update-page",
+        "name": "API-patch-page",
         "description": {
-          "zh-CN": "更新页面内容",
-          "en": "Update page content"
+          "zh-CN": "更新页面属性",
+          "en": "Update page properties"
         },
         "readOnly": false
       },
       {
-        "name": "query-database",
+        "name": "API-query-data-source",
         "description": {
-          "zh-CN": "查询数据库条目",
-          "en": "Query database entries"
+          "zh-CN": "查询数据源条目",
+          "en": "Query data source entries"
         },
         "readOnly": true
       }

@@ -31,7 +31,7 @@
       "transport": "stdio",
       "package": "@playwright/mcp",
       "version": "0.0.82",
-      "integrity": "sha512-mn7IQkrAEj1Myi4gUvbUAAVjm+bzp7C7m1xJ2RgR28fHqtrtmf7xyJuDzMX33G72/WaLIBXvQHE/Wvp+QCjJTA==",
+      "integrity": "sha512-OCqftfb8H4dnqm/njbTBRk3seUvUPttOlJUxCtEzXGETYOlRH5Qt3bbXIjmZIuWAxD9RF+yg1ASrPeXvm0y5cA==",
       "bin": "cli.js",
       "args": []
     },

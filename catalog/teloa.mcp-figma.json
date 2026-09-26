@@ -27,7 +27,9 @@
     "auth": {
       "kind": "oauth",
       "supported": true,
-      "scopes": [],
+      "scopes": [
+        "mcp:connect"
+      ],
       "requiresAllowlist": true
     },
     "recipe": {
@@ -54,8 +56,8 @@
         "en": "Client allowlist: Figma only allows clients listed in the Figma MCP Catalog; Teloa is not approved yet (apply through the official waitlist), and the host refuses to add this connector until then"
       },
       {
-        "zh-CN": "官方文档未列出 OAuth scope",
-        "en": "Official docs do not list OAuth scopes"
+        "zh-CN": "受保护资源元数据列出的 OAuth scope 为 mcp:connect",
+        "en": "The protected-resource metadata lists mcp:connect as the OAuth scope"
       }
     ]
   },

@@ -20,34 +20,34 @@
       "en": "Composio MCP (1500+ App Integrations)"
     },
     "summary": {
-      "zh-CN": "Composio 官方远程 MCP，支持 1500+ 应用集成，OAuth 连接由 Composio 平台托管。当前不可用：官方端点（mcp.composio.dev）实测时重定向至无效页面（HTTP 404），需等待官方更新端点文档后重新接入。",
-      "en": "Composio official remote MCP with 1500+ app integrations. Currently unavailable: the official endpoint (mcp.composio.dev) redirected to an invalid page (HTTP 404) during verification; re-integration pending updated official endpoint documentation."
+      "zh-CN": "Composio 官方远程 MCP（Composio Connect），以少量元工具发现并执行 1000+ 应用的动作，OAuth 连接由 Composio 平台托管。当前不可用：官方端点已迁至 connect.composio.dev，其 OAuth 授权尚未在 Teloa 实测。",
+      "en": "Composio official remote MCP (Composio Connect) that discovers and runs actions across 1000+ apps through a few meta-tools, with OAuth connections hosted by Composio. Currently unavailable: the official endpoint moved to connect.composio.dev and its OAuth flow has not been tested in Teloa yet."
     },
     "auth": {
       "kind": "oauth",
       "supported": false,
-      "reason": "Composio 远程端点实测时返回 HTTP 404（mcp.composio.dev 重定向至无效路径）。在官方确认可用端点格式前，该连接器标记为不支持。"
+      "reason": "官方端点已迁至 https://connect.composio.dev/mcp（支持动态客户端注册与 PKCE），OAuth 授权待技术探针实测后开放。"
     },
     "recipe": {
       "transport": "streamable-http",
-      "url": "https://mcp.composio.dev/mcp"
+      "url": "https://connect.composio.dev/mcp"
     },
     "tools": [
       {
-        "name": "execute_action",
+        "name": "COMPOSIO_SEARCH_TOOLS",
         "description": {
-          "zh-CN": "执行已连接应用的操作",
-          "en": "Execute an action on a connected app"
-        },
-        "readOnly": false
-      },
-      {
-        "name": "list_tools",
-        "description": {
-          "zh-CN": "列出可用的应用工具",
-          "en": "List available app tools"
+          "zh-CN": "搜索可用的应用工具",
+          "en": "Search available app tools"
         },
         "readOnly": true
+      },
+      {
+        "name": "COMPOSIO_MULTI_EXECUTE_TOOL",
+        "description": {
+          "zh-CN": "执行已连接应用的工具",
+          "en": "Execute tools on connected apps"
+        },
+        "readOnly": false
       }
     ],
     "upstreamUrl": "https://docs.composio.dev/mcp"
@@ -65,12 +65,12 @@
     "dsh": "0.1.7-rc.1",
     "conditions": [
       {
-        "zh-CN": "官方端点（mcp.composio.dev）实测时重定向至无效页面（HTTP 404），当前无法建立连接",
-        "en": "Official endpoint (mcp.composio.dev) redirected to invalid page (HTTP 404) during probe; connection cannot be established"
+        "zh-CN": "旧端点 mcp.composio.dev/mcp 已不再提供 MCP 服务；官方端点改为 connect.composio.dev/mcp",
+        "en": "The old endpoint mcp.composio.dev/mcp no longer serves MCP; the official endpoint is now connect.composio.dev/mcp"
       },
       {
-        "zh-CN": "待官方更新端点文档后重新评估接入方式",
-        "en": "Will be re-evaluated after official endpoint documentation is updated"
+        "zh-CN": "OAuth 授权（动态客户端注册 + PKCE）与本机回环回调待实测后开放",
+        "en": "OAuth authorization (dynamic client registration + PKCE) and the loopback callback will open after testing"
       }
     ]
   },

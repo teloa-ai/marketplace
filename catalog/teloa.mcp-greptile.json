@@ -20,8 +20,8 @@
       "en": "Greptile (Codebase Semantic Search)"
     },
     "summary": {
-      "zh-CN": "Greptile 官方远程 MCP，通过 API Key 对代码库进行语义搜索和问答。需在 Greptile 平台索引目标代码库。数据经由 greptile.com 传输。",
-      "en": "Greptile official remote MCP for semantic search and Q&A over codebases via API Key. Index your codebase on Greptile first. Data passes through greptile.com."
+      "zh-CN": "Greptile 官方远程 MCP，通过 API Key 查看已索引的仓库、合并请求与 Greptile 代码评审意见。需在 Greptile 平台接入目标仓库。数据经由 greptile.com 传输。",
+      "en": "Greptile official remote MCP: with an API key, browse indexed repositories, pull/merge requests and Greptile code-review comments. Target repositories must be connected in Greptile. Data transits greptile.com."
     },
     "auth": {
       "kind": "secret",
@@ -38,22 +38,46 @@
     },
     "recipe": {
       "transport": "streamable-http",
-      "url": "https://api.greptile.com/v2/mcp"
+      "url": "https://api.greptile.com/mcp"
     },
     "tools": [
       {
-        "name": "search",
+        "name": "list_repositories",
         "description": {
-          "zh-CN": "在代码库中进行语义搜索",
-          "en": "Semantic search across the codebase"
+          "zh-CN": "列出 Greptile 已接入的仓库",
+          "en": "List repositories connected to Greptile"
         },
         "readOnly": true
       },
       {
-        "name": "query",
+        "name": "list_pull_requests",
         "description": {
-          "zh-CN": "对代码库提问并获得解答",
-          "en": "Ask questions about the codebase and get answers"
+          "zh-CN": "列出 Pull Request",
+          "en": "List pull requests"
+        },
+        "readOnly": true
+      },
+      {
+        "name": "get_merge_request",
+        "description": {
+          "zh-CN": "获取 PR / MR 详情与评审记录",
+          "en": "Get a PR/MR with review records"
+        },
+        "readOnly": true
+      },
+      {
+        "name": "list_merge_request_comments",
+        "description": {
+          "zh-CN": "列出 PR / MR 评审意见",
+          "en": "List PR/MR review comments"
+        },
+        "readOnly": true
+      },
+      {
+        "name": "search_greptile_comments",
+        "description": {
+          "zh-CN": "搜索 Greptile 评审意见",
+          "en": "Search Greptile review comments"
         },
         "readOnly": true
       }

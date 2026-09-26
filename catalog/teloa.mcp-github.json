@@ -67,10 +67,10 @@
         "readOnly": true
       },
       {
-        "name": "create_issue",
+        "name": "issue_write",
         "description": {
-          "zh-CN": "创建 Issue",
-          "en": "Create an issue"
+          "zh-CN": "创建或更新 Issue",
+          "en": "Create or update an issue"
         },
         "readOnly": false
       },
