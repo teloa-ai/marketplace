@@ -20,8 +20,8 @@
       "en": "DingTalk (Enterprise Communication)"
     },
     "summary": {
-      "zh-CN": "钉钉官方 MCP，通过应用 Client ID/Secret 访问钉钉通讯录、部门管理、机器人消息、日程等功能。需在钉钉开放平台创建企业内部应用并授权对应权限。数据经由 dingtalk.com 传输。",
-      "en": "DingTalk official MCP for contacts, department management, robot messages, calendar and more via App Client ID/Secret. Create an enterprise internal app on DingTalk Open Platform and grant the required scopes. Data passes through dingtalk.com."
+      "zh-CN": "钉钉官方 MCP，通过应用 Client ID/Secret 访问钉钉通讯录、机器人群消息与 DING 消息（默认启用的三个模块）。需在钉钉开放平台创建企业内部应用并授权对应权限。数据经由 dingtalk.com 传输。",
+      "en": "DingTalk official MCP for contacts, robot group messages and DING messages (the three modules enabled by default) via App Client ID/Secret. Create an enterprise internal app on DingTalk Open Platform and grant the required scopes. Data passes through dingtalk.com."
     },
     "auth": {
       "kind": "secret",
@@ -56,44 +56,44 @@
     },
     "tools": [
       {
-        "name": "send_robot_message",
+        "name": "searchUser",
         "description": {
-          "zh-CN": "通过群机器人发送消息",
-          "en": "Send a message via group robot"
+          "zh-CN": "按关键词搜索成员",
+          "en": "Search users by keyword"
+        },
+        "readOnly": true
+      },
+      {
+        "name": "getUserDetailByUserId",
+        "description": {
+          "zh-CN": "查询成员详情",
+          "en": "Get user details"
+        },
+        "readOnly": true
+      },
+      {
+        "name": "getDepartmentUsersByDepId",
+        "description": {
+          "zh-CN": "列出部门成员",
+          "en": "List users in a department"
+        },
+        "readOnly": true
+      },
+      {
+        "name": "sendMessageToGroupByRobot",
+        "description": {
+          "zh-CN": "通过机器人向群发送消息",
+          "en": "Send a message to a group via robot"
         },
         "readOnly": false
       },
       {
-        "name": "get_user_info",
+        "name": "batchSendMessageToUsersByRobot",
         "description": {
-          "zh-CN": "查询成员信息",
-          "en": "Get user info"
-        },
-        "readOnly": true
-      },
-      {
-        "name": "list_departments",
-        "description": {
-          "zh-CN": "列出部门",
-          "en": "List departments"
-        },
-        "readOnly": true
-      },
-      {
-        "name": "create_todo",
-        "description": {
-          "zh-CN": "创建钉钉待办",
-          "en": "Create a DingTalk todo item"
+          "zh-CN": "通过机器人向成员批量发送单聊消息",
+          "en": "Send one-on-one messages to users via robot"
         },
         "readOnly": false
-      },
-      {
-        "name": "list_calendar_events",
-        "description": {
-          "zh-CN": "列出日程事件",
-          "en": "List calendar events"
-        },
-        "readOnly": true
       }
     ],
     "upstreamUrl": "https://open.dingtalk.com/document/ai-dev/dingtalk-server-api-mcp-overview"
@@ -117,6 +117,10 @@
       {
         "zh-CN": "数据经由 dingtalk.com 平台传输",
         "en": "Data passes through dingtalk.com"
+      },
+      {
+        "zh-CN": "本版只启用钉钉 MCP 默认模块（通讯录、机器人消息、DING 消息）；日程、待办、部门管理等模块未开放",
+        "en": "Only the DingTalk MCP default modules (contacts, robot messages, DING messages) are enabled in this version; calendar, todo, department management and other modules are not available"
       }
     ]
   },
