@@ -1,0 +1,29 @@
+name: Problem report · 问题反馈
+description: An entry does not install, does not work as described, or has wrong metadata. · 条目无法添加、与描述不符或元数据有误。
+title: "[Problem] "
+labels: ["problem"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Security problems must be reported privately; see SECURITY.md. · 安全问题请按 SECURITY.md 私下报告。
+  - type: input
+    id: entry
+    attributes:
+      label: Entry ID and version · 条目 ID 与版本
+      placeholder: teloa.soc@1.0.1
+    validations:
+      required: true
+  - type: input
+    id: versions
+    attributes:
+      label: Teloa version · Teloa 版本
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened · 发生了什么
+      description: Steps, expected result and actual result. Remove secrets and personal data. · 步骤、预期与实际结果；请去掉密钥与个人信息。
+    validations:
+      required: true

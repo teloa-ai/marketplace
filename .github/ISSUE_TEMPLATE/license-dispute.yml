@@ -1,0 +1,33 @@
+name: License dispute · 许可争议
+description: A hosted artifact or upstream entry has a wrong license, missing attribution, or should not be redistributed. · 托管工件或上游条目的许可有误、缺少署名或不应再分发。
+title: "[License] "
+labels: ["license"]
+body:
+  - type: input
+    id: entry
+    attributes:
+      label: Entry ID and version · 条目 ID 与版本
+    validations:
+      required: true
+  - type: dropdown
+    id: role
+    attributes:
+      label: You are · 你的身份
+      options:
+        - Copyright holder or authorized representative · 版权人或其授权代表
+        - Upstream maintainer · 上游维护者
+        - Other · 其他
+    validations:
+      required: true
+  - type: textarea
+    id: issue
+    attributes:
+      label: Problem · 问题
+      description: What is wrong (license, attribution, redistribution), with links to the original license or source. · 具体问题（许可、署名、再分发），附原许可或来源链接。
+    validations:
+      required: true
+  - type: textarea
+    id: request
+    attributes:
+      label: Requested action · 希望的处理
+      description: For example correct the license file, add attribution, or stop hosting a copy and keep an upstream entry only. · 例如更正许可文件、补署名，或停止托管副本、只保留上游条目。

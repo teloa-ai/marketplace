@@ -1,0 +1,65 @@
+name: Validate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+# Least privilege: the workflow only reads the repository. It runs no code from a submission
+# other than the committed validator, and it has no secrets.
+permissions:
+  contents: read
+
+concurrency:
+  group: validate-${{ github.ref }}
+  cancel-in-progress: true
+
+# Actions are pinned to full commit SHAs (version in the trailing comment), looked up in the
+# official repositories with `git ls-remote https://github.com/<owner>/<repo> refs/tags/<tag>`.
+jobs:
+  catalog:
+    name: Catalog (tools/validate.mjs)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          persist-credentials: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 24
+
+      # Structure, type directories, paths, sizes, digests, license files, and INDEX.md / NOTICE drift.
+      - name: Validate catalog
+        run: node tools/validate.mjs
+
+  dco:
+    name: DCO sign-off
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      # Every non-merge commit in the pull request needs a Signed-off-by trailer with the author's email.
+      - name: Check Signed-off-by trailers
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          status=0
+          for commit in $(git rev-list --no-merges "$BASE_SHA..$HEAD_SHA"); do
+            email=$(git show -s --format=%ae "$commit")
+            if ! git show -s --format='%(trailers:key=Signed-off-by,valueonly)' "$commit" | grep -qF "<$email>"; then
+              echo "::error::Commit $commit has no Signed-off-by trailer for <$email>. Sign off with git commit -s (see CONTRIBUTING.md)."
+              status=1
+            fi
+          done
+          exit "$status"

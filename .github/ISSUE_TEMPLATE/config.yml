@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Report a malicious or unsafe resource · 报告恶意或不安全的资源
+    url: https://github.com/teloa-ai/marketplace/security/advisories/new
+    about: Report privately; see SECURITY.md. Do not open a public issue. · 请私下报告，见 SECURITY.md，不要提公开 Issue。
+  - name: Browse the marketplace · 浏览市场
+    url: https://market.teloa.ai
+    about: Search entries by name, purpose, industry or function. · 按名称、用途、行业或功能搜索条目。

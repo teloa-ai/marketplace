@@ -1,0 +1,35 @@
+name: Resource request · 资源申请
+description: Suggest a skill, solution, connector or model to add to the catalog. · 建议收录一个技能、方案、连接器或模型。
+title: "[Request] "
+labels: ["resource-request"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        To submit the entry yourself, open a pull request instead; see CONTRIBUTING.md. · 想自己投稿请直接提 PR，见 CONTRIBUTING.md。
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Type · 类型
+      options: [skill, solution, role, connector, model]
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: Source · 来源
+      description: Repository URL, ClawHub page, npm package or service documentation. · 仓库地址、ClawHub 页面、npm 包或服务文档。
+    validations:
+      required: true
+  - type: input
+    id: license
+    attributes:
+      label: License · 许可
+      description: SPDX identifier if known. Resources that forbid redistribution can only be listed as upstream entries. · 已知时填 SPDX 标识；禁止再分发的资源只能以上游条目收录。
+  - type: textarea
+    id: purpose
+    attributes:
+      label: Use case · 用途与场景
+      description: What would you use it for in Teloa? · 你打算在 Teloa 里用它做什么？
+    validations:
+      required: true
