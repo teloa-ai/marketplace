@@ -20,8 +20,8 @@
       "en": "Feishu/Lark (Official MCP)"
     },
     "summary": {
-      "zh-CN": "飞书/Lark 官方 MCP 服务（默认工具集），支持消息、云文档、多维表格与通讯录。需要飞书应用凭据（App ID + App Secret），以环境变量 APP_ID / APP_SECRET 注入。工具名为下划线写法（如 im_v1_message_list）。注意：依赖 keytar 原生模块，--ignore-scripts 安装可能影响凭据存储功能，Teloa 通过环境变量直接注入凭据，不使用 keytar。",
-      "en": "Official Feishu/Lark MCP service (default tool preset) for messaging, cloud docs, Bitable and contacts. Requires Lark app credentials (App ID + App Secret), injected as the APP_ID / APP_SECRET environment variables. Tool names use snake case (e.g. im_v1_message_list). Note: depends on keytar native module; --ignore-scripts may affect keychain storage, but Teloa injects credentials via env vars directly, bypassing keytar."
+      "zh-CN": "飞书/Lark 官方 MCP 服务，以 -t 白名单只启用下列消息与云文档工具（包默认预设中的多维表格、建群等其余工具不启用）。需要飞书应用凭据（App ID + App Secret），以环境变量 APP_ID / APP_SECRET 注入。工具名为下划线写法（如 im_v1_message_list）。注意：依赖 keytar 原生模块，--ignore-scripts 安装可能影响凭据存储功能，Teloa 通过环境变量直接注入凭据，不使用 keytar。",
+      "en": "Official Feishu/Lark MCP service; the -t allowlist enables only the messaging and cloud-doc tools listed below (the rest of the default preset, e.g. Bitable and chat creation, stays off). Requires Lark app credentials (App ID + App Secret), injected as the APP_ID / APP_SECRET environment variables. Tool names use snake case (e.g. im_v1_message_list). Teloa injects credentials via env vars, bypassing the keytar native module."
     },
     "auth": {
       "kind": "secret",
@@ -53,7 +53,9 @@
       "integrity": "sha512-KgSzQIvVFUTHKjmTvAg3sSeyIZJ35CXMZQ3HygwT8/tQzDkuM4RsUSoVK4TVJKVsKCHP3QBOV9sAyBmMCBNc9g==",
       "bin": "dist/cli.js",
       "args": [
-        "mcp"
+        "mcp",
+        "-t",
+        "im.v1.chat.list,im.v1.message.list,im.v1.message.create,docx.v1.document.rawContent,docx.builtin.search,docx.builtin.import"
       ]
     },
     "tools": [
@@ -131,6 +133,10 @@
       {
         "zh-CN": "需要 Node.js 20+",
         "en": "Requires Node.js 20+"
+      },
+      {
+        "zh-CN": "配方以 -t 只启用目录列出的工具；Teloa 宿主另外只注册目录声明的工具",
+        "en": "The recipe enables only the listed tools via -t; the Teloa host additionally registers only catalog-declared tools"
       }
     ]
   },
