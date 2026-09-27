@@ -1,12 +1,13 @@
 name: Problem report · 问题反馈
-description: An entry does not install, does not work as described, or has wrong metadata. · 条目无法添加、与描述不符或元数据有误。
+description: Installation, behavior, metadata, or risk notices without sensitive details. · 添加、使用、元数据问题，或不含敏感细节的风险提示。
 title: "[Problem] "
 labels: ["problem"]
 body:
   - type: markdown
     attributes:
       value: |
-        Security problems must be reported privately; see SECURITY.md. · 安全问题请按 SECURITY.md 私下报告。
+        Public issues are the default for problems and unsafe resources. For potentially high-impact issues, we recommend emailing security@teloa.ai privately first. Keep credentials, private data, and exploit details out of public reports; see SECURITY.md.
+        问题或不安全的资源默认在此公开报告；如可能造成重大影响，建议先私下发邮件至 security@teloa.ai。公开内容请去除凭据、隐私和漏洞利用细节，详见 SECURITY.md。
   - type: input
     id: entry
     attributes:

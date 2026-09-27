@@ -67,7 +67,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md). Since the repository was published on 20
 
 ## Security
 
-To report a malicious or unsafe resource, follow [SECURITY.md](SECURITY.md). Do not open a public issue for security problems.
+Report malicious or unsafe resources through a public [Issue](https://github.com/teloa-ai/marketplace/issues) by default. For potentially high-impact issues, we recommend contacting [security@teloa.ai](mailto:security@teloa.ai) privately first. Keep credentials, private data, and exploit details out of public reports; see [SECURITY.md](SECURITY.md).
 
 ## Changes
 

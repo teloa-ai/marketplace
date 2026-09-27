@@ -4,6 +4,13 @@ All notable changes to the catalog are recorded here. The format follows [Keep a
 
 目录的重要变更记录在此，格式遵循 Keep a Changelog，按目录版本（`catalog-version.txt`）分组。全部条目见 [INDEX.md](INDEX.md)。
 
+## [Unreleased]
+
+### Changed
+
+- Public issues are the default for reporting unsafe resources. For potentially high-impact issues, private email to `security@teloa.ai` is recommended; credentials, private data, and exploit details stay out of public reports.
+  不安全资源默认公开提 Issue；可能造成重大影响的问题建议先私下发至 `security@teloa.ai`。公开报告不含凭据、隐私和漏洞利用细节。
+
 ## [2026.9.27.4] - 2026-09-27
 
 ### Added
