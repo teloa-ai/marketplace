@@ -4,7 +4,7 @@ All notable changes to the catalog are recorded here. The format follows [Keep a
 
 目录的重要变更记录在此，格式遵循 Keep a Changelog，按目录版本（`catalog-version.txt`）分组。全部条目见 [INDEX.md](INDEX.md)。
 
-## [2026.9.27.2] - 2026-09-27
+## [2026.9.27.3] - 2026-09-27
 
 ### Added
 
@@ -15,8 +15,8 @@ All notable changes to the catalog are recorded here. The format follows [Keep a
 
 ### Changed
 
-- Connectors to remotely hosted services now declare the provider's terms instead of an open-source license: `teloa.mcp-atlassian` (was Apache-2.0) is `LicenseRef-Atlassian-Terms`; `teloa.mcp-posthog`, `teloa.mcp-sentry` and `teloa.mcp-stripe` (were MIT) are `LicenseRef-PostHog-Terms`, `LicenseRef-Sentry-Terms` and `LicenseRef-Stripe-Terms`. Their license files now carry the provider documentation link, as the other `LicenseRef-*-Terms` connectors already do.
-  连接远端托管服务的 atlassian、posthog、sentry、stripe 改为声明服务商条款 `LicenseRef-<厂商>-Terms`，许可文件给出服务文档链接，与其他七个条款型连接器一致。
+- Connector licenses follow the delivery form. Connectors that only talk to a vendor's remote MCP endpoint (no local npm package) declare the vendor's terms, `LicenseRef-<Vendor>-Terms`, with the vendor documentation link in the license file and in `connector.upstreamUrl`; connectors that install a local npm package declare that package's own license. Changed accordingly: `teloa.mcp-atlassian` (was Apache-2.0) and `teloa.mcp-posthog`, `teloa.mcp-sentry`, `teloa.mcp-stripe`, `teloa.mcp-context7`, `teloa.mcp-deepwiki`, `teloa.mcp-figma`, `teloa.mcp-github`, `teloa.mcp-linear`, `teloa.mcp-notion-remote` (were MIT). The validator now enforces the rule in both directions.
+  连接器按交付形态标许可：只连厂商远端 MCP 端点、无本地 npm 包的一律 `LicenseRef-<厂商>-Terms`（许可文件与 `connector.upstreamUrl` 给出厂商条款/文档链接）；安装本地 npm 包的按包内 LICENSE 标注。据此改动 atlassian（原 Apache-2.0）与 posthog、sentry、stripe、context7、deepwiki、figma、github、linear、notion-remote（原 MIT）；校验器双向强制该规则。
 - Validator messages are English first with the Chinese text after a slash (`English / 中文`). Field-level errors passed through from the entry reader are unchanged.
   校验器报错改为英文优先、中文附后；条目读取器透传的字段级错误不变。
 
@@ -24,6 +24,8 @@ All notable changes to the catalog are recorded here. The format follows [Keep a
 
 - `teloa.mcp-amap` (ISC): the copyright line now names the upstream author from the package's `package.json`, `高德地图开放平台, PBC (https://lbs.amap.com)`, instead of a generic placeholder.
   `teloa.mcp-amap` 的 ISC 版权行改为上游 `package.json` 的实际署名。
+- `teloa.mcp-exa`, `teloa.mcp-lark` and `teloa.mcp-notion` (MIT): the license files now carry the upstream copyright lines (`Exa Labs`, `Lark Technologies Pte. Ltd.`, `Notion Labs, Inc.`), matching the packages in the bundled locks; the other stdio connectors already matched their npm package licenses (amap ISC, dingtalk MIT, playwright Apache-2.0, yuque MIT).
+  `teloa.mcp-exa`、`teloa.mcp-lark`、`teloa.mcp-notion` 的 MIT 许可文件补上游版权行；其余 stdio 连接器许可已与 lock 中包一致。
 
 ### Versioning note · 版本说明
 

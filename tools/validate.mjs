@@ -2,7 +2,7 @@
 // GENERATED FILE - DO NOT EDIT. / 生成文件，请勿手改。
 // Built in teloa-ai/teloa from scripts/市场目录校验.mjs and packages/contract by `node scripts/生成市场仓校验器.mjs`
 // (pnpm build:market-validator). Validation rules are maintained only in that repository.
-// Source commit: 9df66fff10e36e7ae643afe708c57d96f581dcd8
+// Source commit: 290b3c32aef26fdac665ddc433c9569f52006584 (with uncommitted changes)
 // Usage: node tools/validate.mjs [--write]   (--write regenerates INDEX.md and NOTICE)
 import { access, lstat, readFile, readdir, writeFile } from "node:fs/promises";
 import { dirname, join, relative, resolve, sep } from "node:path";
@@ -2251,6 +2251,11 @@ async function validateMarketplace(root, { generateLock, allowNullDigest = false
 		}
 		const artifactRoot = join(root, artifactDirectoryPath(entry));
 		const stdioConnector = entry.kind === "connector" && entry.connector.recipe.transport === "stdio";
+		if (entry.kind === "connector") {
+			const terms = entry.license.spdx.startsWith("LicenseRef-") && entry.license.spdx.endsWith("-Terms");
+			if (!stdioConnector && !terms) fail(`${entry.id} connects to a remote service (${entry.connector.recipe.transport}) and must declare LicenseRef-<Vendor>-Terms, not ${entry.license.spdx}`, `${entry.id} 连接的是远端托管服务（${entry.connector.recipe.transport}），许可须声明 LicenseRef-<厂商>-Terms，而非 ${entry.license.spdx}`);
+			if (stdioConnector && terms) fail(`${entry.id} installs a local npm package (${entry.connector.recipe.package}) and must declare the package's own license, not ${entry.license.spdx}`, `${entry.id} 安装本地 npm 包（${entry.connector.recipe.package}），许可须按包内 LICENSE 标注，而非 ${entry.license.spdx}`);
+		}
 		if (stdioConnector) {
 			const lockPath = join(artifactRoot, "package-lock.json");
 			if (!await exists(lockPath)) {

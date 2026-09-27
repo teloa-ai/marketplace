@@ -16,7 +16,7 @@ Contributions are welcome through pull requests to this repository. One pull req
 - Content hosted in `artifacts/` must use a license that allows redistribution. OSI-approved licenses are recommended. MIT-0, MIT, Apache-2.0, BSD-2-Clause, BSD-3-Clause and ISC are accepted directly; other licenses are reviewed case by case.
 - Every hosted version directory, `artifacts/<type>/<id>/<version>/`, ships its own `LICENSE` or `LICENSE.txt`. It must be listed in the entry's `license.files`, and its text must match `license.spdx`. For MIT and similar licenses, keep the copyright lines.
 - Source-available or no-redistribution resources can only be listed as upstream entries (`delivery: upstream`): metadata and a pinned source, no hosted copy. Publicly readable does not mean redistributable.
-- Connectors that talk to a remote service use `LicenseRef-<Vendor>-Terms`. This names the provider's terms of service, not a license for anything in this repository. The connector's license file must include a link to the provider's terms or documentation.
+- Connector licenses follow the delivery form. A connector that only talks to a vendor's remote MCP endpoint (no local npm package) uses `LicenseRef-<Vendor>-Terms`. This names the provider's terms of service, not a license for anything in this repository; the connector's license file must include a link to the provider's terms or documentation, and `connector.upstreamUrl` points to the vendor documentation. A connector that installs a local npm package (`recipe.transport: stdio`) declares that package's own license, matching the package in the bundled lock. The validator rejects both mismatches.
 - Any other custom license must include its full text or a link to it in the entry's license file.
 - Correcting a license file alone (attribution, identifier, full text) does not bump the entry version, because what is installed and how it behaves do not change. Record the correction in `CHANGELOG.md`. Any change to the installable files still requires a new version directory; earlier version directories are kept so older catalog versions stay reproducible.
 - Catalog metadata and documentation you contribute are licensed under Apache-2.0, like the rest of this repository.
@@ -69,7 +69,7 @@ To report a malicious or unsafe resource, follow [SECURITY.md](SECURITY.md) inst
 - 托管在 `artifacts/` 的内容必须使用允许再分发的许可，推荐 OSI 认可的许可。MIT-0、MIT、Apache-2.0、BSD-2-Clause、BSD-3-Clause、ISC 直接接受，其他许可逐个审核。
 - 每个托管版本目录 `artifacts/<类型>/<id>/<version>/` 自带 `LICENSE` 或 `LICENSE.txt`，列在条目 `license.files` 里，正文与 `license.spdx` 一致。MIT 等许可要保留版权行。
 - 「仅源码可见」或禁止再分发的资源只能以上游条目收录（`delivery: upstream`）：只记元数据与固定来源，不托管副本。公开可读不等于可以再分发。
-- 连接远端服务的连接器使用 `LicenseRef-<厂商>-Terms`，它指的是服务商的服务条款，不是本仓库任何内容的许可。连接器的许可文件里须给出服务条款或文档链接。
+- 连接器按交付形态标许可：只连厂商远端 MCP 端点、无本地 npm 包的连接器使用 `LicenseRef-<厂商>-Terms`，它指的是服务商的服务条款，不是本仓库任何内容的许可；许可文件里须给出服务条款或文档链接，`connector.upstreamUrl` 指向厂商文档。安装本地 npm 包（`recipe.transport: stdio`）的连接器按包内 LICENSE 标注，与随附 lock 中的包一致。两种不一致校验器都拒绝。
 - 其他自定义许可须在条目的许可文件里给出完整许可正文或链接。
 - 只修正许可文件（署名、标识、正文）不递增条目版本：安装内容与行为没有变化，在 `CHANGELOG.md` 里记录即可。改动实际安装的文件仍须新建版本目录；旧版本目录保留，保证旧目录版本可复现。
 - 你贡献的目录元数据与文档和本仓库其余部分一样采用 Apache-2.0。

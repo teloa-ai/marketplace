@@ -102,11 +102,11 @@ teloa.mcp-composio@1.0.1  artifacts/connectors/teloa.mcp-composio/1.0.1/
 
 teloa.mcp-context7@1.0.0  artifacts/connectors/teloa.mcp-context7/1.0.0/
   Attribution: Teloa contributors; connects to https://context7.com
-  License: MIT (LICENSE)
+  License: LicenseRef-Context7-Terms (LICENSE)
 
 teloa.mcp-deepwiki@1.0.0  artifacts/connectors/teloa.mcp-deepwiki/1.0.0/
   Attribution: Teloa contributors; connects to https://cognition.com/blog/deepwiki-mcp-server
-  License: MIT (LICENSE)
+  License: LicenseRef-DeepWiki-Terms (LICENSE)
 
 teloa.mcp-dingtalk@1.0.2  artifacts/connectors/teloa.mcp-dingtalk/1.0.2/
   Attribution: Teloa contributors; connects to npm package dingtalk-mcp@1.1.21
@@ -118,11 +118,11 @@ teloa.mcp-exa@1.0.1  artifacts/connectors/teloa.mcp-exa/1.0.1/
 
 teloa.mcp-figma@1.0.0  artifacts/connectors/teloa.mcp-figma/1.0.0/
   Attribution: Teloa contributors; connects to https://developers.figma.com/docs/figma-mcp-server/
-  License: MIT (LICENSE)
+  License: LicenseRef-Figma-Terms (LICENSE)
 
 teloa.mcp-github@1.0.0  artifacts/connectors/teloa.mcp-github/1.0.0/
   Attribution: Teloa contributors; connects to https://github.com/github/github-mcp-server
-  License: MIT (LICENSE)
+  License: LicenseRef-GitHub-Terms (LICENSE)
 
 teloa.mcp-gitlab@1.0.0  artifacts/connectors/teloa.mcp-gitlab/1.0.0/
   Attribution: Teloa contributors; connects to https://docs.gitlab.com/user/model_context_protocol/mcp_server/
@@ -138,7 +138,7 @@ teloa.mcp-lark@1.0.1  artifacts/connectors/teloa.mcp-lark/1.0.1/
 
 teloa.mcp-linear@1.0.0  artifacts/connectors/teloa.mcp-linear/1.0.0/
   Attribution: Teloa contributors; connects to https://linear.app/settings/api
-  License: MIT (LICENSE)
+  License: LicenseRef-Linear-Terms (LICENSE)
 
 teloa.mcp-notion@1.0.1  artifacts/connectors/teloa.mcp-notion/1.0.1/
   Attribution: Teloa contributors; connects to npm package @notionhq/notion-mcp-server@2.5.2
@@ -146,7 +146,7 @@ teloa.mcp-notion@1.0.1  artifacts/connectors/teloa.mcp-notion/1.0.1/
 
 teloa.mcp-notion-remote@1.0.0  artifacts/connectors/teloa.mcp-notion-remote/1.0.0/
   Attribution: Teloa contributors; connects to https://developers.notion.com/docs/mcp
-  License: MIT (LICENSE)
+  License: LicenseRef-Notion-Terms (LICENSE)
 
 teloa.mcp-pagerduty@1.0.0  artifacts/connectors/teloa.mcp-pagerduty/1.0.0/
   Attribution: Teloa contributors; connects to https://developer.pagerduty.com/docs/mcp
