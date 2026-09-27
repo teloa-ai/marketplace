@@ -2,7 +2,7 @@
 // GENERATED FILE - DO NOT EDIT. / 生成文件，请勿手改。
 // Built in teloa-ai/teloa from scripts/市场目录校验.mjs and packages/contract by `node scripts/生成市场仓校验器.mjs`
 // (pnpm build:market-validator). Validation rules are maintained only in that repository.
-// Source commit: a424edc5f12d417327b1073092491ecc3f091011 (with uncommitted changes)
+// Source commit: 9df66fff10e36e7ae643afe708c57d96f581dcd8
 // Usage: node tools/validate.mjs [--write]   (--write regenerates INDEX.md and NOTICE)
 import { access, lstat, readFile, readdir, writeFile } from "node:fs/promises";
 import { dirname, join, relative, resolve, sep } from "node:path";
