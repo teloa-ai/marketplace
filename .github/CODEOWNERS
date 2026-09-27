@@ -1,8 +1,7 @@
 # Code owners for the Teloa official marketplace.
-# The intended owner team is @teloa-ai/marketplace-reviewers; until that team exists,
-# reviews are routed to the maintainer below.
-*            @cybermaxluo
-/catalog/    @cybermaxluo
-/artifacts/  @cybermaxluo
-/tools/      @cybermaxluo
-/.github/    @cybermaxluo
+# Submissions are reviewed by the @teloa-ai/marketplace-reviewers team.
+*            @teloa-ai/marketplace-reviewers
+/catalog/    @teloa-ai/marketplace-reviewers
+/artifacts/  @teloa-ai/marketplace-reviewers
+/tools/      @teloa-ai/marketplace-reviewers
+/.github/    @teloa-ai/marketplace-reviewers
