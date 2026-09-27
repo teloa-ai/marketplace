@@ -2,7 +2,7 @@
 // GENERATED FILE - DO NOT EDIT. / 生成文件，请勿手改。
 // Built in teloa-ai/teloa from scripts/市场目录校验.mjs and packages/contract by `node scripts/生成市场仓校验器.mjs`
 // (pnpm build:market-validator). Validation rules are maintained only in that repository.
-// Source commit: 0b8db5a30dec9a952047805abdb9234dc9e32ef5 (with uncommitted changes)
+// Source commit: a424edc5f12d417327b1073092491ecc3f091011 (with uncommitted changes)
 // Usage: node tools/validate.mjs [--write]   (--write regenerates INDEX.md and NOTICE)
 import { access, lstat, readFile, readdir, writeFile } from "node:fs/promises";
 import { dirname, join, relative, resolve, sep } from "node:path";
@@ -2052,9 +2052,12 @@ const sha256 = (value) => createHash("sha256").update(value).digest("hex");
 const canonical = (value) => JSON.stringify(value, (_key, item) => item && typeof item === "object" && !Array.isArray(item) ? Object.fromEntries(Object.keys(item).sort().map((key) => [key, item[key]])) : item);
 const safe = (path) => !!path && !path.startsWith("/") && !path.split("/").some((part) => !part || part === "." || part === "..") && !/[\\:?%#\u0000-\u001f\u007f]/.test(path);
 const decoder = new TextDecoder("utf-8", { fatal: true });
-const fail = (message) => {
-	throw new Error(message);
+/** 报错文案：英文优先、中文附后。 */
+const message = (en, zh) => `${en} / ${zh}`;
+const fail = (en, zh) => {
+	throw new Error(message(en, zh));
 };
+const reason = (error) => error instanceof Error ? error.message : String(error);
 const exists = (path) => lstat(path).then(() => true, (error) => {
 	if (error?.code === "ENOENT") return false;
 	throw error;
@@ -2082,40 +2085,42 @@ const licenseMatchers = {
 function licenseTextProblem(spdx, text) {
 	const body = normalized(text);
 	const matcher = licenseMatchers[spdx];
-	if (matcher) return matcher(body) ? null : `正文不是 ${spdx} 许可`;
+	if (matcher) return matcher(body) ? null : message(`the text is not the ${spdx} license`, `正文不是 ${spdx} 许可`);
 	if (/https:\/\/\S+/.test(body)) return null;
 	if (!spdx.startsWith("LicenseRef-") && body.length >= 1e3) return null;
-	return spdx.startsWith("LicenseRef-") ? `${spdx} 须在许可文件里给出条款链接（https://…）` : `${spdx} 须在许可文件里给出完整许可正文或条款链接（https://…）`;
+	return spdx.startsWith("LicenseRef-") ? message(`${spdx} requires a link to the terms (https://…) in the license file`, `${spdx} 须在许可文件里给出条款链接（https://…）`) : message(`${spdx} requires the full license text or a link to the terms (https://…) in the license file`, `${spdx} 须在许可文件里给出完整许可正文或条款链接（https://…）`);
 }
 /** 读 catalog/<类型目录>/*.json：目录名只能是五个类型目录，文件所在目录必须等于条目 kind，文件名等于条目标识。 */
 async function readCatalogEntries(root) {
 	const catalogDirectory = join(root, "catalog"), read = [];
+	const directories = Object.values(MARKET_KIND_DIRECTORIES).join(",");
 	for (const directory of await listDirectory(catalogDirectory)) {
 		const kind = kindOfDirectory.get(directory);
-		if (!kind) fail(`catalog/${directory} 不是类型目录；条目只能放在 catalog/{${Object.values(MARKET_KIND_DIRECTORIES).join(",")}}/ 下`);
-		if (!(await lstat(join(catalogDirectory, directory))).isDirectory()) fail(`catalog/${directory} 必须是目录`);
+		if (!kind) fail(`catalog/${directory} is not a type directory; entries belong in catalog/{${directories}}/`, `catalog/${directory} 不是类型目录；条目只能放在 catalog/{${directories}}/ 下`);
+		if (!(await lstat(join(catalogDirectory, directory))).isDirectory()) fail(`catalog/${directory} must be a directory`, `catalog/${directory} 必须是目录`);
 		for (const name of await listDirectory(join(catalogDirectory, directory))) {
 			const file = `catalog/${directory}/${name}`;
-			if (!name.endsWith(".json") || name.startsWith(".")) fail(file + " 不是条目文件；类型目录里只放 <id>.json");
+			if (!name.endsWith(".json") || name.startsWith(".")) fail(`${file} is not an entry file; type directories hold only <id>.json`, `${file} 不是条目文件；类型目录里只放 <id>.json`);
 			let raw, entry;
 			try {
 				raw = JSON.parse(await readFile(join(root, file), "utf8"));
 			} catch (error) {
-				fail(file + "：" + (error instanceof Error ? error.message : String(error)));
+				fail(`${file}: ${reason(error)}`, `${file}：${reason(error)}`);
 			}
 			const range = raw?.compatibility?.teloa;
 			if (typeof range === "string") try {
 				parseTeloaRange(range);
 			} catch {
-				fail((typeof raw.id === "string" ? raw.id : file) + " 的 compatibility.teloa 范围语法不正确：" + range);
+				const label = typeof raw.id === "string" ? raw.id : file;
+				fail(`${label} has an invalid compatibility.teloa range: ${range}`, `${label} 的 compatibility.teloa 范围语法不正确：${range}`);
 			}
 			try {
 				entry = readMarketCatalogEntry(raw);
 			} catch (error) {
-				fail(file + "：" + (error instanceof Error ? error.message : String(error)));
+				fail(`${file}: ${reason(error)}`, `${file}：${reason(error)}`);
 			}
-			if (name !== entry.id + ".json") fail(file + " 文件名必须等于条目标识 " + entry.id + ".json");
-			if (entry.kind !== kind) fail(`${file} 放错目录：${entry.kind} 条目应在 ${entryFilePath(entry)}`);
+			if (name !== entry.id + ".json") fail(`${file} must be named after the entry id: ${entry.id}.json`, `${file} 文件名必须等于条目标识 ${entry.id}.json`);
+			if (entry.kind !== kind) fail(`${file} is in the wrong directory: a ${entry.kind} entry belongs at ${entryFilePath(entry)}`, `${file} 放错目录：${entry.kind} 条目应在 ${entryFilePath(entry)}`);
 			if (entry.kind === "model" && entry.model.form === "cloud" && entry.model.cloud.provider.kind === "custom") modelEndpointHost(entry);
 			read.push({
 				entry,
@@ -2126,7 +2131,7 @@ async function readCatalogEntries(root) {
 	}
 	const seen = /* @__PURE__ */ new Map();
 	for (const { entry, file } of read) {
-		if (seen.has(entry.id)) fail(`${file} 与 ${seen.get(entry.id)} 条目标识重复`);
+		if (seen.has(entry.id)) fail(`${file} duplicates the entry id of ${seen.get(entry.id)}`, `${file} 与 ${seen.get(entry.id)} 条目标识重复`);
 		seen.set(entry.id, file);
 	}
 	return read.sort((left, right) => left.entry.id < right.entry.id ? -1 : left.entry.id > right.entry.id ? 1 : 0);
@@ -2137,24 +2142,24 @@ function modelEndpointHost(entry) {
 	try {
 		return new URL(baseURL).hostname;
 	} catch {
-		throw new Error(entry.id + " 的模型接入地址无法解析：" + baseURL);
+		fail(`${entry.id} has an unparseable model endpoint: ${baseURL}`, `${entry.id} 的模型接入地址无法解析：${baseURL}`);
 	}
 }
 async function walk(directory, base = directory) {
 	const files = [];
 	for (const item of (await readdir(directory)).sort()) {
 		const absolute = join(directory, item), info = await lstat(absolute), path = relative(base, absolute).split(sep).join("/");
-		if (item.startsWith(".")) fail(path + " 是隐藏文件；目录工件不收录点文件（例如 .DS_Store）");
-		if (info.isSymbolicLink()) fail(path + " 是符号链接");
+		if (item.startsWith(".")) fail(`${path} is a hidden file; artifacts must not contain dot files (for example .DS_Store)`, `${path} 是隐藏文件；目录工件不收录点文件（例如 .DS_Store）`);
+		if (info.isSymbolicLink()) fail(`${path} is a symbolic link`, `${path} 是符号链接`);
 		if (info.isDirectory()) {
 			files.push(...await walk(absolute, base));
 			continue;
 		}
-		if (!info.isFile()) fail(path + " 不是普通文件");
-		if (info.mode & 73) fail(path + " 带可执行权限");
-		if (MARKET_CATALOG_FORBIDDEN_EXTENSIONS.test(path)) fail(path + " 是可执行脚本，目录工件不收录脚本");
-		if (!safe(path)) fail(path + " 路径不安全");
-		if (info.size > 2097152) fail(path + " 超过 2 MiB");
+		if (!info.isFile()) fail(`${path} is not a regular file`, `${path} 不是普通文件`);
+		if (info.mode & 73) fail(`${path} has the executable bit set`, `${path} 带可执行权限`);
+		if (MARKET_CATALOG_FORBIDDEN_EXTENSIONS.test(path)) fail(`${path} is an executable script; artifacts must not contain scripts`, `${path} 是可执行脚本，目录工件不收录脚本`);
+		if (!safe(path)) fail(`${path} is not a safe path`, `${path} 路径不安全`);
+		if (info.size > 2097152) fail(`${path} exceeds 2 MiB`, `${path} 超过 2 MiB`);
 		files.push({
 			path,
 			absolute
@@ -2163,29 +2168,30 @@ async function walk(directory, base = directory) {
 	return files;
 }
 function frontmatter(text, expectedName, label) {
-	if (!text.startsWith("---\n")) fail(label + " 的 SKILL.md 缺少 frontmatter");
+	if (!text.startsWith("---\n")) fail(`${label}: SKILL.md has no frontmatter`, `${label} 的 SKILL.md 缺少 frontmatter`);
 	const end = text.indexOf("\n---\n", 4);
-	if (end < 0) fail(label + " 的 SKILL.md frontmatter 未闭合");
+	if (end < 0) fail(`${label}: SKILL.md frontmatter is not closed`, `${label} 的 SKILL.md frontmatter 未闭合`);
 	const fields = {};
 	for (const line of text.slice(4, end).split("\n")) {
 		const match = /^([a-z][a-z0-9_-]*): (.+)$/.exec(line);
-		if (!match) fail(label + " 的 frontmatter 只允许单行 name 与 description：" + line);
-		if (Object.hasOwn(fields, match[1])) fail(label + " 的 frontmatter 字段重复：" + match[1]);
+		if (!match) fail(`${label}: frontmatter allows only single-line name and description: ${line}`, `${label} 的 frontmatter 只允许单行 name 与 description：${line}`);
+		if (Object.hasOwn(fields, match[1])) fail(`${label}: duplicate frontmatter field ${match[1]}`, `${label} 的 frontmatter 字段重复：${match[1]}`);
 		fields[match[1]] = match[2].replace(/^"(.*)"$/, "$1");
 	}
 	const keys = Object.keys(fields).sort().join(",");
-	if (keys !== "description,name") fail(label + " 的 frontmatter 只允许 name 与 description，实际为 " + keys);
-	if (fields.name !== expectedName) fail(label + " 的 SKILL.md name 与条目技能名不一致");
-	if (!fields.description.trim() || fields.description.length > 1024) fail(label + " 的 description 必须非空且不超过 1024 字");
-	if (!text.slice(end + 5).trim()) fail(label + " 的 SKILL.md 正文为空");
+	if (keys !== "description,name") fail(`${label}: frontmatter allows only name and description, found ${keys}`, `${label} 的 frontmatter 只允许 name 与 description，实际为 ${keys}`);
+	if (fields.name !== expectedName) fail(`${label}: SKILL.md name does not match the entry's skill name`, `${label} 的 SKILL.md name 与条目技能名不一致`);
+	if (!fields.description.trim() || fields.description.length > 1024) fail(`${label}: description must be non-empty and at most 1024 characters`, `${label} 的 description 必须非空且不超过 1024 字`);
+	if (!text.slice(end + 5).trim()) fail(`${label}: SKILL.md body is empty`, `${label} 的 SKILL.md 正文为空`);
 }
 function verifyLicenseFiles(entry, fileBytes) {
 	const present = MARKET_LICENSE_FILES.filter((name) => fileBytes.has(name));
-	if (!present.length) fail(`${entry.id} 的托管工件缺少许可文件：${artifactDirectoryPath(entry)}/ 根下须有 ${MARKET_LICENSE_FILES.join(" 或 ")}`);
+	const names = MARKET_LICENSE_FILES.join(" or "), namesZh = MARKET_LICENSE_FILES.join(" 或 ");
+	if (!present.length) fail(`${entry.id}: hosted artifact has no license file; ${artifactDirectoryPath(entry)}/ must contain ${names}`, `${entry.id} 的托管工件缺少许可文件：${artifactDirectoryPath(entry)}/ 根下须有 ${namesZh}`);
 	for (const name of present) {
-		if (!entry.license.files.includes(name)) fail(`${entry.id} 的许可文件 ${name} 须列在条目 license.files 里`);
+		if (!entry.license.files.includes(name)) fail(`${entry.id}: license file ${name} must be listed in the entry's license.files`, `${entry.id} 的许可文件 ${name} 须列在条目 license.files 里`);
 		const problem = licenseTextProblem(entry.license.spdx, decoder.decode(fileBytes.get(name)));
-		if (problem) fail(`${entry.id} 的 ${name} 与条目许可 ${entry.license.spdx} 不符：${problem}`);
+		if (problem) fail(`${entry.id}: ${name} does not match the entry license ${entry.license.spdx}: ${problem}`, `${entry.id} 的 ${name} 与条目许可 ${entry.license.spdx} 不符：${problem}`);
 	}
 }
 /** artifacts/ 下只放托管条目：类型目录固定，<id> 必须是该类型的托管条目；历史版本目录同样须自带许可文件。 */
@@ -2198,13 +2204,13 @@ async function verifyArtifactTree(root, hosted) {
 	}
 	for (const directory of await listDirectory(join(root, "artifacts"))) {
 		const ids = byDirectory.get(directory);
-		if (!kindOfDirectory.has(directory) || directory === "models") fail(`artifacts/${directory} 不是托管类型目录；工件只能放在 artifacts/{solutions,roles,skills,connectors}/ 下`);
+		if (!kindOfDirectory.has(directory) || directory === "models") fail(`artifacts/${directory} is not a hosted type directory; artifacts belong in artifacts/{solutions,roles,skills,connectors}/`, `artifacts/${directory} 不是托管类型目录；工件只能放在 artifacts/{solutions,roles,skills,connectors}/ 下`);
 		for (const id of await listDirectory(join(root, "artifacts", directory))) {
-			if (!ids?.has(id)) fail(`artifacts/${directory}/${id} 没有对应的 ${kindOfDirectory.get(directory)} 托管条目（上游条目不托管副本）`);
+			if (!ids?.has(id)) fail(`artifacts/${directory}/${id} has no matching hosted ${kindOfDirectory.get(directory)} entry (upstream entries are not hosted)`, `artifacts/${directory}/${id} 没有对应的 ${kindOfDirectory.get(directory)} 托管条目（上游条目不托管副本）`);
 			for (const version of await listDirectory(join(root, "artifacts", directory, id))) {
 				const base = join(root, "artifacts", directory, id, version);
-				if (!(await lstat(base)).isDirectory()) fail(`artifacts/${directory}/${id}/${version} 必须是版本目录`);
-				if (!(await Promise.all(MARKET_LICENSE_FILES.map((name) => exists(join(base, name))))).some(Boolean)) fail(`artifacts/${directory}/${id}/${version} 缺少许可文件（${MARKET_LICENSE_FILES.join(" 或 ")}）`);
+				if (!(await lstat(base)).isDirectory()) fail(`artifacts/${directory}/${id}/${version} must be a version directory`, `artifacts/${directory}/${id}/${version} 必须是版本目录`);
+				if (!(await Promise.all(MARKET_LICENSE_FILES.map((name) => exists(join(base, name))))).some(Boolean)) fail(`artifacts/${directory}/${id}/${version} has no license file (${MARKET_LICENSE_FILES.join(" or ")})`, `artifacts/${directory}/${id}/${version} 缺少许可文件（${MARKET_LICENSE_FILES.join(" 或 ")}）`);
 			}
 		}
 	}
@@ -2223,7 +2229,7 @@ async function validateMarketplace(root, { generateLock, allowNullDigest = false
 	const skillOwners = /* @__PURE__ */ new Map();
 	const claimSkillName = (skillName, entryId) => {
 		const owner = skillOwners.get(skillName);
-		if (owner && owner !== entryId) fail(entryId + " 的技能 " + skillName + " 与 " + owner + " 重名；同一宿主内技能名必须唯一，请改名");
+		if (owner && owner !== entryId) fail(`${entryId}: skill ${skillName} has the same name as ${owner}; skill names must be unique within a host, rename it`, `${entryId} 的技能 ${skillName} 与 ${owner} 重名；同一宿主内技能名必须唯一，请改名`);
 		skillOwners.set(skillName, entryId);
 	};
 	const solutionsByPackage = new Map(official.filter((entry) => entry.kind === "solution").map((entry) => [entry.solution.packageId, entry]));
@@ -2232,9 +2238,9 @@ async function validateMarketplace(root, { generateLock, allowNullDigest = false
 	for (const entry of official) {
 		if (entry.kind === "model" && entry.model.form === "local-general") for (const variant of entry.model.variants) {
 			const name = variant.sources[0].name;
-			if (localNames.has(name)) fail(`Ollama 模型名称重复：${name}（${localNames.get(name)} 与 ${entry.id}）`);
+			if (localNames.has(name)) fail(`duplicate Ollama model name ${name} (${localNames.get(name)} and ${entry.id})`, `Ollama 模型名称重复：${name}（${localNames.get(name)} 与 ${entry.id}）`);
 			localNames.set(name, entry.id);
-			if (variant.sources[0].digest === null && !allowNullDigest) fail(`${entry.id} 的 ${name} 缺少来源摘要；先运行 node scripts/核实Ollama条目摘要.mjs --write`);
+			if (variant.sources[0].digest === null && !allowNullDigest) fail(`${entry.id}: ${name} has no source digest; run node scripts/核实Ollama条目摘要.mjs --write first`, `${entry.id} 的 ${name} 缺少来源摘要；先运行 node scripts/核实Ollama条目摘要.mjs --write`);
 		}
 		if (entry.kind === "model") {
 			entries.push({
@@ -2248,11 +2254,12 @@ async function validateMarketplace(root, { generateLock, allowNullDigest = false
 		if (stdioConnector) {
 			const lockPath = join(artifactRoot, "package-lock.json");
 			if (!await exists(lockPath)) {
-				if (!generateLock) fail(entry.id + " 缺少随附依赖锁定 package-lock.json：运行 pnpm build:market-catalog 生成");
+				if (!generateLock) fail(`${entry.id} has no bundled dependency lock package-lock.json; run pnpm build:market-catalog to generate it`, `${entry.id} 缺少随附依赖锁定 package-lock.json：运行 pnpm build:market-catalog 生成`);
 				try {
 					await generateLock(entry.connector.recipe, lockPath);
 				} catch (error) {
-					fail(entry.id + " 的 package-lock.json 生成失败：" + (error?.stderr?.toString().trim() || error?.message || String(error)));
+					const detail = error?.stderr?.toString().trim() || error?.message || String(error);
+					fail(`${entry.id}: failed to generate package-lock.json: ${detail}`, `${entry.id} 的 package-lock.json 生成失败：${detail}`);
 				}
 			}
 		}
@@ -2260,17 +2267,17 @@ async function validateMarketplace(root, { generateLock, allowNullDigest = false
 		try {
 			listed = await walk(artifactRoot);
 		} catch (error) {
-			if (error?.code === "ENOENT") fail(entry.id + " 缺少工件目录 " + artifactDirectoryPath(entry));
+			if (error?.code === "ENOENT") fail(`${entry.id} has no artifact directory ${artifactDirectoryPath(entry)}`, `${entry.id} 缺少工件目录 ${artifactDirectoryPath(entry)}`);
 			throw error;
 		}
-		if (!listed.length || listed.length > 500) fail(entry.id + " 工件文件数必须在 1–500 之间");
+		if (!listed.length || listed.length > 500) fail(`${entry.id}: artifact must contain between 1 and 500 files`, `${entry.id} 工件文件数必须在 1–500 之间`);
 		const artifactFiles = [];
 		let total = 0;
 		const fileBytes = /* @__PURE__ */ new Map();
 		for (const file of listed) {
 			const bytes = await readFile(file.absolute);
 			total += bytes.byteLength;
-			if (total > 20971520) fail(entry.id + " 工件总大小超过 20 MiB");
+			if (total > 20971520) fail(`${entry.id}: artifact exceeds 20 MiB in total`, `${entry.id} 工件总大小超过 20 MiB`);
 			if (entry.kind === "skill" && file.path === "SKILL.md") {
 				frontmatter(decoder.decode(bytes), entry.skill.name, entry.id);
 				claimSkillName(entry.skill.name, entry.id);
@@ -2285,44 +2292,44 @@ async function validateMarketplace(root, { generateLock, allowNullDigest = false
 		}
 		verifyLicenseFiles(entry, fileBytes);
 		if (stdioConnector) {
-			const bytes = fileBytes.get("package-lock.json"), label = entry.id + " 的 package-lock.json";
-			if (!bytes) fail(label + " 缺失");
+			const bytes = fileBytes.get("package-lock.json");
+			if (!bytes) fail(`${entry.id}: package-lock.json is missing`, `${entry.id} 的 package-lock.json 缺失`);
 			try {
 				readManagedPackageLock(JSON.parse(decoder.decode(bytes)), entry.connector.recipe);
 			} catch (error) {
-				fail(label + " 无效：" + (error?.message ?? String(error)));
+				fail(`${entry.id}: package-lock.json is invalid: ${reason(error)}`, `${entry.id} 的 package-lock.json 无效：${reason(error)}`);
 			}
 		}
 		if (entry.kind === "solution") {
 			const manifestBytes = fileBytes.get("teloa.json");
-			if (!manifestBytes) fail(entry.id + " 缺少根目录 teloa.json");
+			if (!manifestBytes) fail(`${entry.id} has no root teloa.json`, `${entry.id} 缺少根目录 teloa.json`);
 			let manifest;
 			try {
 				manifest = validateManifest(JSON.parse(decoder.decode(manifestBytes)));
 			} catch (error) {
-				fail(entry.id + " 的 teloa.json 无效：" + (error?.message ?? String(error)));
+				fail(`${entry.id}: teloa.json is invalid: ${reason(error)}`, `${entry.id} 的 teloa.json 无效：${reason(error)}`);
 			}
-			if (manifest.id !== entry.solution.packageId) fail(entry.id + " 的 teloa.json id（" + manifest.id + "）与条目 solution.packageId（" + entry.solution.packageId + "）不一致");
-			if (manifest.scope !== entry.solution.scope) fail(entry.id + " 的 teloa.json scope（" + manifest.scope + "）与条目 solution.scope（" + entry.solution.scope + "）不一致");
-			if (!isMarketIndustryRoot(manifest.domain)) fail(entry.id + " 的 teloa.json domain（" + manifest.domain + "）不是合法的一级行业键。");
+			if (manifest.id !== entry.solution.packageId) fail(`${entry.id}: teloa.json id (${manifest.id}) does not match solution.packageId (${entry.solution.packageId})`, `${entry.id} 的 teloa.json id（${manifest.id}）与条目 solution.packageId（${entry.solution.packageId}）不一致`);
+			if (manifest.scope !== entry.solution.scope) fail(`${entry.id}: teloa.json scope (${manifest.scope}) does not match solution.scope (${entry.solution.scope})`, `${entry.id} 的 teloa.json scope（${manifest.scope}）与条目 solution.scope（${entry.solution.scope}）不一致`);
+			if (!isMarketIndustryRoot(manifest.domain)) fail(`${entry.id}: teloa.json domain (${manifest.domain}) is not a valid top-level industry key`, `${entry.id} 的 teloa.json domain（${manifest.domain}）不是合法的一级行业键。`);
 			if (!entry.taxonomy.industries.some((ind) => {
 				return (ind.includes("/") ? ind.split("/")[0] : ind) === manifest.domain;
-			})) fail(entry.id + " 的 taxonomy.industries（" + JSON.stringify(entry.taxonomy.industries) + "）与 domain（" + manifest.domain + "）不一致，至少一个行业键的一级应等于 domain。");
-			for (const resource of manifest.resources) if (resource.required && resource.source.kind === "local" && !fileBytes.has(resource.source.path)) fail(entry.id + " 缺少清单中必需的资源文件 " + resource.source.path);
+			})) fail(`${entry.id}: taxonomy.industries (${JSON.stringify(entry.taxonomy.industries)}) does not match domain (${manifest.domain}); at least one industry key must start with the domain`, `${entry.id} 的 taxonomy.industries（${JSON.stringify(entry.taxonomy.industries)}）与 domain（${manifest.domain}）不一致，至少一个行业键的一级应等于 domain。`);
+			for (const resource of manifest.resources) if (resource.required && resource.source.kind === "local" && !fileBytes.has(resource.source.path)) fail(`${entry.id} is missing the required resource file ${resource.source.path} listed in the manifest`, `${entry.id} 缺少清单中必需的资源文件 ${resource.source.path}`);
 			for (const resource of manifest.resources) {
 				if (resource.kind !== "mcp" || resource.source.kind !== "local") continue;
-				if (!fileBytes.has(resource.source.path)) fail(entry.id + " 的 " + resource.id + " 的连接声明文件 " + resource.source.path + " 不存在");
+				if (!fileBytes.has(resource.source.path)) fail(`${entry.id}: connection definition file ${resource.source.path} of ${resource.id} does not exist`, `${entry.id} 的 ${resource.id} 的连接声明文件 ${resource.source.path} 不存在`);
 				let definition;
 				try {
 					definition = readIndustryMcpConnectionDefinition(JSON.parse(decoder.decode(fileBytes.get(resource.source.path))));
 				} catch (error) {
-					fail(entry.id + " 的 " + resource.id + " 的连接声明无效：" + (error?.message ?? String(error)));
+					fail(`${entry.id}: connection definition of ${resource.id} is invalid: ${reason(error)}`, `${entry.id} 的 ${resource.id} 的连接声明无效：${reason(error)}`);
 				}
 				const connector = connectorsByServer.get(definition.serverName);
-				if (!connector) fail(entry.id + " 的 " + resource.id + " 的连接服务 " + definition.serverName + " 不在目录连接器里");
+				if (!connector) fail(`${entry.id}: connection server ${definition.serverName} of ${resource.id} is not a catalog connector`, `${entry.id} 的 ${resource.id} 的连接服务 ${definition.serverName} 不在目录连接器里`);
 				for (const tool of definition.tools) {
 					const declared = connector.connector.tools.find((item) => item.name === tool);
-					if (!declared) fail(entry.id + " 的 " + resource.id + " 声明的工具 " + tool + " 不在连接器 " + connector.id + " 的工具清单里");
+					if (!declared) fail(`${entry.id}: tool ${tool} declared by ${resource.id} is not in the tool list of connector ${connector.id}`, `${entry.id} 的 ${resource.id} 声明的工具 ${tool} 不在连接器 ${connector.id} 的工具清单里`);
 					if (declared.readOnly) continue;
 					const roles = manifest.relations.filter((relation) => relation.kind === "role-connection" && relation.to === resource.id).map((relation) => manifest.resources.find((item) => item.id === relation.from && item.kind === "role"));
 					const confirmed = (role) => {
@@ -2334,7 +2341,7 @@ async function validateMarketplace(root, { generateLock, allowNullDigest = false
 							return false;
 						}
 					};
-					if (!roles.length || !roles.every(confirmed)) fail(entry.id + " 的 " + resource.id + " 声明的工具 " + tool + " 不是只读工具：须在每个关联岗位的 confirmationPoints 里写明工具名 " + tool + " 的确认点（须作为完整记号出现）");
+					if (!roles.length || !roles.every(confirmed)) fail(`${entry.id}: tool ${tool} declared by ${resource.id} is not read-only; every linked role must name ${tool} (as a whole token) in its confirmationPoints`, `${entry.id} 的 ${resource.id} 声明的工具 ${tool} 不是只读工具：须在每个关联岗位的 confirmationPoints 里写明工具名 ${tool} 的确认点（须作为完整记号出现）`);
 				}
 			}
 			for (const [path, bytes] of fileBytes) {
@@ -2346,30 +2353,30 @@ async function validateMarketplace(root, { generateLock, allowNullDigest = false
 			}
 		}
 		if (entry.kind === "role") {
-			if ([...fileBytes.keys()].some((path) => path !== "role.json" && path !== "README.md" && !MARKET_LICENSE_FILES.includes(path))) fail(entry.id + " 的工件只允许 role.json、README.md 与许可文件");
+			if ([...fileBytes.keys()].some((path) => path !== "role.json" && path !== "README.md" && !MARKET_LICENSE_FILES.includes(path))) fail(`${entry.id}: artifact may contain only role.json, README.md and the license file`, `${entry.id} 的工件只允许 role.json、README.md 与许可文件`);
 			const roleBytes = fileBytes.get("role.json");
-			if (!roleBytes) fail(entry.id + " 缺少 role.json");
+			if (!roleBytes) fail(`${entry.id} has no role.json`, `${entry.id} 缺少 role.json`);
 			const solution = solutionsByPackage.get(entry.role.fromSolution.packageId);
-			if (!solution) fail(entry.id + " 找不到来源方案条目（packageId " + entry.role.fromSolution.packageId + "）");
-			if (entry.version !== solution.version || entry.role.fromSolution.version !== solution.version) fail(entry.id + " 的版本（" + entry.version + "）必须等于所指方案条目版本（" + solution.id + "@" + solution.version + "）：方案 roles/<id>.json 变更时 role 条目版本须同步递增");
-			if (entry.role.scope !== solution.solution.scope) fail(entry.id + " 的 scope 与所属方案不一致（条目 " + entry.role.scope + "，" + solution.id + " 为 " + solution.solution.scope + "）");
-			if (entry.role.fromSolution.path !== "roles/" + entry.role.roleId + ".json") fail(entry.id + " 的 fromSolution.path 必须是 roles/" + entry.role.roleId + ".json（与 roleId 对应），实为 " + entry.role.fromSolution.path);
+			if (!solution) fail(`${entry.id}: source solution entry not found (packageId ${entry.role.fromSolution.packageId})`, `${entry.id} 找不到来源方案条目（packageId ${entry.role.fromSolution.packageId}）`);
+			if (entry.version !== solution.version || entry.role.fromSolution.version !== solution.version) fail(`${entry.id}: version (${entry.version}) must equal the source solution entry version (${solution.id}@${solution.version}); bump the role entry whenever the solution's roles/<id>.json changes`, `${entry.id} 的版本（${entry.version}）必须等于所指方案条目版本（${solution.id}@${solution.version}）：方案 roles/<id>.json 变更时 role 条目版本须同步递增`);
+			if (entry.role.scope !== solution.solution.scope) fail(`${entry.id}: scope does not match the source solution (entry ${entry.role.scope}, ${solution.id} is ${solution.solution.scope})`, `${entry.id} 的 scope 与所属方案不一致（条目 ${entry.role.scope}，${solution.id} 为 ${solution.solution.scope}）`);
+			if (entry.role.fromSolution.path !== "roles/" + entry.role.roleId + ".json") fail(`${entry.id}: fromSolution.path must be roles/${entry.role.roleId}.json (matching roleId), found ${entry.role.fromSolution.path}`, `${entry.id} 的 fromSolution.path 必须是 roles/${entry.role.roleId}.json（与 roleId 对应），实为 ${entry.role.fromSolution.path}`);
 			let sourceBytes;
 			try {
 				sourceBytes = await readFile(join(root, artifactDirectoryPath(solution), entry.role.fromSolution.path));
 			} catch {
-				fail(entry.id + " 的来源方案缺少 " + entry.role.fromSolution.path);
+				fail(`${entry.id}: source solution has no ${entry.role.fromSolution.path}`, `${entry.id} 的来源方案缺少 ${entry.role.fromSolution.path}`);
 			}
-			if (!Buffer.from(roleBytes).equals(sourceBytes)) fail(entry.id + " 的 role.json 与方案 " + solution.id + "@" + solution.version + "/" + entry.role.fromSolution.path + " 字节不一致");
+			if (!Buffer.from(roleBytes).equals(sourceBytes)) fail(`${entry.id}: role.json differs byte-for-byte from ${solution.id}@${solution.version}/${entry.role.fromSolution.path}`, `${entry.id} 的 role.json 与方案 ${solution.id}@${solution.version}/${entry.role.fromSolution.path} 字节不一致`);
 			let parsed;
 			try {
 				parsed = JSON.parse(decoder.decode(roleBytes));
 			} catch {
-				fail(entry.id + " 的 role.json 不是合法 JSON");
+				fail(`${entry.id}: role.json is not valid JSON`, `${entry.id} 的 role.json 不是合法 JSON`);
 			}
-			if (parsed?.format !== "teloa.role/v1") fail(entry.id + " 的 role.json 必须是 teloa.role/v1");
+			if (parsed?.format !== "teloa.role/v1") fail(`${entry.id}: role.json must be teloa.role/v1`, `${entry.id} 的 role.json 必须是 teloa.role/v1`);
 			const { format: _format, ...definition } = parsed;
-			if (canonical(definition) !== canonical(rawById.get(entry.id).role.definition)) fail(entry.id + " 的 definition 与 role.json 不一致");
+			if (canonical(definition) !== canonical(rawById.get(entry.id).role.definition)) fail(`${entry.id}: definition does not match role.json`, `${entry.id} 的 definition 与 role.json 不一致`);
 		}
 		entries.push({
 			...entry,
@@ -2398,7 +2405,7 @@ async function validateMarketplace(root, { generateLock, allowNullDigest = false
 /** v1 条目投影：词表外的行业二级键降为一级键（去重），其余字段不变。 */
 function v1Entry(entry) {
 	const industries = [...new Set(entry.taxonomy.industries.map((key) => MARKET_INDEX_V1_INDUSTRIES.includes(key) ? key : marketIndustryParent(key)))];
-	if (industries.some((key) => !MARKET_INDEX_V1_INDUSTRIES.includes(key))) throw new Error(entry.id + " 的行业键无法映射到 v1 冻结词表");
+	if (industries.some((key) => !MARKET_INDEX_V1_INDUSTRIES.includes(key))) fail(`${entry.id}: industry key cannot be mapped to the frozen v1 vocabulary`, `${entry.id} 的行业键无法映射到 v1 冻结词表`);
 	return {
 		...entry,
 		taxonomy: {
@@ -2416,7 +2423,7 @@ async function buildMarketIndexes(root) {
 	for (const entry of all.filter(isHostedEntry)) try {
 		await access(join(root, artifactDirectoryPath(entry)));
 	} catch {
-		throw new Error(entry.id + " 缺少工件目录 " + artifactDirectoryPath(entry));
+		fail(`${entry.id} has no artifact directory ${artifactDirectoryPath(entry)}`, `${entry.id} 缺少工件目录 ${artifactDirectoryPath(entry)}`);
 	}
 	const entries = all.filter((entry) => !(entry.kind === "skill" && entry.delivery !== "upstream" && entry.upstream === null));
 	const catalogVersion = (await readFile(join(root, "catalog-version.txt"), "utf8")).trim();

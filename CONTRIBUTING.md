@@ -9,7 +9,7 @@ Contributions are welcome through pull requests to this repository. One pull req
 ### Before you start
 
 - **Sign off every commit** under the [Developer Certificate of Origin 1.1](https://developercertificate.org/): add `Signed-off-by: Your Name <you@example.com>` with `git commit -s`. The DCO check in CI fails without it. There is no CLA. The DCO certifies that you have the right to submit the work under the license that applies to it; it is not a copyright assignment. This is the same policy as the Teloa source repository ([DCO.md](https://github.com/teloa-ai/teloa/blob/main/DCO.md)).
-- **Run the validator** from the repository root: `node tools/validate.mjs`. After adding or changing entries, run `node tools/validate.mjs --write` to regenerate `INDEX.md` and `NOTICE`, then commit them. Node.js 22 or newer is required; nothing else needs to be installed.
+- **Run the validator** from the repository root: `node tools/validate.mjs`. After adding or changing entries, run `node tools/validate.mjs --write` to regenerate `INDEX.md` and `NOTICE`, then commit them. Node.js 22 or newer is required; nothing else needs to be installed. Error messages are English first, with the Chinese text after a slash.
 
 ### Licensing rules
 
@@ -18,6 +18,7 @@ Contributions are welcome through pull requests to this repository. One pull req
 - Source-available or no-redistribution resources can only be listed as upstream entries (`delivery: upstream`): metadata and a pinned source, no hosted copy. Publicly readable does not mean redistributable.
 - Connectors that talk to a remote service use `LicenseRef-<Vendor>-Terms`. This names the provider's terms of service, not a license for anything in this repository. The connector's license file must include a link to the provider's terms or documentation.
 - Any other custom license must include its full text or a link to it in the entry's license file.
+- Correcting a license file alone (attribution, identifier, full text) does not bump the entry version, because what is installed and how it behaves do not change. Record the correction in `CHANGELOG.md`. Any change to the installable files still requires a new version directory; earlier version directories are kept so older catalog versions stay reproducible.
 - Catalog metadata and documentation you contribute are licensed under Apache-2.0, like the rest of this repository.
 
 ### A pull request contains
@@ -50,6 +51,8 @@ A `skill` or `work-template` resource in a `teloa.business-package/v3` solution 
 2. A maintainer reviews source, license and content, and sets the compatibility status from actual verification. Code owners for `catalog/` and `artifacts/` are listed in `.github/CODEOWNERS`.
 3. After merging, a maintainer publishes the signed index to market.teloa.ai and pins the catalog into the next Teloa release.
 
+This repository is the single source of truth for the catalog. Until the sync script in the Teloa source repository (`scripts/同步官方市场.mjs --ref <commit>`, planned for the release after the marketplace goes public) is in place, maintainers copy a reviewed commit of this repository into the source repository's `marketplace/` by hand and record the commit id there; the source repository does not accept direct catalog changes.
+
 To report a malicious or unsafe resource, follow [SECURITY.md](SECURITY.md) instead of opening a pull request.
 
 ## 中文
@@ -59,7 +62,7 @@ To report a malicious or unsafe resource, follow [SECURITY.md](SECURITY.md) inst
 ### 开始之前
 
 - **每个提交都要签署** [Developer Certificate of Origin 1.1](https://developercertificate.org/)：用 `git commit -s` 加上 `Signed-off-by: 你的名字 <you@example.com>`，缺签署 CI 的 DCO 检查会失败。不设 CLA。签署是在证明你有权按适用的许可提交这份内容，不是转让版权。与 Teloa 源码仓的规则一致（[DCO.md](https://github.com/teloa-ai/teloa/blob/main/DCO.md)）。
-- **运行校验器**：在仓库根目录运行 `node tools/validate.mjs`。新增或修改条目后运行 `node tools/validate.mjs --write` 重新生成 `INDEX.md` 与 `NOTICE` 并一起提交。需要 Node.js 22 或更新版本，无需安装其他依赖。
+- **运行校验器**：在仓库根目录运行 `node tools/validate.mjs`。新增或修改条目后运行 `node tools/validate.mjs --write` 重新生成 `INDEX.md` 与 `NOTICE` 并一起提交。需要 Node.js 22 或更新版本，无需安装其他依赖。报错文案英文优先，斜杠后附中文。
 
 ### 许可规则
 
@@ -68,6 +71,7 @@ To report a malicious or unsafe resource, follow [SECURITY.md](SECURITY.md) inst
 - 「仅源码可见」或禁止再分发的资源只能以上游条目收录（`delivery: upstream`）：只记元数据与固定来源，不托管副本。公开可读不等于可以再分发。
 - 连接远端服务的连接器使用 `LicenseRef-<厂商>-Terms`，它指的是服务商的服务条款，不是本仓库任何内容的许可。连接器的许可文件里须给出服务条款或文档链接。
 - 其他自定义许可须在条目的许可文件里给出完整许可正文或链接。
+- 只修正许可文件（署名、标识、正文）不递增条目版本：安装内容与行为没有变化，在 `CHANGELOG.md` 里记录即可。改动实际安装的文件仍须新建版本目录；旧版本目录保留，保证旧目录版本可复现。
 - 你贡献的目录元数据与文档和本仓库其余部分一样采用 Apache-2.0。
 
 ### PR 需要包含
@@ -99,5 +103,7 @@ To report a malicious or unsafe resource, follow [SECURITY.md](SECURITY.md) inst
 1. CI 只做静态校验：运行 `node tools/validate.mjs`（结构、路径、大小、摘要、许可文件与生成文件）和 DCO 签署检查。CI 不执行投稿中的任何脚本，也不接触部署密钥。
 2. 维护者人工核对来源、许可与内容，按实际验证结果填写兼容状态。`catalog/` 与 `artifacts/` 的负责人见 `.github/CODEOWNERS`。
 3. 合入后由维护者把签名索引发布到 market.teloa.ai，并在下一个 Teloa 版本中固定目录快照。
+
+本仓库是目录的唯一事实源。Teloa 源码仓的同步脚本（`scripts/同步官方市场.mjs --ref <commit>`，排在市场仓公开后的下一个发行）落地前，维护者手工把本仓库某个已审核提交复制进源码仓的 `marketplace/` 并记录提交号；源码仓不再直接改目录。
 
 发现恶意或不安全的资源，请按 [SECURITY.md](SECURITY.md) 报告，不要提 PR。

@@ -4,6 +4,32 @@ All notable changes to the catalog are recorded here. The format follows [Keep a
 
 目录的重要变更记录在此，格式遵循 Keep a Changelog，按目录版本（`catalog-version.txt`）分组。全部条目见 [INDEX.md](INDEX.md)。
 
+## [2026.9.27.2] - 2026-09-27
+
+### Added
+
+- Five local Ollama model references (`model.form: local-general`): `teloa.model.local.deepseek-r1`, `teloa.model.local.gemma3`, `teloa.model.local.llama3.1`, `teloa.model.local.phi4`, `teloa.model.local.qwen3`. Cloud model entries now carry explicit `local: null` and `variants: null`.
+  新增五个本机 Ollama 模型引用；云端模型条目显式写出 `local: null` 与 `variants: null`。
+- The validator requires Ollama variant names to be unique across entries and every variant to carry its registry digest.
+  校验器要求 Ollama 变体名称跨条目唯一，且每个变体都带 registry 摘要。
+
+### Changed
+
+- Connectors to remotely hosted services now declare the provider's terms instead of an open-source license: `teloa.mcp-atlassian` (was Apache-2.0) is `LicenseRef-Atlassian-Terms`; `teloa.mcp-posthog`, `teloa.mcp-sentry` and `teloa.mcp-stripe` (were MIT) are `LicenseRef-PostHog-Terms`, `LicenseRef-Sentry-Terms` and `LicenseRef-Stripe-Terms`. Their license files now carry the provider documentation link, as the other `LicenseRef-*-Terms` connectors already do.
+  连接远端托管服务的 atlassian、posthog、sentry、stripe 改为声明服务商条款 `LicenseRef-<厂商>-Terms`，许可文件给出服务文档链接，与其他七个条款型连接器一致。
+- Validator messages are English first with the Chinese text after a slash (`English / 中文`). Field-level errors passed through from the entry reader are unchanged.
+  校验器报错改为英文优先、中文附后；条目读取器透传的字段级错误不变。
+
+### Fixed
+
+- `teloa.mcp-amap` (ISC): the copyright line now names the upstream author from the package's `package.json`, `高德地图开放平台, PBC (https://lbs.amap.com)`, instead of a generic placeholder.
+  `teloa.mcp-amap` 的 ISC 版权行改为上游 `package.json` 的实际署名。
+
+### Versioning note · 版本说明
+
+The license-file corrections in 2026.9.27.1 and in this release change hosted artifact bytes (and therefore the entries' artifact tree hashes) without changing what is installed or how it behaves. Entry versions were deliberately not bumped for these fixes; the catalog version records them. Historical version directories under `artifacts/` (16 at this release) are kept so earlier catalog versions stay reproducible.
+2026.9.27.1 与本版的许可文件修正只改工件字节与工件树摘要，不改安装内容与行为，经裁定不递增条目版本，以目录版本记录。`artifacts/` 下的历史版本目录（本版 16 个）保留，以保证旧目录版本可复现。
+
 ## [2026.9.27.1] - 2026-09-27
 
 First public layout of the repository. / 仓库首次公开时的目录布局。

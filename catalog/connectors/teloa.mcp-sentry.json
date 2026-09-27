@@ -78,7 +78,7 @@
   },
   "modifications": [],
   "license": {
-    "spdx": "MIT",
+    "spdx": "LicenseRef-Sentry-Terms",
     "files": [
       "LICENSE"
     ]

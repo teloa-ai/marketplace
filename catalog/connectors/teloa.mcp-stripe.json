@@ -86,7 +86,7 @@
   },
   "modifications": [],
   "license": {
-    "spdx": "MIT",
+    "spdx": "LicenseRef-Stripe-Terms",
     "files": [
       "LICENSE"
     ]

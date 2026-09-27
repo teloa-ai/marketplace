@@ -87,7 +87,7 @@
   },
   "modifications": [],
   "license": {
-    "spdx": "Apache-2.0",
+    "spdx": "LicenseRef-Atlassian-Terms",
     "files": [
       "LICENSE"
     ]

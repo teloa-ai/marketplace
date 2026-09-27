@@ -94,7 +94,7 @@ teloa.mcp-amap@1.0.1  artifacts/connectors/teloa.mcp-amap/1.0.1/
 
 teloa.mcp-atlassian@1.0.0  artifacts/connectors/teloa.mcp-atlassian/1.0.0/
   Attribution: Teloa contributors; connects to https://developer.atlassian.com/cloud/jira/platform/mcp/
-  License: Apache-2.0 (LICENSE)
+  License: LicenseRef-Atlassian-Terms (LICENSE)
 
 teloa.mcp-composio@1.0.1  artifacts/connectors/teloa.mcp-composio/1.0.1/
   Attribution: Teloa contributors; connects to https://docs.composio.dev/mcp
@@ -158,11 +158,11 @@ teloa.mcp-playwright@1.0.1  artifacts/connectors/teloa.mcp-playwright/1.0.1/
 
 teloa.mcp-posthog@1.0.0  artifacts/connectors/teloa.mcp-posthog/1.0.0/
   Attribution: Teloa contributors; connects to https://posthog.com/docs/mcp
-  License: MIT (LICENSE)
+  License: LicenseRef-PostHog-Terms (LICENSE)
 
 teloa.mcp-sentry@1.0.0  artifacts/connectors/teloa.mcp-sentry/1.0.0/
   Attribution: Teloa contributors; connects to https://docs.sentry.io/product/sentry-basics/integrations/mcp/
-  License: MIT (LICENSE)
+  License: LicenseRef-Sentry-Terms (LICENSE)
 
 teloa.mcp-slack@1.0.0  artifacts/connectors/teloa.mcp-slack/1.0.0/
   Attribution: Teloa contributors; connects to https://docs.slack.dev/ai/slack-mcp-server/
@@ -170,7 +170,7 @@ teloa.mcp-slack@1.0.0  artifacts/connectors/teloa.mcp-slack/1.0.0/
 
 teloa.mcp-stripe@1.0.0  artifacts/connectors/teloa.mcp-stripe/1.0.0/
   Attribution: Teloa contributors; connects to https://docs.stripe.com/building-with-llms/mcp
-  License: MIT (LICENSE)
+  License: LicenseRef-Stripe-Terms (LICENSE)
 
 teloa.mcp-supabase-remote@1.0.0  artifacts/connectors/teloa.mcp-supabase-remote/1.0.0/
   Attribution: Teloa contributors; connects to https://supabase.com/docs/guides/getting-started/mcp

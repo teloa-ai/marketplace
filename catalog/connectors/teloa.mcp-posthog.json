@@ -55,7 +55,7 @@
   },
   "modifications": [],
   "license": {
-    "spdx": "MIT",
+    "spdx": "LicenseRef-PostHog-Terms",
     "files": [
       "LICENSE"
     ]
