@@ -34,7 +34,8 @@ jobs:
         with:
           node-version: 24
 
-      # Scope guard. Submissions change only catalog/, artifacts/ and reviews/: generated files are produced after
+      # Scope guard, fast feedback only: a pull request can edit this file, so the hard gate is scope.yml
+      # (pull_request_target, runs from main). Submissions change only catalog/, artifacts/ and reviews/: generated files are produced after
       # merge by generate.yml (editing them makes parallel pull requests conflict), and tools/, .github/ and the
       # documents run or ship with write permissions after merge. Two same-repository branch families are
       # different, and only people with write access can push them:

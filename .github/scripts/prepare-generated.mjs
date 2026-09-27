@@ -18,15 +18,13 @@ const isAncestor = (commit) => {
 	}
 };
 
-// The main commit the last generated files were built from. Start at the last commit that changed
-// catalog-version.txt: pull requests other than bot/generated-files cannot touch that file (validate.yml).
-// If github-actions[bot] authored it, use its Catalog-Source trailer, because after a squash or rebase merge
-// its tree may already include submissions merged while the generated-files pull request was open. Otherwise
-// (history before this workflow, or a maintainer's manual bump) use that commit itself. A Catalog-Source
-// trailer on any other commit is ignored.
-const BOT_EMAIL = "41898282+github-actions[bot]@users.noreply.github.com";
-const [last, author, traced] = git("log", "-1", "--format=%H%x00%ae%x00%(trailers:key=Catalog-Source,valueonly,separator=%x20)", "--", "catalog-version.txt").split("\0");
-const source = author === BOT_EMAIL && /^[0-9a-f]{40}$/.test(traced ?? "") && isAncestor(traced) ? traced : last;
+// The main commit the last generated files were built from is recorded in the tree, not in commit metadata:
+// every generated CHANGELOG.md section carries <!-- Catalog-Source: <sha> -->, and the first one is the latest.
+// That survives merge-commit, squash and rebase merges of the generated-files pull request whatever author,
+// committer or message GitHub gives the result, and submissions cannot edit CHANGELOG.md (scope check).
+// Without a marker (history before this workflow), fall back to the last commit that changed catalog-version.txt.
+const recorded = /<!-- Catalog-Source: ([0-9a-f]{40}) -->/.exec(readFileSync("CHANGELOG.md", "utf8"))?.[1];
+const source = recorded && isAncestor(recorded) ? recorded : git("log", "-1", "--format=%H", "--", "catalog-version.txt");
 const changedPaths = git("diff", "--name-only", "--no-renames", source, "HEAD", "--", "catalog", "artifacts").split("\n").filter(Boolean);
 if (!changedPaths.length) {
 	console.log(`catalog/ and artifacts/ unchanged since ${source}; catalog version stays.`);
@@ -68,7 +66,7 @@ const version = match[1] === today ? `${today}.${Number(match[2]) + 1}` : `${tod
 writeFileSync("catalog-version.txt", version + "\n");
 
 const date = `${parts.year}-${parts.month.padStart(2, "0")}-${parts.day.padStart(2, "0")}`;
-const section = [`## [${version}] - ${date}`, "", `_Generated after merge from the catalog changes since \`${source.slice(0, 7)}\`; details are in the merged pull requests. / 合并后按 \`${source.slice(0, 7)}\` 以来的目录变更自动生成，详情见对应 PR。_`, ""];
+const section = [`## [${version}] - ${date}`, "", `<!-- Catalog-Source: ${git("rev-parse", "HEAD")} -->`, `_Generated after merge from the catalog changes since \`${source.slice(0, 7)}\`; details are in the merged pull requests. / 合并后按 \`${source.slice(0, 7)}\` 以来的目录变更自动生成，详情见对应 PR。_`, ""];
 for (const [heading, lines] of [["Added", added], ["Changed", changed], ["Removed", removed]]) if (lines.length) section.push(`### ${heading}`, "", ...lines, "");
 const changelog = readFileSync("CHANGELOG.md", "utf8");
 const at = changelog.indexOf("\n## ");

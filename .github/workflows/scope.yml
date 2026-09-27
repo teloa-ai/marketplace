@@ -1,0 +1,95 @@
+name: Scope
+
+# Hard scope gate. pull_request_target runs this file as it is on the base branch, so a pull request cannot
+# weaken the rule by editing its own workflows (the scope step in validate.yml stays as fast feedback only).
+# It never checks out or runs pull request content: changed paths come from the GitHub API, event fields reach
+# the shell only through env, and the token can only read.
+#   submissions (forks and every other branch)  catalog/, artifacts/, reviews/ only;
+#   same-repository bot/generated-files        the six generated files only;
+#   same-repository infra/*                    anything except INDEX.md, NOTICE and catalog-version.txt
+#                                              (code owner review is the gate for tools/ and .github/);
+#   nobody deletes README.md or README.zh-CN.md.
+# workflow_dispatch serves bot/generated-files, whose pull request is opened with GITHUB_TOKEN and so starts no
+# pull_request_target run; generate.yml dispatches this workflow on that branch.
+on:
+  pull_request_target:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: read
+
+concurrency:
+  group: scope-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  scope:
+    name: Scope (base workflow)
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check changed paths (GitHub API, no checkout)
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          EVENT: ${{ github.event_name }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          CHANGED_FILES: ${{ github.event.pull_request.changed_files }}
+          HEAD_REF: ${{ github.event.pull_request.head.ref }}
+          HEAD_REPO: ${{ github.event.pull_request.head.repo.full_name }}
+          DISPATCH_REF: ${{ github.ref_name }}
+        run: |
+          # One line per file: status, path, previous path (renames). @tsv escapes tabs and newlines in names.
+          if [ "$EVENT" = pull_request_target ]; then
+            # The pull request files API lists at most 3000 files; refuse to judge a partial list.
+            if [ "$CHANGED_FILES" -gt 3000 ]; then
+              echo "::error::The pull request changes $CHANGED_FILES files; the API lists at most 3000. Split it. / 改动文件超过 3000 个，请拆分 PR。"
+              exit 1
+            fi
+            files=$(gh api --paginate "repos/$GH_REPO/pulls/$PR_NUMBER/files?per_page=100" --jq '.[] | [.status, .filename, (.previous_filename // "")] | @tsv')
+            listed=$(printf '%s' "$files" | grep -c '' || true)
+            if [ "$listed" != "$CHANGED_FILES" ]; then
+              echo "::error::The API listed $listed of $CHANGED_FILES changed files; refusing to judge a partial list. / 文件列表不完整。"
+              exit 1
+            fi
+            mode=submission
+            if [ "$HEAD_REPO" = "$GH_REPO" ] && [ "$HEAD_REF" = bot/generated-files ]; then mode=bot; fi
+            if [ "$HEAD_REPO" = "$GH_REPO" ] && [[ "$HEAD_REF" == infra/* ]]; then mode=infra; fi
+          else
+            # Dispatch: only the generated-files branch, compared with main (the compare API lists up to 300 files).
+            if [ "$DISPATCH_REF" != bot/generated-files ]; then
+              echo "::error::Dispatch is only for bot/generated-files. / 仅用于机器人分支。"
+              exit 1
+            fi
+            files=$(gh api "repos/$GH_REPO/compare/main...bot/generated-files" --jq '.files[] | [.status, .filename, (.previous_filename // "")] | @tsv')
+            if [ "$(printf '%s' "$files" | grep -c '' || true)" -ge 300 ]; then
+              echo "::error::Too many changed files for the compare API. / 改动文件过多。"
+              exit 1
+            fi
+            mode=bot
+          fi
+
+          # Escape values for workflow commands: message text, and properties such as file=.
+          msg() { local v=${1//%/%25}; v=${v//$'\r'/%0D}; printf '%s' "${v//$'\n'/%0A}"; }
+          prop() { local v; v=$(msg "$1"); v=${v//:/%3A}; printf '%s' "${v//,/%2C}"; }
+          allowed() {
+            case $mode in
+              submission) [[ "$1" =~ ^(catalog|artifacts|reviews)/ ]] ;;
+              bot) [[ "$1" =~ ^(INDEX\.md|NOTICE|catalog-version\.txt|CHANGELOG\.md|README\.md|README\.zh-CN\.md)$ ]] ;;
+              infra) ! [[ "$1" =~ ^(INDEX\.md|NOTICE|catalog-version\.txt)$ ]] ;;
+            esac
+          }
+          status=0
+          while IFS=$'\t' read -r change path previous; do
+            [ -n "$path" ] || continue
+            for name in "$path" ${previous:+"$previous"}; do
+              if [[ "$name" =~ ^README(\.zh-CN)?\.md$ ]] && { [ "$change" = removed ] || [ "$name" = "$previous" ]; }; then
+                echo "::error file=$(prop "$name")::$(msg "$name") must not be deleted or renamed. / 不得删除或改名。"; status=1
+              elif ! allowed "$name"; then
+                echo "::error file=$(prop "$name")::$(msg "$name") ($change) is outside what a $mode pull request may change: submissions change only catalog/, artifacts/ and reviews/; generated files are produced after merge (CONTRIBUTING.md). / 越界改动，见 CONTRIBUTING.md。"; status=1
+              fi
+            done
+          done <<< "$files"
+          if [ "$status" = 0 ]; then echo "Scope OK ($mode, $(printf '%s' "$files" | grep -c '' || true) files)."; fi
+          exit "$status"
