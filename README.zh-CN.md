@@ -67,7 +67,7 @@
 
 ## 安全
 
-发现恶意或不安全的资源，请按 [SECURITY.md](SECURITY.md) 私下报告，不要在公开 Issue 中披露。
+发现恶意或不安全的资源，默认通过公开 [Issue](https://github.com/teloa-ai/marketplace/issues) 报告；如可能造成重大影响，建议先私下联系 [security@teloa.ai](mailto:security@teloa.ai)。公开内容请去除凭据、隐私和漏洞利用细节，详见 [SECURITY.md](SECURITY.md)。
 
 ## 变更
 

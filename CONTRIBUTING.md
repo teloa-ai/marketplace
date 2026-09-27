@@ -53,7 +53,7 @@ A `skill` or `work-template` resource in a `teloa.business-package/v3` solution 
 
 This repository is the single source of truth for the catalog. Until the sync script in the Teloa source repository (`scripts/同步官方市场.mjs --ref <commit>`, planned for the release after the marketplace goes public) is in place, maintainers copy a reviewed commit of this repository into the source repository's `marketplace/` by hand and record the commit id there; the source repository does not accept direct catalog changes.
 
-To report a malicious or unsafe resource, follow [SECURITY.md](SECURITY.md) instead of opening a pull request.
+Use public issues by default to report malicious or unsafe resources. For potentially high-impact issues, we recommend contacting [security@teloa.ai](mailto:security@teloa.ai) privately first. Keep credentials, private data, and exploit details out of public issues and pull requests; see [SECURITY.md](SECURITY.md).
 
 ## 中文
 
@@ -106,4 +106,4 @@ To report a malicious or unsafe resource, follow [SECURITY.md](SECURITY.md) inst
 
 本仓库是目录的唯一事实源。Teloa 源码仓的同步脚本（`scripts/同步官方市场.mjs --ref <commit>`，排在市场仓公开后的下一个发行）落地前，维护者手工把本仓库某个已审核提交复制进源码仓的 `marketplace/` 并记录提交号；源码仓不再直接改目录。
 
-发现恶意或不安全的资源，请按 [SECURITY.md](SECURITY.md) 报告，不要提 PR。
+发现恶意或不安全的资源，默认公开提 Issue；如可能造成重大影响，建议先私下联系 [security@teloa.ai](mailto:security@teloa.ai)。不要将凭据、隐私和漏洞利用细节写入公开 Issue 或 PR，详见 [SECURITY.md](SECURITY.md)。
