@@ -10,7 +10,8 @@ name: Scope
 #                                              (code owner review is the gate for tools/ and .github/);
 #   nobody deletes README.md or README.zh-CN.md.
 # workflow_dispatch serves bot/generated-files, whose pull request is opened with GITHUB_TOKEN and so starts no
-# pull_request_target run; generate.yml dispatches this workflow on that branch.
+# pull_request_target run (only a pull_request run held for approval, which maintainers may approve or ignore);
+# generate.yml dispatches this workflow on that branch and the run satisfies the required check.
 on:
   pull_request_target:
   workflow_dispatch:
@@ -42,6 +43,10 @@ jobs:
         run: |
           # One line per file: status, path, previous path (renames). @tsv escapes tabs and newlines in names.
           if [ "$EVENT" = pull_request_target ]; then
+            if ! [[ "$CHANGED_FILES" =~ ^[0-9]+$ ]]; then
+              echo "::error::The event payload has no changed_files count (got '$CHANGED_FILES'); re-run this check from the Actions tab or push again. / 事件里没有改动文件数，请重新运行本检查或重新推送。"
+              exit 1
+            fi
             # The pull request files API lists at most 3000 files; refuse to judge a partial list.
             if [ "$CHANGED_FILES" -gt 3000 ]; then
               echo "::error::The pull request changes $CHANGED_FILES files; the API lists at most 3000. Split it. / 改动文件超过 3000 个，请拆分 PR。"

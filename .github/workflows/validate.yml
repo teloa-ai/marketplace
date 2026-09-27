@@ -1,7 +1,8 @@
 name: Validate
 
 # Pushes to main are validated strictly by generate.yml before it proposes the generated files. workflow_dispatch
-# lets that workflow run these checks on bot/generated-files, whose pull request cannot trigger pull_request runs.
+# lets that workflow run these checks on bot/generated-files, whose GITHUB_TOKEN pull request only gets a
+# pull_request run held for approval; the dispatched run satisfies the required check.
 on:
   pull_request:
   workflow_dispatch:

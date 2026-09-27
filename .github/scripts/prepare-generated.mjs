@@ -23,7 +23,13 @@ const isAncestor = (commit) => {
 // That survives merge-commit, squash and rebase merges of the generated-files pull request whatever author,
 // committer or message GitHub gives the result, and submissions cannot edit CHANGELOG.md (scope check).
 // Without a marker (history before this workflow), fall back to the last commit that changed catalog-version.txt.
-const recorded = /<!-- Catalog-Source: ([0-9a-f]{40}) -->/.exec(readFileSync("CHANGELOG.md", "utf8"))?.[1];
+// The marker is only accepted as a whole line inside the first section: entry titles are rendered into list
+// lines below it (and escaped by titleOf), so a submission cannot plant a marker that is read here.
+const changelog = readFileSync("CHANGELOG.md", "utf8");
+const at = changelog.indexOf("\n## ");
+const next = at < 0 ? -1 : changelog.indexOf("\n## ", at + 1);
+const latestSection = at < 0 ? "" : changelog.slice(at, next < 0 ? undefined : next);
+const recorded = /^<!-- Catalog-Source: ([0-9a-f]{40}) -->$/m.exec(latestSection)?.[1];
 const source = recorded && isAncestor(recorded) ? recorded : git("log", "-1", "--format=%H", "--", "catalog-version.txt");
 const changedPaths = git("diff", "--name-only", "--no-renames", source, "HEAD", "--", "catalog", "artifacts").split("\n").filter(Boolean);
 if (!changedPaths.length) {
@@ -45,9 +51,11 @@ const entryAt = (commit, type, id) => {
 		return null;
 	}
 };
+// Titles come from submissions: escape HTML so they render as text and cannot form a comment or tag.
+const text = (value) => String(value).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 const titleOf = (entry) => {
 	const title = entry[entry.kind]?.title;
-	return title ? ` — ${title.en} · ${title["zh-CN"]}` : "";
+	return title ? ` — ${text(title.en)} · ${text(title["zh-CN"])}` : "";
 };
 const added = [], changed = [], removed = [];
 for (const [id, type] of [...ids].sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0))) {
@@ -68,7 +76,5 @@ writeFileSync("catalog-version.txt", version + "\n");
 const date = `${parts.year}-${parts.month.padStart(2, "0")}-${parts.day.padStart(2, "0")}`;
 const section = [`## [${version}] - ${date}`, "", `<!-- Catalog-Source: ${git("rev-parse", "HEAD")} -->`, `_Generated after merge from the catalog changes since \`${source.slice(0, 7)}\`; details are in the merged pull requests. / 合并后按 \`${source.slice(0, 7)}\` 以来的目录变更自动生成，详情见对应 PR。_`, ""];
 for (const [heading, lines] of [["Added", added], ["Changed", changed], ["Removed", removed]]) if (lines.length) section.push(`### ${heading}`, "", ...lines, "");
-const changelog = readFileSync("CHANGELOG.md", "utf8");
-const at = changelog.indexOf("\n## ");
 writeFileSync("CHANGELOG.md", at < 0 ? `${changelog.trimEnd()}\n\n${section.join("\n")}` : `${changelog.slice(0, at + 1)}${section.join("\n")}\n${changelog.slice(at + 1)}`);
 console.log(`Catalog version ${current} → ${version}: ${added.length} added, ${changed.length} changed, ${removed.length} removed since ${source}.`);
