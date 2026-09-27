@@ -2,14 +2,12 @@
 // GENERATED FILE - DO NOT EDIT. / 生成文件，请勿手改。
 // Built in teloa-ai/teloa from scripts/市场目录校验.mjs and packages/contract by `node scripts/生成市场仓校验器.mjs`
 // (pnpm build:market-validator). Validation rules are maintained only in that repository.
-// Source commit: 290b3c32aef26fdac665ddc433c9569f52006584 (with uncommitted changes)
+// Source commit: 948099d7c566e3a796dca8096bac13dda5440d61
 // Usage: node tools/validate.mjs [--write]   (--write regenerates INDEX.md and NOTICE)
 import { access, lstat, readFile, readdir, writeFile } from "node:fs/promises";
 import { dirname, join, relative, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import { createHash } from "node:crypto";
-import { execFile } from "node:child_process";
-import { promisify } from "node:util";
 
 //#region packages/contract/src/work-error.ts
 var WorkError = class extends Error {
@@ -2008,9 +2006,7 @@ function validateManifest(input) {
 }
 
 //#endregion
-//#region packages/harness-dsh/src/managed-package-install.ts
-const execFileAsync = promisify(execFile);
-let installQueue = Promise.resolve();
+//#region packages/harness-dsh/src/managed-package-lock.ts
 /** 随附 lock 的每个包只能从 npm 官方源取；与目录构建的收录要求一致。 */
 const managedPackageRegistry = "https://registry.npmjs.org/";
 const lockKeyPat = /^node_modules\/(?:@[a-z0-9~-][a-z0-9._~-]*\/)?[a-z0-9~-][a-z0-9._~-]*(?:\/node_modules\/(?:@[a-z0-9~-][a-z0-9._~-]*\/)?[a-z0-9~-][a-z0-9._~-]*)*$/i;
@@ -2526,24 +2522,45 @@ function generatedMarketplaceFiles(all, catalogVersion) {
 		"NOTICE": renderNotice(all)
 	};
 }
+const CATALOG_VERSION_MARKED_FILES = ["README.md", "README.zh-CN.md"];
+const CATALOG_VERSION_MARKER = /<!-- catalog-version -->[^<]*<!-- \/catalog-version -->/g;
+/** 把文档里全部版本标记块替换为当前目录版本；没有标记则报错（防止文档漏掉后静默过期）。 */
+function withCatalogVersion(path, text, catalogVersion) {
+	if (!CATALOG_VERSION_MARKER.test(text)) fail(`${path} has no <!-- catalog-version --> marker`, `${path} 缺少 <!-- catalog-version --> 标记`);
+	return text.replace(CATALOG_VERSION_MARKER, `<!-- catalog-version -->${catalogVersion}<!-- /catalog-version -->`);
+}
 
 //#endregion
 //#region scripts/市场仓校验器入口.mjs
 const args = process.argv.slice(2);
-const write = args.includes("--write");
-const at = args.indexOf("--root");
-const root = at < 0 ? resolve(dirname(fileURLToPath(import.meta.url)), "..") : resolve(args[at + 1]);
+let write = false;
+let rootArgument;
+for (let at = 0; at < args.length; at++) {
+	const arg = args[at];
+	if (arg === "--write") write = true;
+	else if (arg === "--root" && at + 1 < args.length) rootArgument = args[++at];
+	else {
+		console.error(`Unknown argument ${JSON.stringify(arg)} / 未知参数. Usage: node tools/validate.mjs [--write] [--root <dir>]`);
+		process.exit(2);
+	}
+}
+const root = rootArgument === void 0 ? resolve(dirname(fileURLToPath(import.meta.url)), "..") : resolve(rootArgument);
 try {
 	const { all, catalogVersion } = await validateMarketplace(root);
 	await buildMarketIndexes(root);
 	const drifted = [];
-	for (const [path, content] of Object.entries(generatedMarketplaceFiles(all, catalogVersion))) {
+	const expected = Object.entries(generatedMarketplaceFiles(all, catalogVersion));
+	for (const path of CATALOG_VERSION_MARKED_FILES) {
+		const current = await readFile(join(root, path), "utf8").catch(() => null);
+		if (current !== null) expected.push([path, withCatalogVersion(path, current, catalogVersion)]);
+	}
+	for (const [path, content] of expected) {
 		if (await readFile(join(root, path), "utf8").catch(() => null) === content) continue;
 		if (write) await writeFile(join(root, path), content);
 		else drifted.push(path);
 	}
 	if (drifted.length) throw new Error(`${drifted.join(", ")} out of date; run node tools/validate.mjs --write / 与 catalog/ 不一致，请运行 node tools/validate.mjs --write`);
-	console.log(`Marketplace catalog OK / 目录校验通过: ${all.length} entries, catalog version ${catalogVersion}${write ? "; INDEX.md and NOTICE up to date" : ""}.`);
+	console.log(`Marketplace catalog OK / 目录校验通过: ${all.length} entries, catalog version ${catalogVersion}${write ? "; INDEX.md, NOTICE and README catalog version up to date" : ""}.`);
 } catch (error) {
 	console.error("Marketplace validation failed / 目录校验失败: " + (error instanceof Error ? error.message : String(error)));
 	process.exit(1);
