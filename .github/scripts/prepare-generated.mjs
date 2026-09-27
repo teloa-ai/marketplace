@@ -18,11 +18,15 @@ const isAncestor = (commit) => {
 	}
 };
 
-// The main commit the last generated files were built from: the Catalog-Source trailer of the latest
-// generated-files commit (survives merge, squash and rebase merges), else the last commit that changed
-// catalog-version.txt (history before this workflow existed).
-const traced = git("log", "-1", "-E", "--grep=^Catalog-Source: [0-9a-f]{40}$", "--format=%(trailers:key=Catalog-Source,valueonly,separator=%x20)");
-const source = traced && isAncestor(traced) ? traced : git("log", "-1", "--format=%H", "--", "catalog-version.txt");
+// The main commit the last generated files were built from. Start at the last commit that changed
+// catalog-version.txt: pull requests other than bot/generated-files cannot touch that file (validate.yml).
+// If github-actions[bot] authored it, use its Catalog-Source trailer, because after a squash or rebase merge
+// its tree may already include submissions merged while the generated-files pull request was open. Otherwise
+// (history before this workflow, or a maintainer's manual bump) use that commit itself. A Catalog-Source
+// trailer on any other commit is ignored.
+const BOT_EMAIL = "41898282+github-actions[bot]@users.noreply.github.com";
+const [last, author, traced] = git("log", "-1", "--format=%H%x00%ae%x00%(trailers:key=Catalog-Source,valueonly,separator=%x20)", "--", "catalog-version.txt").split("\0");
+const source = author === BOT_EMAIL && /^[0-9a-f]{40}$/.test(traced ?? "") && isAncestor(traced) ? traced : last;
 const changedPaths = git("diff", "--name-only", "--no-renames", source, "HEAD", "--", "catalog", "artifacts").split("\n").filter(Boolean);
 if (!changedPaths.length) {
 	console.log(`catalog/ and artifacts/ unchanged since ${source}; catalog version stays.`);

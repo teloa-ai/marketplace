@@ -34,19 +34,46 @@ jobs:
         with:
           node-version: 24
 
-      # Generated files (INDEX.md, NOTICE, catalog-version.txt) are produced after merge by generate.yml, so
-      # submissions must not edit them; otherwise parallel pull requests conflict with each other.
-      - name: Generated files are not edited (pull request)
-        if: github.event_name == 'pull_request' && !(github.event.pull_request.head.ref == 'bot/generated-files' && github.event.pull_request.head.repo.full_name == github.repository)
+      # Scope guard. Submissions change only catalog/, artifacts/ and reviews/: generated files are produced after
+      # merge by generate.yml (editing them makes parallel pull requests conflict), and tools/, .github/ and the
+      # documents run or ship with write permissions after merge. Two same-repository branch families are
+      # different, and only people with write access can push them:
+      #   bot/generated-files  only the six generated files (normally checked through workflow_dispatch instead);
+      #   infra/*              maintainer infrastructure changes, anything except the generated files; code owner
+      #                        review (CODEOWNERS) is the gate for tools/ and .github/.
+      # Nobody may delete README.md or README.zh-CN.md (the validator skips missing files).
+      - name: Pull request scope (catalog/, artifacts/, reviews/ only)
+        if: github.event_name == 'pull_request'
         env:
           BASE_SHA: ${{ github.event.pull_request.base.sha }}
           HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          HEAD_REF: ${{ github.event.pull_request.head.ref }}
+          HEAD_REPO: ${{ github.event.pull_request.head.repo.full_name }}
+          REPO: ${{ github.repository }}
         run: |
-          edited=$(git diff --name-only "$BASE_SHA...$HEAD_SHA" -- INDEX.md NOTICE catalog-version.txt | tr '\n' ' ')
-          if [ -n "$edited" ]; then
-            echo "::error::Do not edit generated files in a pull request: $edited. They are regenerated after merge (see CONTRIBUTING.md). / 生成文件由合并后工作流统一生成，PR 里请勿改动。"
-            exit 1
+          generated='^(INDEX\.md|NOTICE|catalog-version\.txt|CHANGELOG\.md|README\.md|README\.zh-CN\.md)$'
+          if [ "$HEAD_REPO" = "$REPO" ] && [ "$HEAD_REF" = bot/generated-files ]; then
+            mode=bot allowed=$generated
+          elif [ "$HEAD_REPO" = "$REPO" ] && [[ "$HEAD_REF" == infra/* ]]; then
+            mode=infra allowed='.'
+          else
+            mode=submission allowed='^(catalog|artifacts|reviews)/'
           fi
+          changes=$(git diff --name-status --no-renames "$BASE_SHA...$HEAD_SHA")
+          status=0
+          while IFS=$'\t' read -r change path; do
+            if [ -z "$path" ]; then
+              continue
+            elif [ "$change" = D ] && [[ "$path" =~ ^README(\.zh-CN)?\.md$ ]]; then
+              echo "::error file=$path::$path must not be deleted. / 不得删除 $path。"; status=1
+            elif [ "$mode" = infra ] && [[ "$path" =~ ^(INDEX\.md|NOTICE|catalog-version\.txt)$ ]]; then
+              echo "::error file=$path::$path is generated after merge by generate.yml; do not edit it in a pull request. / 生成文件由合并后工作流生成，PR 里请勿改动。"; status=1
+            elif ! [[ "$path" =~ $allowed ]]; then
+              echo "::error file=$path::$path is outside what a $mode pull request may change (submissions: catalog/, artifacts/, reviews/ only; generated files are produced after merge; see CONTRIBUTING.md). / 投稿只能改 catalog/、artifacts/、reviews/，见 CONTRIBUTING.md。"; status=1
+            fi
+          done <<< "$changes"
+          [ "$status" = 0 ] && echo "Scope OK ($mode pull request)."
+          exit "$status"
 
       # Pull requests: take tools/validate.mjs from the base branch so a submission cannot change the rules it is
       # checked against, then validate the checked-out content with --root. --write regenerates INDEX.md, NOTICE and

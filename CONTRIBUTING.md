@@ -28,7 +28,7 @@ Contributions are welcome through pull requests to this repository. One pull req
 3. The license file described above.
 4. For content taken from elsewhere, the pinned upstream source: the full 40-character commit and the Git blob digest of each file taken. Mark every changed file at the top of its body and list each change in `modifications`.
 5. stdio connectors (npm packages): the full dependency lock `package-lock.json` in the artifact (lockfile v3, the root depends only on the recipe package at its exact version, every package carries a sha512 integrity and comes from `https://registry.npmjs.org/`). The host installs with `npm ci --ignore-scripts` from this lock and checks every entry; a lock that disagrees with the recipe is refused. Changing the dependency tree requires a new entry version.
-6. Nothing outside `catalog/`, `artifacts/` and `reviews/`. Do not edit `INDEX.md`, `NOTICE`, `catalog-version.txt`, the README catalog version or `CHANGELOG.md`: they are generated after merge (see Review), so parallel pull requests never conflict. Review records use one file per entry, `reviews/<type>/<id>.json`.
+6. Nothing outside `catalog/`, `artifacts/` and `reviews/`. Do not edit `INDEX.md`, `NOTICE`, `catalog-version.txt`, the README catalog version or `CHANGELOG.md`: they are generated after merge (see Review), so parallel pull requests never conflict. Review records use one file per entry, `reviews/<type>/<id>.json`. CI enforces this scope and reports each path outside it. Changes to `tools/`, `.github/` and the documents are made by maintainers from an `infra/*` branch of this repository (pushing one requires write access) and need code owner review; those branches may change anything except `INDEX.md`, `NOTICE` and `catalog-version.txt`. Nobody deletes `README.md` or `README.zh-CN.md`.
 7. A pull request description covering purpose and use cases, required tools and network access, how you tested, and how the entry will be upgraded.
 
 ### Model references
@@ -47,7 +47,7 @@ A `skill` or `work-template` resource in a `teloa.business-package/v3` solution 
 
 ### Review
 
-1. CI runs static checks only: `tools/validate.mjs` taken from the `main` branch (not from the pull request) is run against the pull request's content (structure, paths, sizes, digests, license files; generated files are regenerated in the CI checkout instead of being required), a check that the pull request does not edit `INDEX.md`, `NOTICE` or `catalog-version.txt`, plus the DCO sign-off check on the commits the pull request adds. CI never runs scripts from a submission and has no deployment secrets. Changes to `tools/` are regenerated from the Teloa source repository by code owners.
+1. CI runs static checks only: `tools/validate.mjs` taken from the `main` branch (not from the pull request) is run against the pull request's content (structure, paths, sizes, digests, license files; generated files are regenerated in the CI checkout instead of being required), a scope check (item 6 above), plus the DCO sign-off check on the commits the pull request adds. CI never runs scripts from a submission and has no deployment secrets. Changes to `tools/` are regenerated from the Teloa source repository by code owners.
 2. A maintainer reviews source, license and content, and sets the compatibility status from actual verification. Code owners for `catalog/` and `artifacts/` are listed in `.github/CODEOWNERS`.
 3. After merging, the Generate workflow (`.github/workflows/generate.yml`) bumps `catalog-version.txt`, adds a `CHANGELOG.md` section for the entries added, changed or removed, regenerates `INDEX.md`, `NOTICE` and the README catalog version, validates strictly and opens one pull request from `bot/generated-files` (submissions merged in the meantime join the same pull request). Once that is merged, a maintainer publishes the signed index to market.teloa.ai and pins the catalog into the next Teloa release.
 
@@ -81,7 +81,7 @@ Use public issues by default to report malicious or unsafe resources. For potent
 3. 上文要求的许可文件。
 4. 取自别处的内容要写上游固定来源：完整 40 位提交与每个取用文件的 Git blob 摘要。改动过的文件在正文开头注明来源，并在条目 `modifications` 里逐条说明。
 5. stdio 连接器（npm 包）：工件里随附完整依赖锁定 `package-lock.json`（lockfile v3，根只精确依赖配方包，每个包带 sha512 integrity、只从 `https://registry.npmjs.org/` 取）。宿主安装时按它 `npm ci --ignore-scripts` 并逐条核对，锁与配方不一致拒绝安装。换依赖树须递增条目版本。
-6. 只改 `catalog/`、`artifacts/`、`reviews/`。不要改 `INDEX.md`、`NOTICE`、`catalog-version.txt`、README 目录版本与 `CHANGELOG.md`：它们在合并后统一生成（见审核流程），并行的 PR 因此不会互相冲突。审查记录每个条目一个文件：`reviews/<类型>/<id>.json`。
+6. 只改 `catalog/`、`artifacts/`、`reviews/`。不要改 `INDEX.md`、`NOTICE`、`catalog-version.txt`、README 目录版本与 `CHANGELOG.md`：它们在合并后统一生成（见审核流程），并行的 PR 因此不会互相冲突。审查记录每个条目一个文件：`reviews/<类型>/<id>.json`。CI 强制这一范围，并逐个指出越界路径。`tools/`、`.github/` 与文档的改动由维护者从本仓库的 `infra/*` 分支提交（推送该分支需要写权限），并须代码所有者审查；这类分支可以改除 `INDEX.md`、`NOTICE`、`catalog-version.txt` 之外的任何文件。任何 PR 都不得删除 `README.md`、`README.zh-CN.md`。
 7. PR 描述写清：用途与适用场景、依赖的工具与是否联网、你如何测试、以后如何升级。
 
 ### 模型引用
@@ -100,7 +100,7 @@ Use public issues by default to report malicious or unsafe resources. For potent
 
 ### 审核流程
 
-1. CI 只做静态校验：用 `main` 分支（而非 PR 内）的 `tools/validate.mjs` 校验 PR 内容（结构、路径、大小、摘要、许可文件；生成文件在 CI 检出里重新生成，不要求 PR 已更新），检查 PR 没有改动 `INDEX.md`、`NOTICE`、`catalog-version.txt`，并对 PR 新增的提交做 DCO 签署检查。CI 不执行投稿中的任何脚本，也不接触部署密钥。`tools/` 的改动由代码所有者从 Teloa 源码仓重新生成。
+1. CI 只做静态校验：用 `main` 分支（而非 PR 内）的 `tools/validate.mjs` 校验 PR 内容（结构、路径、大小、摘要、许可文件；生成文件在 CI 检出里重新生成，不要求 PR 已更新），做范围检查（见上文第 6 项），并对 PR 新增的提交做 DCO 签署检查。CI 不执行投稿中的任何脚本，也不接触部署密钥。`tools/` 的改动由代码所有者从 Teloa 源码仓重新生成。
 2. 维护者人工核对来源、许可与内容，按实际验证结果填写兼容状态。`catalog/` 与 `artifacts/` 的负责人见 `.github/CODEOWNERS`。
 3. 合入后 Generate 工作流（`.github/workflows/generate.yml`）递增 `catalog-version.txt`，在 `CHANGELOG.md` 加一节列出新增、变更、移除的条目，重新生成 `INDEX.md`、`NOTICE` 与 README 目录版本，严格校验后从 `bot/generated-files` 开一个 PR（期间合入的其他投稿并入同一个 PR）。该 PR 合并后，由维护者把签名索引发布到 market.teloa.ai，并在下一个 Teloa 版本中固定目录快照。
 

@@ -29,6 +29,7 @@ jobs:
       contents: write # push bot/generated-files (not main)
       pull-requests: write # open or update the generated-files pull request
       actions: write # dispatch Validate on bot/generated-files: events from GITHUB_TOKEN do not start pull_request runs
+      issues: write # open or update the generated-check-failed issue when strict validation fails
     env:
       BRANCH: bot/generated-files
       GH_TOKEN: ${{ github.token }}
@@ -49,14 +50,61 @@ jobs:
       - name: Bump catalog version and prepend changelog section
         run: node .github/scripts/prepare-generated.mjs
 
-      - name: Regenerate INDEX.md, NOTICE and README catalog version
-        run: node tools/validate.mjs --write
+      # Regenerate INDEX.md, NOTICE and the README catalog version, then validate strictly. A failure (for example
+      # two pull requests that pass on their own but clash once both are merged) opens no generated-files pull
+      # request; the next step reports it in an issue instead.
+      - name: Regenerate and validate strictly
+        id: check
+        run: |
+          if node tools/validate.mjs --write && node tools/validate.mjs; then
+            echo "ok=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          echo "ok=false" >> "$GITHUB_OUTPUT"
+          # Machine-readable report when the validator supports it; older validators reject the argument (exit 2).
+          status=0
+          node tools/validate.mjs --format json > "$RUNNER_TEMP/report.txt" 2>&1 || status=$?
+          if [ "$status" = 2 ]; then node tools/validate.mjs > "$RUNNER_TEMP/report.txt" 2>&1 || true; fi
 
-      - name: Validate strictly (generated files must be current)
-        run: node tools/validate.mjs
+      - name: Open or update the generated-check-failed issue
+        if: steps.check.outputs.ok != 'true'
+        env:
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          # The report quotes catalog content written by contributors: keep it inside a fence longer than any
+          # backtick run it contains, and neutralise HTML comment openers.
+          # shellcheck disable=SC2016 # the single-quoted program is JavaScript
+          MAIN_SHA=$(git rev-parse HEAD) REPORT="$RUNNER_TEMP/report.txt" node --input-type=module -e '
+            import { readFileSync } from "node:fs";
+            const report = readFileSync(process.env.REPORT, "utf8").slice(0, 60000).replaceAll("<!--", "< !--");
+            const fence = "`".repeat(Math.max(3, ...[...report.matchAll(/`+/g)].map((run) => run[0].length + 1)));
+            process.stdout.write([
+              `Strict validation failed on main at ${process.env.MAIN_SHA}, so no generated-files pull request was opened. Fix it with a pull request; this issue is updated on every failing run and closed by the next passing run.`,
+              "",
+              `main ${process.env.MAIN_SHA} 严格校验失败，未开生成物 PR。请提 PR 修复；每次失败运行都会更新本 Issue，下次通过时自动关闭。`,
+              "",
+              `Run: ${process.env.RUN_URL}`,
+              "",
+              fence, report.trimEnd(), fence, ""
+            ].join("\n"));
+          ' > "$RUNNER_TEMP/issue.md"
+          gh label create generated-check-failed --color B60205 --description "Strict validation failed after merge (generate.yml)" --force
+          issue=$(gh issue list --label generated-check-failed --state open --json number --jq '.[0].number // empty')
+          if [ -n "$issue" ]; then
+            gh issue edit "$issue" --body-file "$RUNNER_TEMP/issue.md"
+          else
+            gh issue create --title "Generated files check failed on main" --label generated-check-failed --body-file "$RUNNER_TEMP/issue.md"
+          fi
+          echo "::error::Strict validation failed on main; see the generated-check-failed issue."
+          exit 1
 
       - name: Commit, push and open the pull request
+        if: steps.check.outputs.ok == 'true'
         run: |
+          issue=$(gh issue list --label generated-check-failed --state open --json number --jq '.[0].number // empty' 2>/dev/null || true)
+          if [ -n "$issue" ]; then
+            gh issue close "$issue" --comment "Strict validation passes on main at $(git rev-parse HEAD). / 严格校验已通过。"
+          fi
           if git diff --quiet; then
             echo "Generated files are up to date; nothing to propose."
             exit 0
@@ -69,7 +117,10 @@ jobs:
           fi
           git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' \
             commit -s -m "chore(catalog): generated files for $version" -m "Catalog-Source: $source"
-          git push --force "https://x-access-token:${GH_TOKEN}@github.com/${GH_REPO}.git" "HEAD:refs/heads/$BRANCH"
+          # The token goes into a header for this one command only; it is never written to .git/config or a URL.
+          auth=$(printf 'x-access-token:%s' "$GH_TOKEN" | base64 | tr -d '\n')
+          echo "::add-mask::$auth"
+          git -c "http.https://github.com/.extraheader=AUTHORIZATION: basic $auth" push --force origin "HEAD:refs/heads/$BRANCH"
 
           title="chore(catalog): generated files for $version"
           body=$(printf '%s\n\n%s\n\n%s\n\n%s' \
@@ -77,9 +128,11 @@ jobs:
             "由 Generate 工作流从 main $source 生成：目录版本、变更日志、INDEX.md、NOTICE 与 README 目录版本。请勿手改本分支，每次合入 main 后会重建。合并即发布目录版本 $version。" \
             "Checks run through workflow_dispatch (strict validation); the DCO job is skipped there and the bot commit is signed off." \
             "Catalog-Source: $source")
+          # Looked up after the push. If the pull request was merged or closed in between, editing fails and a new
+          # one is opened for the pushed commit.
           pr=$(gh pr list --head "$BRANCH" --base main --state open --json number --jq '.[0].number // empty')
-          if [ -n "$pr" ]; then
-            gh pr edit "$pr" --title "$title" --body "$body"
+          if [ -n "$pr" ] && gh pr edit "$pr" --title "$title" --body "$body"; then
+            echo "Updated pull request #$pr."
           elif ! gh pr create --base main --head "$BRANCH" --title "$title" --body "$body"; then
             echo "::warning::GITHUB_TOKEN could not open the pull request. Enable 'Allow GitHub Actions to create and approve pull requests' in the repository settings, or open it from https://github.com/${GH_REPO}/compare/main...${BRANCH}"
           fi
