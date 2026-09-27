@@ -8,7 +8,7 @@
 
 Report privately. Do not open a public issue or pull request with details.
 
-- Use GitHub private vulnerability reporting on this repository (**Security → Report a vulnerability**), or email [support@teloa.ai](mailto:support@teloa.ai).
+- Use GitHub private vulnerability reporting on this repository (**Security → Report a vulnerability**), or email [hi@teloa.ai](mailto:hi@teloa.ai).
 - Include the entry ID and version, what is wrong (for example malicious instructions, credential exfiltration, a tampered upstream source, a hidden network call, a license violation that exposes users to legal risk), how to reproduce it, and whether you believe it is being exploited.
 
 Non-security problems, such as a broken entry or wrong metadata, go to a normal issue. License disputes use the license-dispute issue template.
@@ -36,7 +36,7 @@ Only the current `main` branch of this repository and the catalog snapshot pinne
 
 请私下报告，不要在公开 Issue 或 PR 里披露细节。
 
-- 使用本仓库的 GitHub 私密漏洞报告（**Security → Report a vulnerability**），或发邮件至 [support@teloa.ai](mailto:support@teloa.ai)。
+- 使用本仓库的 GitHub 私密漏洞报告（**Security → Report a vulnerability**），或发邮件至 [hi@teloa.ai](mailto:hi@teloa.ai)。
 - 请写明条目 ID 与版本、问题是什么（例如恶意指令、外传凭据、上游来源被篡改、隐藏的网络调用、会让用户承担法律风险的许可违规）、如何复现，以及是否已被利用。
 
 非安全问题（例如条目不可用、元数据错误）请提普通 Issue；许可争议请用「许可争议」Issue 模板。

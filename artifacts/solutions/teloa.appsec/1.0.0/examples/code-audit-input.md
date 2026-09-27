@@ -73,10 +73,10 @@ module.exports = router;
 module.exports = {
   db: {
     host: 'localhost',
-    password: 'Sup3rS3cr3t!',  // 硬编码密码
+    password: '<PLACEHOLDER_DB_PASSWORD>',  // 硬编码密码（合成样例占位）
     database: 'appdb'
   },
-  jwtSecret: 'my-jwt-secret-key-12345'  // 硬编码 JWT 密钥
+  jwtSecret: '<PLACEHOLDER_JWT_SECRET>'  // 硬编码 JWT 密钥（合成样例占位）
 };
 ```
 

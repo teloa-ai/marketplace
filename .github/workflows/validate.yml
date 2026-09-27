@@ -5,8 +5,8 @@ on:
     branches: [main]
   pull_request:
 
-# Least privilege: the workflow only reads the repository. It runs no code from a submission
-# other than the committed validator, and it has no secrets.
+# Least privilege: the workflow only reads the repository and has no secrets. On pull requests it runs
+# the validator from the base branch (main), never a copy modified inside the submission.
 permissions:
   contents: read
 
@@ -25,6 +25,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
         with:
+          fetch-depth: 0
           persist-credentials: false
 
       - name: Set up Node.js
@@ -32,8 +33,19 @@ jobs:
         with:
           node-version: 24
 
-      # Structure, type directories, paths, sizes, digests, license files, and INDEX.md / NOTICE drift.
-      - name: Validate catalog
+      # Pull requests: take tools/validate.mjs from the base branch so a submission cannot change the
+      # rules it is checked against, then validate the checked-out pull request content with --root.
+      - name: Validate catalog (pull request, validator from base branch)
+        if: github.event_name == 'pull_request'
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: |
+          git show "$BASE_SHA:tools/validate.mjs" > "$RUNNER_TEMP/validate.mjs"
+          node "$RUNNER_TEMP/validate.mjs" --root "$GITHUB_WORKSPACE"
+
+      # Structure, type directories, paths, sizes, digests, license files, and INDEX.md / NOTICE / README drift.
+      - name: Validate catalog (main)
+        if: github.event_name != 'pull_request'
         run: node tools/validate.mjs
 
   dco:
@@ -48,7 +60,8 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
 
-      # Every non-merge commit in the pull request needs a Signed-off-by trailer with the author's email.
+      # Only the commits the pull request adds (base..head, non-merge) need a Signed-off-by trailer with the
+      # author's email. History before the repository was published (2026-09-27) is not checked.
       - name: Check Signed-off-by trailers
         env:
           BASE_SHA: ${{ github.event.pull_request.base.sha }}

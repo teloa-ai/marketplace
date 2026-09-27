@@ -8,7 +8,7 @@ Contributions are welcome through pull requests to this repository. One pull req
 
 ### Before you start
 
-- **Sign off every commit** under the [Developer Certificate of Origin 1.1](https://developercertificate.org/): add `Signed-off-by: Your Name <you@example.com>` with `git commit -s`. The DCO check in CI fails without it. There is no CLA. The DCO certifies that you have the right to submit the work under the license that applies to it; it is not a copyright assignment. This is the same policy as the Teloa source repository ([DCO.md](https://github.com/teloa-ai/teloa/blob/main/DCO.md)).
+- **Sign off every commit** under the [Developer Certificate of Origin 1.1](https://developercertificate.org/): add `Signed-off-by: Your Name <you@example.com>` with `git commit -s`. The DCO check in CI fails without it. The requirement applies to every new contribution since the repository was published on 2026-09-27; commits before that date are Teloa's internal curation history imported from the source repository, and CI checks only the commits a pull request adds. There is no CLA. The DCO certifies that you have the right to submit the work under the license that applies to it; it is not a copyright assignment. This is the same policy as the Teloa source repository ([DCO.md](https://github.com/teloa-ai/teloa/blob/main/DCO.md)).
 - **Run the validator** from the repository root: `node tools/validate.mjs`. After adding or changing entries, run `node tools/validate.mjs --write` to regenerate `INDEX.md` and `NOTICE`, then commit them. Node.js 22 or newer is required; nothing else needs to be installed. Error messages are English first, with the Chinese text after a slash.
 
 ### Licensing rules
@@ -47,7 +47,7 @@ A `skill` or `work-template` resource in a `teloa.business-package/v3` solution 
 
 ### Review
 
-1. CI runs static checks only: `node tools/validate.mjs` (structure, paths, sizes, digests, license files, generated files) and the DCO sign-off check. CI never runs scripts from a submission and has no deployment secrets.
+1. CI runs static checks only: `tools/validate.mjs` taken from the `main` branch (not from the pull request) is run against the pull request's content (structure, paths, sizes, digests, license files, generated files), plus the DCO sign-off check on the commits the pull request adds. CI never runs scripts from a submission and has no deployment secrets. Changes to `tools/` are regenerated from the Teloa source repository by code owners.
 2. A maintainer reviews source, license and content, and sets the compatibility status from actual verification. Code owners for `catalog/` and `artifacts/` are listed in `.github/CODEOWNERS`.
 3. After merging, a maintainer publishes the signed index to market.teloa.ai and pins the catalog into the next Teloa release.
 
@@ -61,7 +61,7 @@ To report a malicious or unsafe resource, follow [SECURITY.md](SECURITY.md) inst
 
 ### 开始之前
 
-- **每个提交都要签署** [Developer Certificate of Origin 1.1](https://developercertificate.org/)：用 `git commit -s` 加上 `Signed-off-by: 你的名字 <you@example.com>`，缺签署 CI 的 DCO 检查会失败。不设 CLA。签署是在证明你有权按适用的许可提交这份内容，不是转让版权。与 Teloa 源码仓的规则一致（[DCO.md](https://github.com/teloa-ai/teloa/blob/main/DCO.md)）。
+- **每个提交都要签署** [Developer Certificate of Origin 1.1](https://developercertificate.org/)：用 `git commit -s` 加上 `Signed-off-by: 你的名字 <you@example.com>`，缺签署 CI 的 DCO 检查会失败。该要求自 2026-09-27 本仓库公开起对所有新贡献生效；此前的历史提交是 Teloa 从源码仓导入的内部整理记录，CI 只检查 PR 新增的提交。不设 CLA。签署是在证明你有权按适用的许可提交这份内容，不是转让版权。与 Teloa 源码仓的规则一致（[DCO.md](https://github.com/teloa-ai/teloa/blob/main/DCO.md)）。
 - **运行校验器**：在仓库根目录运行 `node tools/validate.mjs`。新增或修改条目后运行 `node tools/validate.mjs --write` 重新生成 `INDEX.md` 与 `NOTICE` 并一起提交。需要 Node.js 22 或更新版本，无需安装其他依赖。报错文案英文优先，斜杠后附中文。
 
 ### 许可规则
@@ -100,7 +100,7 @@ To report a malicious or unsafe resource, follow [SECURITY.md](SECURITY.md) inst
 
 ### 审核流程
 
-1. CI 只做静态校验：运行 `node tools/validate.mjs`（结构、路径、大小、摘要、许可文件与生成文件）和 DCO 签署检查。CI 不执行投稿中的任何脚本，也不接触部署密钥。
+1. CI 只做静态校验：用 `main` 分支（而非 PR 内）的 `tools/validate.mjs` 校验 PR 内容（结构、路径、大小、摘要、许可文件与生成文件），并对 PR 新增的提交做 DCO 签署检查。CI 不执行投稿中的任何脚本，也不接触部署密钥。`tools/` 的改动由代码所有者从 Teloa 源码仓重新生成。
 2. 维护者人工核对来源、许可与内容，按实际验证结果填写兼容状态。`catalog/` 与 `artifacts/` 的负责人见 `.github/CODEOWNERS`。
 3. 合入后由维护者把签名索引发布到 market.teloa.ai，并在下一个 Teloa 版本中固定目录快照。
 

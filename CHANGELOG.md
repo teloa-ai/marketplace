@@ -4,7 +4,7 @@ All notable changes to the catalog are recorded here. The format follows [Keep a
 
 目录的重要变更记录在此，格式遵循 Keep a Changelog，按目录版本（`catalog-version.txt`）分组。全部条目见 [INDEX.md](INDEX.md)。
 
-## [2026.9.27.3] - 2026-09-27
+## [2026.9.27.4] - 2026-09-27
 
 ### Added
 
@@ -27,10 +27,13 @@ All notable changes to the catalog are recorded here. The format follows [Keep a
 - `teloa.mcp-exa`, `teloa.mcp-lark` and `teloa.mcp-notion` (MIT): the license files now carry the upstream copyright lines (`Exa Labs`, `Lark Technologies Pte. Ltd.`, `Notion Labs, Inc.`), matching the packages in the bundled locks; the other stdio connectors already matched their npm package licenses (amap ISC, dingtalk MIT, playwright Apache-2.0, yuque MIT).
   `teloa.mcp-exa`、`teloa.mcp-lark`、`teloa.mcp-notion` 的 MIT 许可文件补上游版权行；其余 stdio 连接器许可已与 lock 中包一致。
 
+- Final pre-publication review: the synthetic secrets in `teloa.appsec` `examples/code-audit-input.md` (both hosted version directories) are now obvious placeholders (`<PLACEHOLDER_DB_PASSWORD>`, `<PLACEHOLDER_JWT_SECRET>`) so generic secret scanners stay quiet; the security contact is `hi@teloa.ai`; the README publication status carries the current catalog version in a marker block that `tools/validate.mjs` checks and `--write` refreshes; `tools/validate.mjs` rejects unknown arguments and no longer bundles process-execution code; CI validates pull requests with the validator taken from the `main` branch; DCO wording states that sign-off is required for contributions since 2026-09-27 and that earlier commits are the imported curation history.
+  发布前终审：`teloa.appsec` 样例里的合成密钥改为明显占位；安全联系邮箱统一为 `hi@teloa.ai`；README 发布状态的目录版本改为标记块，由校验器核对、`--write` 刷新；校验器拒绝未知参数、不再打进进程执行代码；CI 用 `main` 分支的校验器校验 PR；DCO 口径写明自 2026-09-27 起对新贡献强制、历史提交为导入的整理记录。
+
 ### Versioning note · 版本说明
 
-The license-file corrections in 2026.9.27.1 and in this release change hosted artifact bytes (and therefore the entries' artifact tree hashes) without changing what is installed or how it behaves. Entry versions were deliberately not bumped for these fixes; the catalog version records them. Historical version directories under `artifacts/` (16 at this release) are kept so earlier catalog versions stay reproducible.
-2026.9.27.1 与本版的许可文件修正只改工件字节与工件树摘要，不改安装内容与行为，经裁定不递增条目版本，以目录版本记录。`artifacts/` 下的历史版本目录（本版 16 个）保留，以保证旧目录版本可复现。
+The license-file corrections in 2026.9.27.1 and in this release change hosted artifact bytes (and therefore the entries' artifact tree hashes) without changing what is installed or how it behaves. Entry versions were deliberately not bumped for these fixes, nor for the placeholder edit in the `teloa.appsec` example input (documentation text inside an example, no installable behavior); the catalog version records them. Historical version directories under `artifacts/` (16 at this release) are kept so earlier catalog versions stay reproducible.
+2026.9.27.1 与本版的许可文件修正只改工件字节与工件树摘要，不改安装内容与行为，经裁定不递增条目版本（`teloa.appsec` 样例输入里的占位改写同样只是示例文字，不改安装行为，亦不递增），以目录版本记录。`artifacts/` 下的历史版本目录（本版 16 个）保留，以保证旧目录版本可复现。
 
 ## [2026.9.27.1] - 2026-09-27
 
