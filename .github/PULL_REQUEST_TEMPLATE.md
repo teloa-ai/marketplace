@@ -34,6 +34,6 @@
 ## Checklist · 自查
 
 - [ ] Every commit is signed off (`git commit -s`, DCO) · 每个提交都已签署
-- [ ] `node tools/validate.mjs` passes · 校验通过
-- [ ] `INDEX.md`, `NOTICE` regenerated with `node tools/validate.mjs --write`, and `catalog-version.txt` bumped · 已重新生成并递增目录版本
+- [ ] `node tools/validate.mjs --write` passes · 校验通过
+- [ ] Only `catalog/`, `artifacts/` and `reviews/` changed; `INDEX.md`, `NOTICE`, `catalog-version.txt` and `CHANGELOG.md` are generated after merge · 只改这三个目录，生成文件由合并后工作流生成
 - [ ] No scripts, executables, symlinks, secrets or private download links · 不含脚本、可执行文件、符号链接、密钥或私有下载地址

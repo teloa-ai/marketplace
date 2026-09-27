@@ -1,9 +1,10 @@
 name: Validate
 
+# Pushes to main are validated strictly by generate.yml before it proposes the generated files. workflow_dispatch
+# lets that workflow run these checks on bot/generated-files, whose pull request cannot trigger pull_request runs.
 on:
-  push:
-    branches: [main]
   pull_request:
+  workflow_dispatch:
 
 # Least privilege: the workflow only reads the repository and has no secrets. On pull requests it runs
 # the validator from the base branch (main), never a copy modified inside the submission.
@@ -33,18 +34,34 @@ jobs:
         with:
           node-version: 24
 
-      # Pull requests: take tools/validate.mjs from the base branch so a submission cannot change the
-      # rules it is checked against, then validate the checked-out pull request content with --root.
+      # Generated files (INDEX.md, NOTICE, catalog-version.txt) are produced after merge by generate.yml, so
+      # submissions must not edit them; otherwise parallel pull requests conflict with each other.
+      - name: Generated files are not edited (pull request)
+        if: github.event_name == 'pull_request' && !(github.event.pull_request.head.ref == 'bot/generated-files' && github.event.pull_request.head.repo.full_name == github.repository)
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          edited=$(git diff --name-only "$BASE_SHA...$HEAD_SHA" -- INDEX.md NOTICE catalog-version.txt | tr '\n' ' ')
+          if [ -n "$edited" ]; then
+            echo "::error::Do not edit generated files in a pull request: $edited. They are regenerated after merge (see CONTRIBUTING.md). / 生成文件由合并后工作流统一生成，PR 里请勿改动。"
+            exit 1
+          fi
+
+      # Pull requests: take tools/validate.mjs from the base branch so a submission cannot change the rules it is
+      # checked against, then validate the checked-out content with --root. --write regenerates INDEX.md, NOTICE and
+      # the README catalog version inside this throwaway checkout instead of requiring them to be current; every
+      # other check (structure, paths, sizes, digests, license files) still applies.
       - name: Validate catalog (pull request, validator from base branch)
         if: github.event_name == 'pull_request'
         env:
           BASE_SHA: ${{ github.event.pull_request.base.sha }}
         run: |
           git show "$BASE_SHA:tools/validate.mjs" > "$RUNNER_TEMP/validate.mjs"
-          node "$RUNNER_TEMP/validate.mjs" --root "$GITHUB_WORKSPACE"
+          node "$RUNNER_TEMP/validate.mjs" --write --root "$GITHUB_WORKSPACE"
 
-      # Structure, type directories, paths, sizes, digests, license files, and INDEX.md / NOTICE / README drift.
-      - name: Validate catalog (main)
+      # Strict: structure, type directories, paths, sizes, digests, license files, and INDEX.md / NOTICE / README drift.
+      - name: Validate catalog (strict, generated files must be current)
         if: github.event_name != 'pull_request'
         run: node tools/validate.mjs
 
