@@ -2,7 +2,7 @@
 // GENERATED FILE - DO NOT EDIT. / 生成文件，请勿手改。
 // Built in teloa-ai/teloa from scripts/市场目录校验.mjs and packages/contract by `node scripts/生成市场仓校验器.mjs`
 // (pnpm build:market-validator). Validation rules are maintained only in that repository.
-// Source commit: ec1ccb148da21e9d4fcdebe30efc2d505da6d9a4
+// Source commit: 0b8db5a30dec9a952047805abdb9234dc9e32ef5 (with uncommitted changes)
 // Usage: node tools/validate.mjs [--write]   (--write regenerates INDEX.md and NOTICE)
 import { access, lstat, readFile, readdir, writeFile } from "node:fs/promises";
 import { dirname, join, relative, resolve, sep } from "node:path";
@@ -122,10 +122,49 @@ const marketEntryKinds = [
 ];
 
 //#endregion
+//#region packages/contract/src/model-policy.ts
+const fields = (value, keys) => {
+	if (!value || typeof value !== "object" || Array.isArray(value) || Object.keys(value).some((key) => !keys.includes(key))) throw new WorkError("teloa/invalid-input", "模型配置格式不正确。");
+	return value;
+};
+const token = (value, max) => typeof value === "string" && value.length > 0 && value.length <= max && value.trim() === value && !/[\s\x00-\x1f\x7f]/.test(value);
+function readModelReference(value) {
+	const row = fields(value, [
+		"provider",
+		"model",
+		"reasoningEffort"
+	]);
+	if (!token(row.provider, 128) || !token(row.model, 256) || row.reasoningEffort !== void 0 && !token(row.reasoningEffort, 128)) throw new WorkError("teloa/invalid-input", "请选择有效的模型。");
+	return {
+		provider: row.provider,
+		model: row.model,
+		...row.reasoningEffort === void 0 ? {} : { reasoningEffort: row.reasoningEffort }
+	};
+}
+const sameModelRoute = (a, b) => a.provider === b.provider && a.model === b.model;
+
+//#endregion
 //#region packages/contract/src/roles.ts
 function roleInput(value, keys) {
 	if (!value || typeof value !== "object" || Array.isArray(value) || Object.keys(value).some((key) => !keys.includes(key))) throw new WorkError("teloa/invalid-input", "岗位请求包含未知字段或格式不正确。");
 	return value;
+}
+function readRoleRuntimeConfig(value) {
+	const source = roleInput(value, [
+		"agentPresetId",
+		"model",
+		"fallbackModel"
+	]);
+	if (!Object.keys(source).length || source.agentPresetId !== void 0 && (typeof source.agentPresetId !== "string" || !/^[a-z0-9][-a-z0-9]{0,119}$/.test(source.agentPresetId))) throw new WorkError("teloa/invalid-input", "岗位运行配置不合法。");
+	const model = source.model === void 0 ? void 0 : readModelReference(source.model), fallbackModel = source.fallbackModel === void 0 ? void 0 : readModelReference(source.fallbackModel);
+	if (model && fallbackModel && sameModelRoute(model, fallbackModel)) throw new WorkError("teloa/invalid-input", "备用模型不能与首选模型相同。");
+	const result = {
+		...source.agentPresetId === void 0 ? {} : { agentPresetId: source.agentPresetId },
+		...model ? { model } : {},
+		...fallbackModel ? { fallbackModel } : {}
+	};
+	if (!Object.keys(result).length) throw new WorkError("teloa/invalid-input", "岗位运行配置不合法。");
+	return result;
 }
 function roleDefinition(value) {
 	const row = roleInput(value, [
@@ -173,11 +212,7 @@ function roleDefinition(value) {
 		};
 	}
 	let runtimeConfig;
-	if (row.runtimeConfig !== void 0) {
-		const source = roleInput(row.runtimeConfig, ["agentPresetId"]);
-		if (typeof source.agentPresetId !== "string" || source.agentPresetId.length > 120 || !/^[-a-z0-9]+$/.test(source.agentPresetId) || !/^[a-z0-9]/.test(source.agentPresetId)) return fail();
-		runtimeConfig = { agentPresetId: source.agentPresetId };
-	}
+	if (row.runtimeConfig !== void 0) runtimeConfig = readRoleRuntimeConfig(row.runtimeConfig);
 	return {
 		name: text(row.name, 80),
 		kind: row.kind,
@@ -244,6 +279,9 @@ const marketCatalogCompatibility = [
 	"content-only",
 	"unsupported"
 ];
+/** 二期本机模型（模型二期规格 §4）：Ollama 唯一运行时；名称必须带 tag，digest 为 registry 清单摘要或 null（发布前由脚本填写）。 */
+const ollamaModelNamePattern = /^[a-z0-9][a-z0-9._-]*:[a-z0-9._-]+$/;
+const ollamaDigestPattern = /^sha256:[0-9a-f]{64}$/;
 const bad$4 = (message) => new WorkError("teloa/invalid-input", message);
 const exact$4 = (value, keys, label) => {
 	if (!isRecord(value) || Object.keys(value).length !== keys.length || keys.some((key) => !Object.hasOwn(value, key))) throw bad$4(label + "格式不正确或包含未知字段。");
@@ -266,6 +304,9 @@ const pattern = (value, regex, label) => {
 	return value;
 };
 const catalogId = /^(?=.{1,120}$)[a-z0-9]+(?:-[a-z0-9]+)*(?:\.[a-z0-9]+(?:-[a-z0-9]+)*){1,2}$/;
+/** 模型条目标识允许最多四段（如 `teloa.model.local.llama3.1`）；其余 kind 仍用两段 `catalogId`。 */
+const modelCatalogIdPattern = /^(?=.{1,120}$)[a-z0-9]+(?:-[a-z0-9]+)*(?:\.[a-z0-9]+(?:-[a-z0-9]+)*){1,4}$/;
+const modelCatalogId = modelCatalogIdPattern;
 /** 与 DSH 技能名同一文法（kebab-case，≤64）。 */
 const marketCatalogSkillName = /^(?=.{1,64}$)[a-z0-9]+(?:-[a-z0-9]+)*$/;
 /** 方案包 id 文法（与 content-store.ts stableId 一致，1-120 位字母数字连字符）。 */
@@ -977,9 +1018,15 @@ function readModelEntry(row) {
 	if (row.format !== "teloa.market-catalog-entry/v1") throw bad$4("目录条目格式版本不受支持。");
 	if (row.delivery !== "reference") throw bad$4("模型条目只能以 reference 方式交付，准备过程由原生服务管理。");
 	if (row.upstream !== null) throw bad$4("模型条目的 upstream 必须为 null。");
-	if (!isRecord(row.model) || !["cloud", "local-specialist"].includes(String(row.model.form))) throw bad$4("模型形态只支持 cloud 或 local-specialist。");
-	const local = row.model.form === "local-specialist";
-	const m = exact$4(row.model, [
+	if (!isRecord(row.model)) throw bad$4("模型信息格式不正确。");
+	if (row.model.form === "local-vertical") throw bad$4("form local-vertical 属三期，本期不收。");
+	if (![
+		"cloud",
+		"local-general",
+		"local-specialist"
+	].includes(String(row.model.form))) throw bad$4("模型形态只支持 cloud、local-general 或 local-specialist。");
+	const specialist = row.model.form === "local-specialist";
+	const m = specialist ? exact$4(row.model, [
 		"modelId",
 		"title",
 		"summary",
@@ -991,10 +1038,29 @@ function readModelEntry(row) {
 		"cnReachable",
 		"support",
 		"notes",
-		local ? "native" : "cloud"
+		"native"
+	], "模型信息") : exact$4({
+		local: null,
+		variants: null,
+		...row.model
+	}, [
+		"modelId",
+		"title",
+		"summary",
+		"form",
+		"usage",
+		"capabilities",
+		"contextWindow",
+		"license",
+		"cnReachable",
+		"support",
+		"notes",
+		"cloud",
+		"local",
+		"variants"
 	], "模型信息");
 	const usage = distinct(list$1(m.usage, "模型用法", 3).map((item) => {
-		if (local ? item !== "speech-to-text" : item !== "chat" && item !== "embedding" && item !== "tool") throw bad$4("模型用法与运行形态不匹配。");
+		if (specialist ? item !== "speech-to-text" : item !== "chat" && item !== "embedding" && item !== "tool") throw bad$4(specialist ? "模型用法与运行形态不匹配。" : "模型用法只能是 chat、embedding 或 tool。");
 		return item;
 	}), "模型用法");
 	if (!usage.length) throw bad$4("模型用法至少一项。");
@@ -1020,13 +1086,11 @@ function readModelEntry(row) {
 		"proxy-required"
 	].includes(String(m.cnReachable))) throw bad$4("国内可达性只能是 direct、mirror 或 proxy-required。");
 	if (m.support !== "experimental" && m.support !== "supported") throw bad$4("支持状态只能是 experimental 或 supported。");
-	if (local && (m.contextWindow !== null || Object.values(cap).some((value) => value !== false))) throw bad$4("语音模型不声明聊天上下文或聊天能力。");
-	const identity = {
+	if (specialist && (m.contextWindow !== null || Object.values(cap).some((value) => value !== false))) throw bad$4("语音模型不声明聊天上下文或聊天能力。");
+	const base = {
 		modelId: pattern(m.modelId, roleIdPattern, "模型标识"),
 		title: localized(m.title, "模型标题", 120),
-		summary: localized(m.summary, "模型用途")
-	};
-	const fields = {
+		summary: localized(m.summary, "模型用途"),
 		capabilities: {
 			tools: bool(cap.tools, "工具调用"),
 			vision: bool(cap.vision, "视觉"),
@@ -1045,32 +1109,134 @@ function readModelEntry(row) {
 		support: m.support,
 		notes: list$1(m.notes, "说明", 10).map((item) => localized(item, "说明", 500))
 	};
-	const model = local ? {
-		...identity,
-		form: "local-specialist",
-		usage: ["speech-to-text"],
-		...fields,
-		native: readNativeModel(m.native)
-	} : {
-		...identity,
-		form: "cloud",
-		usage,
-		...fields,
-		cloud: readModelCloud(m.cloud)
-	};
-	return {
+	const commonFields = readCommonFields(row, {
+		allowEmptyLicenseFiles: true,
+		licenseUrl: true
+	});
+	const head = {
 		format: "teloa.market-catalog-entry/v1",
-		id: pattern(row.id, catalogId, "目录条目标识"),
+		id: pattern(row.id, modelCatalogId, "目录条目标识"),
 		kind: "model",
 		delivery: "reference",
 		version: pattern(row.version, semver$1, "条目版本"),
 		upstream: null,
-		taxonomy: readMarketTaxonomy(row.taxonomy),
-		model,
-		...readCommonFields(row, {
-			allowEmptyLicenseFiles: true,
-			licenseUrl: true
-		})
+		taxonomy: readMarketTaxonomy(row.taxonomy)
+	};
+	if (specialist) return {
+		...head,
+		model: {
+			...base,
+			form: "local-specialist",
+			usage: ["speech-to-text"],
+			native: readNativeModel(m.native)
+		},
+		...commonFields
+	};
+	const common = {
+		...base,
+		usage
+	};
+	if (m.form === "cloud") {
+		if (m.local !== null || m.variants !== null) throw bad$4("云端模型的 local 与 variants 必须为 null。");
+		return {
+			...head,
+			model: {
+				...common,
+				form: "cloud",
+				cloud: readModelCloud(m.cloud),
+				local: null,
+				variants: null
+			},
+			...commonFields
+		};
+	}
+	if (m.cloud !== null) throw bad$4("本机模型的 cloud 必须为 null。");
+	if (exact$4(m.local, ["runtime"], "本机运行时").runtime !== "ollama") throw bad$4("本机运行时只支持 ollama。");
+	if (!commonFields.requires.runtimes.includes("ollama")) throw bad$4("本机模型的 requires.runtimes 必须包含 ollama。");
+	const gb = (x, label) => {
+		if (!Number.isInteger(x) || x < 1 || x > 1024) throw bad$4(label + "须为 1–1024 的整数。");
+		return x;
+	};
+	const gb2 = (x, label) => {
+		if (!Number.isInteger(x) || x < 256 || x > 2e6) throw bad$4(label + "须为 256–2000000 的整数。");
+		return x;
+	};
+	const variants = list$1(m.variants, "模型变体", 6).map((item) => {
+		const v = exact$4(item, [
+			"quant",
+			"format",
+			"sizeBytes",
+			"sources",
+			"hardware",
+			"models"
+		], "模型变体");
+		if (v.format !== "gguf") throw bad$4("模型变体格式只收 gguf。");
+		const sources = list$1(v.sources, "来源", 1).map((item) => {
+			if (!isRecord(item) || item.kind !== "ollama") throw bad$4("本期来源只支持 ollama。");
+			const s = exact$4(item, [
+				"kind",
+				"name",
+				"digest"
+			], "来源");
+			const name = pattern(s.name, ollamaModelNamePattern, "Ollama 模型名称（必须带 tag）");
+			if (s.digest !== null && (typeof s.digest !== "string" || !ollamaDigestPattern.test(s.digest))) throw bad$4("来源摘要必须为 sha256:64 位十六进制或 null。");
+			return {
+				kind: "ollama",
+				name,
+				digest: s.digest
+			};
+		});
+		if (!sources.length) throw bad$4("来源至少一项。");
+		const hardware = exact$4(v.hardware, [
+			"minRamGb",
+			"recommendedRamGb",
+			"vramGb"
+		], "硬件条件");
+		const models = exact$4(v.models, [
+			"id",
+			"contextWindow",
+			"maxTokens",
+			"input"
+		], "路由模型");
+		if (models.id !== sources[0].name) throw bad$4("路由模型 id 必须与 Ollama 名称一致。");
+		const input = distinct(list$1(models.input, "输入类型", 2).map((t) => {
+			if (t !== "text" && t !== "image") throw bad$4("输入类型只支持 text/image。");
+			return t;
+		}), "输入类型");
+		if (!input.includes("text")) throw bad$4("输入类型必须包含 text。");
+		if (!Number.isSafeInteger(v.sizeBytes) || v.sizeBytes <= 0) throw bad$4("sizeBytes 须为正整数。");
+		if (hardware.minRamGb > hardware.recommendedRamGb) throw bad$4("最低内存不能高于推荐内存。");
+		if (models.maxTokens > models.contextWindow) throw bad$4("最大输出不能超过上下文窗口。");
+		return {
+			quant: pattern(v.quant, /^[A-Za-z0-9_]{1,16}$/, "量化标识"),
+			format: "gguf",
+			sizeBytes: v.sizeBytes,
+			sources: [sources[0]],
+			hardware: {
+				minRamGb: gb(hardware.minRamGb, "最低内存"),
+				recommendedRamGb: gb(hardware.recommendedRamGb, "推荐内存"),
+				vramGb: hardware.vramGb === null ? null : gb(hardware.vramGb, "显存")
+			},
+			models: {
+				id: models.id,
+				contextWindow: gb2(models.contextWindow, "上下文"),
+				maxTokens: gb2(models.maxTokens, "最大输出"),
+				input
+			}
+		};
+	});
+	if (!variants.length) throw bad$4("模型变体至少一项。");
+	distinct(variants.map((v) => v.sources[0].name), "Ollama 模型名称");
+	return {
+		...head,
+		model: {
+			...common,
+			form: "local-general",
+			cloud: null,
+			local: { runtime: "ollama" },
+			variants
+		},
+		...commonFields
 	};
 }
 function readModelCloud(value) {
@@ -2046,8 +2212,9 @@ async function verifyArtifactTree(root, hosted) {
 /**
 * 校验整个目录源，返回全部条目（含上游）与应用快照所需的索引、文件字节。
 * generateLock(recipe,lockPath)：stdio 连接器缺随附 lock 时的生成钩子；不给则缺 lock 直接失败（--check 与市场仓校验器）。
+* allowNullDigest：本机通用模型（Ollama）变体允许 digest 为 null（发布前由 scripts/核实Ollama条目摘要.mjs --write 填写）；默认拒绝。
 */
-async function validateMarketplace(root, { generateLock } = {}) {
+async function validateMarketplace(root, { generateLock, allowNullDigest = false } = {}) {
 	const read = await readCatalogEntries(root);
 	const hosted = read.map((item) => item.entry).filter(isHostedEntry);
 	const rawById = new Map(read.map((item) => [item.entry.id, item.raw]));
@@ -2061,7 +2228,14 @@ async function validateMarketplace(root, { generateLock } = {}) {
 	};
 	const solutionsByPackage = new Map(official.filter((entry) => entry.kind === "solution").map((entry) => [entry.solution.packageId, entry]));
 	const connectorsByServer = new Map(official.filter((entry) => entry.kind === "connector").map((entry) => [entry.connector.serverName, entry]));
+	const localNames = /* @__PURE__ */ new Map();
 	for (const entry of official) {
+		if (entry.kind === "model" && entry.model.form === "local-general") for (const variant of entry.model.variants) {
+			const name = variant.sources[0].name;
+			if (localNames.has(name)) fail(`Ollama 模型名称重复：${name}（${localNames.get(name)} 与 ${entry.id}）`);
+			localNames.set(name, entry.id);
+			if (variant.sources[0].digest === null && !allowNullDigest) fail(`${entry.id} 的 ${name} 缺少来源摘要；先运行 node scripts/核实Ollama条目摘要.mjs --write`);
+		}
 		if (entry.kind === "model") {
 			entries.push({
 				...entry,

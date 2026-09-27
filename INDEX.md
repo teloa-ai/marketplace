@@ -1,6 +1,6 @@
 # Catalog index · 目录索引
 
-_Generated from `catalog/` by `node tools/validate.mjs --write` (source repository: `pnpm build:market-catalog`); do not edit by hand. 132 entries, catalog version 2026.9.27.1. Browse and search: https://market.teloa.ai_
+_Generated from `catalog/` by `node tools/validate.mjs --write` (source repository: `pnpm build:market-catalog`); do not edit by hand. 137 entries, catalog version 2026.9.27.2. Browse and search: https://market.teloa.ai_
 
 _由 `catalog/` 自动生成，请勿手改。在线浏览与搜索：https://market.teloa.ai_
 
@@ -143,7 +143,7 @@ _由 `catalog/` 自动生成，请勿手改。在线浏览与搜索：https://ma
 | Yuque (Knowledge Base) · 语雀（知识库） | `teloa.mcp-yuque` | Teloa | MIT | needs-configuration | 1.0.2 | [catalog/connectors/teloa.mcp-yuque.json](catalog/connectors/teloa.mcp-yuque.json) · [files](artifacts/connectors/teloa.mcp-yuque/1.0.2/) |
 | Zapier MCP (9000+ App Automations) · Zapier MCP（9000+ 应用自动化） | `teloa.mcp-zapier` | Teloa | LicenseRef-Zapier-Terms | needs-configuration | 1.0.1 | [catalog/connectors/teloa.mcp-zapier.json](catalog/connectors/teloa.mcp-zapier.json) · [files](artifacts/connectors/teloa.mcp-zapier/1.0.1/) |
 
-## Models · 模型 (13)
+## Models · 模型 (18)
 
 | Name · 名称 | ID | Source · 来源 | License · 许可 | Compatibility · 兼容 | Version · 版本 | Entry · 条目 |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -154,6 +154,11 @@ _由 `catalog/` 自动生成，请勿手改。在线浏览与搜索：https://ma
 | Zhipu GLM · 智谱 GLM | `teloa.model.glm` | Teloa | custom | needs-configuration | 1.0.0 | [catalog/models/teloa.model.glm.json](catalog/models/teloa.model.glm.json) |
 | Grok (xAI) · Grok（xAI） | `teloa.model.grok` | Teloa | custom | needs-configuration | 1.0.0 | [catalog/models/teloa.model.grok.json](catalog/models/teloa.model.grok.json) |
 | Kimi (Moonshot) · Kimi（Moonshot） | `teloa.model.kimi` | Teloa | custom | needs-configuration | 1.0.0 | [catalog/models/teloa.model.kimi.json](catalog/models/teloa.model.kimi.json) |
+| DeepSeek-R1 (local) · DeepSeek-R1（本机） | `teloa.model.local.deepseek-r1` | Teloa | MIT | needs-configuration | 1.0.0 | [catalog/models/teloa.model.local.deepseek-r1.json](catalog/models/teloa.model.local.deepseek-r1.json) |
+| Gemma 3 (local) · Gemma 3（本机） | `teloa.model.local.gemma3` | Teloa | custom | needs-configuration | 1.0.0 | [catalog/models/teloa.model.local.gemma3.json](catalog/models/teloa.model.local.gemma3.json) |
+| Llama 3.1 (local) · Llama 3.1（本机） | `teloa.model.local.llama3.1` | Teloa | custom | needs-configuration | 1.0.0 | [catalog/models/teloa.model.local.llama3.1.json](catalog/models/teloa.model.local.llama3.1.json) |
+| Phi-4 (local) · Phi-4（本机） | `teloa.model.local.phi4` | Teloa | MIT | needs-configuration | 1.0.0 | [catalog/models/teloa.model.local.phi4.json](catalog/models/teloa.model.local.phi4.json) |
+| Qwen3 (local) · Qwen3（本机） | `teloa.model.local.qwen3` | Teloa | Apache-2.0 | needs-configuration | 1.0.0 | [catalog/models/teloa.model.local.qwen3.json](catalog/models/teloa.model.local.qwen3.json) |
 | MiniMax · MiniMax | `teloa.model.minimax` | Teloa | custom | needs-configuration | 1.0.0 | [catalog/models/teloa.model.minimax.json](catalog/models/teloa.model.minimax.json) |
 | OpenAI · OpenAI | `teloa.model.openai` | Teloa | custom | needs-configuration | 1.0.0 | [catalog/models/teloa.model.openai.json](catalog/models/teloa.model.openai.json) |
 | OpenRouter (aggregator) · OpenRouter（聚合） | `teloa.model.openrouter` | Teloa | custom | needs-configuration | 1.0.0 | [catalog/models/teloa.model.openrouter.json](catalog/models/teloa.model.openrouter.json) |

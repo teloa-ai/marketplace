@@ -92,7 +92,9 @@
         "en": "OpenAI API key"
       },
       "signupUrl": "https://platform.openai.com"
-    }
+    },
+    "local": null,
+    "variants": null
   },
   "modifications": [],
   "license": {

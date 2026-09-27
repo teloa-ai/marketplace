@@ -76,7 +76,9 @@
         "en": "Zhipu API key"
       },
       "signupUrl": "https://open.bigmodel.cn"
-    }
+    },
+    "local": null,
+    "variants": null
   },
   "modifications": [],
   "license": {

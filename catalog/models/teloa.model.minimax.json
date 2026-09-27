@@ -81,7 +81,9 @@
         "en": "MiniMax API key"
       },
       "signupUrl": "https://platform.minimax.cn"
-    }
+    },
+    "local": null,
+    "variants": null
   },
   "modifications": [],
   "license": {

@@ -92,7 +92,9 @@
         "en": "Anthropic API key"
       },
       "signupUrl": "https://platform.claude.com"
-    }
+    },
+    "local": null,
+    "variants": null
   },
   "modifications": [],
   "license": {
