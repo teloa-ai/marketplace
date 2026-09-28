@@ -1,6 +1,6 @@
 # Catalog index · 目录索引
 
-_Generated from `catalog/` by `node tools/validate.mjs --write` (source repository: `pnpm build:market-catalog`); do not edit by hand. 137 entries, catalog version 2026.9.27.4. Browse and search: https://market.teloa.ai_
+_Generated from `catalog/` by `node tools/validate.mjs --write` (source repository: `pnpm build:market-catalog`); do not edit by hand. 144 entries, catalog version 2026.9.28.1. Browse and search: https://market.teloa.ai_
 
 _由 `catalog/` 自动生成，请勿手改。在线浏览与搜索：https://market.teloa.ai_
 
@@ -46,12 +46,15 @@ _由 `catalog/` 自动生成，请勿手改。在线浏览与搜索：https://ma
 | Support knowledge collaborator · 客服知识协作员 | `teloa.role.support-knowledge-collaborator` | Teloa | Apache-2.0 | content-only | 1.0.0 | [catalog/roles/teloa.role.support-knowledge-collaborator.json](catalog/roles/teloa.role.support-knowledge-collaborator.json) · [files](artifacts/roles/teloa.role.support-knowledge-collaborator/1.0.0/) |
 | Video editing collaborator · 视频剪辑协作员 | `teloa.role.video-editor` | Teloa | Apache-2.0 | content-only | 1.0.0 | [catalog/roles/teloa.role.video-editor.json](catalog/roles/teloa.role.video-editor.json) · [files](artifacts/roles/teloa.role.video-editor/1.0.0/) |
 
-## Skills · 技能 (63)
+## Skills · 技能 (66)
 
 | Name · 名称 | ID | Source · 来源 | License · 许可 | Compatibility · 兼容 | Version · 版本 | Entry · 条目 |
 | --- | --- | --- | --- | --- | --- | --- |
+| MCPB bundle builder · MCPB 本地服务器打包 | `anthropic.build-mcpb` | Upstream · GitHub anthropics/claude-plugins-official | Apache-2.0 | content-only | 1.0.0 | [catalog/skills/anthropic.build-mcpb.json](catalog/skills/anthropic.build-mcpb.json) |
+| Frontend design · 前端视觉设计 | `anthropic.frontend-design` | Upstream · GitHub anthropics/skills | Apache-2.0 | content-only | 1.0.0 | [catalog/skills/anthropic.frontend-design.json](catalog/skills/anthropic.frontend-design.json) |
 | Internal communications · 内部沟通稿 | `anthropic.internal-comms` | Teloa · from GitHub anthropics/skills | Apache-2.0 | content-only | 1.0.0 | [catalog/skills/anthropic.internal-comms.json](catalog/skills/anthropic.internal-comms.json) · [files](artifacts/skills/anthropic.internal-comms/1.0.0/) |
 | MCP server builder · MCP 服务器构建指南 | `anthropic.mcp-builder` | Teloa · from GitHub anthropics/skills | Apache-2.0 | content-only | 1.0.0 | [catalog/skills/anthropic.mcp-builder.json](catalog/skills/anthropic.mcp-builder.json) · [files](artifacts/skills/anthropic.mcp-builder/1.0.0/) |
+| Interactive HTML playground · 交互式 HTML 演练页 | `anthropic.playground` | Upstream · GitHub anthropics/claude-plugins-official | Apache-2.0 | content-only | 1.0.0 | [catalog/skills/anthropic.playground.json](catalog/skills/anthropic.playground.json) |
 | API Gateway · API 网关（Maton） | `clawhub.byungkyu.api-gateway` | Upstream · ClawHub byungkyu/api-gateway@1.2.23 | MIT-0 | unsupported | 1.2.23 | [catalog/skills/clawhub.byungkyu.api-gateway.json](catalog/skills/clawhub.byungkyu.api-gateway.json) |
 | Calendly · Calendly 日程管理 | `clawhub.byungkyu.calendly-api` | Upstream · ClawHub byungkyu/calendly-api@1.2.5 | MIT-0 | unsupported | 1.2.5 | [catalog/skills/clawhub.byungkyu.calendly-api.json](catalog/skills/clawhub.byungkyu.calendly-api.json) |
 | ClickUp · ClickUp 任务管理 | `clawhub.byungkyu.clickup-api` | Upstream · ClawHub byungkyu/clickup-api@1.2.3 | MIT-0 | unsupported | 1.2.3 | [catalog/skills/clawhub.byungkyu.clickup-api.json](catalog/skills/clawhub.byungkyu.clickup-api.json) |
@@ -114,13 +117,16 @@ _由 `catalog/` 自动生成，请勿手改。在线浏览与搜索：https://ma
 | GitHub CLI workflow · GitHub CLI 工作流 | `openclaw.github` | Teloa · from GitHub openclaw/openclaw | MIT | needs-configuration | 1.0.0 | [catalog/skills/openclaw.github.json](catalog/skills/openclaw.github.json) · [files](artifacts/skills/openclaw.github/1.0.0/) |
 | Dashboard designer · 看板设计 | `teloa.dashboard-designer` | Teloa | Apache-2.0 | verified | 1.0.0 | [catalog/skills/teloa.dashboard-designer.json](catalog/skills/teloa.dashboard-designer.json) · [files](artifacts/skills/teloa.dashboard-designer/1.0.0/) |
 
-## Connectors · 连接器 (24)
+## Connectors · 连接器 (28)
 
 | Name · 名称 | ID | Source · 来源 | License · 许可 | Compatibility · 兼容 | Version · 版本 | Entry · 条目 |
 | --- | --- | --- | --- | --- | --- | --- |
 | Amap Maps (Official MCP) · 高德地图（官方 MCP） | `teloa.mcp-amap` | Teloa | ISC | needs-configuration | 1.0.1 | [catalog/connectors/teloa.mcp-amap.json](catalog/connectors/teloa.mcp-amap.json) · [files](artifacts/connectors/teloa.mcp-amap/1.0.1/) |
 | Atlassian (Jira & Confluence) · Atlassian（Jira & Confluence） | `teloa.mcp-atlassian` | Teloa | LicenseRef-Atlassian-Terms | needs-configuration | 1.0.0 | [catalog/connectors/teloa.mcp-atlassian.json](catalog/connectors/teloa.mcp-atlassian.json) · [files](artifacts/connectors/teloa.mcp-atlassian/1.0.0/) |
+| Cloudflare API (OAuth) · Cloudflare API（OAuth） | `teloa.mcp-cloudflare` | Teloa | LicenseRef-Cloudflare-Terms | needs-configuration | 1.0.0 | [catalog/connectors/teloa.mcp-cloudflare.json](catalog/connectors/teloa.mcp-cloudflare.json) · [files](artifacts/connectors/teloa.mcp-cloudflare/1.0.0/) |
+| Cloudflare Developer Docs (Official Remote) · Cloudflare 开发者文档（官方远程） | `teloa.mcp-cloudflare-docs` | Teloa | LicenseRef-Cloudflare-Terms | verified | 1.0.0 | [catalog/connectors/teloa.mcp-cloudflare-docs.json](catalog/connectors/teloa.mcp-cloudflare-docs.json) · [files](artifacts/connectors/teloa.mcp-cloudflare-docs/1.0.0/) |
 | Composio MCP (1500+ App Integrations) · Composio MCP（1500+ 应用集成） | `teloa.mcp-composio` | Teloa | LicenseRef-Composio-Terms | unsupported | 1.0.1 | [catalog/connectors/teloa.mcp-composio.json](catalog/connectors/teloa.mcp-composio.json) · [files](artifacts/connectors/teloa.mcp-composio/1.0.1/) |
+| Consensus Academic Search (OAuth) · Consensus 学术检索（OAuth） | `teloa.mcp-consensus` | Teloa | LicenseRef-Consensus-Terms | needs-configuration | 1.0.0 | [catalog/connectors/teloa.mcp-consensus.json](catalog/connectors/teloa.mcp-consensus.json) · [files](artifacts/connectors/teloa.mcp-consensus/1.0.0/) |
 | Context7 (Official Docs MCP) · Context7（官方文档 MCP） | `teloa.mcp-context7` | Teloa | LicenseRef-Context7-Terms | verified | 1.0.0 | [catalog/connectors/teloa.mcp-context7.json](catalog/connectors/teloa.mcp-context7.json) · [files](artifacts/connectors/teloa.mcp-context7/1.0.0/) |
 | DeepWiki (Official Remote) · DeepWiki（官方远程） | `teloa.mcp-deepwiki` | Teloa | LicenseRef-DeepWiki-Terms | verified | 1.0.0 | [catalog/connectors/teloa.mcp-deepwiki.json](catalog/connectors/teloa.mcp-deepwiki.json) · [files](artifacts/connectors/teloa.mcp-deepwiki/1.0.0/) |
 | DingTalk (Enterprise Communication) · 钉钉（企业通讯与协作） | `teloa.mcp-dingtalk` | Teloa | MIT | needs-configuration | 1.0.2 | [catalog/connectors/teloa.mcp-dingtalk.json](catalog/connectors/teloa.mcp-dingtalk.json) · [files](artifacts/connectors/teloa.mcp-dingtalk/1.0.2/) |
@@ -131,6 +137,7 @@ _由 `catalog/` 自动生成，请勿手改。在线浏览与搜索：https://ma
 | Greptile (Codebase Semantic Search) · Greptile（代码库语义搜索） | `teloa.mcp-greptile` | Teloa | LicenseRef-Greptile-Terms | needs-configuration | 1.0.0 | [catalog/connectors/teloa.mcp-greptile.json](catalog/connectors/teloa.mcp-greptile.json) · [files](artifacts/connectors/teloa.mcp-greptile/1.0.0/) |
 | Feishu/Lark (Official MCP) · 飞书/Lark（官方 MCP） | `teloa.mcp-lark` | Teloa | MIT | needs-configuration | 1.0.1 | [catalog/connectors/teloa.mcp-lark.json](catalog/connectors/teloa.mcp-lark.json) · [files](artifacts/connectors/teloa.mcp-lark/1.0.1/) |
 | Linear (Official Remote MCP) · Linear（官方远程 MCP） | `teloa.mcp-linear` | Teloa | LicenseRef-Linear-Terms | needs-configuration | 1.0.0 | [catalog/connectors/teloa.mcp-linear.json](catalog/connectors/teloa.mcp-linear.json) · [files](artifacts/connectors/teloa.mcp-linear/1.0.0/) |
+| Microsoft Learn Docs (Official Remote) · Microsoft Learn 文档（官方远程） | `teloa.mcp-microsoft-learn` | Teloa | LicenseRef-Microsoft-Learn-Terms | verified | 1.0.0 | [catalog/connectors/teloa.mcp-microsoft-learn.json](catalog/connectors/teloa.mcp-microsoft-learn.json) · [files](artifacts/connectors/teloa.mcp-microsoft-learn/1.0.0/) |
 | Notion (Local Bearer Token Mode) · Notion（本地 Bearer Token 模式） | `teloa.mcp-notion` | Teloa | MIT | needs-configuration | 1.0.1 | [catalog/connectors/teloa.mcp-notion.json](catalog/connectors/teloa.mcp-notion.json) · [files](artifacts/connectors/teloa.mcp-notion/1.0.1/) |
 | Notion Remote (OAuth) · Notion 远程（OAuth） | `teloa.mcp-notion-remote` | Teloa | LicenseRef-Notion-Terms | unsupported | 1.0.0 | [catalog/connectors/teloa.mcp-notion-remote.json](catalog/connectors/teloa.mcp-notion-remote.json) · [files](artifacts/connectors/teloa.mcp-notion-remote/1.0.0/) |
 | PagerDuty (Incident Response) · PagerDuty（事件响应） | `teloa.mcp-pagerduty` | Teloa | LicenseRef-PagerDuty-Terms | needs-configuration | 1.0.0 | [catalog/connectors/teloa.mcp-pagerduty.json](catalog/connectors/teloa.mcp-pagerduty.json) · [files](artifacts/connectors/teloa.mcp-pagerduty/1.0.0/) |
