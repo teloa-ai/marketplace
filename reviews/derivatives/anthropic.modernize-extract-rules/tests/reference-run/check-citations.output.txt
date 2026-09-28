@@ -1,0 +1,61 @@
+RULE-001 Monthly interest on a positive balance [interest.py:8-13]
+   8: def monthly_interest(balance, apr):
+   9:     # balance and apr are Decimals; apr is a percentage such as 18.5
+   10:     if balance <= 0:
+   11:         return Decimal("0.00")
+   12:     raw = balance * (apr / Decimal(100)) / Decimal(12)
+   13:     return raw.quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
+RULE-002 Late fee after the grace period, capped at 10% of the balance [interest.py:16-23]
+   16: def late_fee(balance, days_late):
+   17:     if balance <= 0 or days_late <= GRACE_DAYS:
+   18:         return Decimal("0.00")
+   19:     fee = LATE_FEE
+   20:     cap = (balance * Decimal("0.10")).quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
+   21:     if fee > cap:
+   22:         fee = cap
+   23:     return fee
+RULE-003 Minimum payment [validation.py:20-25]
+   20: def minimum_payment(balance):
+   21:     # 3% of the balance, but never less than the floor (or the whole balance if smaller)
+   22:     pct = balance * 3 / 100
+   23:     if pct < MIN_PAYMENT_FLOOR:
+   24:         return min(balance, MIN_PAYMENT_FLOOR)
+   25:     return round(pct, 2)
+RULE-004 Statement total [report.py:8-12]
+   8: def statement_total(account, apr, days_late):
+   9:     total = account["balance"]
+   10:     total += monthly_interest(account["balance"], apr)
+   11:     total += late_fee(account["balance"], days_late)
+   12:     return total
+RULE-005 Account ID format [validation.py:4-9]
+   4: ACCOUNT_ID = re.compile(r"^AC\d{8}$")
+   5: MIN_PAYMENT_FLOOR = 20
+   6: 
+   7: 
+   8: def valid_account_id(account_id):
+   9:     return bool(ACCOUNT_ID.match(account_id))
+RULE-006 Purchase eligibility [validation.py:12-17]
+   12: def can_purchase(account, amount):
+   13:     if account["status"] != "OPEN":
+   14:         return False
+   15:     if account["balance"] + amount > account["credit_limit"]:
+   16:         return False
+   17:     return True
+RULE-007 Delinquency and charge-off by days past due [lifecycle.py:5-14]
+   5: def next_status(account, days_past_due):
+   6:     status = account["status"]
+   7:     if status == CHARGED_OFF:
+   8:         return CHARGED_OFF
+   9:     if days_past_due >= 180:
+   10:         notify_collections(account)
+   11:         return CHARGED_OFF
+   12:     if days_past_due > 30:
+   13:         return DELINQUENT
+   14:     return status
+RULE-008 Payment returns a delinquent account to open [lifecycle.py:17-21]
+   17: def apply_payment(account, amount):
+   18:     account["balance"] = account["balance"] - amount
+   19:     if account["status"] == DELINQUENT and account["balance"] <= 0:
+   20:         account["status"] = OPEN
+   21:     return account
+citations in range; no credential value
