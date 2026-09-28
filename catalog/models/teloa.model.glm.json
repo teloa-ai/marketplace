@@ -20,8 +20,8 @@
       "en": "Zhipu GLM"
     },
     "summary": {
-      "zh-CN": "智谱 BigModel 开放平台的 GLM 系列，国内直连，按量付费通用端点。",
-      "en": "Zhipu BigModel GLM models, reachable directly in China, via the general pay-as-you-go endpoint."
+      "zh-CN": "智谱 BigModel 开放平台的 GLM 系列，国内直连，按量付费通用服务地址。",
+      "en": "Zhipu BigModel GLM models, reachable directly in China, via the general pay-as-you-go service address."
     },
     "form": "cloud",
     "usage": [
@@ -45,12 +45,12 @@
     "support": "supported",
     "notes": [
       {
-        "zh-CN": "2026-09-26 按官方文档核实端点与模型名。",
-        "en": "Endpoint and model ids verified against official docs on 2026-09-26."
+        "zh-CN": "2026-09-26 按官方文档核实服务地址与模型名。",
+        "en": "Service address and model ids verified against official docs on 2026-09-26."
       },
       {
-        "zh-CN": "这是按量付费通用端点；GLM Coding Plan 用户须改用 /api/coding/paas/v4，两者密钥与地址不能混用。",
-        "en": "This is the general pay-as-you-go endpoint; GLM Coding Plan subscribers must use /api/coding/paas/v4 instead, and keys and endpoints cannot be mixed."
+        "zh-CN": "这是按量付费通用服务地址；GLM Coding Plan 用户须改用 /api/coding/paas/v4，两者密钥与地址不能混用。",
+        "en": "This is the general pay-as-you-go service address; GLM Coding Plan subscribers must use /api/coding/paas/v4 instead, and keys and addresses cannot be mixed."
       }
     ],
     "cloud": {

@@ -27,8 +27,8 @@
     "capabilities": {
       "now": [
         {
-          "zh-CN": "审计代码快照，给出文件行号、调用链证据、CWE 与修复建议",
-          "en": "Audit code snapshots with file and line, call-chain evidence, CWE and fixes"
+          "zh-CN": "审计某一版本的代码，给出文件行号、调用链证据、CWE 与修复建议",
+          "en": "Audit a given version of the code with file and line, call-chain evidence, CWE and fixes"
         },
         {
           "zh-CN": "按 ASVS 章节评审设计，按 STRIDE 建立威胁模型",
@@ -45,8 +45,8 @@
       ],
       "needs": [
         {
-          "zh-CN": "固定版本的代码、架构文档或扫描报告",
-          "en": "Pinned code, architecture documents or scan reports"
+          "zh-CN": "锁定版本的代码、架构文档或扫描报告",
+          "en": "Code at a locked version, architecture documents or scan reports"
         },
         {
           "zh-CN": "Web 测试需书面授权范围与停止联系人",

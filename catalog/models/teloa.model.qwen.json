@@ -20,8 +20,8 @@
       "en": "Qwen (Model Studio)"
     },
     "summary": {
-      "zh-CN": "阿里云百炼的通义千问系列，国内直连；本预设走百炼 Token Plan 端点。",
-      "en": "Alibaba Cloud Model Studio Qwen models, reachable directly in China; this preset uses the Model Studio Token Plan endpoint."
+      "zh-CN": "阿里云百炼的通义千问系列，国内直连；本预设使用百炼 Token Plan 服务地址。",
+      "en": "Alibaba Cloud Model Studio Qwen models, reachable directly in China; this preset uses the Model Studio Token Plan service address."
     },
     "form": "cloud",
     "usage": [
@@ -45,12 +45,12 @@
     "support": "supported",
     "notes": [
       {
-        "zh-CN": "2026-09-26 按官方文档核实端点与模型名。",
-        "en": "Endpoint and model ids verified against official docs on 2026-09-26."
+        "zh-CN": "2026-09-26 按官方文档核实服务地址与模型名。",
+        "en": "Service address and model ids verified against official docs on 2026-09-26."
       },
       {
-        "zh-CN": "此预设需要百炼 Token Plan 专属密钥（sk-sp- 开头），与按量付费密钥不能混用；按量付费请在 设置 · 模型 添加 OpenAI 兼容端点，地址含你自己的业务空间 ID，见百炼文档。",
-        "en": "This preset needs a Model Studio Token Plan key (starts with sk-sp-), which cannot be mixed with pay-as-you-go keys; for pay-as-you-go, add an OpenAI-compatible endpoint under Settings · Models using the address with your own workspace id, as described in the Model Studio docs."
+        "zh-CN": "此预设需要百炼 Token Plan 专属密钥（sk-sp- 开头），与按量付费密钥不能混用；按量付费请在 设置 · 模型 添加 OpenAI 兼容服务，地址含你自己的业务空间 ID，见百炼文档。",
+        "en": "This preset needs a Model Studio Token Plan key (starts with sk-sp-), which cannot be mixed with pay-as-you-go keys; for pay-as-you-go, add an OpenAI-compatible service under Settings · Models using the address with your own workspace id, as described in the Model Studio docs."
       }
     ],
     "cloud": {

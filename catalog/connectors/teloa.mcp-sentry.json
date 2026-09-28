@@ -20,8 +20,8 @@
       "en": "Sentry (Error Monitoring)"
     },
     "summary": {
-      "zh-CN": "Sentry 官方远程 MCP，查询组织与项目、搜索 Issue 与事件、按链接或 ID 读取 Issue 详情。由宿主以 OAuth（动态客户端注册 + PKCE）授权，令牌自动刷新。数据经由 sentry.io 传输。",
-      "en": "Sentry official remote MCP: find organizations and projects, search issues and events, and read issue details by URL or ID. Authorized by the host via OAuth (dynamic client registration + PKCE) with automatic token refresh. Data transits sentry.io."
+      "zh-CN": "Sentry 官方远程 MCP，查询组织与项目、搜索 Issue 与事件、按链接或 ID 读取 Issue 详情。由 Teloa 以 OAuth（动态客户端注册 + PKCE）授权，令牌自动刷新。数据经由 sentry.io 传输。",
+      "en": "Sentry official remote MCP: find organizations and projects, search issues and events, and read issue details by URL or ID. Authorized by Teloa via OAuth (dynamic client registration + PKCE) with automatic token refresh. Data transits sentry.io."
     },
     "auth": {
       "kind": "oauth",
@@ -94,7 +94,7 @@
       },
       {
         "zh-CN": "远程服务的 Bearer 只收 MCP OAuth 令牌，Sentry 用户 Auth Token 须用 Sentry-Bearer 头（Teloa 不支持），故改为 OAuth；服务端支持动态客户端注册与 PKCE S256，本机回环回调（127.0.0.1）尚未实测",
-        "en": "The remote server accepts only MCP OAuth tokens as Bearer; Sentry user auth tokens need a Sentry-Bearer header (unsupported in Teloa), so the recipe uses OAuth; the server supports dynamic client registration and PKCE S256, and the loopback callback (127.0.0.1) has not been tested yet"
+        "en": "The remote server accepts only MCP OAuth tokens as Bearer; Sentry user auth tokens need a Sentry-Bearer header (unsupported in Teloa), so this connector uses OAuth; the server supports dynamic client registration and PKCE S256, and the loopback callback (127.0.0.1) has not been tested yet"
       },
       {
         "zh-CN": "数据经由 sentry.io 平台传输",

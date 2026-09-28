@@ -93,8 +93,8 @@
     "dsh": "0.1.7-rc.1",
     "conditions": [
       {
-        "zh-CN": "2026-09-25 已用真实模型（DeepSeek deepseek-flash，隔离宿主）验证：JD 起草、简历初筛对照、面试纲要与记录三个模板按合成样例产出结构与期望一致，年龄、婚育等受保护特征被剔除并在合规提示中说明，只出对照清单与草案、不给录用或淘汰结论。",
-        "en": "Verified with a real model (DeepSeek deepseek-flash, isolated host) on 2026-09-25: JD draft, resume screening checklist and interview guide with notes matched the expected structure on synthetic samples; protected attributes such as age and marital status were excluded and flagged; only checklists and drafts, no hire or reject conclusions."
+        "zh-CN": "2026-09-25 已用真实模型（DeepSeek deepseek-flash，隔离的测试环境）验证：JD 起草、简历初筛对照、面试纲要与记录三个模板按合成样例产出结构与期望一致，年龄、婚育等受保护特征被剔除并在合规提示中说明，只出对照清单与草案、不给录用或淘汰结论。",
+        "en": "Verified with a real model (DeepSeek deepseek-flash, isolated test environment) on 2026-09-25: JD draft, resume screening checklist and interview guide with notes matched the expected structure on synthetic samples; protected attributes such as age and marital status were excluded and flagged; only checklists and drafts, no hire or reject conclusions."
       },
       {
         "zh-CN": "飞书、钉钉等日历与消息连接为可选项，本版不内置。",

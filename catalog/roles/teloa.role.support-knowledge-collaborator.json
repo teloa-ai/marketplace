@@ -100,8 +100,8 @@
     "dsh": "0.1.7-rc.1",
     "conditions": [
       {
-        "zh-CN": "2026-09-25 已用真实模型（DeepSeek deepseek-flash，隔离宿主）验证：工单分诊、FAQ 沉淀、升级摘要三个模板按合成样例产出结构与期望一致，回复草案逐条引用事实库条目并做措辞核对，升级类工单不起草对外回复、个人信息只保留工单编号。",
-        "en": "Verified with a real model (DeepSeek deepseek-flash, isolated host) on 2026-09-25: ticket triage, FAQ distillation and escalation summary matched the expected structure on synthetic samples; reply drafts cite fact-base entries with wording checks, escalated tickets get no outbound draft, personal data reduced to ticket ids."
+        "zh-CN": "2026-09-25 已用真实模型（DeepSeek deepseek-flash，隔离的测试环境）验证：工单分诊、FAQ 沉淀、升级摘要三个模板按合成样例产出结构与期望一致，回复草案逐条引用事实库条目并做措辞核对，升级类工单不起草对外回复、个人信息只保留工单编号。",
+        "en": "Verified with a real model (DeepSeek deepseek-flash, isolated test environment) on 2026-09-25: ticket triage, FAQ distillation and escalation summary matched the expected structure on synthetic samples; reply drafts cite fact-base entries with wording checks, escalated tickets get no outbound draft, personal data reduced to ticket ids."
       },
       {
         "zh-CN": "工单系统、即时通讯与知识库连接为可选项，本版不内置。",

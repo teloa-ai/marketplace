@@ -72,8 +72,8 @@
     "dsh": "0.1.7-rc.1",
     "conditions": [
       {
-        "zh-CN": "数据经由 learn.microsoft.com 传输；官方为公共免费端点并设有限流（未公布具体数值），请勿批量调用",
-        "en": "Data passes through learn.microsoft.com; the endpoint is public and free with undisclosed rate limits, so do not call it in bulk"
+        "zh-CN": "数据经由 learn.microsoft.com 传输；官方为公共免费服务并设有限流（未公布具体数值），请勿批量调用",
+        "en": "Data passes through learn.microsoft.com; the service is public and free with undisclosed rate limits, so do not call it in bulk"
       },
       {
         "zh-CN": "官方说明工具清单可能随时调整；Teloa 只启用这里列出的三个工具",

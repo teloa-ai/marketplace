@@ -73,7 +73,7 @@
       "en": "Frontmatter keeps only name and description; the license field removed."
     },
     {
-      "zh-CN": "scripts/ 目录（connections.py、evaluation.py、example_evaluation.xml、requirements.txt）不随工件收录（构建拒绝脚本文件）；SKILL.md 开头加注说明评测脚本未包含，评测参考文档 reference/evaluation.md 原样收录。",
+      "zh-CN": "scripts/ 目录（connections.py、evaluation.py、example_evaluation.xml、requirements.txt）不随资源文件收录（构建拒绝脚本文件）；SKILL.md 开头加注说明评测脚本未包含，评测参考文档 reference/evaluation.md 原样收录。",
       "en": "The scripts/ directory (connections.py, evaluation.py, example_evaluation.xml, requirements.txt) is not included (build rejects script files); a note is added to SKILL.md stating scripts are excluded; the evaluation reference doc reference/evaluation.md is included unchanged."
     },
     {

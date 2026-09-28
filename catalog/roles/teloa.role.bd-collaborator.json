@@ -95,8 +95,8 @@
     "dsh": "0.1.7-rc.1",
     "conditions": [
       {
-        "zh-CN": "2026-09-25 已用真实模型（DeepSeek deepseek-flash，隔离宿主）验证：客户研究简报、方案书草案、会后跟进与报价核对三个模板按合成样例产出结构与期望一致，报价核对的单价差异与合计差额与期望完全相同，价格、折扣、交期一律留待本人填写，未对外发送。",
-        "en": "Verified with a real model (DeepSeek deepseek-flash, isolated host) on 2026-09-25: customer research brief, proposal draft and meeting follow-up with quote verification matched the expected structure on synthetic samples; the quote check reproduced the expected unit-price and total discrepancies exactly; prices, discounts and delivery dates left for the owner, nothing sent."
+        "zh-CN": "2026-09-25 已用真实模型（DeepSeek deepseek-flash，隔离的测试环境）验证：客户研究简报、方案书草案、会后跟进与报价核对三个模板按合成样例产出结构与期望一致，报价核对的单价差异与合计差额与期望完全相同，价格、折扣、交期一律留待本人填写，未对外发送。",
+        "en": "Verified with a real model (DeepSeek deepseek-flash, isolated test environment) on 2026-09-25: customer research brief, proposal draft and meeting follow-up with quote verification matched the expected structure on synthetic samples; the quote check reproduced the expected unit-price and total discrepancies exactly; prices, discounts and delivery dates left for the owner, nothing sent."
       },
       {
         "zh-CN": "商务协作员不定价、不承诺、不改条款；检索、消息与 CRM 连接为可选项，本版不内置。",
