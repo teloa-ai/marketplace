@@ -1,6 +1,6 @@
 # Catalog index · 目录索引
 
-_Generated from `catalog/` by `node tools/validate.mjs --write` (source repository: `pnpm build:market-catalog`); do not edit by hand. 145 entries, catalog version 2026.9.28.4. Browse and search: https://market.teloa.ai_
+_Generated from `catalog/` by `node tools/validate.mjs --write` (source repository: `pnpm build:market-catalog`); do not edit by hand. 146 entries, catalog version 2026.9.28.5. Browse and search: https://market.teloa.ai_
 
 _由 `catalog/` 自动生成，请勿手改。在线浏览与搜索：https://market.teloa.ai_
 
@@ -46,7 +46,7 @@ _由 `catalog/` 自动生成，请勿手改。在线浏览与搜索：https://ma
 | Support knowledge collaborator · 客服知识协作员 | `teloa.role.support-knowledge-collaborator` | Teloa | Apache-2.0 | content-only | 1.0.0 | [catalog/roles/teloa.role.support-knowledge-collaborator.json](catalog/roles/teloa.role.support-knowledge-collaborator.json) · [files](artifacts/roles/teloa.role.support-knowledge-collaborator/1.0.0/) |
 | Video editing collaborator · 视频剪辑协作员 | `teloa.role.video-editor` | Teloa | Apache-2.0 | content-only | 1.0.0 | [catalog/roles/teloa.role.video-editor.json](catalog/roles/teloa.role.video-editor.json) · [files](artifacts/roles/teloa.role.video-editor/1.0.0/) |
 
-## Skills · 技能 (67)
+## Skills · 技能 (68)
 
 | Name · 名称 | ID | Source · 来源 | License · 许可 | Compatibility · 兼容 | Version · 版本 | Entry · 条目 |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -112,6 +112,7 @@ _由 `catalog/` 自动生成，请勿手改。在线浏览与搜索：https://ma
 | Self-Improving Proactive Agent · 自改进主动代理 | `clawhub.yueyanc.self-improving-proactive-agent` | Upstream · ClawHub yueyanc/self-improving-proactive-agent@1.0.0 | MIT-0 | content-only | 1.0.0 | [catalog/skills/clawhub.yueyanc.self-improving-proactive-agent.json](catalog/skills/clawhub.yueyanc.self-improving-proactive-agent.json) |
 | Grounded citations · 有据引用 | `hermes.grounded-citations` | Teloa · from GitHub NousResearch/hermes-agent | MIT | content-only | 1.0.0 | [catalog/skills/hermes.grounded-citations.json](catalog/skills/hermes.grounded-citations.json) · [files](artifacts/skills/hermes.grounded-citations/1.0.0/) |
 | Meeting action items · 会议行动项 | `hermes.meeting-action-items` | Teloa · from GitHub NousResearch/hermes-agent | MIT | content-only | 1.0.0 | [catalog/skills/hermes.meeting-action-items.json](catalog/skills/hermes.meeting-action-items.json) · [files](artifacts/skills/hermes.meeting-action-items/1.0.0/) |
+| Code change cleanup · 代码变更清理 | `hermes.simplify-code` | Teloa · derived from GitHub NousResearch/hermes-agent | MIT | needs-configuration | 1.1.0 | [catalog/skills/hermes.simplify-code.json](catalog/skills/hermes.simplify-code.json) · [files](artifacts/skills/hermes.simplify-code/1.1.0/) |
 | Language and framework security review · 语言与框架安全实践审查 | `openai.security-best-practices` | Teloa · derived from GitHub openai/skills | Apache-2.0 | content-only | 1.0.0 | [catalog/skills/openai.security-best-practices.json](catalog/skills/openai.security-best-practices.json) · [files](artifacts/skills/openai.security-best-practices/1.0.0/) |
 | Repository threat modeling · 代码仓威胁建模 | `openai.security-threat-model` | Teloa · from GitHub openai/skills | Apache-2.0 | content-only | 1.0.0 | [catalog/skills/openai.security-threat-model.json](catalog/skills/openai.security-threat-model.json) · [files](artifacts/skills/openai.security-threat-model/1.0.0/) |
 | Skill creator · 技能创建器 | `openai.skill-creator` | Teloa · from GitHub openai/skills | Apache-2.0 | verified | 1.0.0 | [catalog/skills/openai.skill-creator.json](catalog/skills/openai.skill-creator.json) · [files](artifacts/skills/openai.skill-creator/1.0.0/) |
