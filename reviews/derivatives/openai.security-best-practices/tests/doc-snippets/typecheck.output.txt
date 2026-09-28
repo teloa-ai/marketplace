@@ -1,0 +1,6 @@
+## tsc Version 5.9.3 -p tsconfig.json（strict / noImplicitAny）：文档提取的 react.ts、nextjs.ts、nextjs-full.ts + next-server.d.ts 桩
+exit 0
+## 对照：未标注类型的 Next 片段 nextjs-r1.ts（由 nextjs.ts 去掉类型标注生成，同为 strict）
+nextjs-r1.ts(1,23): error TS7006: Parameter 'value' implicitly has an 'any' type.
+nextjs-r1.ts(1,30): error TS7006: Parameter 'origin' implicitly has an 'any' type.
+exit 2
