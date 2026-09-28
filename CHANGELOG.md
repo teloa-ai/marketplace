@@ -4,6 +4,15 @@ All notable changes to the catalog are recorded here. The format follows [Keep a
 
 目录的重要变更记录在此，格式遵循 Keep a Changelog，按目录版本（`catalog-version.txt`）分组。全部条目见 [INDEX.md](INDEX.md)。
 
+## [2026.9.28.3] - 2026-09-28
+
+<!-- Catalog-Source: ec3199bfd0cc316f60a7f2644abd9b038f65bd2f -->
+_Generated after merge from the catalog changes since `6705646`; details are in the merged pull requests. / 合并后按 `6705646` 以来的目录变更自动生成，详情见对应 PR。_
+
+### Changed
+
+- `teloa.dashboard-designer` 1.0.0 → 1.1.0 — Dashboard designer · 看板设计
+
 ## [2026.9.28.2] - 2026-09-28
 
 <!-- Catalog-Source: 6705646d205aae120b2a3f22d7edf3aaa8ad077f -->
