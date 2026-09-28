@@ -2,9 +2,9 @@
 // GENERATED FILE - DO NOT EDIT. / 生成文件，请勿手改。
 // Built in teloa-ai/teloa from scripts/市场目录校验.mjs and packages/contract by `node scripts/生成市场仓校验器.mjs`
 // (pnpm build:market-validator). Validation rules are maintained only in that repository.
-// Source commit: 917822ffd94e4c19bfd623c1cc5dbda0498a804c
+// Source commit: 57a962cf93f826322920fa076a30c0872a6ff816
 // Usage: node tools/validate.mjs [--write | --pr] [--format text|json|github]   (--write regenerates INDEX.md and NOTICE; --pr skips them for pull requests; json/github for automated review)
-import { access, lstat, readFile, readdir, writeFile } from "node:fs/promises";
+import { access, lstat, readFile, readdir, realpath, writeFile } from "node:fs/promises";
 import { basename, dirname, isAbsolute, join, relative, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import { createHash } from "node:crypto";
@@ -338,10 +338,29 @@ const skillSecretBindingSlot = "TELOA_BINDING_SHA256";
 const skillSecretHttpTool = "teloa_skill_http";
 /** 带 `secrets` 的条目 `compatibility.teloa` 不得接受的最后一个旧版：旧应用不认识 secrets，读到会当作未知字段整份拒绝。 */
 const skillSecretLastUnsupportedTeloa = "0.2.0-alpha.6";
+/**
+* 目录扩展字段的统一版本闸（规格 2026-09-27 §3）：使用 `httpGuide`、`secretGroup`、`secrets[].allowHeaders`、含 `_` 的注入头名、
+* 连接器 `header`/`basic` 变量、`instructionsMaxBytes`、stdio `args` 的 `${NAME}` 引用之一的条目，`compatibility.teloa` 不得满足此版本。
+* 旧读取器按 exact 键整份拒收未知字段，版本闸与 v1 过滤（`marketEntryNeedsV2`）是唯一不让旧应用整份读不了索引的办法。
+*/
+const catalogExtensionsLastUnsupportedTeloa = "0.2.0-alpha.6";
 /** GitHub 目录添加与审核文件过滤从此版本提供；发布与生成共用，发版前须复核。 */
 const githubCatalogMinimumTeloa = "0.2.0-alpha.7";
 /** 推荐替代（`alternatives[].recommended`）与连接器其他来源（`alternatives`）从此版本提供：旧版 v2 读取器按未知字段整份拒收，条目须用兼容下界排除旧版；发布与生成共用，发版前须复核。 */
 const marketAlternativesMinimumTeloa = "0.2.0-alpha.7";
+/** 二次开发资源（`derivation`）、install 条目原版文件摘要与许可映射（`upstream.files[].sha256|repositoryPath`）、安装量来源（`origin.installsSource`）从此版本提供：
+*  旧版读取器按未知字段整份拒收，条目须用兼容下界排除旧版，且不进 v1 索引；发布与生成共用，发版前须复核。 */
+const marketDerivativeMinimumTeloa = "0.2.0-alpha.7";
+/** 二次开发修改七类，互斥、按此顺序取优先（security > fixed > removed > adapted > added > improved > localized）。 */
+const marketDerivativeChangeTypes = [
+	"security",
+	"fixed",
+	"removed",
+	"adapted",
+	"added",
+	"improved",
+	"localized"
+];
 /** 二期本机模型（模型二期规格 §4）：Ollama 唯一运行时；名称必须带 tag，digest 为 registry 清单摘要或 null（发布前由脚本填写）。 */
 const ollamaModelNamePattern = /^[a-z0-9][a-z0-9._-]*:[a-z0-9._-]+$/;
 const ollamaDigestPattern = /^sha256:[0-9a-f]{64}$/;
@@ -388,6 +407,7 @@ const GITHUB_REPOSITORY_NAME = /^(?!\.\.?$)(?!.*\.git$)[A-Za-z0-9._-]{1,100}$/i;
 const httpsUrl = /^https:\/\/[^/].{0,1000}$/;
 const MARKET_CATALOG_MAX_FILE_SIZE = 2 * 1024 * 1024;
 const MARKET_CATALOG_MAX_TOTAL_SIZE = 20 * 1024 * 1024;
+const MARKET_CATALOG_MAX_FILES = 500;
 const MARKET_CATALOG_FORBIDDEN_EXTENSIONS = /\.(?:py|sh|bash|zsh|js|mjs|cjs|ts|mts|cts|exe|bat|cmd|ps1|rb|pl|php|lobster)$/i;
 /** 未确认许可的资源只能展示固定出处，不能安装或托管正文。 */
 const PROVENANCE_ONLY_SPDX = "NOASSERTION";
@@ -404,12 +424,16 @@ function path(value, label) {
 	if (result.startsWith("/") || result.split("/").some((part) => !part || part === "." || part === "..") || /[\\:?%#]/.test(result) || invisiblePathCharacter.test(result)) throw bad$4(label + "必须是安全的相对路径。");
 	return result;
 }
-/** 许可补充沿用同一仓库/提交；不能借映射导入其他技能或改写 SKILL.md。 */
-function marketCatalogGithubFileRepositoryPath(directory, file) {
+/**
+* 许可补充沿用同一仓库/提交；不能借映射导入其他技能或改写 SKILL.md。祖先目录许可判定上游条目与 install 条目共用；
+* 安装位置按条目形态：上游条目只能 `licenses/upstream/<原路径>`，市场保存文件的 install 条目另可放根目录 `LICENSE`/`LICENSE.txt`（规格 D10）。
+*/
+function marketCatalogGithubFileRepositoryPath(directory, file, shape = "upstream") {
 	const root = path(directory, "上游目录"), target = path(file.path, "上游文件路径");
 	if (file.repositoryPath === void 0) return root + "/" + target;
 	const source = path(file.repositoryPath, "许可文件仓库路径"), parts = source.split("/"), name = parts.at(-1), parent = parts.slice(0, -1).join("/");
-	if (!MARKET_CATALOG_LEGAL_FILENAME.test(name) || parent !== "" && !root.startsWith(parent + "/") || parts.some((part) => part.startsWith(".") || part === "scripts") || target !== "licenses/upstream/" + source) throw bad$4("目录外引用仅允许祖先目录的许可文件，并保留规范安装路径。");
+	const placed = target === "licenses/upstream/" + source || shape === "install" && (target === "LICENSE" || target === "LICENSE.txt") && /^licen[sc]e(?:\.(?:txt|md))?$/i.test(name);
+	if (!MARKET_CATALOG_LEGAL_FILENAME.test(name) || parent !== "" && !root.startsWith(parent + "/") || parts.some((part) => part.startsWith(".") || part === "scripts") || !placed) throw bad$4("目录外引用仅允许祖先目录的许可文件，并保留规范安装路径。");
 	if (file.size === null) throw bad$4("目录外许可文件必须固定大小。");
 	return source;
 }
@@ -421,9 +445,14 @@ function localized(value, label, max = 500) {
 	};
 }
 const secretEnvVar = /^[A-Z][A-Z0-9_]{1,63}$/;
-const secretHeaderName = /^[A-Za-z][A-Za-z0-9-]{0,63}$/;
+const secretHeaderName = /^[A-Za-z][A-Za-z0-9_-]{0,63}$/;
 const secretQueryName = /^[A-Za-z][A-Za-z0-9_.-]{0,63}$/;
 const secretSkillName = /^[a-z][a-z0-9-]{0,63}$/;
+/** 共享密钥组标识（规格 2026-09-27 §4.5）。 */
+const secretGroupPattern = /^[a-z][a-z0-9-]{1,63}$/;
+/** 代发调用指引每种语言的上限：2000 字符、40 行，只允许 `\n` 一种控制字符。 */
+const httpGuideMaxLength = 2e3;
+const httpGuideMaxLines = 40;
 const secretOrigin = /^https:\/\/(?=[a-z0-9.-]{1,253}$)(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z]{2,63}$/;
 const secretForbiddenTlds = /* @__PURE__ */ new Set([
 	"localhost",
@@ -457,9 +486,87 @@ const forbiddenSecretHeaders = /* @__PURE__ */ new Set([
 	"forwarded"
 ]);
 const forbiddenSecretHeaderPrefixes = ["proxy-", "x-forwarded-"];
+const routingSpoofHeaders = /* @__PURE__ */ new Set([
+	"range",
+	"if-range",
+	"accept-encoding",
+	"x-http-method-override",
+	"x-method-override",
+	"x-http-method",
+	"x-real-ip",
+	"x-original-url",
+	"x-rewrite-url",
+	"x-original-host",
+	"x-host",
+	"x-http-host-override",
+	"true-client-ip",
+	"x-client-ip",
+	"x-cluster-client-ip",
+	"x-originating-ip",
+	"x-remote-ip",
+	"x-remote-addr",
+	"client-ip",
+	"via",
+	"cf-connecting-ip",
+	"fastly-client-ip"
+]);
+const forbiddenModelHeaders = /* @__PURE__ */ new Set([
+	...forbiddenSecretHeaders,
+	...routingSpoofHeaders,
+	"x-api-key",
+	"api-key",
+	"apikey",
+	"x-apikey",
+	"x-api-token",
+	"api-token",
+	"x-auth-token",
+	"auth-token",
+	"x-access-token",
+	"access-token",
+	"x-token",
+	"x-auth-key"
+]);
+const forbiddenModelHeaderSegments = /* @__PURE__ */ new Set([
+	"auth",
+	"authorization",
+	"token",
+	"secret",
+	"session",
+	"cookie",
+	"password",
+	"passwd",
+	"credential",
+	"credentials",
+	"signature",
+	"apikey"
+]);
+/** 分段模式的显式例外（归一名）：命中分段规则但语义不是凭据的头。 */
+const modelHeaderSegmentExceptions = Object.freeze(["idempotency-key"]);
+const skillHttpBaseHeaders = /* @__PURE__ */ new Set([
+	"accept",
+	"accept-language",
+	"content-type",
+	"user-agent",
+	"idempotency-key"
+]);
+/**
+* 头名归一：小写并把 `_` 换成 `-`。CGI / WSGI / PHP 类后端把 `-` 与 `_` 映射成同一个环境变量（含 httpoxy 的 `Proxy`→`HTTP_PROXY`），
+* 所以 `X_Forwarded_For`、`Proxy_Authorization` 与被禁头等同处理；宿主比对「模型给的头与注入头重名」也按此归一。
+*/
+function normalizedHeaderName(name) {
+	return name.toLowerCase().replaceAll("_", "-");
+}
 function isForbiddenSecretHeader(name) {
-	const lower = name.toLowerCase();
-	return forbiddenSecretHeaders.has(lower) || forbiddenSecretHeaderPrefixes.some((prefix) => lower.startsWith(prefix));
+	const normalized = normalizedHeaderName(name);
+	return forbiddenSecretHeaders.has(normalized) || forbiddenSecretHeaderPrefixes.some((prefix) => normalized.startsWith(prefix));
+}
+/** 规格 §4.3 全集：模型不得设置的请求头（含 `Proxy-*`、`X-Forwarded-*`），按归一化名判定。 */
+function isForbiddenModelHeader(name) {
+	const normalized = normalizedHeaderName(name);
+	if (forbiddenModelHeaders.has(normalized) || forbiddenSecretHeaderPrefixes.some((prefix) => normalized.startsWith(prefix))) return true;
+	if (modelHeaderSegmentExceptions.includes(normalized)) return false;
+	const segments = normalized.split("-");
+	return segments.some((segment, i) => forbiddenModelHeaderSegments.has(segment) || segment === "api" && segments[i + 1] === "key");
 }
 const skillSecretMaxPathLength = 2048;
 const secretSafePath = /^\/[A-Za-z0-9\-._~!$&'()*+,=:@\/%]*$/;
@@ -495,7 +602,8 @@ function readSkillSecrets(value, skillName) {
 			"target",
 			"endpoints",
 			...named ? ["name"] : [],
-			...isRecord(input) && input.methods !== void 0 ? ["methods"] : []
+			...isRecord(input) && input.methods !== void 0 ? ["methods"] : [],
+			...isRecord(input) && input.allowHeaders !== void 0 ? ["allowHeaders"] : []
 		];
 		const row = exact$4(input, keys, "技能密钥声明");
 		if (row.target !== "bearer" && row.target !== "header" && row.target !== "query") throw bad$4("技能密钥注入位置只能是 bearer、header 或 query。");
@@ -534,10 +642,22 @@ function readSkillSecrets(value, skillName) {
 			if (row.target === "header" && isForbiddenSecretHeader(name)) throw bad$4("技能密钥注入头名不允许。");
 			secret.name = name;
 		}
+		if (row.allowHeaders !== void 0) {
+			const allowHeaders = list$1(row.allowHeaders, "附加请求头", 8).map((item) => pattern(item, secretHeaderName, "附加请求头名"));
+			if (!allowHeaders.length) throw bad$4("附加请求头至少一项。");
+			distinct(allowHeaders.map(normalizedHeaderName), "附加请求头");
+			for (const header of allowHeaders) {
+				if (isForbiddenModelHeader(header)) throw bad$4("附加请求头不能是模型禁用头：" + header + "。");
+				if (skillHttpBaseHeaders.has(normalizedHeaderName(header))) throw bad$4("附加请求头已在基础白名单内，不必重复声明：" + header + "。");
+			}
+			secret.allowHeaders = allowHeaders;
+		}
 		return secret;
 	});
 	distinct(secrets.map((secret) => secret.envVarName), "技能密钥变量名");
-	distinct(secrets.map((secret) => secret.target === "bearer" ? "header:authorization" : secret.target === "header" ? "header:" + secret.name.toLowerCase() : "query:" + secret.name), "技能密钥注入位置");
+	distinct(secrets.map((secret) => secret.target === "bearer" ? "header:authorization" : secret.target === "header" ? "header:" + normalizedHeaderName(secret.name) : "query:" + secret.name), "技能密钥注入位置");
+	const injected = new Set(secrets.filter((secret) => secret.target === "header").map((secret) => normalizedHeaderName(secret.name)));
+	for (const secret of secrets) for (const header of secret.allowHeaders ?? []) if (injected.has(normalizedHeaderName(header))) throw bad$4("附加请求头不能与本条目的注入头重名：" + header + "。");
 	return secrets;
 }
 /** 带 `secrets` 的条目版本闸（计划关键决定 9）：旧应用不认识 secrets，条目必须把不认识的版本排除在兼容范围外，并声明依赖宿主工具。 */
@@ -546,9 +666,100 @@ function readSkillSecretGate(entry) {
 	if (teloaRangeSatisfies(entry.compatibility.teloa, "0.2.0-alpha.6")) throw bad$4("声明密钥的技能条目 Teloa 兼容范围不能包含 0.2.0-alpha.6 及更早版本。");
 	if (!entry.requires.tools.includes("teloa_skill_http")) throw bad$4("声明密钥的技能条目 requires.tools 必须包含 teloa_skill_http。");
 }
+/** 目录扩展字段的版本闸（规格 2026-09-27 §3）：旧读取器按 exact 键整份拒收未知字段，条目必须把不认识的版本排除在兼容范围外。 */
+function readExtensionsGate(entry) {
+	if (teloaRangeSatisfies(entry.compatibility.teloa, "0.2.0-alpha.6")) throw bad$4("使用目录扩展字段的条目 Teloa 兼容范围不能包含 0.2.0-alpha.6 及更早版本。");
+}
+/**
+* 代发调用指引正文：1–2000 字符、至多 40 行，只允许 `\n`，首尾不留空白；C1 控制字符与双向覆盖 / 隔离字符会在模型提示里视觉隐藏内容，一并拒绝。
+* 行/段分隔符 U+2028/U+2029 会让模型把其后的内容当作新行、绕过下方逐 `\n` 行的前缀检查，LRM/RLM U+200E/U+200F 与 U+2060–U+2069 整段（含隐形运算符 U+2061–U+2064）
+* 可藏在【】之间——与宿主确认卡预览的替换集（U+2060–U+2069 整段）对齐，一并拒绝（复审 LOW-2、审查 R1 L5）。
+*/
+function guideText(value, label) {
+	if (typeof value !== "string" || !value.trim() || value !== value.trim() || value.length > httpGuideMaxLength || /[\x00-\x09\x0b-\x1f\x7f-\x9f\xad\u200b-\u200f\u2028-\u202e\u2060-\u2069\ufeff]/.test(value) || value.split("\n").length > httpGuideMaxLines) throw bad$4(label + "必须填写，不超过 2000 字、40 行，且只允许换行一种控制字符，不得含双向覆盖字符或零宽字符。");
+	if (value.split("\n").some((line) => hostPrefixLine.test(line))) throw bad$4(label + "的任何一行都不得以【Teloa】开头（该前缀保留给宿主提示）。");
+	return value;
+}
+const hostPrefixLine = /^\s*【\s*teloa\s*】/i;
+function readHttpGuide(value) {
+	const row = exact$4(value, ["zh-CN", "en"], "调用指引");
+	return {
+		"zh-CN": guideText(row["zh-CN"], "调用指引（简体中文）"),
+		en: guideText(row.en, "调用指引（英文）")
+	};
+}
+const stdioEnvRefName = /^[A-Z][A-Z0-9_]{1,63}$/;
+/**
+* stdio `args` 里的 `${NAME}` 引用（规格 2026-09-27 §7.3）：合法时返回引用名列表（无引用为空数组），任一 `${` 不构成 `${NAME}`
+* 或紧跟在 `$` 之后即畸形，返回 undefined。宿主不做替换：`args` 原样传给子进程，由桥接进程从自身环境展开，密钥不进 argv。
+*/
+function stdioArgEnvRefs(arg) {
+	const refs = [];
+	for (let at = arg.indexOf("${"); at >= 0; at = arg.indexOf("${", at)) {
+		if (at > 0 && arg[at - 1] === "$") return void 0;
+		const close = arg.indexOf("}", at);
+		if (close < 0) return void 0;
+		const name = arg.slice(at + 2, close);
+		if (!stdioEnvRefName.test(name)) return void 0;
+		refs.push(name);
+		at = close + 1;
+	}
+	return refs;
+}
+/** 连接器是否用了目录扩展字段（header/basic 变量、instructionsMaxBytes、stdio args 的 `${NAME}`）：用了就必须过扩展版本闸，与鉴权类型无关。 */
+function usesConnectorExtensions(connector) {
+	const { auth, recipe, instructionsMaxBytes } = connector;
+	if (instructionsMaxBytes !== void 0) return true;
+	if (auth.kind === "secret" && auth.vars.some((item) => item.target === "header" || item.target === "basic")) return true;
+	return recipe.transport === "stdio" && recipe.args.some((arg) => arg.includes("${"));
+}
+/** v1 冻结索引不能收的条目：旧应用按 exact 键整份拒收未知字段（secrets、全部目录扩展字段与二次开发相关字段），旧版连接器读取器也不认识 OAuth 的 supported 字段。 */
+function marketEntryNeedsV2(entry) {
+	if (entry.kind === "skill") return entry.secrets !== void 0 || entry.httpGuide !== void 0 || entry.secretGroup !== void 0 || marketEntryUsesDerivativeFields(entry);
+	if (entry.kind !== "connector") return false;
+	return entry.connector.auth.kind === "oauth" || usesConnectorExtensions(entry.connector);
+}
+/**
+* 共享密钥组一致性（规格 2026-09-27 §4.5）：同组条目必须声明完全相同的变量集合，每个变量的 envVarName / label / required / target / name 相同，
+* 且 endpoints 的 origin 集合相同；pathPrefixes、methods、allowHeaders 可以不同。快照读取与目录构建按目录整体调用；宿主运行时按同组成员再核一次。
+*/
+function assertSecretGroupsConsistent(entries) {
+	const seen = /* @__PURE__ */ new Map();
+	for (const entry of entries) {
+		if (entry.secretGroup === void 0 || entry.secrets === void 0) continue;
+		const shape = JSON.stringify([...entry.secrets].sort((left, right) => left.envVarName < right.envVarName ? -1 : 1).map((secret) => [
+			secret.envVarName,
+			secret.label["zh-CN"],
+			secret.label.en,
+			secret.required,
+			secret.target,
+			secret.name ?? null,
+			[...new Set(secret.endpoints.map((endpoint) => endpoint.origin))].sort()
+		]));
+		const first = seen.get(entry.secretGroup);
+		if (!first) {
+			seen.set(entry.secretGroup, {
+				id: entry.id,
+				shape
+			});
+			continue;
+		}
+		if (first.shape !== shape) throw bad$4("共享密钥组 " + entry.secretGroup + " 的声明不一致：" + first.id + " 与 " + entry.id + " 的变量集合或目标 origin 集合不同。");
+	}
+}
 /** 推荐替代与连接器其他来源的版本闸：带这些新字段的条目，兼容范围须有不低于 marketAlternativesMinimumTeloa 的下界。 */
 function readAlternativesGate(entry) {
 	if ((entry.kind === "connector" ? entry.alternatives !== void 0 : "alternatives" in entry && !!entry.alternatives?.some((item) => item.recommended)) && !teloaRangeHasLowerBound(entry.compatibility.teloa, "0.2.0-alpha.7")) throw bad$4("带推荐替代或连接器其他来源的条目，Teloa 兼容下界须为 0.2.0-alpha.7 或更高（旧版应用不认识这些字段）。");
+}
+/** 条目是否用了二次开发相关新字段（版本闸用它；v1 过滤经 marketEntryNeedsV2 并入同一判定）。 */
+function marketEntryUsesDerivativeFields(entry) {
+	if (entry.kind !== "skill") return false;
+	if (entry.delivery === "upstream") return entry.origin.installsSource !== void 0;
+	return entry.derivation !== void 0 || !!entry.upstream?.files.some((file) => file.sha256 !== void 0 || file.repositoryPath !== void 0);
+}
+/** 二次开发相关新字段的版本闸：兼容范围须有不低于 marketDerivativeMinimumTeloa 的下界。 */
+function readDerivativeGate(entry) {
+	if (marketEntryUsesDerivativeFields(entry) && !teloaRangeHasLowerBound(entry.compatibility.teloa, "0.2.0-alpha.7")) throw bad$4("用到二次开发说明、原版文件摘要、许可映射或安装量来源的条目，Teloa 兼容下界须为 0.2.0-alpha.7 或更高（旧版应用不认识这些字段）。");
 }
 function date(value, label) {
 	const result = pattern(value, /^\d{4}-\d{2}-\d{2}$/, label), parsed = /* @__PURE__ */ new Date(result + "T00:00:00.000Z");
@@ -631,19 +842,26 @@ function readSkillUpstream(value) {
 	], "上游仓库");
 	if (repositoryRow.host !== "github.com") throw bad$4("上游仓库目前只支持 github.com。");
 	const upstreamFiles = list$1(upstreamRow.files, "上游文件", 500).map((input) => {
+		const present = (key) => isRecord(input) && Object.hasOwn(input, key) ? [key] : [];
 		const file = exact$4(input, [
 			"path",
 			"gitBlob",
-			"size"
+			"size",
+			...present("sha256"),
+			...present("repositoryPath")
 		], "上游文件");
 		return {
 			path: path(file.path, "上游文件路径"),
 			gitBlob: pattern(file.gitBlob, hex40, "上游文件 blob 摘要"),
-			size: size(file.size, "上游文件")
+			size: size(file.size, "上游文件"),
+			...Object.hasOwn(file, "sha256") ? { sha256: pattern(file.sha256, hex64, "上游文件 sha256 摘要") } : {},
+			...Object.hasOwn(file, "repositoryPath") ? { repositoryPath: path(file.repositoryPath, "许可文件仓库路径") } : {}
 		};
 	});
 	if (!upstreamFiles.length) throw bad$4("上游文件至少一项。");
 	distinct(upstreamFiles.map((file) => file.path), "上游文件路径");
+	const directory = path(upstreamRow.path, "上游目录");
+	distinct(upstreamFiles.map((file) => marketCatalogGithubFileRepositoryPath(directory, file, "install").normalize("NFC").toLocaleLowerCase("en-US")), "上游仓库文件路径");
 	return {
 		ecosystem: pattern(upstreamRow.ecosystem, /^[a-z0-9-]{1,40}$/, "上游生态"),
 		author: text(upstreamRow.author, "上游作者", 200),
@@ -653,9 +871,75 @@ function readSkillUpstream(value) {
 			repo: pattern(repositoryRow.repo, GITHUB_REPOSITORY_NAME, "上游仓库名")
 		},
 		commit: pattern(upstreamRow.commit, hex40, "上游提交"),
-		path: path(upstreamRow.path, "上游目录"),
+		path: directory,
 		license: text(upstreamRow.license, "上游许可", 200),
 		files: upstreamFiles
+	};
+}
+const derivativeChangeId = /^[A-Z][A-Z0-9]{1,7}-M\d{2,4}$/;
+/** 大小写不敏感文件系统上的同一路径（与上游条目仓库路径去重同一折叠）。 */
+const foldPath = (value) => value.normalize("NFC").toLocaleLowerCase("en-US");
+const derivativeUpstreamRef = /^([^/@:\s]+)\/([^/@:\s]+)@([0-9a-f]{40}):(.+)$/;
+/** 二次开发说明（规格 D2、D3、D5）：修改只登记在 changes；每条 upstream 指向本条目锁定的同一仓库、提交与某个原版文件，null 只给原版没有的新文件。 */
+function readDerivation(value, upstream, modifications) {
+	const row = exact$4(value, ["unchangedFiles", "changes"], "二次开发说明");
+	if (modifications.length) throw bad$4("二次开发条目的修改只登记在 derivation.changes，modifications 必须为空。");
+	if (upstream.files.some((file) => file.sha256 === void 0)) throw bad$4("二次开发条目的每个原版文件都必须固定 sha256 摘要。");
+	const originals = new Set(upstream.files.map((file) => file.path));
+	const repositoryPathOf = new Map(upstream.files.map((file) => [file.path, marketCatalogGithubFileRepositoryPath(upstream.path, file, "install")]));
+	const repositoryPaths = new Set(repositoryPathOf.values());
+	const originalByFold = new Map(upstream.files.map((file) => [foldPath(file.path), file.path]));
+	const changeRows = list$1(row.changes, "修改清单", 200);
+	if (!changeRows.length) throw bad$4("修改清单至少一项。");
+	const changes = changeRows.map((input) => {
+		const hasSection = isRecord(input) && Object.hasOwn(input, "section");
+		const item = exact$4(input, [
+			"id",
+			"type",
+			"path",
+			...hasSection ? ["section"] : [],
+			"upstream",
+			"summary",
+			"reason"
+		], "修改条目");
+		const id = pattern(item.id, derivativeChangeId, "修改编号");
+		if (!marketDerivativeChangeTypes.includes(item.type)) throw bad$4("修改类型只能是 " + marketDerivativeChangeTypes.join("、") + "。");
+		const filePath = path(item.path, "修改文件路径");
+		const section = hasSection ? text(item.section, "修改位置", 200) : void 0;
+		if (section !== void 0 && invisiblePathCharacter.test(section)) throw bad$4("修改位置不能含不可见或双向控制字符。");
+		const sameFold = originalByFold.get(foldPath(filePath));
+		if (sameFold !== void 0 && sameFold !== filePath) throw bad$4("修改 " + id + " 的文件 " + filePath + " 与原版文件 " + sameFold + " 只差大小写，会在不区分大小写的文件系统上覆盖原版文件。");
+		if (item.upstream === null) {
+			if (originals.has(filePath)) throw bad$4("修改 " + id + " 的文件 " + filePath + " 是原版文件，upstream 必须指向原版文件。");
+			if (item.type === "removed") throw bad$4("removed 修改 " + id + " 必须用 upstream 指明被移除的原版文件。");
+		} else {
+			const ref = typeof item.upstream === "string" ? derivativeUpstreamRef.exec(item.upstream) : null;
+			if (!ref || ref[1] !== upstream.repository.owner || ref[2] !== upstream.repository.repo || ref[3] !== upstream.commit) throw bad$4("修改 " + id + " 的 upstream 必须写成 <owner>/<repo>@<40 位提交>:<仓库内路径>，且与条目锁定的仓库和提交一致。");
+			const source = path(ref[4], "修改的原版文件路径");
+			if (!repositoryPaths.has(source)) throw bad$4("修改 " + id + " 的 upstream 必须指向本条目的某个原版文件。");
+			if (originals.has(filePath) && repositoryPathOf.get(filePath) !== source) throw bad$4("修改 " + id + " 改的是原版文件 " + filePath + "，upstream 必须指向该文件在原版仓库里的路径。");
+		}
+		if (item.type === "removed" && !originals.has(filePath)) throw bad$4("removed 修改 " + id + " 的文件 " + filePath + " 必须是原版文件。");
+		return {
+			id,
+			type: item.type,
+			path: filePath,
+			...section === void 0 ? {} : { section },
+			upstream: item.upstream,
+			summary: localized(item.summary, "修改摘要", 1e3),
+			reason: localized(item.reason, "修改原因", 1e3)
+		};
+	});
+	distinct(changes.map((change) => change.id), "修改编号");
+	const unchangedFiles = distinct(list$1(row.unchangedFiles, "未修改文件", 500).map((item) => path(item, "未修改文件路径")), "未修改文件");
+	for (const file of unchangedFiles) {
+		if (!originals.has(file)) throw bad$4("未修改文件 " + file + " 不是原版文件。");
+		if (changes.some((change) => change.path === file)) throw bad$4("未修改文件 " + file + " 同时被修改清单引用。");
+	}
+	if (originals.has("MODIFICATIONS.md") && !changes.some((change) => change.path === "MODIFICATIONS.md")) throw bad$4("原版自带 MODIFICATIONS.md，须在修改清单里登记对它的改写。");
+	return {
+		unchangedFiles,
+		changes
 	};
 }
 function readSkillEntry(row) {
@@ -670,6 +954,8 @@ function readSkillEntry(row) {
 	if (row.delivery === "builtin" && !name.startsWith("teloa-")) throw bad$4("内置技能名必须以 teloa- 开头。");
 	if (row.delivery === "install" && name.startsWith("teloa-")) throw bad$4("teloa- 前缀保留给内置技能，安装型条目不能使用。");
 	if (row.upstream === null && row.delivery !== "builtin") throw bad$4("只有 Teloa 内置技能的 upstream 可以为 null。");
+	if (Object.hasOwn(row, "derivation") && (row.delivery !== "install" || row.upstream === null)) throw bad$4("二次开发说明只用于有原版来源的安装型技能条目。");
+	const upstream = row.upstream === null ? null : readSkillUpstream(row.upstream), common = readCommonFields(row);
 	return {
 		format: "teloa.market-catalog-entry/v1",
 		id: pattern(row.id, catalogId, "目录条目标识"),
@@ -682,8 +968,9 @@ function readSkillEntry(row) {
 			title: localized(skillRow.title, "技能标题", 120),
 			summary: localized(skillRow.summary, "技能用途")
 		},
-		upstream: row.upstream === null ? null : readSkillUpstream(row.upstream),
-		...readCommonFields(row)
+		upstream,
+		...common,
+		...Object.hasOwn(row, "derivation") ? { derivation: readDerivation(row.derivation, upstream, common.modifications) } : {}
 	};
 }
 function readSolutionEntry(row) {
@@ -738,10 +1025,74 @@ const connectorServerName = /^(?!.*__)[A-Za-z0-9_-]{1,32}$/;
 const envVarName = /^[A-Za-z][A-Za-z0-9_]{0,127}$/;
 /** 宿主写入的 OAuth 凭据槽前缀：env 变量名不得占用，避免与 oauth_* 槽同名 */
 const reservedEnvVarPrefix = /^oauth_/i;
+/**
+* 宿主与运行时保留的环境变量名（审查修复 L-2，按大写比较）：受管 stdio 子进程继承宿主环境，连接器凭据变量若占用这些名字，
+* 就能改写可执行搜索路径、Node / 动态链接器加载行为、代理与证书信任，或冒充 Teloa / DSH 自身配置。
+*/
+const reservedEnvVarNames = /* @__PURE__ */ new Set([
+	"PATH",
+	"PATHEXT",
+	"HOME",
+	"USERPROFILE",
+	"SHELL",
+	"COMSPEC",
+	"SYSTEMROOT",
+	"WINDIR",
+	"USER",
+	"USERNAME",
+	"LOGNAME",
+	"PWD",
+	"TMPDIR",
+	"TMP",
+	"TEMP",
+	"IFS",
+	"ENV",
+	"BASH_ENV",
+	"NODE_OPTIONS",
+	"NODE_PATH",
+	"NODE_EXTRA_CA_CERTS",
+	"NODE_TLS_REJECT_UNAUTHORIZED",
+	"SSL_CERT_FILE",
+	"SSL_CERT_DIR",
+	"HTTP_PROXY",
+	"HTTPS_PROXY",
+	"ALL_PROXY",
+	"NO_PROXY"
+]);
+const reservedEnvVarNamePrefixes = [
+	"LD_",
+	"DYLD_",
+	"TELOA_",
+	"DSH_",
+	"NPM_CONFIG_"
+];
+/** 连接器 header 鉴权头名（规格 §7.1）：不含 `_`（远端是该连接器自己的服务，不存在 CGI 映射伪装问题）；Authorization 允许。 */
+const connectorHeaderName = /^[A-Za-z][A-Za-z0-9-]{0,63}$/;
+/** 鉴权头 scheme：`Bearer`、`Sentry-Bearer` 这类单词，或 `Token token=` 这类以 `=` 结尾的两段形。 */
+const connectorHeaderScheme = /^[A-Za-z][A-Za-z0-9._-]{0,31}(?: [A-Za-z][A-Za-z0-9._-]{0,31}=)?$/;
+const connectorTransportHeaders = /* @__PURE__ */ new Set([
+	"accept",
+	"content-type",
+	"last-event-id",
+	"mcp-session-id",
+	"mcp-protocol-version"
+]);
+/**
+* 连接器鉴权头禁用判定（审查修复 L-3）：与技能侧共用同一实现——注入头禁用集与 `Proxy-*`、`X-Forwarded-*` 前缀（isForbiddenSecretHeader）、
+* 路由伪装 / 方法覆盖 / 编码协商头（与 isForbiddenModelHeader 同一集合），按 normalizedHeaderName 归一后判定；另禁 MCP 传输自管头。
+* `Authorization` 允许（远端是该连接器自己的服务）。模型侧的凭据词分段规则不适用：连接器鉴权头本身就是凭据头，按该规则 `X-Api-Key`、`Authorization` 都会被禁。
+*/
+function isForbiddenConnectorHeader(name) {
+	const normalized = normalizedHeaderName(name);
+	if (normalized === "authorization") return false;
+	return isForbiddenSecretHeader(normalized) || routingSpoofHeaders.has(normalized) || connectorTransportHeaders.has(normalized);
+}
 /** OAuth scope 记号：RFC 6749 §3.3 scope-token 字符集（不含空格、引号、反斜杠）。 */
 const oauthScope = /^[\x21\x23-\x5B\x5D-\x7E]{1,200}$/;
 function unreservedEnvVarName(name) {
 	if (reservedEnvVarPrefix.test(name)) throw bad$4("环境变量名不得以 oauth_ 开头（为宿主 OAuth 凭据槽保留）。");
+	const upper = name.toUpperCase();
+	if (reservedEnvVarNames.has(upper) || reservedEnvVarNamePrefixes.some((prefix) => upper.startsWith(prefix))) throw bad$4("环境变量名 " + name + " 为宿主或运行时保留（PATH、HOME、NODE_OPTIONS、代理与证书变量，以及 LD_、DYLD_、TELOA_、DSH_、NPM_CONFIG_ 开头），不能用作连接器凭据变量。");
 	return name;
 }
 const clientIdPatternAtom = /^(?:[^\\^$.|?*+()[\]{}]|\.|\\[dDwWsS]|\\[-\\^$.|?*+()[\]{}/]|\[\^?(?:[^\\[\]]|\\[dDwWsS]|\\[-\\^$.|?*+()[\]{}/])+\])/;
@@ -779,7 +1130,8 @@ function readConnectorEntry(row) {
 		"auth",
 		"recipe",
 		"tools",
-		"upstreamUrl"
+		"upstreamUrl",
+		...isRecord(row.connector) && row.connector.instructionsMaxBytes !== void 0 ? ["instructionsMaxBytes"] : []
 	], "连接器信息");
 	const serverName = pattern(connRow.serverName, connectorServerName, "连接器服务名");
 	const authRow = isRecord(connRow.auth) ? connRow.auth : null;
@@ -790,50 +1142,84 @@ function readConnectorEntry(row) {
 		auth = { kind: "none" };
 	} else if (authRow.kind === "secret") {
 		const ar = exact$4(connRow.auth, ["kind", "vars"], "secret 认证");
+		const vars = list$1(ar.vars, "凭据变量", 20).map((v) => {
+			const vRow = isRecord(v) ? v : null;
+			if (!vRow) throw bad$4("凭据变量格式不正确。");
+			if (typeof vRow.required !== "boolean") throw bad$4("凭据 required 必须是布尔值。");
+			if (vRow.target === "env") {
+				const vr = exact$4(v, [
+					"target",
+					"envVarName",
+					"label",
+					"required"
+				], "env 凭据变量");
+				return {
+					target: "env",
+					envVarName: unreservedEnvVarName(pattern(vr.envVarName, envVarName, "环境变量名")),
+					label: localized(vr.label, "凭据说明"),
+					required: vr.required
+				};
+			} else if (vRow.target === "bearer") {
+				const vr = exact$4(v, [
+					"target",
+					"label",
+					"required"
+				], "bearer 凭据变量");
+				return {
+					target: "bearer",
+					label: localized(vr.label, "凭据说明"),
+					required: vr.required
+				};
+			} else if (vRow.target === "url-path") {
+				const vr = exact$4(v, [
+					"target",
+					"label",
+					"required"
+				], "url-path 凭据变量");
+				return {
+					target: "url-path",
+					label: localized(vr.label, "凭据说明"),
+					required: vr.required
+				};
+			} else if (vRow.target === "header") {
+				const vr = exact$4(v, [
+					"target",
+					"name",
+					"label",
+					"required",
+					...vRow.scheme !== void 0 ? ["scheme"] : []
+				], "header 凭据变量");
+				const name = pattern(vr.name, connectorHeaderName, "鉴权头名");
+				if (isForbiddenConnectorHeader(name)) throw bad$4("鉴权头名不允许：" + name + "。");
+				const item = {
+					target: "header",
+					name,
+					label: localized(vr.label, "凭据说明"),
+					required: vr.required
+				};
+				if (vr.scheme !== void 0) item.scheme = pattern(vr.scheme, connectorHeaderScheme, "鉴权头 scheme");
+				return item;
+			} else if (vRow.target === "basic") {
+				const vr = exact$4(v, [
+					"target",
+					"userLabel",
+					"label",
+					"required"
+				], "basic 凭据变量");
+				return {
+					target: "basic",
+					userLabel: localized(vr.userLabel, "用户名说明"),
+					label: localized(vr.label, "凭据说明"),
+					required: vr.required
+				};
+			}
+			throw bad$4("凭据变量 target 只支持 env、bearer、url-path、header 或 basic。");
+		});
+		if (vars.filter((item) => item.target === "bearer" || item.target === "basic" || item.target === "header" && item.name.toLowerCase() === "authorization").length > 1) throw bad$4("产生 Authorization 头的凭据变量（bearer、authorization 头、basic）至多一个。");
+		distinct(vars.flatMap((item) => item.target === "header" ? [item.name.toLowerCase()] : []), "鉴权头名");
 		auth = {
 			kind: "secret",
-			vars: list$1(ar.vars, "凭据变量", 20).map((v) => {
-				const vRow = isRecord(v) ? v : null;
-				if (!vRow) throw bad$4("凭据变量格式不正确。");
-				if (typeof vRow.required !== "boolean") throw bad$4("凭据 required 必须是布尔值。");
-				if (vRow.target === "env") {
-					const vr = exact$4(v, [
-						"target",
-						"envVarName",
-						"label",
-						"required"
-					], "env 凭据变量");
-					return {
-						target: "env",
-						envVarName: unreservedEnvVarName(pattern(vr.envVarName, envVarName, "环境变量名")),
-						label: localized(vr.label, "凭据说明"),
-						required: vr.required
-					};
-				} else if (vRow.target === "bearer") {
-					const vr = exact$4(v, [
-						"target",
-						"label",
-						"required"
-					], "bearer 凭据变量");
-					return {
-						target: "bearer",
-						label: localized(vr.label, "凭据说明"),
-						required: vr.required
-					};
-				} else if (vRow.target === "url-path") {
-					const vr = exact$4(v, [
-						"target",
-						"label",
-						"required"
-					], "url-path 凭据变量");
-					return {
-						target: "url-path",
-						label: localized(vr.label, "凭据说明"),
-						required: vr.required
-					};
-				}
-				throw bad$4("凭据变量 target 只支持 env、bearer 或 url-path。");
-			})
+			vars
 		};
 	} else if (authRow.kind === "oauth") {
 		if (typeof authRow.supported !== "boolean") throw bad$4("oauth 认证的 supported 必须是布尔值。");
@@ -892,13 +1278,24 @@ function readConnectorEntry(row) {
 			"bin",
 			"args"
 		], "stdio 配方");
+		const pkg = pattern(r.package, npmPackageName, "npm 包名");
+		const ver = pattern(r.version, semver$1, "npm 包版本");
+		const integ = pattern(r.integrity, sha512Integrity, "npm 包 integrity");
+		const binPath = path(r.bin, "bin 路径");
+		const args = list$1(r.args, "固定参数", 50).map((a) => text(a, "参数", 1e3));
+		const declaredEnv = new Set(auth.kind === "secret" ? auth.vars.flatMap((item) => item.target === "env" ? [item.envVarName] : []) : []);
+		for (const arg of args) {
+			const refs = stdioArgEnvRefs(arg);
+			if (refs === void 0) throw bad$4("参数里的 ${ 必须构成 ${NAME} 引用（大写字母、数字、下划线）：" + arg);
+			for (const name of refs) if (!declaredEnv.has(name)) throw bad$4("参数引用了未声明的 env 凭据变量 " + name + "：" + arg);
+		}
 		recipe = {
 			transport: "stdio",
-			package: pattern(r.package, npmPackageName, "npm 包名"),
-			version: pattern(r.version, semver$1, "npm 包版本"),
-			integrity: pattern(r.integrity, sha512Integrity, "npm 包 integrity"),
-			bin: path(r.bin, "bin 路径"),
-			args: list$1(r.args, "固定参数", 50).map((a) => text(a, "参数", 1e3))
+			package: pkg,
+			version: ver,
+			integrity: integ,
+			bin: binPath,
+			args
 		};
 	} else if (recipeRow.transport === "streamable-http") {
 		const r = exact$4(connRow.recipe, ["transport", "url"], "streamable-http 配方");
@@ -923,6 +1320,13 @@ function readConnectorEntry(row) {
 		if (v.target === "bearer" && recipe.transport === "stdio") throw bad$4("bearer 凭据变量对 stdio 传输无意义（stdio 通过环境变量传递凭据）。");
 		if (v.target === "bearer" && recipe.transport === "streamable-http-template") throw bad$4("bearer 凭据变量对 streamable-http-template 无意义，请改用 url-path。");
 		if (v.target === "url-path" && recipe.transport !== "streamable-http-template") throw bad$4(`url-path 凭据变量只对 streamable-http-template 传输有意义（当前传输：${recipe.transport}）。`);
+		if ((v.target === "header" || v.target === "basic") && recipe.transport !== "streamable-http") throw bad$4(`${v.target} 凭据变量只对 streamable-http 传输有意义（当前传输：${recipe.transport}）。`);
+	}
+	let instructionsMaxBytes;
+	if (connRow.instructionsMaxBytes !== void 0) {
+		const n = connRow.instructionsMaxBytes;
+		if (!Number.isSafeInteger(n) || n <= 4096 || n > 32768 || n % 1024 !== 0) throw bad$4("instructionsMaxBytes 必须是大于 4096、不超过 32768 且为 1024 整数倍的整数。");
+		instructionsMaxBytes = n;
 	}
 	const tools = list$1(connRow.tools, "工具列表", 200).map((t) => {
 		const tr = exact$4(t, [
@@ -942,7 +1346,7 @@ function readConnectorEntry(row) {
 	if (auth.kind === "oauth" && auth.supported && auth.requiresAllowlist && (common.compatibility.status !== "needs-configuration" || common.compatibility.conditions.length === 0)) throw bad$4("requiresAllowlist 的连接器兼容状态必须是 needs-configuration，并在兼容条件中写明白名单要求。");
 	if (auth.kind === "oauth" && auth.supported && recipe.transport !== "streamable-http") throw bad$4("supported:true 的 OAuth 连接器配方必须是 streamable-http（固定 https 地址）。");
 	if (auth.kind === "oauth" && !auth.supported && common.compatibility.status !== "unsupported") throw bad$4("supported:false 的 OAuth 连接器兼容状态必须是 unsupported。");
-	return {
+	const entry = {
 		format: "teloa.market-catalog-entry/v1",
 		id: pattern(row.id, catalogId, "目录条目标识"),
 		kind: "connector",
@@ -957,11 +1361,14 @@ function readConnectorEntry(row) {
 			auth,
 			recipe,
 			tools,
-			upstreamUrl
+			upstreamUrl,
+			...instructionsMaxBytes === void 0 ? {} : { instructionsMaxBytes }
 		},
 		...Object.hasOwn(row, "alternatives") ? { alternatives: readAlternatives(row.alternatives) } : {},
 		...common
 	};
+	if (usesConnectorExtensions(entry.connector)) readExtensionsGate(entry);
+	return entry;
 }
 /** 其他来源共用读法；推荐只允许显式 true，缺省保持旧条目形状。 */
 function readAlternatives(value) {
@@ -1092,11 +1499,13 @@ function readUpstreamSkillEntry(row) {
 			files
 		};
 	} else throw bad$4("上游来源类型只支持 github 或 clawhub。");
+	const hasInstallsSource = isRecord(row.origin) && Object.hasOwn(row.origin, "installsSource");
 	const origRow = exact$4(row.origin, [
 		"marketplace",
 		"installs",
 		"installsLabel",
-		"countedAt"
+		"countedAt",
+		...hasInstallsSource ? ["installsSource"] : []
 	], "来源信息");
 	if (![
 		"claude-code",
@@ -1113,6 +1522,10 @@ function readUpstreamSkillEntry(row) {
 		installsLabel: text(origRow.installsLabel, "安装量显示文本", 200),
 		countedAt: date(origRow.countedAt, "统计日期")
 	};
+	if (hasInstallsSource) {
+		if (origin.installs === null) throw bad$4("安装量为 null 时不能写安装量来源。");
+		origin.installsSource = readInstallsSource(origRow.installsSource);
+	} else if (origin.installs !== null && origin.marketplace !== "clawhub") throw bad$4("非 ClawHub 来源的安装量必须写明可复核的安装量来源（origin.installsSource）。");
 	const alternatives = readAlternatives(row.alternatives);
 	const unsupportedKinds = [
 		"agents",
@@ -1151,6 +1564,25 @@ function readUpstreamSkillEntry(row) {
 		alternatives,
 		unsupportedComponents,
 		...common
+	};
+}
+/** 安装量来源地址：https、规范形式（`new URL` 往返不变），不带账号、端口、查询或片段，≤1000。 */
+function readInstallsSource(value) {
+	const row = exact$4(value, ["url", "scope"], "安装量来源");
+	if (row.scope !== "resource" && row.scope !== "plugin") throw bad$4("安装量口径只能是 resource 或 plugin。");
+	const url = text(row.url, "安装量来源地址", 1e3);
+	let parsed;
+	try {
+		parsed = new URL(url);
+	} catch {
+		throw bad$4("安装量来源地址格式不正确。");
+	}
+	if (parsed.protocol !== "https:" || parsed.username || parsed.password || parsed.port || parsed.search || parsed.hash || url.includes("?") || url.includes("#") || parsed.href !== url) throw bad$4("安装量来源地址必须是 https，且不带账号、端口、查询或片段。");
+	const host = parsed.hostname;
+	if (host.startsWith("[") || /^\d+(?:\.\d+){3}$/.test(host) || host === "localhost" || host.endsWith(".localhost")) throw bad$4("安装量来源地址必须是公开域名，不能是 IP 地址或 localhost。");
+	return {
+		url,
+		scope: row.scope
 	};
 }
 const roleIdPattern = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
@@ -1568,7 +2000,7 @@ function readModelCloud(value) {
 function readMarketCatalogEntry(value) {
 	if (!isRecord(value)) throw bad$4("目录条目格式不正确或包含未知字段。");
 	if (value.kind === "skill") {
-		const { secrets, ...rest } = value;
+		const { secrets, httpGuide, secretGroup, ...rest } = value;
 		const entry = rest.delivery === "upstream" ? readUpstreamSkillEntry(exact$4(rest, [
 			"format",
 			"id",
@@ -1599,15 +2031,26 @@ function readMarketCatalogEntry(value) {
 			"license",
 			"compatibility",
 			"requires",
-			"review"
+			"review",
+			...Object.hasOwn(rest, "derivation") ? ["derivation"] : []
 		], "技能条目"));
 		readAlternativesGate(entry);
-		if (secrets === void 0) return entry;
+		readDerivativeGate(entry);
+		if (secrets === void 0) {
+			if (httpGuide !== void 0) throw bad$4("调用指引 httpGuide 只能与 secrets 同时出现。");
+			if (secretGroup !== void 0) throw bad$4("共享密钥组 secretGroup 只能与 secrets 同时出现。");
+			return entry;
+		}
 		readSkillSecretGate(entry);
-		return {
+		const read = readSkillSecrets(secrets, entry.skill.name);
+		const result = {
 			...entry,
-			secrets: readSkillSecrets(secrets, entry.skill.name)
+			secrets: read
 		};
+		if (httpGuide !== void 0) result.httpGuide = readHttpGuide(httpGuide);
+		if (secretGroup !== void 0) result.secretGroup = pattern(secretGroup, secretGroupPattern, "共享密钥组");
+		if (httpGuide !== void 0 || secretGroup !== void 0 || read.some((secret) => secret.allowHeaders !== void 0 || secret.target === "header" && secret.name.includes("_"))) readExtensionsGate(entry);
+		return result;
 	}
 	if (value.kind === "solution") return readSolutionEntry(exact$4(value, [
 		"format",
@@ -1704,6 +2147,10 @@ function readMarketCatalogArtifact(value, entry, sha256) {
 	if (entry.kind === "skill" && entry.delivery !== "upstream") {
 		const skillEntries = files.filter((file) => file.path.split("/").at(-1) === "SKILL.md");
 		if (skillEntries.length !== 1 || skillEntries[0].path !== "SKILL.md") throw bad$4("条目工件必须恰有一个位于根目录的 SKILL.md。");
+		if (entry.derivation) {
+			distinct(files.map((file) => foldPath(file.path)), "工件文件路径（不区分大小写）");
+			readDerivativeArtifact(files, entry.derivation, entry.upstream.files);
+		}
 	} else if (entry.kind === "solution") {
 		if (!files.some((file) => file.path === "teloa.json")) throw bad$4("方案条目工件必须包含根目录的 teloa.json。");
 	} else if (entry.kind === "role") {
@@ -1723,6 +2170,19 @@ function readMarketCatalogArtifact(value, entry, sha256) {
 		files,
 		treeHash
 	};
+}
+/** 二次开发条目的工件清单（规格 D6、D7）：未修改文件摘要等于原版锁定摘要；除根目录 MODIFICATIONS.md 外每个文件都已登记；不在工件里的原版文件都有 removed 修改。 */
+function readDerivativeArtifact(files, derivation, originals) {
+	const byPath = new Map(files.map((file) => [file.path, file]));
+	if (!byPath.has("MODIFICATIONS.md")) throw bad$4("二次开发条目工件必须包含根目录的 MODIFICATIONS.md。");
+	for (const name of derivation.unchangedFiles) if (byPath.get(name)?.sha256 !== originals.find((file) => file.path === name).sha256) throw bad$4("未修改文件 " + name + " 与原版锁定摘要不一致（工件缺少该文件或内容已改动）。");
+	const shipped = derivation.changes.find((change) => change.type === "removed" && byPath.has(change.path));
+	if (shipped) throw bad$4("工件文件 " + shipped.path + " 登记为移除（" + shipped.id + "），但仍随附。");
+	const listed = /* @__PURE__ */ new Set([...derivation.unchangedFiles, ...derivation.changes.map((change) => change.path)]);
+	const unlisted = files.find((file) => file.path !== "MODIFICATIONS.md" && !listed.has(file.path));
+	if (unlisted) throw bad$4("工件文件 " + unlisted.path + " 既不在未修改文件中，也没有被任何修改登记。");
+	const removed = originals.find((file) => !byPath.has(file.path) && !derivation.changes.some((change) => change.type === "removed" && change.path === file.path));
+	if (removed) throw bad$4("原版文件 " + removed.path + " 不在工件中，须登记一条 removed 修改。");
 }
 function readMarketCatalogIndex(value, sha256) {
 	const row = exact$4(value, [
@@ -1754,6 +2214,7 @@ function readMarketCatalogIndex(value, sha256) {
 	distinct(entries.filter((e) => e.kind === "connector").map((e) => e.connector.serverName), "连接器服务名");
 	distinct(entries.filter((e) => e.kind === "role").map((e) => e.role.roleId), "岗位标识");
 	distinct(entries.filter((e) => e.kind === "model").map((e) => e.model.modelId), "模型标识");
+	assertSecretGroupsConsistent(entries.flatMap((e) => e.kind === "skill" ? [e] : []));
 	return {
 		format: "teloa.market-catalog/v1",
 		catalogVersion,
@@ -1808,7 +2269,7 @@ function readMarketIndex(value) {
 	const { catalogVersion, entries: raw } = envelope(value, "teloa.market-index/v1");
 	const entries = raw.map((item) => readMarketCatalogEntry(item));
 	if (entries.some((entry) => !MARKET_INDEX_V1_KINDS.includes(entry.kind))) throw bad$3("v1 索引只收 skill、solution、connector；其余类型请发布到 v2 索引。");
-	if (entries.some((entry) => entry.kind === "skill" && entry.secrets !== void 0)) throw bad$3("v1 索引不收声明密钥的技能条目；请发布到 v2 索引。");
+	if (entries.some(marketEntryNeedsV2)) throw bad$3("v1 索引不收声明密钥、使用目录扩展字段、二次开发相关字段（二次开发说明、原版文件摘要、许可映射、安装量来源）或 OAuth 认证的条目；请发布到 v2 索引。");
 	if (entries.some((entry) => entry.kind === "connector" && entry.alternatives !== void 0)) throw bad$3("v1 索引不收连接器其他来源；请发布到 v2 索引。");
 	if (entries.some((entry) => "alternatives" in entry && entry.alternatives?.some((item) => item.recommended))) throw bad$3("v1 索引不收推荐替代标记；请发布到 v2 索引。");
 	noBuiltinWithoutUpstream(entries);
@@ -1872,6 +2333,15 @@ function readIndustryMcpConnectionDefinition(value) {
 		tools: list(row.tools, toolName, 64, "行业 MCP 连接工具名必须非空、去重且只含字母数字下划线连字符与点号。")
 	};
 }
+
+//#endregion
+//#region packages/contract/src/group-attachments.ts
+const groupAttachmentFileMaxBytes = 16 * 1024 * 1024;
+/**
+* 上传请求体上限，防的是「超限的请求在被拒之前先吃掉宿主内存」：取满额文件档的 base64 长度，外加 64 KiB 字段余量
+* （requestId、groupId、版本、MIME、≤120 字文件名经 JSON 转义，远小于这个量）。超过即在读请求体之前拒绝。
+*/
+const groupAttachmentUploadMaxBodyBytes = 4 * Math.ceil(groupAttachmentFileMaxBytes / 3) + 64 * 1024;
 
 //#endregion
 //#region packages/contract/src/localized-metadata.ts
@@ -2360,6 +2830,9 @@ const MARKET_VALIDATION_RULES = Object.freeze([
 	"catalog.alternatives",
 	"catalog.github-minimum-app",
 	"catalog.alternatives-minimum-app",
+	"catalog.derivative-minimum-app",
+	"catalog.installs-source",
+	"catalog.secret-group",
 	"model.endpoint",
 	"model.duplicate-ollama-name",
 	"model.digest-missing",
@@ -2388,6 +2861,14 @@ const MARKET_VALIDATION_RULES = Object.freeze([
 	"license.file-missing",
 	"license.not-listed",
 	"license.text-mismatch",
+	"derivative.unchanged-mismatch",
+	"derivative.case-conflict",
+	"derivative.unlisted-file",
+	"derivative.removed-unlisted",
+	"derivative.modifications-file",
+	"derivative.change-notice",
+	"derivative.review-missing",
+	"derivative.review-coverage",
 	"connector.license-terms",
 	"connector.lock-missing",
 	"connector.lock-generate",
@@ -2696,6 +3177,21 @@ async function readCatalogEntries(root) {
 						field: "compatibility.teloa"
 					});
 				}
+				if (typeof range === "string" && rawUsesDerivativeFields(raw) && !teloaRangeHasLowerBound(range, "0.2.0-alpha.7")) {
+					const label = typeof raw.id === "string" ? raw.id : file;
+					fail("catalog.derivative-minimum-app", `${label}: entries with derivative changes, original file digests or license mappings, or an install count source require a lower compatibility bound of ${marketDerivativeMinimumTeloa} or later`, `${label}：带二次开发修改清单、原版文件摘要或许可映射、安装量来源的资源须明确限制最低应用版本为 ${marketDerivativeMinimumTeloa} 或更高`, {
+						entry: typeof raw.id === "string" ? raw.id : null,
+						field: "compatibility.teloa"
+					});
+				}
+				const installsProblem = rawInstallsSourceProblem(raw);
+				if (installsProblem) {
+					const label = typeof raw.id === "string" ? raw.id : file;
+					fail("catalog.installs-source", `${label}: ${installsProblem[0]}`, `${label}：${installsProblem[1]}`, {
+						entry: typeof raw.id === "string" ? raw.id : null,
+						field: "origin.installsSource"
+					});
+				}
 				try {
 					entry = readMarketCatalogEntry(raw);
 				} catch (error) {
@@ -2746,6 +3242,23 @@ async function readCatalogEntries(root) {
 	});
 	settle(problems);
 	return read.sort((left, right) => left.entry.id < right.entry.id ? -1 : left.entry.id > right.entry.id ? 1 : 0);
+}
+const isObject = (value) => !!value && typeof value === "object" && !Array.isArray(value);
+/** 原始 JSON 上的 marketEntryUsesDerivativeFields：技能条目带 derivation、安装型原版文件带 sha256 或 repositoryPath、原版条目带安装量来源。 */
+function rawUsesDerivativeFields(raw) {
+	if (!isObject(raw) || raw.kind !== "skill") return false;
+	if (raw.delivery === "upstream") return isObject(raw.origin) && Object.hasOwn(raw.origin, "installsSource");
+	const files = isObject(raw.upstream) && Array.isArray(raw.upstream.files) ? raw.upstream.files : [];
+	return Object.hasOwn(raw, "derivation") || files.some((file) => isObject(file) && (Object.hasOwn(file, "sha256") || Object.hasOwn(file, "repositoryPath")));
+}
+/** 规格 D11：非 ClawHub 的安装量须写可复核来源；没有安装量不得写来源。返回 [en,zh] 或 null。 */
+function rawInstallsSourceProblem(raw) {
+	const origin = isObject(raw) && raw.kind === "skill" && isObject(raw.origin) ? raw.origin : null;
+	if (!origin) return null;
+	const hasSource = Object.hasOwn(origin, "installsSource");
+	if (origin.installs === null && hasSource) return ["origin.installsSource is only allowed together with an install count", "没有安装量时不能写安装量来源（origin.installsSource）"];
+	if (typeof origin.installs === "number" && origin.marketplace !== "clawhub" && !hasSource) return [`an install count from ${origin.marketplace} needs a verifiable public source (origin.installsSource with url and scope)`, `写了安装量就要写可复核的来源地址（origin.installsSource 的 url 与 scope）`];
+	return null;
 }
 /** 自定义模型端点的主机名；契约只核对 https 前缀，这里解析失败即报条目错误。 */
 function modelEndpointHost(entry) {
@@ -2828,6 +3341,98 @@ function verifyLicenseFiles(entry, fileBytes) {
 	}
 	settle(problems);
 }
+/** 我方修改的验证记录位置（市场仓 reviews/derivatives/<id>@<version>.json，不进目录条目）。 */
+const derivativeReviewPath = (entry) => `reviews/derivatives/${entry.id}@${entry.version}.json`;
+const DERIVATIVE_REVIEW_METHODS = [
+	"test",
+	"reproduction",
+	"source-check",
+	"review"
+];
+/** 修改声明须出现在登记文件的前 4 KiB 内。 */
+const CHANGE_NOTICE_BYTES = 4096;
+const validDate = (value) => {
+	if (typeof value !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
+	const parsed = /* @__PURE__ */ new Date(value + "T00:00:00.000Z");
+	return Number.isFinite(parsed.getTime()) && parsed.toISOString().slice(0, 10) === value;
+};
+/** 分三层核对，前一层有问题时不进入下一层（登记不全时修改说明与验证记录的覆盖无从谈起）；每层收集全部问题后一并抛出。
+*  fileBytes：工件相对路径 → 字节。导出供单测构造大小写不敏感文件系统上造不出的工件清单。 */
+async function verifyDerivative(root, entry, fileBytes) {
+	const { derivation, upstream } = entry, directory = artifactDirectoryPath(entry), at = (file, field) => ({
+		file,
+		entry: entry.id,
+		field
+	});
+	const originals = new Map(upstream.files.map((file) => [file.path, file]));
+	const listed = /* @__PURE__ */ new Set([...derivation.unchangedFiles, ...derivation.changes.map((change) => change.path)]);
+	const registration = [];
+	const byFold = /* @__PURE__ */ new Map();
+	for (const path of fileBytes.keys()) {
+		const fold = path.normalize("NFC").toLocaleLowerCase("en-US"), other = byFold.get(fold);
+		if (other === void 0) {
+			byFold.set(fold, path);
+			continue;
+		}
+		registration.push(problem("derivative.case-conflict", `${entry.id}: ${path} and ${other} differ only in letter case and overwrite each other on case-insensitive file systems`, `${entry.id} 的 ${path} 与 ${other} 只差大小写，在不区分大小写的文件系统上会互相覆盖`, at(`${directory}/${path}`, "derivation.changes")));
+	}
+	for (const name of derivation.unchangedFiles) {
+		const bytes = fileBytes.get(name), file = `${directory}/${name}`;
+		if (!bytes) registration.push(problem("derivative.unchanged-mismatch", `${entry.id}: unchanged file ${name} is missing from the artifact`, `${entry.id} 的未修改文件 ${name} 不在资源文件里`, at(file, "derivation.unchangedFiles")));
+		else if (sha256(bytes) !== originals.get(name).sha256) registration.push(problem("derivative.unchanged-mismatch", `${entry.id}: ${name} is listed as unchanged but differs from the original locked digest; list the change or restore the original bytes`, `${entry.id} 的 ${name} 列为未修改，但与原版锁定摘要不一致：请登记修改或恢复原版字节`, at(file, "derivation.unchangedFiles")));
+	}
+	const removedPaths = new Set(derivation.changes.filter((change) => change.type === "removed").map((change) => change.path));
+	for (const path of fileBytes.keys()) if (removedPaths.has(path)) registration.push(problem("derivative.unlisted-file", `${entry.id}: ${path} is listed as removed but still shipped`, `${entry.id} 的 ${path} 登记为移除但仍随附`, at(`${directory}/${path}`, "derivation.changes")));
+	else if (path !== "MODIFICATIONS.md" && !listed.has(path)) registration.push(problem("derivative.unlisted-file", `${entry.id}: ${path} is neither an unchanged original file nor listed in any change`, `${entry.id} 的 ${path} 既不在未修改文件里，也没有被任何修改登记`, at(`${directory}/${path}`, "derivation.changes")));
+	for (const path of originals.keys()) if (!fileBytes.has(path) && !derivation.changes.some((change) => change.type === "removed" && change.path === path)) registration.push(problem("derivative.removed-unlisted", `${entry.id}: original file ${path} is not in the artifact and has no removed change`, `${entry.id} 的原版文件 ${path} 没有随附，也没有登记 removed 修改`, at(`${directory}/${path}`, "derivation.changes")));
+	settle(registration);
+	const notices = [], modifications = fileBytes.get("MODIFICATIONS.md"), modificationsFile = `${directory}/MODIFICATIONS.md`;
+	if (!modifications) notices.push(problem("derivative.modifications-file", `${entry.id}: derivative artifact has no root MODIFICATIONS.md`, `${entry.id} 的二次开发资源根目录缺少 MODIFICATIONS.md`, at(modificationsFile, "derivation.changes")));
+	else {
+		const text = modifications.toString("latin1");
+		const missing = derivation.changes.map((change) => change.id).filter((id) => !new RegExp(`(?<![A-Za-z0-9-])${id}(?![0-9])`).test(text));
+		if (missing.length) notices.push(problem("derivative.modifications-file", `${entry.id}: MODIFICATIONS.md does not mention change ${missing.join(", ")}`, `${entry.id} 的 MODIFICATIONS.md 缺少修改编号 ${missing.join("、")}`, at(modificationsFile, "derivation.changes")));
+	}
+	for (const path of new Set(derivation.changes.map((change) => change.path))) {
+		const bytes = fileBytes.get(path);
+		if (!bytes || path === "MODIFICATIONS.md") continue;
+		if (!bytes.subarray(0, CHANGE_NOTICE_BYTES).includes("MODIFICATIONS.md")) notices.push(problem("derivative.change-notice", `${entry.id}: changed file ${path} must mention MODIFICATIONS.md within its first 4 KiB`, `${entry.id} 改过或新增的文件 ${path} 须在前 4 KiB 内写明 MODIFICATIONS.md（修改声明）`, at(`${directory}/${path}`, "derivation.changes")));
+	}
+	settle(notices);
+	const reviewFile = derivativeReviewPath(entry);
+	const invalid = (en, zh) => fail("derivative.review-missing", `${entry.id}: ${en} (${reviewFile})`, `${entry.id}：${zh}（${reviewFile}）`, at(reviewFile, "derivation"));
+	const info = await lstat(join(root, reviewFile)).catch((error) => {
+		if (error?.code === "ENOENT") return null;
+		throw error;
+	});
+	if (!info) invalid("the verification record for our changes is missing", "缺少我方修改的验证记录");
+	if (!info.isFile() || info.size > 2097152) invalid("the verification record must be a regular file of at most 2 MiB", "验证记录必须是不超过 2 MiB 的普通文件");
+	const inside = relative(await realpath(root), await realpath(join(root, reviewFile)));
+	if (!inside || inside.startsWith("..") || isAbsolute(inside)) invalid("the verification record must be inside the catalog directory (no symbolic links in its path)", "验证记录必须位于目录根之内（路径上不能有符号链接指向外部）");
+	let record;
+	try {
+		record = JSON.parse(decoder.decode(await readFile(join(root, reviewFile))));
+	} catch {
+		invalid("the verification record is not valid UTF-8 JSON", "验证记录不是合法的 UTF-8 JSON");
+	}
+	const keys = (value) => isObject(value) ? Object.keys(value).sort().join(",") : null;
+	if (keys(record) !== "changeChecks,entryId,format,reviewedAt,reviewer,version" || record.format !== "teloa.derivative-review/v1") invalid("the verification record must be teloa.derivative-review/v1 with exactly format, entryId, version, reviewedAt, reviewer and changeChecks", "验证记录须为 teloa.derivative-review/v1，且只含 format、entryId、version、reviewedAt、reviewer、changeChecks");
+	if (record.entryId !== entry.id || record.version !== entry.version) invalid(`entryId and version must be ${entry.id} and ${entry.version}`, `entryId 与 version 须为 ${entry.id} 与 ${entry.version}`);
+	if (!validDate(record.reviewedAt)) invalid("reviewedAt must be a valid YYYY-MM-DD date", "reviewedAt 须为有效的 YYYY-MM-DD 日期");
+	if (typeof record.reviewer !== "string" || !record.reviewer.trim() || record.reviewer.length > 200) invalid("reviewer must be non-empty text of at most 200 characters", "reviewer 须为非空文字且不超过 200 字");
+	if (!Array.isArray(record.changeChecks) || record.changeChecks.length > 500) invalid(`changeChecks must be a list of at most ${500} checks`, `changeChecks 须为不超过 ${500} 条的检查列表`);
+	for (const check of record.changeChecks) if (keys(check) !== "changeId,evidence,method,result" || typeof check.changeId !== "string" || typeof check.result !== "string" || !DERIVATIVE_REVIEW_METHODS.includes(check.method) || typeof check.evidence !== "string" || !check.evidence.trim() || check.evidence.length > 1e3) invalid(`every check needs exactly changeId, method (${DERIVATIVE_REVIEW_METHODS.join(", ")}), result and evidence (non-empty, at most 1000 characters)`, `每条检查须恰含 changeId、method（${DERIVATIVE_REVIEW_METHODS.join("、")}）、result 与 evidence（非空，不超过 1000 字）`);
+	const checksById = Map.groupBy(record.changeChecks, (check) => check.changeId), ids = new Set(derivation.changes.map((change) => change.id)), gaps = [];
+	for (const change of derivation.changes) {
+		const checks = checksById.get(change.id) ?? [];
+		if (!checks.length) gaps.push([`${change.id} has no check`, `${change.id} 没有检查`]);
+		else if (checks.length > 1) gaps.push([`${change.id} has more than one check`, `${change.id} 有多条检查`]);
+		else if (checks[0].result !== "pass") gaps.push([`${change.id} did not pass (result must be pass)`, `${change.id} 未通过（result 须为 pass）`]);
+		else if ((change.type === "security" || change.type === "fixed") && checks[0].method === "review") gaps.push([`${change.id} is a ${change.type} change and needs test, reproduction or source-check, not review alone`, `${change.id} 属于 ${change.type}，须用 test、reproduction 或 source-check 验证，不能只靠审阅`]);
+	}
+	for (const id of checksById.keys()) if (!ids.has(id)) gaps.push([`${id} is not in the change list`, `${id} 不在修改清单里`]);
+	if (gaps.length) fail("derivative.review-coverage", `${entry.id}: verification record does not cover the changes: ${gaps.map((item) => item[0]).join("; ")}`, `${entry.id} 的验证记录未覆盖修改：${gaps.map((item) => item[1]).join("；")}`, at(reviewFile, "derivation.changes"));
+}
 /** artifacts/ 下只放托管条目：类型目录固定，<id> 必须是该类型的托管条目；历史版本目录同样须自带许可文件。 */
 async function verifyArtifactTree(root, hosted, skip) {
 	const byDirectory = /* @__PURE__ */ new Map();
@@ -2871,6 +3476,17 @@ async function verifyArtifactTree(root, hosted, skip) {
 */
 async function validateMarketplace(root, { generateLock, allowNullDigest = false } = {}) {
 	const read = await readCatalogEntries(root);
+	const groups = /* @__PURE__ */ new Map();
+	for (const { entry } of read) if (entry.kind === "skill" && entry.secretGroup !== void 0 && entry.secrets !== void 0) groups.set(entry.secretGroup, [...groups.get(entry.secretGroup) ?? [], entry]);
+	for (const [first, ...rest] of groups.values()) for (const entry of rest) try {
+		assertSecretGroupsConsistent([first, entry]);
+	} catch (error) {
+		fail("catalog.secret-group", `shared secret group declarations disagree: ${reason(error)}`, `共享密钥组声明不一致：${reason(error)}`, {
+			entry: entry.id,
+			file: entryFilePath(entry),
+			field: "secretGroup"
+		});
+	}
 	const hosted = read.map((item) => item.entry).filter(isHostedEntry);
 	const rawById = new Map(read.map((item) => [item.entry.id, item.raw]));
 	const official = read.map((item) => item.entry).filter((entry) => entry.delivery !== "upstream");
@@ -2953,6 +3569,7 @@ async function validateMarketplace(root, { generateLock, allowNullDigest = false
 			fileBytes.set(file.path, bytes);
 		}
 		verifyLicenseFiles(entry, fileBytes);
+		if (entry.kind === "skill" && entry.derivation) await verifyDerivative(root, entry, fileBytes);
 		if (stdioConnector) {
 			const bytes = fileBytes.get("package-lock.json");
 			const lockFile = { file: `${artifactDirectory}/package-lock.json` };
@@ -3098,9 +3715,9 @@ function v1Entry(entry) {
 	else if ("alternatives" in entry) result.alternatives = entry.alternatives.map(({ recommended, ...item }) => item);
 	return result;
 }
-/** 读取目录源，同一批条目组装两份索引：v1 冻结只收三类，且排除 OAuth 连接器（旧版读取器只认 {kind, reason}，
-*  supported 字段会使其整份拒收；旧版应用也无法发起授权）；GitHub 上游目录添加与密钥技能仅进入 v2。
-*  v2 收全部。两份都不收无上游来源的 Teloa 内置技能
+/** 读取目录源，同一批条目组装两份索引：v1 冻结只收三类，且按契约谓词 marketEntryNeedsV2 排除旧读取器整份拒收的条目
+*  （声明密钥、目录扩展字段或二次开发相关新字段的条目、OAuth 连接器——旧版读取器只认 {kind, reason}，supported 字段会使其整份拒收；旧版应用也无法发起授权）；
+*  GitHub 上游目录添加同样仅进入 v2。v2 收全部。两份都不收无上游来源的 Teloa 内置技能
 *  （只随发行快照提供；契约读取器同样拒收）。字节固定（无时间戳），重复生成一致。
 *  条目结构沿用契约读取器；工件字节级校验由 validateMarketplace 负责，这里只核对托管工件目录存在。 */
 async function buildMarketIndexes(root) {
@@ -3118,7 +3735,7 @@ async function buildMarketIndexes(root) {
 	const v1Index = readMarketIndex({
 		format: "teloa.market-index/v1",
 		catalogVersion,
-		entries: projectAlternatives(entries.filter((entry) => MARKET_INDEX_V1_KINDS.includes(entry.kind) && !(entry.kind === "connector" && entry.connector.auth.kind === "oauth") && !(entry.delivery === "upstream" && entry.upstream.kind === "github") && !entry.secrets?.length)).map(v1Entry)
+		entries: projectAlternatives(entries.filter((entry) => MARKET_INDEX_V1_KINDS.includes(entry.kind) && !marketEntryNeedsV2(entry) && !(entry.delivery === "upstream" && entry.upstream.kind === "github"))).map(v1Entry)
 	});
 	const v2Index = assembleMarketIndexV2({
 		format: "teloa.market-index/v2",
@@ -3149,7 +3766,7 @@ const SECTIONS = [
 ];
 /** INDEX.md：按类型分节的全条目表（名称、ID、来源、许可、兼容状态、版本、条目文件链接）。 */
 function renderIndexMarkdown(all, catalogVersion) {
-	const source = (entry) => entry.delivery === "upstream" ? `Upstream · ${upstreamLabel(entry.upstream)}` : entry.kind === "skill" && entry.upstream ? `Teloa · from ${upstreamLabel(entry.upstream)}` : "Teloa";
+	const source = (entry) => entry.delivery === "upstream" ? `Upstream · ${upstreamLabel(entry.upstream)}` : entry.kind === "skill" && entry.derivation ? `Teloa · derived from ${upstreamLabel(entry.upstream)}` : entry.kind === "skill" && entry.upstream ? `Teloa · from ${upstreamLabel(entry.upstream)}` : "Teloa";
 	const lines = [
 		"# Catalog index · 目录索引",
 		"",
@@ -3196,7 +3813,7 @@ function renderNotice(all) {
 	];
 	for (const entry of hosted) {
 		const attribution = entry.kind === "skill" && entry.upstream ? `${entry.upstream.author} (${upstreamLocation(entry.upstream)})` : entry.kind === "connector" ? `Teloa contributors; connects to ${entry.connector.recipe.transport === "stdio" ? `npm package ${entry.connector.recipe.package}@${entry.connector.recipe.version}` : entry.connector.upstreamUrl}` : "Teloa contributors";
-		lines.push(`${entry.id}@${entry.version}  ${artifactDirectoryPath(entry)}/`, `  Attribution: ${attribution}`, `  License: ${entry.license.spdx} (${entry.license.files.join(", ")})`, "");
+		lines.push(`${entry.id}@${entry.version}  ${artifactDirectoryPath(entry)}/`, `  Attribution: ${attribution}`, ...entry.kind === "skill" && entry.derivation ? ["  Derived work; changes listed in MODIFICATIONS.md"] : [], `  License: ${entry.license.spdx} (${entry.license.files.join(", ")})`, "");
 	}
 	lines.push(`== Upstream entries, not hosted (${upstream.length}) ==`, "");
 	for (const entry of upstream) lines.push(`${entry.id}@${entry.version}`, `  Source: ${upstreamLocation(entry.upstream)}`, `  License: ${entry.license.spdx}`, "");
