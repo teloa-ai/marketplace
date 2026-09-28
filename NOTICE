@@ -14,7 +14,7 @@ not a license for content in this repository.
 
 This file is generated from catalog/ by tools/validate.mjs; do not edit by hand.
 
-== Hosted artifacts (69) ==
+== Hosted artifacts (70) ==
 
 anthropic.internal-comms@1.0.0  artifacts/skills/anthropic.internal-comms/1.0.0/
   Attribution: Anthropic (https://github.com/anthropics/skills/tree/33375500bcea98d610eb30ce10ac4e59b89c390d/skills/internal-comms)
@@ -30,6 +30,11 @@ hermes.grounded-citations@1.0.0  artifacts/skills/hermes.grounded-citations/1.0.
 
 hermes.meeting-action-items@1.0.0  artifacts/skills/hermes.meeting-action-items/1.0.0/
   Attribution: Ben Barclay (Hermes Agent) (https://github.com/NousResearch/hermes-agent/tree/130b8f2c5dbca93a81aa396dd2ba44420d78f6f0/skills/productivity/meeting-action-items)
+  License: MIT (LICENSE)
+
+hermes.simplify-code@1.1.0  artifacts/skills/hermes.simplify-code/1.1.0/
+  Attribution: Hermes Agent (https://github.com/NousResearch/hermes-agent/tree/a7c080ca66d32b1ec2cb71e15896c5b0dc2470e8/skills/software-development/simplify-code)
+  Derived work; changes listed in MODIFICATIONS.md
   License: MIT (LICENSE)
 
 openai.security-best-practices@1.0.0  artifacts/skills/openai.security-best-practices/1.0.0/
