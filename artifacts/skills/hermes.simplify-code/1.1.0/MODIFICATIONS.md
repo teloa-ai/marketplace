@@ -8,30 +8,11 @@
 
 未修改：frontmatter 的 `name` 与 `description`；`delegate_task` 委派接口与顺序回退说明主体；Phase 1 / Phase 3 / Related 全文；Reviewer 1/2/4 提示；Reviewer 3 的检查清单（复审建议删长列表未采纳——它是技能覆盖面本身，删了会降低覆盖）。
 
-共 9 条：fixed 1、adapted 3、added 5（security、removed、improved、localized 均为 0）。
+共 8 条：improved 1、adapted 2、added 5（security、fixed、removed、localized 均为 0）。R3 按市场审查意见：HSC-M01 由 `fixed` 改归 `improved`（盲评未测出版本差异，依据是表述改进）；HSC-M07 修改的 `version` 字段在交付文件中已不存在，移出修改清单，说明并入 HSC-M09。
 
 安装文件清单（主控裁定）：`SKILL.md`（技能正文；本技能没有参考文件），以及许可合规所需的 `LICENSE`（上游仓库根 LICENSE 原件；MIT 要求随附版权与许可声明）和本文件 `MODIFICATIONS.md`（SKILL.md 顶部声明写有 "See MODIFICATIONS.md"）。`MODIFICATIONS.json`、`CATALOG-ENTRY-DRAFT.md` 不随安装包。
 
-## fixed
-
-### HSC-M01
-
-- type: `fixed`
-- path: SKILL.md §Phase 2 — Reviewer 3 (Efficiency) 末句（上游 L166-167 "For each, give the concrete fix and why it's faster or safer."）
-- upstream: `NousResearch/hermes-agent@a7c080ca66d32b1ec2cb71e15896c5b0dc2470e8:skills/software-development/simplify-code/SKILL.md`
-- summary: R1 改为：给出具体修复及其可度量依据——引用在一次请求/运行中真正执行了重复工作的调用点（file:line），写出修复前后每次调用的工作量（SKILL.md 中的例子："before: one DNS lookup per outgoing message; after: one per batch"）；前后相同即不是效率发现，删除或交给 Quality 角度；在分别被调用的函数间共享代码本身不减少运行时工作量（SKILL.md 中的例子：两个 CLI 子命令共用一个参数解析器，仍各解析一次），只有同一执行路径上重复的工作才算；对 silent failures/TOCTOU 要说明当前被掩盖的错误或竞态是什么、什么会把它暴露出来——这就是 "safer" 的论证出口。两个例子都与盲评输入 A/B/C 无关（R2 更正：R1 记录里写的 "before: one file read per order; after: one per report" 从未出现在 SKILL.md 中，且恰是盲评阳性输入 B 的答案，属记录错误，已删）。
-- reason: 上游要求每条效率发现解释"为什么更快"，输入无效率问题时诱导编造收益。R0 版把测试样例（subtotal/taxedTotal 的"抽 helper 不减少循环迭代"）写进了提示，构成答案泄漏，且去掉了 "or safer"（复审 M6/MINOR）；R1 改为通用表述、换与测试无关的例子、恢复安全性出口。 R1 盲评复测（3 组未见输入 A/B/C，每模型×版本×输入 10 采样，pi-ai 真实链路，8k 输出上限，0 截断）：qwen3:4b 两版阴性编造均 0/20、阳性均 10/10；qwen3:8b 阴性编造 原版 5/20 vs 二次开发版 4/20（Fisher 双侧 p=1.0），阳性均 10/10。版本差异不可检出；本条保留的依据是消除答案泄漏、恢复 "safer" 出口与表述正确性，不是实测收益（详见 optimize-codex-hermes.md「复审修复 R1」）。 R2：按复判 H1 更正 summary 中与实物不符的例子；对外不宣称本条降低编造（主控裁定）。
-
 ## adapted
-
-### HSC-M07
-
-- type: `adapted`
-- path: SKILL.md frontmatter `version`
-- upstream: `NousResearch/hermes-agent@a7c080ca66d32b1ec2cb71e15896c5b0dc2470e8:skills/software-development/simplify-code/SKILL.md`
-- summary: R1：`1.1.0` → `1.1.0-teloa.1`。
-- reason: 内容已改，保留上游版本号会被当成上游 1.1.0 原件（复审 MINOR）。
-- 市场版：`version` 字段随 HSC-M09 一并删除，版本以市场目录条目（1.1.0）为准。
 
 ### HSC-M08
 
@@ -46,7 +27,7 @@
 - type: `adapted`
 - path: SKILL.md frontmatter
 - upstream: `NousResearch/hermes-agent@a7c080ca66d32b1ec2cb71e15896c5b0dc2470e8:skills/software-development/simplify-code/SKILL.md`
-- summary: R3（市场上架）：frontmatter 只保留 `name` 与 `description`，删除 `version`（含 HSC-M07 写入的 `1.1.0-teloa.1`）、`author`、`license`、`platforms` 与 `metadata.hermes`（`tags`、`related_skills`）；正文未改。
+- summary: R3（市场上架）：frontmatter 只保留 `name` 与 `description`，删除 `version`（R1 曾以 HSC-M07 把它从 `1.1.0` 改为 `1.1.0-teloa.1`，避免被当成上游 1.1.0 原件；该字段现已删除，HSC-M07 随之移出修改清单，版本以市场目录条目 1.1.0 为准）、`author`、`license`、`platforms` 与 `metadata.hermes`（`tags`、`related_skills`）；正文未改。
 - reason: Teloa 市场保存的技能 frontmatter 只允许 `name` 与 `description` 两个单行键；作者与许可信息由市场目录条目的原版来源、根目录 `LICENSE` 与本文件保留。
 
 ## added
@@ -90,3 +71,13 @@
 - upstream: `NousResearch/hermes-agent@a7c080ca66d32b1ec2cb71e15896c5b0dc2470e8:skills/software-development/simplify-code/SKILL.md`
 - summary: R1 新增 "Reasoning budget"：会先思考再回答的模型做四角度内联审查可能需要 ≥ 8k 输出 token；被截断的回答不是审查，应加大输出上限或缩小 diff 重跑，不得据部分结果行动。
 - reason: 复审 §6-7；R0 复测中 4b 两次撞 4096 上限。 R2 按复判 H2 更正行号（原写 L232）。
+
+## improved
+
+### HSC-M01
+
+- type: `improved`
+- path: SKILL.md §Phase 2 — Reviewer 3 (Efficiency) 末句（上游 L166-167 "For each, give the concrete fix and why it's faster or safer."）
+- upstream: `NousResearch/hermes-agent@a7c080ca66d32b1ec2cb71e15896c5b0dc2470e8:skills/software-development/simplify-code/SKILL.md`
+- summary: R1 改为：给出具体修复及其可度量依据——引用在一次请求/运行中真正执行了重复工作的调用点（file:line），写出修复前后每次调用的工作量（SKILL.md 中的例子："before: one DNS lookup per outgoing message; after: one per batch"）；前后相同即不是效率发现，删除或交给 Quality 角度；在分别被调用的函数间共享代码本身不减少运行时工作量（SKILL.md 中的例子：两个 CLI 子命令共用一个参数解析器，仍各解析一次），只有同一执行路径上重复的工作才算；对 silent failures/TOCTOU 要说明当前被掩盖的错误或竞态是什么、什么会把它暴露出来——这就是 "safer" 的论证出口。两个例子都与盲评输入 A/B/C 无关（R2 更正：R1 记录里写的 "before: one file read per order; after: one per report" 从未出现在 SKILL.md 中，且恰是盲评阳性输入 B 的答案，属记录错误，已删）。
+- reason: 上游要求每条效率发现解释"为什么更快"，输入无效率问题时诱导编造收益。R0 版把测试样例（subtotal/taxedTotal 的"抽 helper 不减少循环迭代"）写进了提示，构成答案泄漏，且去掉了 "or safer"（复审 M6/MINOR）；R1 改为通用表述、换与测试无关的例子、恢复安全性出口。 R1 盲评复测（3 组未见输入 A/B/C，每模型×版本×输入 10 采样，pi-ai 真实链路，8k 输出上限，0 截断）：qwen3:4b 两版阴性编造均 0/20、阳性均 10/10；qwen3:8b 阴性编造 原版 5/20 vs 二次开发版 4/20（Fisher 双侧 p=1.0），阳性均 10/10。版本差异不可检出；本条保留的依据是消除答案泄漏、恢复 "safer" 出口与表述正确性，不是实测收益（详见 optimize-codex-hermes.md「复审修复 R1」）。 R2：按复判 H1 更正 summary 中与实物不符的例子；对外不宣称本条降低编造（主控裁定）。
