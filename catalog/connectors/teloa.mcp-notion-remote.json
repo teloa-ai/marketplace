@@ -3,7 +3,7 @@
   "id": "teloa.mcp-notion-remote",
   "kind": "connector",
   "delivery": "managed",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "taxonomy": {
     "functions": [
       "office-docs",
@@ -21,13 +21,15 @@
       "en": "Notion Remote (OAuth)"
     },
     "summary": {
-      "zh-CN": "Notion 官方推荐的远程 MCP 服务，可搜索与读取页面和数据库、创建与更新页面、查询数据源、读写评论。OAuth 授权待技术探针实测通过后开放；现阶段只用 Notion 集成令牌时请改用本地条目（teloa.mcp-notion）。",
-      "en": "Notion's officially recommended remote MCP service for searching and reading pages and databases, creating and updating pages, querying data sources, and reading or writing comments. OAuth authorization opens after the technical probe passes; for now, to use a Notion integration token, use the local entry (teloa.mcp-notion)."
+      "zh-CN": "Notion 官方推荐的远程 MCP 服务，可搜索与读取页面和数据库、创建与更新页面、查询数据源、读写评论。由 Teloa 以 OAuth（动态客户端注册 + PKCE）授权，令牌自动刷新。只想用 Notion 集成令牌时，请改用本地版资源（teloa.mcp-notion）。",
+      "en": "Notion's officially recommended remote MCP service for searching and reading pages and databases, creating and updating pages, querying data sources, and reading or writing comments. Authorized by Teloa via OAuth (dynamic client registration + PKCE) with automatic token refresh. To use a Notion integration token instead, use the local version (teloa.mcp-notion)."
     },
     "auth": {
       "kind": "oauth",
-      "supported": false,
-      "reason": "OAuth 授权待技术探针实测（DCR、PKCE 与本机回环回调）通过后开放"
+      "supported": true,
+      "scopes": [
+        "default"
+      ]
     },
     "recipe": {
       "transport": "streamable-http",
@@ -141,17 +143,25 @@
     ]
   },
   "compatibility": {
-    "status": "unsupported",
+    "status": "needs-configuration",
     "teloa": ">=0.2.0-alpha.6",
     "dsh": "0.1.7-rc.1",
     "conditions": [
       {
-        "zh-CN": "OAuth 授权待技术探针实测（DCR、PKCE 与本机回环回调）通过后开放；届时需在 市场 → 连接 页由本人在浏览器中完成授权",
-        "en": "OAuth authorization opens after the technical probe (DCR, PKCE and the loopback callback) passes; the owner will then authorize in a browser from Market → Connections"
+        "zh-CN": "需在 市场 > 连接 页由本人在浏览器中用 Notion 账户完成 OAuth 授权；服务器部署需在配置文件设置 oauth.publicCallbackUrl",
+        "en": "The owner must complete OAuth authorization with a Notion account in a browser from Market > Connections; server deployments must set oauth.publicCallbackUrl in the config file"
       },
       {
-        "zh-CN": "官方文档确认支持动态客户端注册（token_endpoint_auth_method none）与 PKCE S256；本机回环回调（127.0.0.1）尚未实测",
-        "en": "Official docs confirm dynamic client registration (token_endpoint_auth_method none) and PKCE S256; the loopback callback (127.0.0.1) has not been tested yet"
+        "zh-CN": "授权服务器公开的配置信息支持动态客户端注册（token_endpoint_auth_method none）与 PKCE S256，只申请 default scope；2026-09-27 实测客户端注册成功、授权页正常跳转到 Notion 登录页。",
+        "en": "The authorization server's published configuration supports dynamic client registration (token_endpoint_auth_method none) and PKCE S256, and only the default scope is requested; on 2026-09-27 client registration succeeded and the authorization page redirected to the Notion sign-in page."
+      },
+      {
+        "zh-CN": "同一套 OAuth 流程已在 Cloudflare 连接器上用真实账户走通（注册、授权、令牌交换、工具调用）。",
+        "en": "The same OAuth flow has been run end to end with a real account on the Cloudflare connector (registration, consent, token exchange, tool calls)."
+      },
+      {
+        "zh-CN": "登录 Notion 之后的令牌交换与工具调用未经 Teloa 真实账户实测，使用中遇到问题请在资源详情页点「问题反馈」。",
+        "en": "Token exchange and tool calls after signing in to Notion have not been tested with a real account by Teloa; if something does not work, use Report a problem on the resource page."
       },
       {
         "zh-CN": "企业版工作区管理员可限制可连接的 MCP 客户端，新客户端可能被拦截",
@@ -162,8 +172,8 @@
         "en": "Refresh tokens expire after at most 180 days or 30 days without a refresh; re-authorization is then required"
       },
       {
-        "zh-CN": "替代方案：teloa.mcp-notion（本地 Bearer Token 模式）",
-        "en": "Alternative: teloa.mcp-notion (local Bearer Token mode)"
+        "zh-CN": "替代方案：本地版资源 teloa.mcp-notion（使用 Notion 集成令牌）",
+        "en": "Alternative: the local version teloa.mcp-notion (uses a Notion integration token)"
       }
     ]
   },
@@ -174,7 +184,7 @@
   },
   "review": {
     "status": "approved",
-    "reviewedAt": "2026-09-26",
+    "reviewedAt": "2026-09-28",
     "reviewer": "Teloa"
   }
 }

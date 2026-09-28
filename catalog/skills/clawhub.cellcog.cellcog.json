@@ -60,8 +60,12 @@
     "dsh": "0.1.7-rc.1",
     "conditions": [
       {
-        "zh-CN": "需自备 CellCog API 密钥，文件会上传到 cellcog.ai 处理。Teloa 暂不支持为技能安全注入密钥，暂不可添加。",
-        "en": "Requires your own CellCog API key; files are uploaded to cellcog.ai for processing. Teloa cannot yet inject secrets into skills safely, so this skill can't be added yet."
+        "zh-CN": "不可添加：这个技能只能通过 CellCog 官方 Python SDK（pip 包 cellcog）调用，正文没有给出可直接请求的 HTTP 接口，文件也要经 SDK 上传；Teloa 的技能不能安装或运行 Python 包和脚本。",
+        "en": "Cannot be added: this skill works only through CellCog's official Python SDK (the cellcog pip package); the skill text documents no HTTP interface that can be called directly, and files are uploaded through the SDK. Teloa skills cannot install or run Python packages or scripts."
+      },
+      {
+        "zh-CN": "需要 CellCog API Key，文件会上传到 cellcog.ai 处理。",
+        "en": "Requires a CellCog API key; files are uploaded to cellcog.ai for processing."
       }
     ]
   },
@@ -74,7 +78,7 @@
   },
   "review": {
     "status": "approved",
-    "reviewedAt": "2026-09-25",
+    "reviewedAt": "2026-09-28",
     "reviewer": "Teloa 内容安全审查（逐文件）"
   }
 }
