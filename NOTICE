@@ -14,7 +14,12 @@ not a license for content in this repository.
 
 This file is generated from catalog/ by tools/validate.mjs; do not edit by hand.
 
-== Hosted artifacts (70) ==
+== Hosted artifacts (71) ==
+
+anthropic.commit@1.0.0  artifacts/skills/anthropic.commit/1.0.0/
+  Attribution: Anthropic (https://github.com/anthropics/claude-plugins-official/tree/fa59bc9037741ecfa131aa27938272605710d7b2/plugins/commit-commands)
+  Derived work; changes listed in MODIFICATIONS.md
+  License: Apache-2.0 (LICENSE)
 
 anthropic.internal-comms@1.0.0  artifacts/skills/anthropic.internal-comms/1.0.0/
   Attribution: Anthropic (https://github.com/anthropics/skills/tree/33375500bcea98d610eb30ce10ac4e59b89c390d/skills/internal-comms)

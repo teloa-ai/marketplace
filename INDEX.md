@@ -1,6 +1,6 @@
 # Catalog index · 目录索引
 
-_Generated from `catalog/` by `node tools/validate.mjs --write` (source repository: `pnpm build:market-catalog`); do not edit by hand. 146 entries, catalog version 2026.9.28.6. Browse and search: https://market.teloa.ai_
+_Generated from `catalog/` by `node tools/validate.mjs --write` (source repository: `pnpm build:market-catalog`); do not edit by hand. 147 entries, catalog version 2026.9.28.7. Browse and search: https://market.teloa.ai_
 
 _由 `catalog/` 自动生成，请勿手改。在线浏览与搜索：https://market.teloa.ai_
 
@@ -46,11 +46,12 @@ _由 `catalog/` 自动生成，请勿手改。在线浏览与搜索：https://ma
 | Support knowledge collaborator · 客服知识协作员 | `teloa.role.support-knowledge-collaborator` | Teloa | Apache-2.0 | content-only | 1.0.1 | [catalog/roles/teloa.role.support-knowledge-collaborator.json](catalog/roles/teloa.role.support-knowledge-collaborator.json) · [files](artifacts/roles/teloa.role.support-knowledge-collaborator/1.0.1/) |
 | Video editing collaborator · 视频剪辑协作员 | `teloa.role.video-editor` | Teloa | Apache-2.0 | content-only | 1.0.0 | [catalog/roles/teloa.role.video-editor.json](catalog/roles/teloa.role.video-editor.json) · [files](artifacts/roles/teloa.role.video-editor/1.0.0/) |
 
-## Skills · 技能 (68)
+## Skills · 技能 (69)
 
 | Name · 名称 | ID | Source · 来源 | License · 许可 | Compatibility · 兼容 | Version · 版本 | Entry · 条目 |
 | --- | --- | --- | --- | --- | --- | --- |
 | MCPB bundle builder · MCPB 本地服务器打包 | `anthropic.build-mcpb` | Upstream · GitHub anthropics/claude-plugins-official | Apache-2.0 | content-only | 1.0.0 | [catalog/skills/anthropic.build-mcpb.json](catalog/skills/anthropic.build-mcpb.json) |
+| Commit after confirmation · 确认后提交 | `anthropic.commit` | Teloa · derived from GitHub anthropics/claude-plugins-official | Apache-2.0 | needs-configuration | 1.0.0 | [catalog/skills/anthropic.commit.json](catalog/skills/anthropic.commit.json) · [files](artifacts/skills/anthropic.commit/1.0.0/) |
 | Frontend design · 前端视觉设计 | `anthropic.frontend-design` | Upstream · GitHub anthropics/skills | Apache-2.0 | content-only | 1.0.0 | [catalog/skills/anthropic.frontend-design.json](catalog/skills/anthropic.frontend-design.json) |
 | Internal communications · 内部沟通稿 | `anthropic.internal-comms` | Teloa · from GitHub anthropics/skills | Apache-2.0 | content-only | 1.0.0 | [catalog/skills/anthropic.internal-comms.json](catalog/skills/anthropic.internal-comms.json) · [files](artifacts/skills/anthropic.internal-comms/1.0.0/) |
 | MCP server builder · MCP 服务器构建指南 | `anthropic.mcp-builder` | Teloa · from GitHub anthropics/skills | Apache-2.0 | content-only | 1.0.1 | [catalog/skills/anthropic.mcp-builder.json](catalog/skills/anthropic.mcp-builder.json) · [files](artifacts/skills/anthropic.mcp-builder/1.0.1/) |
