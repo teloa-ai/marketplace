@@ -3,7 +3,7 @@
   "id": "teloa.dashboard-designer",
   "kind": "skill",
   "delivery": "builtin",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "taxonomy": {
     "functions": [
       "data-research"
@@ -62,7 +62,7 @@
   },
   "review": {
     "status": "approved",
-    "reviewedAt": "2026-09-26",
+    "reviewedAt": "2026-09-28",
     "reviewer": "Teloa"
   }
 }
