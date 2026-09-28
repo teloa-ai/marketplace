@@ -138,8 +138,8 @@
         "section": "§Phase 2, finding format (L110)",
         "upstream": "NousResearch/hermes-agent@a7c080ca66d32b1ec2cb71e15896c5b0dc2470e8:skills/software-development/simplify-code/SKILL.md",
         "summary": {
-          "zh-CN": "发现格式新增「→ behavior check (why the fix keeps outputs, iteration order, side effects and error behavior identical)」；CAREFUL/RISKY 级修复缺少这一项时记为 `confidence: low`。",
-          "en": "The finding format adds \"→ behavior check (why the fix keeps outputs, iteration order, side effects and error behavior identical)\"; CAREFUL/RISKY fixes without it are marked `confidence: low`."
+          "zh-CN": "发现格式新增一项「behavior check (why the fix keeps outputs, iteration order, side effects and error behavior identical)」；CAREFUL/RISKY 级修复缺少这一项时记为 `confidence: low`。",
+          "en": "The finding format adds a \"behavior check (why the fix keeps outputs, iteration order, side effects and error behavior identical)\"; CAREFUL/RISKY fixes without it are marked `confidence: low`."
         },
         "reason": {
           "zh-CN": "原版只在 Phase 3 应用修改后靠跑测试兜底，只报告不修改时没有任何等价性论证要求。",

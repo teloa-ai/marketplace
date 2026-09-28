@@ -3,7 +3,7 @@
   "id": "teloa.grc",
   "kind": "solution",
   "delivery": "install",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "taxonomy": {
     "functions": [
       "security"

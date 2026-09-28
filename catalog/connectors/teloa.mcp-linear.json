@@ -29,8 +29,8 @@
         {
           "target": "bearer",
           "label": {
-            "zh-CN": "Linear API Key（从 Linear 设置 → API 获取）",
-            "en": "Linear API Key (get from Linear Settings → API)"
+            "zh-CN": "Linear API Key（从 Linear 设置 > API 获取）",
+            "en": "Linear API Key (get from Linear Settings > API)"
           },
           "required": true
         }

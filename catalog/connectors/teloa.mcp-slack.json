@@ -55,8 +55,8 @@
     "dsh": "0.1.7-rc.1",
     "conditions": [
       {
-        "zh-CN": "需在 市场 → 连接 页由本人在浏览器中完成 OAuth 授权；服务器部署需在配置文件设置 oauth.publicCallbackUrl",
-        "en": "The owner must complete OAuth authorization in a browser from Market → Connections; server deployments must set oauth.publicCallbackUrl in the config file"
+        "zh-CN": "需在 市场 > 连接 页由本人在浏览器中完成 OAuth 授权；服务器部署需在配置文件设置 oauth.publicCallbackUrl",
+        "en": "The owner must complete OAuth authorization in a browser from Market > Connections; server deployments must set oauth.publicCallbackUrl in the config file"
       },
       {
         "zh-CN": "Slack 不支持动态客户端注册，且只允许内部应用或已上架应用使用 MCP：需自建内部应用、开启 PKCE、把 Teloa 的回调地址加入 Redirect URLs、添加上述用户 scope，并在连接设置填写 client_id",

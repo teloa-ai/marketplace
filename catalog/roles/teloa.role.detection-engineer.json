@@ -3,7 +3,7 @@
   "id": "teloa.role.detection-engineer",
   "kind": "role",
   "delivery": "install",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "upstream": null,
   "taxonomy": {
     "functions": [
@@ -80,7 +80,7 @@
     "preferredModel": null,
     "fromSolution": {
       "packageId": "detection-engineering",
-      "version": "1.0.1",
+      "version": "1.0.2",
       "path": "roles/detection-engineer.json"
     }
   },

@@ -3,7 +3,7 @@
   "id": "teloa.role.office-collaborator",
   "kind": "role",
   "delivery": "install",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "upstream": null,
   "taxonomy": {
     "functions": [
@@ -57,7 +57,7 @@
           "每条关键事实和待办均指向输入材料的来源文件名与段落",
           "纪要区分原文决议、建议事项与缺席确认，owner 和截止日期未提及时保留空白",
           "表格差异清单列出列名、期望值与实际值，不隐藏任何差异",
-          "简报结构：目标 → 关键事实（含来源）→ 推断（含依据）→ 待确认事项"
+          "简报结构依次为：目标、关键事实（含来源）、推断（含依据）、待确认事项"
         ]
       }
     },
@@ -71,7 +71,7 @@
     "preferredModel": null,
     "fromSolution": {
       "packageId": "office-collaboration",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "path": "roles/office-collaborator.json"
     }
   },

@@ -3,7 +3,7 @@
   "id": "teloa.role.support-knowledge-collaborator",
   "kind": "role",
   "delivery": "install",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "upstream": null,
   "taxonomy": {
     "functions": [
@@ -82,7 +82,7 @@
     "preferredModel": null,
     "fromSolution": {
       "packageId": "customer-support",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "path": "roles/support-knowledge-collaborator.json"
     }
   },

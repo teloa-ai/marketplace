@@ -249,7 +249,7 @@
         "section": "§FLASK-REDIRECT-001 Fix (L566-567)",
         "upstream": "openai/skills@49f948faa9258a0c61caceaf225e179651397431:skills/.curated/security-best-practices/references/python-flask-web-server-security.md",
         "summary": {
-          "zh-CN": "给出只用标准库的 `safe_return_to(value, request_origin)`：原始串策略 → `urlsplit`/`urljoin` 后比较 scheme 与 netloc → 复验路径不以 `//` 开头 → 返回绝对 URL；注明 Django 的 `url_has_allowed_host_and_scheme` 是同一思路的参考实现。代码块补齐 `import re` 与 `from urllib.parse import urlsplit, urljoin`，`re.split` 改用关键字参数 `maxsplit=1`。用法写明生产环境应传入配置的规范 origin（`current_app.config.get(\"APP_ORIGIN\") or request.host_url.rstrip(\"/\")`）。点段措辞改为「原样发出时仍在本源，重新序列化为相对串后才会变成站外的协议相对地址」。",
+          "zh-CN": "给出只用标准库的 `safe_return_to(value, request_origin)`：先按原始串策略判断，再经 `urlsplit`/`urljoin` 后比较 scheme 与 netloc，然后复验路径不以 `//` 开头，最后返回绝对 URL；注明 Django 的 `url_has_allowed_host_and_scheme` 是同一思路的参考实现。代码块补齐 `import re` 与 `from urllib.parse import urlsplit, urljoin`，`re.split` 改用关键字参数 `maxsplit=1`。用法写明生产环境应传入配置的规范 origin（`current_app.config.get(\"APP_ORIGIN\") or request.host_url.rstrip(\"/\")`）。点段措辞改为「原样发出时仍在本源，重新序列化为相对串后才会变成站外的协议相对地址」。",
           "en": "Adds a standard-library `safe_return_to(value, request_origin)`: raw-string policy, then `urlsplit`/`urljoin` and compare scheme and netloc, re-check that the path does not start with `//`, and return the absolute URL; Django's `url_has_allowed_host_and_scheme` is named as a reference implementation of the same idea. The code block now imports `re` and `urlsplit, urljoin`, and `re.split` uses the keyword `maxsplit=1`. The usage passes the configured canonical origin in production (`current_app.config.get(\"APP_ORIGIN\") or request.host_url.rstrip(\"/\")`). The dot-segment wording now says such values stay on the origin when sent as-is and only become off-site protocol-relative addresses after re-serialisation to a relative string."
         },
         "reason": {
@@ -879,8 +879,8 @@
         "section": "§FLASK-SUPPLY-001 Audit focus (L626)",
         "upstream": "openai/skills@49f948faa9258a0c61caceaf225e179651397431:skills/.curated/security-best-practices/references/python-flask-web-server-security.md",
         "summary": {
-          "zh-CN": "新增一句：Werkzeug `safe_join` 的设备名处理有多次后续修复（CVE-2025-66221 → 3.1.4、CVE-2026-21860 → 3.1.5、CVE-2026-27199 → 3.1.6），以当前 Werkzeug 公告为准。",
-          "en": "Adds a sentence: Werkzeug `safe_join` device-name handling had several follow-up fixes (CVE-2025-66221 → 3.1.4, CVE-2026-21860 → 3.1.5, CVE-2026-27199 → 3.1.6); check the current Werkzeug advisories."
+          "zh-CN": "新增一句：Werkzeug `safe_join` 的设备名处理有多次后续修复（CVE-2025-66221 在 3.1.4 修复、CVE-2026-21860 在 3.1.5 修复、CVE-2026-27199 在 3.1.6 修复），以当前 Werkzeug 公告为准。",
+          "en": "Adds a sentence: Werkzeug `safe_join` device-name handling had several follow-up fixes (CVE-2025-66221 fixed in 3.1.4, CVE-2026-21860 fixed in 3.1.5, CVE-2026-27199 fixed in 3.1.6); check the current Werkzeug advisories."
         },
         "reason": {
           "zh-CN": "原版文件的抓取日（2026-01-26）之前 CVE-2026-21860 已经发布，但文中没有列出。",

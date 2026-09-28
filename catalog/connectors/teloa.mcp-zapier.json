@@ -29,8 +29,8 @@
         {
           "target": "url-path",
           "label": {
-            "zh-CN": "Zapier MCP 连接令牌（在 Zapier 账户 → AI Actions → MCP 设置中生成，格式为字母数字串）",
-            "en": "Zapier MCP connection token (generate in Zapier account → AI Actions → MCP settings; alphanumeric string)"
+            "zh-CN": "Zapier MCP 连接令牌（在 Zapier 账户 > AI Actions > MCP 设置中生成，格式为字母数字串）",
+            "en": "Zapier MCP connection token (generate in Zapier account > AI Actions > MCP settings; alphanumeric string)"
           },
           "required": true
         }

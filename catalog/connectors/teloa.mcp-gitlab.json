@@ -211,8 +211,8 @@
     "dsh": "0.1.7-rc.1",
     "conditions": [
       {
-        "zh-CN": "需在 市场 → 连接 页由本人在浏览器中完成 OAuth 授权；服务器部署需在配置文件设置 oauth.publicCallbackUrl",
-        "en": "The owner must complete OAuth authorization in a browser from Market → Connections; server deployments must set oauth.publicCallbackUrl in the config file"
+        "zh-CN": "需在 市场 > 连接 页由本人在浏览器中完成 OAuth 授权；服务器部署需在配置文件设置 oauth.publicCallbackUrl",
+        "en": "The owner must complete OAuth authorization in a browser from Market > Connections; server deployments must set oauth.publicCallbackUrl in the config file"
       },
       {
         "zh-CN": "官方状态为 Beta；GitLab.com 需在顶级群组设置中允许访问 MCP 服务器",

@@ -74,8 +74,8 @@
     "dsh": "0.1.7-rc.1",
     "conditions": [
       {
-        "zh-CN": "需在 市场 → 连接 页由本人在浏览器中完成 OAuth 授权；服务器部署需在配置文件设置 oauth.publicCallbackUrl",
-        "en": "The owner must complete OAuth authorization in a browser from Market → Connections; server deployments must set oauth.publicCallbackUrl in the config file"
+        "zh-CN": "需在 市场 > 连接 页由本人在浏览器中完成 OAuth 授权；服务器部署需在配置文件设置 oauth.publicCallbackUrl",
+        "en": "The owner must complete OAuth authorization in a browser from Market > Connections; server deployments must set oauth.publicCallbackUrl in the config file"
       },
       {
         "zh-CN": "授权服务器公开的配置信息实测支持动态客户端注册（token_endpoint_auth_method none）与 PKCE S256；本机回环回调（127.0.0.1）尚未实测",

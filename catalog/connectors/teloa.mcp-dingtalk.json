@@ -30,8 +30,8 @@
           "target": "env",
           "envVarName": "DINGTALK_Client_ID",
           "label": {
-            "zh-CN": "钉钉应用 Client ID（开放平台 → 应用详情 → AppKey）",
-            "en": "DingTalk App Client ID (Open Platform → App Details → AppKey)"
+            "zh-CN": "钉钉应用 Client ID（开放平台 > 应用详情 > AppKey）",
+            "en": "DingTalk App Client ID (Open Platform > App Details > AppKey)"
           },
           "required": true
         },
@@ -39,8 +39,8 @@
           "target": "env",
           "envVarName": "DINGTALK_Client_Secret",
           "label": {
-            "zh-CN": "钉钉应用 Client Secret（开放平台 → 应用详情 → AppSecret）",
-            "en": "DingTalk App Client Secret (Open Platform → App Details → AppSecret)"
+            "zh-CN": "钉钉应用 Client Secret（开放平台 > 应用详情 > AppSecret）",
+            "en": "DingTalk App Client Secret (Open Platform > App Details > AppSecret)"
           },
           "required": true
         }

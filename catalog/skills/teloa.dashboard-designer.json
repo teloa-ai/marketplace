@@ -46,8 +46,8 @@
         "en": "Available only in your own ordinary conversations; not visible to colleagues running tasks."
       },
       {
-        "zh-CN": "草案须由本人在「业务 → 看板 → 待确认」预览并确认后才生效。",
-        "en": "Drafts take effect only after you preview and confirm them under Business → Dashboards → Pending."
+        "zh-CN": "草案须由本人在「业务 > 看板 > 待确认」预览并确认后才生效。",
+        "en": "Drafts take effect only after you preview and confirm them under Business > Dashboards > Pending."
       }
     ]
   },
