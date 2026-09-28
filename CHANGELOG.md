@@ -4,6 +4,17 @@ All notable changes to the catalog are recorded here. The format follows [Keep a
 
 目录的重要变更记录在此，格式遵循 Keep a Changelog，按目录版本（`catalog-version.txt`）分组。全部条目见 [INDEX.md](INDEX.md)。
 
+## [2026.9.28.2] - 2026-09-28
+
+<!-- Catalog-Source: 6705646d205aae120b2a3f22d7edf3aaa8ad077f -->
+_Generated after merge from the catalog changes since `b45cc00`; details are in the merged pull requests. / 合并后按 `b45cc00` 以来的目录变更自动生成，详情见对应 PR。_
+
+### Changed
+
+- `anthropic.build-mcpb` 1.0.0 — MCPB bundle builder · MCPB 本地服务器打包
+- `anthropic.frontend-design` 1.0.0 — Frontend design · 前端视觉设计
+- `anthropic.playground` 1.0.0 — Interactive HTML playground · 交互式 HTML 演练页
+
 ## [2026.9.28.1] - 2026-09-28
 
 <!-- Catalog-Source: b45cc00eaec984a500ca8c074d9167ee5c121b21 -->
