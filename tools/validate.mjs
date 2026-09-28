@@ -2,7 +2,7 @@
 // GENERATED FILE - DO NOT EDIT. / 生成文件，请勿手改。
 // Built in teloa-ai/teloa from scripts/市场目录校验.mjs and packages/contract by `node scripts/生成市场仓校验器.mjs`
 // (pnpm build:market-validator). Validation rules are maintained only in that repository.
-// Source commit: 57a962cf93f826322920fa076a30c0872a6ff816
+// Source commit: 7ac49823ba8932097aaf18df6eea97c87436914c
 // Usage: node tools/validate.mjs [--write | --pr] [--format text|json|github]   (--write regenerates INDEX.md and NOTICE; --pr skips them for pull requests; json/github for automated review)
 import { access, lstat, readFile, readdir, realpath, writeFile } from "node:fs/promises";
 import { basename, dirname, isAbsolute, join, relative, resolve, sep } from "node:path";
@@ -145,7 +145,7 @@ const sameModelRoute = (a, b) => a.provider === b.provider && a.model === b.mode
 //#endregion
 //#region packages/contract/src/roles.ts
 function roleInput(value, keys) {
-	if (!value || typeof value !== "object" || Array.isArray(value) || Object.keys(value).some((key) => !keys.includes(key))) throw new WorkError("teloa/invalid-input", "岗位请求包含未知字段或格式不正确。");
+	if (!value || typeof value !== "object" || Array.isArray(value) || Object.keys(value).some((key) => !keys.includes(key))) throw new WorkError("teloa/invalid-input", "同事请求包含未知字段或格式不正确。");
 	return value;
 }
 function readRoleRuntimeConfig(value) {
@@ -154,7 +154,7 @@ function readRoleRuntimeConfig(value) {
 		"model",
 		"fallbackModel"
 	]);
-	if (!Object.keys(source).length || source.agentPresetId !== void 0 && (typeof source.agentPresetId !== "string" || !/^[a-z0-9][-a-z0-9]{0,119}$/.test(source.agentPresetId))) throw new WorkError("teloa/invalid-input", "岗位运行配置不合法。");
+	if (!Object.keys(source).length || source.agentPresetId !== void 0 && (typeof source.agentPresetId !== "string" || !/^[a-z0-9][-a-z0-9]{0,119}$/.test(source.agentPresetId))) throw new WorkError("teloa/invalid-input", "同事运行配置不合法。");
 	const model = source.model === void 0 ? void 0 : readModelReference(source.model), fallbackModel = source.fallbackModel === void 0 ? void 0 : readModelReference(source.fallbackModel);
 	if (model && fallbackModel && sameModelRoute(model, fallbackModel)) throw new WorkError("teloa/invalid-input", "备用模型不能与首选模型相同。");
 	const result = {
@@ -162,7 +162,7 @@ function readRoleRuntimeConfig(value) {
 		...model ? { model } : {},
 		...fallbackModel ? { fallbackModel } : {}
 	};
-	if (!Object.keys(result).length) throw new WorkError("teloa/invalid-input", "岗位运行配置不合法。");
+	if (!Object.keys(result).length) throw new WorkError("teloa/invalid-input", "同事运行配置不合法。");
 	return result;
 }
 function roleDefinition(value) {
@@ -179,7 +179,7 @@ function roleDefinition(value) {
 		"runtimeConfig"
 	]);
 	const fail = () => {
-		throw new WorkError("teloa/invalid-input", "岗位职责、范围或能力声明不合法。");
+		throw new WorkError("teloa/invalid-input", "同事职责、范围或能力声明不合法。");
 	};
 	const text = (v, max) => typeof v === "string" && v.trim().length > 0 && v.length <= max ? v.trim() : fail();
 	const list = (v, ids = false) => {
@@ -2739,7 +2739,7 @@ function validateManifest(input) {
 	if (!Array.isArray(row.entrypoints) || row.entrypoints.length > 500) throw bad("行业入口不能超过 500 项。");
 	const entrypoints = row.entrypoints.map((value) => id(value, "业务入口"));
 	if (new Set(entrypoints).size !== entrypoints.length) throw bad("业务入口重复。");
-	for (const entry of entrypoints) if (!["skill", "work-template"].includes(byId.get(entry)?.kind ?? "")) throw bad("业务入口必须引用存在的 Skill 或工作模板。");
+	for (const entry of entrypoints) if (!["skill", "work-template"].includes(byId.get(entry)?.kind ?? "")) throw bad("业务入口必须引用存在的技能或工作模板。");
 	const title = requiredText(row.title, "行业名称", 120), description = requiredText(row.description, "行业定位", 2e3), domain = requiredText(row.domain, "行业分类", 80), scope = hasScope ? requiredText(row.scope, "业务范围", 80) : domain;
 	if (!/^[a-zA-Z0-9_-]{1,64}$/.test(scope)) throw bad("业务范围只能是 1–64 位字母、数字、下划线或连字符。");
 	return {
