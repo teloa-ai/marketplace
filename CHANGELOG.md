@@ -4,6 +4,15 @@ All notable changes to the catalog are recorded here. The format follows [Keep a
 
 目录的重要变更记录在此，格式遵循 Keep a Changelog，按目录版本（`catalog-version.txt`）分组。全部条目见 [INDEX.md](INDEX.md)。
 
+## [2026.9.28.4] - 2026-09-28
+
+<!-- Catalog-Source: 214a5389b3c80334f67e7b6731d9defa921d56fb -->
+_Generated after merge from the catalog changes since `ec3199b`; details are in the merged pull requests. / 合并后按 `ec3199b` 以来的目录变更自动生成，详情见对应 PR。_
+
+### Added
+
+- `openai.security-best-practices` 1.0.0 — Language and framework security review · 语言与框架安全实践审查
+
 ## [2026.9.28.3] - 2026-09-28
 
 <!-- Catalog-Source: ec3199bfd0cc316f60a7f2644abd9b038f65bd2f -->
