@@ -14,7 +14,7 @@ not a license for content in this repository.
 
 This file is generated from catalog/ by tools/validate.mjs; do not edit by hand.
 
-== Hosted artifacts (64) ==
+== Hosted artifacts (68) ==
 
 anthropic.internal-comms@1.0.0  artifacts/skills/anthropic.internal-comms/1.0.0/
   Attribution: Anthropic (https://github.com/anthropics/skills/tree/33375500bcea98d610eb30ce10ac4e59b89c390d/skills/internal-comms)
@@ -96,9 +96,21 @@ teloa.mcp-atlassian@1.0.0  artifacts/connectors/teloa.mcp-atlassian/1.0.0/
   Attribution: Teloa contributors; connects to https://developer.atlassian.com/cloud/jira/platform/mcp/
   License: LicenseRef-Atlassian-Terms (LICENSE)
 
+teloa.mcp-cloudflare@1.0.0  artifacts/connectors/teloa.mcp-cloudflare/1.0.0/
+  Attribution: Teloa contributors; connects to https://developers.cloudflare.com/agents/model-context-protocol/cloudflare/servers-for-cloudflare/
+  License: LicenseRef-Cloudflare-Terms (LICENSE)
+
+teloa.mcp-cloudflare-docs@1.0.0  artifacts/connectors/teloa.mcp-cloudflare-docs/1.0.0/
+  Attribution: Teloa contributors; connects to https://developers.cloudflare.com/agents/model-context-protocol/cloudflare/servers-for-cloudflare/
+  License: LicenseRef-Cloudflare-Terms (LICENSE)
+
 teloa.mcp-composio@1.0.1  artifacts/connectors/teloa.mcp-composio/1.0.1/
   Attribution: Teloa contributors; connects to https://docs.composio.dev/mcp
   License: LicenseRef-Composio-Terms (LICENSE)
+
+teloa.mcp-consensus@1.0.0  artifacts/connectors/teloa.mcp-consensus/1.0.0/
+  Attribution: Teloa contributors; connects to https://docs.consensus.app/consensus-mcp
+  License: LicenseRef-Consensus-Terms (LICENSE)
 
 teloa.mcp-context7@1.0.0  artifacts/connectors/teloa.mcp-context7/1.0.0/
   Attribution: Teloa contributors; connects to https://context7.com
@@ -139,6 +151,10 @@ teloa.mcp-lark@1.0.1  artifacts/connectors/teloa.mcp-lark/1.0.1/
 teloa.mcp-linear@1.0.0  artifacts/connectors/teloa.mcp-linear/1.0.0/
   Attribution: Teloa contributors; connects to https://linear.app/settings/api
   License: LicenseRef-Linear-Terms (LICENSE)
+
+teloa.mcp-microsoft-learn@1.0.0  artifacts/connectors/teloa.mcp-microsoft-learn/1.0.0/
+  Attribution: Teloa contributors; connects to https://learn.microsoft.com/en-us/training/support/mcp-developer-reference
+  License: LicenseRef-Microsoft-Learn-Terms (LICENSE)
 
 teloa.mcp-notion@1.0.1  artifacts/connectors/teloa.mcp-notion/1.0.1/
   Attribution: Teloa contributors; connects to npm package @notionhq/notion-mcp-server@2.5.2
@@ -272,7 +288,19 @@ teloa.video@1.0.0  artifacts/solutions/teloa.video/1.0.0/
   Attribution: Teloa contributors
   License: Apache-2.0 (LICENSE)
 
-== Upstream entries, not hosted (55) ==
+== Upstream entries, not hosted (58) ==
+
+anthropic.build-mcpb@1.0.0
+  Source: https://github.com/anthropics/claude-plugins-official/tree/fa59bc9037741ecfa131aa27938272605710d7b2/plugins/mcp-server-dev/skills/build-mcpb
+  License: Apache-2.0
+
+anthropic.frontend-design@1.0.0
+  Source: https://github.com/anthropics/skills/tree/33375500bcea98d610eb30ce10ac4e59b89c390d/skills/frontend-design
+  License: Apache-2.0
+
+anthropic.playground@1.0.0
+  Source: https://github.com/anthropics/claude-plugins-official/tree/fa59bc9037741ecfa131aa27938272605710d7b2/plugins/playground/skills/playground
+  License: Apache-2.0
 
 clawhub.byungkyu.api-gateway@1.2.23
   Source: ClawHub byungkyu/api-gateway version 1.2.23

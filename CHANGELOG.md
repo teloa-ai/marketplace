@@ -4,6 +4,21 @@ All notable changes to the catalog are recorded here. The format follows [Keep a
 
 目录的重要变更记录在此，格式遵循 Keep a Changelog，按目录版本（`catalog-version.txt`）分组。全部条目见 [INDEX.md](INDEX.md)。
 
+## [2026.9.28.1] - 2026-09-28
+
+<!-- Catalog-Source: b45cc00eaec984a500ca8c074d9167ee5c121b21 -->
+_Generated after merge from the catalog changes since `bb0a592`; details are in the merged pull requests. / 合并后按 `bb0a592` 以来的目录变更自动生成，详情见对应 PR。_
+
+### Added
+
+- `anthropic.build-mcpb` 1.0.0 — MCPB bundle builder · MCPB 本地服务器打包
+- `anthropic.frontend-design` 1.0.0 — Frontend design · 前端视觉设计
+- `anthropic.playground` 1.0.0 — Interactive HTML playground · 交互式 HTML 演练页
+- `teloa.mcp-cloudflare` 1.0.0 — Cloudflare API (OAuth) · Cloudflare API（OAuth）
+- `teloa.mcp-cloudflare-docs` 1.0.0 — Cloudflare Developer Docs (Official Remote) · Cloudflare 开发者文档（官方远程）
+- `teloa.mcp-consensus` 1.0.0 — Consensus Academic Search (OAuth) · Consensus 学术检索（OAuth）
+- `teloa.mcp-microsoft-learn` 1.0.0 — Microsoft Learn Docs (Official Remote) · Microsoft Learn 文档（官方远程）
+
 ## [Unreleased]
 
 ### Changed
