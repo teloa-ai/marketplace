@@ -95,7 +95,7 @@
         "readOnly": true
       }
     ],
-    "upstreamUrl": "https://github.com/amap-demo/amap-mcp-server"
+    "upstreamUrl": "https://lbs.amap.com/api/mcp-server/gettingstarted"
   },
   "modifications": [],
   "license": {
