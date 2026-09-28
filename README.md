@@ -13,7 +13,7 @@ Browse and search online: **https://market.teloa.ai** · Full entry list: [INDEX
 - Every Teloa release pins a catalog snapshot taken from a specific commit of this repository. Updating the catalog never changes a version you already installed.
 - Validation rules are maintained in the Teloa source repository ([teloa-ai/teloa](https://github.com/teloa-ai/teloa)) and bundled into [`tools/validate.mjs`](tools/validate.mjs). Do not edit that file by hand.
 
-**Publication status:** first published on 2026-09-27 from the `marketplace/` directory of the Teloa source repository, with its history, ahead of the marketplace's general availability. Current catalog version: <!-- catalog-version -->2026.9.28.8<!-- /catalog-version --> (kept in sync with `catalog-version.txt` by the validator). From then on this repository is the single source of truth, and the source repository only pins snapshots taken from it. Entry pages on market.teloa.ai link here; the in-app online index is opt-in during this phase.
+**Publication status:** first published on 2026-09-27 from the `marketplace/` directory of the Teloa source repository, with its history, ahead of the marketplace's general availability. Current catalog version: <!-- catalog-version -->2026.9.28.9<!-- /catalog-version --> (kept in sync with `catalog-version.txt` by the validator). From then on this repository is the single source of truth, and the source repository only pins snapshots taken from it. Entry pages on market.teloa.ai link here; the in-app online index is opt-in during this phase.
 
 ## Layout
 
