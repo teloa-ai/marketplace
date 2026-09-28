@@ -1,0 +1,13 @@
+$ git status --porcelain=v1 -uall
+M  orders/service.py
+ M tests/test_service.py
+?? orders/coupon.py
+$ git diff --name-only   # original review-pr.md step 3
+tests/test_service.py
+$ git diff | grep "^+++"   # original code-reviewer default scope
++++ b/tests/test_service.py
+$ git diff HEAD --name-only   # derived skill
+orders/service.py
+tests/test_service.py
+$ grep -n "except Exception" orders/service.py   # the swallowed exception is in the staged file
+12:    except Exception:
