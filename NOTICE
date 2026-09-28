@@ -20,7 +20,7 @@ anthropic.internal-comms@1.0.0  artifacts/skills/anthropic.internal-comms/1.0.0/
   Attribution: Anthropic (https://github.com/anthropics/skills/tree/33375500bcea98d610eb30ce10ac4e59b89c390d/skills/internal-comms)
   License: Apache-2.0 (LICENSE.txt)
 
-anthropic.mcp-builder@1.0.0  artifacts/skills/anthropic.mcp-builder/1.0.0/
+anthropic.mcp-builder@1.0.1  artifacts/skills/anthropic.mcp-builder/1.0.1/
   Attribution: Anthropic (https://github.com/anthropics/skills/tree/33375500bcea98d610eb30ce10ac4e59b89c390d/skills/mcp-builder)
   License: Apache-2.0 (LICENSE.txt)
 
@@ -70,7 +70,7 @@ teloa.dashboard-designer@1.1.0  artifacts/skills/teloa.dashboard-designer/1.1.0/
   Attribution: Teloa contributors
   License: Apache-2.0 (LICENSE)
 
-teloa.detection@1.0.1  artifacts/solutions/teloa.detection/1.0.1/
+teloa.detection@1.0.2  artifacts/solutions/teloa.detection/1.0.2/
   Attribution: Teloa contributors
   License: Apache-2.0 (LICENSE)
 
@@ -82,7 +82,7 @@ teloa.finance@1.0.0  artifacts/solutions/teloa.finance/1.0.0/
   Attribution: Teloa contributors
   License: Apache-2.0 (LICENSE)
 
-teloa.grc@1.0.2  artifacts/solutions/teloa.grc/1.0.2/
+teloa.grc@1.0.3  artifacts/solutions/teloa.grc/1.0.3/
   Attribution: Teloa contributors
   License: Apache-2.0 (LICENSE)
 
@@ -94,7 +94,7 @@ teloa.incident@1.0.0  artifacts/solutions/teloa.incident/1.0.0/
   Attribution: Teloa contributors
   License: Apache-2.0 (LICENSE)
 
-teloa.marketing@1.0.0  artifacts/solutions/teloa.marketing/1.0.0/
+teloa.marketing@1.0.1  artifacts/solutions/teloa.marketing/1.0.1/
   Attribution: Teloa contributors
   License: Apache-2.0 (LICENSE)
 
@@ -114,7 +114,7 @@ teloa.mcp-cloudflare-docs@1.0.0  artifacts/connectors/teloa.mcp-cloudflare-docs/
   Attribution: Teloa contributors; connects to https://developers.cloudflare.com/agents/model-context-protocol/cloudflare/servers-for-cloudflare/
   License: LicenseRef-Cloudflare-Terms (LICENSE)
 
-teloa.mcp-composio@1.0.1  artifacts/connectors/teloa.mcp-composio/1.0.1/
+teloa.mcp-composio@1.0.2  artifacts/connectors/teloa.mcp-composio/1.0.2/
   Attribution: Teloa contributors; connects to https://docs.composio.dev/mcp
   License: LicenseRef-Composio-Terms (LICENSE)
 
@@ -170,7 +170,7 @@ teloa.mcp-notion@1.0.1  artifacts/connectors/teloa.mcp-notion/1.0.1/
   Attribution: Teloa contributors; connects to npm package @notionhq/notion-mcp-server@2.5.2
   License: MIT (LICENSE)
 
-teloa.mcp-notion-remote@1.0.0  artifacts/connectors/teloa.mcp-notion-remote/1.0.0/
+teloa.mcp-notion-remote@1.0.1  artifacts/connectors/teloa.mcp-notion-remote/1.0.1/
   Attribution: Teloa contributors; connects to https://developers.notion.com/docs/mcp
   License: LicenseRef-Notion-Terms (LICENSE)
 
@@ -210,7 +210,7 @@ teloa.mcp-zapier@1.0.1  artifacts/connectors/teloa.mcp-zapier/1.0.1/
   Attribution: Teloa contributors; connects to https://zapier.com/mcp
   License: LicenseRef-Zapier-Terms (LICENSE)
 
-teloa.office@1.0.0  artifacts/solutions/teloa.office/1.0.0/
+teloa.office@1.0.1  artifacts/solutions/teloa.office/1.0.1/
   Attribution: Teloa contributors
   License: Apache-2.0 (LICENSE)
 
@@ -234,19 +234,19 @@ teloa.role.bd-collaborator@1.0.0  artifacts/roles/teloa.role.bd-collaborator/1.0
   Attribution: Teloa contributors
   License: Apache-2.0 (LICENSE)
 
-teloa.role.content-marketer@1.0.0  artifacts/roles/teloa.role.content-marketer/1.0.0/
+teloa.role.content-marketer@1.0.1  artifacts/roles/teloa.role.content-marketer/1.0.1/
   Attribution: Teloa contributors
   License: Apache-2.0 (LICENSE)
 
-teloa.role.detection-engineer@1.0.1  artifacts/roles/teloa.role.detection-engineer/1.0.1/
+teloa.role.detection-engineer@1.0.2  artifacts/roles/teloa.role.detection-engineer/1.0.2/
   Attribution: Teloa contributors
   License: Apache-2.0 (LICENSE)
 
-teloa.role.grc-collaborator@1.0.2  artifacts/roles/teloa.role.grc-collaborator/1.0.2/
+teloa.role.grc-collaborator@1.0.3  artifacts/roles/teloa.role.grc-collaborator/1.0.3/
   Attribution: Teloa contributors
   License: Apache-2.0 (LICENSE)
 
-teloa.role.office-collaborator@1.0.0  artifacts/roles/teloa.role.office-collaborator/1.0.0/
+teloa.role.office-collaborator@1.0.1  artifacts/roles/teloa.role.office-collaborator/1.0.1/
   Attribution: Teloa contributors
   License: Apache-2.0 (LICENSE)
 
@@ -266,15 +266,15 @@ teloa.role.research-collaborator@1.0.0  artifacts/roles/teloa.role.research-coll
   Attribution: Teloa contributors
   License: Apache-2.0 (LICENSE)
 
-teloa.role.soc-t1-analyst@1.0.1  artifacts/roles/teloa.role.soc-t1-analyst/1.0.1/
+teloa.role.soc-t1-analyst@1.0.2  artifacts/roles/teloa.role.soc-t1-analyst/1.0.2/
   Attribution: Teloa contributors
   License: Apache-2.0 (LICENSE)
 
-teloa.role.soc-t2-investigator@1.0.1  artifacts/roles/teloa.role.soc-t2-investigator/1.0.1/
+teloa.role.soc-t2-investigator@1.0.2  artifacts/roles/teloa.role.soc-t2-investigator/1.0.2/
   Attribution: Teloa contributors
   License: Apache-2.0 (LICENSE)
 
-teloa.role.support-knowledge-collaborator@1.0.0  artifacts/roles/teloa.role.support-knowledge-collaborator/1.0.0/
+teloa.role.support-knowledge-collaborator@1.0.1  artifacts/roles/teloa.role.support-knowledge-collaborator/1.0.1/
   Attribution: Teloa contributors
   License: Apache-2.0 (LICENSE)
 
@@ -286,11 +286,11 @@ teloa.sales@1.0.0  artifacts/solutions/teloa.sales/1.0.0/
   Attribution: Teloa contributors
   License: Apache-2.0 (LICENSE)
 
-teloa.soc@1.0.1  artifacts/solutions/teloa.soc/1.0.1/
+teloa.soc@1.0.2  artifacts/solutions/teloa.soc/1.0.2/
   Attribution: Teloa contributors
   License: Apache-2.0 (LICENSE)
 
-teloa.support@1.0.0  artifacts/solutions/teloa.support/1.0.0/
+teloa.support@1.0.1  artifacts/solutions/teloa.support/1.0.1/
   Attribution: Teloa contributors
   License: Apache-2.0 (LICENSE)
 
