@@ -1,0 +1,12 @@
+graph TD
+  subgraph Money
+    Charges[Charges: interest.py]
+    Statements[Statements: report.py]
+  end
+  subgraph Accounts
+    Rules[Account rules: validation.py]
+    Lifecycle[Lifecycle: lifecycle.py]
+  end
+  Persistence[Persistence: db.py]
+  Statements --> Charges
+  Persistence --> DB[(accounts table)]

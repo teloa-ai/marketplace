@@ -1,0 +1,21 @@
+$ command -v scc cloc
+scc: not installed
+cloc: not installed
+$ find billing -type f | sort | xargs wc -l
+       3 billing/README.md
+      19 billing/db.py
+      23 billing/interest.py
+      25 billing/lifecycle.py
+      12 billing/report.py
+      25 billing/validation.py
+     107 total
+$ decision keywords per file (if|elif|for|while|except|and|or)
+6 billing/validation.py
+6 billing/interest.py
+5 billing/lifecycle.py
+1 billing/report.py
+1 billing/db.py
+$ index 2.94 x KSLOC^1.10 (104 Python lines)
+0.24
+$ git check-ignore -q analysis/billing/SECRETS.local.md; echo $?
+0
