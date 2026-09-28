@@ -38,6 +38,13 @@ Use this form when you publish a skill whose files differ from a pinned original
 - **Entry.** `upstream.files` lists every original file with `gitBlob`, `size` and `sha256` of the original bytes at the pinned commit. A license at the original repository root is listed with `repositoryPath` and placed at the artifact root as `LICENSE` or `LICENSE.txt`. `modifications` is `[]`. `derivation.unchangedFiles` lists original files shipped unchanged (their digest must equal the original digest, licenses included). `derivation.changes` lists every change. Derivative entries carry no `origin`: the original's install count is not ours. `compatibility.teloa` must have a lower bound of at least `0.2.0-alpha.7`.
 - **Each change** has `id` (such as `CSB-M01`, unique in the entry), `type`, `path` (one file in the artifact, or the removed original file), optional `section` (language-neutral heading or line numbers; line numbers refer to the original file), `upstream` (`<owner>/<repo>@<commit>:<path>` of the original file, same repository and commit as the entry; `null` only for a file the original does not have), and `summary` and `reason` in Chinese and English, each at most 1000 characters. These texts are public: keep the technical content, leave out internal review bookkeeping.
 - **Seven types, one per change,** chosen by priority: `security` > `fixed` > `removed` > `adapted` > `added` > `improved` > `localized`. Split a change that falls into two types.
+  - `security`: removes an exploitable flaw or advice that leads to an unsafe result (for example a redirect check that accepts `//`).
+  - `fixed`: corrects a factual, logic or code error the original did not intend.
+  - `removed`: deletes content that is proprietary, broken, unsupported by Teloa or not licensed for redistribution.
+  - `adapted`: reworks content to run in Teloa (tool names, paths, permissions, required notices) without changing its intent.
+  - `added`: a capability, step or check the original does not have.
+  - `improved`: same capability, better quality (clarity, structure, wording, performance, token use).
+  - `localized`: translation or regional adaptation without changing meaning.
 - **Every file is accounted for.** Each file in the artifact other than `MODIFICATIONS.md` is either in `unchangedFiles` or named by a change; each original file that is not shipped has a `removed` change.
 - **`MODIFICATIONS.md`** at the artifact root is the full technical record and mentions every change `id`. Each changed or added file says `MODIFICATIONS.md` within its first 4 KiB (a visible change notice, as Apache-2.0 section 4(b) requires).
 - **Verification record.** `reviews/derivatives/<id>@<version>.json` in format `teloa.derivative-review/v1` (`entryId`, `version`, `reviewedAt`, `reviewer`, `changeChecks`) has exactly one check per change with `result: "pass"`, a `method` of `test`, `reproduction`, `source-check` or `review`, and `evidence` (method and outcome, at most 1000 characters). `security` and `fixed` changes need a test, a reproduction or a check against an authoritative source, not review alone. Do not claim results you have not observed.
@@ -105,6 +112,13 @@ Use public issues by default to report malicious or unsafe resources. For potent
 - **条目。** `upstream.files` 列出全部原版文件，每项带锁定提交下原版字节的 `gitBlob`、`size` 与 `sha256`；原版仓库根目录的许可用 `repositoryPath` 登记，并放在资源文件根目录的 `LICENSE` 或 `LICENSE.txt`。`modifications` 为 `[]`。`derivation.unchangedFiles` 列出原样随附的原版文件（摘要必须与原版一致，许可文件也不例外）；`derivation.changes` 逐条列出修改。二次开发条目不写 `origin`：原版的安装量不是我们的安装量。`compatibility.teloa` 的下界至少为 `0.2.0-alpha.7`。
 - **每条修改**包含：`id`（如 `CSB-M01`，条目内唯一）、`type`、`path`（资源文件里的一个文件，或被移除的原版文件）、可选的 `section`（语言中性的章节名或行号，行号指原版文件）、`upstream`（原版文件的 `<owner>/<repo>@<提交>:<路径>`，仓库与提交须与条目一致；只有原版没有的文件写 `null`），以及中英双语的 `summary` 与 `reason`（每语不超过 1000 字）。这些文字会公开展示：保留技术内容，不写内部审查记账。
 - **七类，每条只归一类**，按优先级取：`security` > `fixed` > `removed` > `adapted` > `added` > `improved` > `localized`。一处改动跨两类时拆成两条。
+  - `security`（安全修复）：消除可被利用的漏洞，或会导致不安全结果的建议（例如放过 `//` 的重定向校验）。
+  - `fixed`（修复）：纠正原版并非本意的事实、逻辑或代码错误。
+  - `removed`（移除）：删除专有、失效、Teloa 不支持或许可不允许再分发的内容。
+  - `adapted`（适配）：为在 Teloa 中运行而改造（工具名、路径、权限、必需的声明），功能意图不变。
+  - `added`（新增）：原版没有的新能力、新步骤或新检查项。
+  - `improved`（优化）：能力不变，提升质量（清晰度、结构、表述、性能、token 用量）。
+  - `localized`（本地化）：翻译与区域化，不改语义。
 - **每个文件都有着落。** 资源文件里除 `MODIFICATIONS.md` 外的每个文件，要么在 `unchangedFiles` 里，要么被某条修改引用；没有随附的原版文件都要有一条 `removed` 修改。
 - **`MODIFICATIONS.md`** 放在资源文件根目录，是完整的技术记录，须列出全部修改 `id`。每个改过或新增的文件在前 4 KiB 内写明 `MODIFICATIONS.md`（可见的修改声明，满足 Apache-2.0 第 4(b) 条）。
 - **验证记录。** `reviews/derivatives/<id>@<version>.json`，格式 `teloa.derivative-review/v1`（`entryId`、`version`、`reviewedAt`、`reviewer`、`changeChecks`）：每条修改恰有一条检查，`result` 为 `"pass"`，`method` 取 `test`、`reproduction`、`source-check`、`review` 之一，`evidence` 写方法与结果（不超过 1000 字）。`security` 与 `fixed` 须用测试、复现或对照权威资料，不能只靠审阅。没有观察到的结果不要写。
