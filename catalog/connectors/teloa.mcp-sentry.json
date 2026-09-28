@@ -89,8 +89,8 @@
     "dsh": "0.1.7-rc.1",
     "conditions": [
       {
-        "zh-CN": "需在 市场 → 连接 页由本人在浏览器中完成 OAuth 授权；服务器部署需在配置文件设置 oauth.publicCallbackUrl",
-        "en": "The owner must complete OAuth authorization in a browser from Market → Connections; server deployments must set oauth.publicCallbackUrl in the config file"
+        "zh-CN": "需在 市场 > 连接 页由本人在浏览器中完成 OAuth 授权；服务器部署需在配置文件设置 oauth.publicCallbackUrl",
+        "en": "The owner must complete OAuth authorization in a browser from Market > Connections; server deployments must set oauth.publicCallbackUrl in the config file"
       },
       {
         "zh-CN": "远程服务的 Bearer 只收 MCP OAuth 令牌，Sentry 用户 Auth Token 须用 Sentry-Bearer 头（Teloa 不支持），故改为 OAuth；服务端支持动态客户端注册与 PKCE S256，本机回环回调（127.0.0.1）尚未实测",

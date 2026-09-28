@@ -3,7 +3,7 @@
   "id": "anthropic.mcp-builder",
   "kind": "skill",
   "delivery": "install",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "taxonomy": {
     "functions": [
       "dev-tools"
@@ -73,12 +73,16 @@
       "en": "Frontmatter keeps only name and description; the license field removed."
     },
     {
-      "zh-CN": "scripts/ 目录（connections.py、evaluation.py、example_evaluation.xml、requirements.txt）不随资源文件收录（构建拒绝脚本文件）；SKILL.md 开头加注说明评测脚本未包含，评测参考文档 reference/evaluation.md 原样收录。",
-      "en": "The scripts/ directory (connections.py, evaluation.py, example_evaluation.xml, requirements.txt) is not included (build rejects script files); a note is added to SKILL.md stating scripts are excluded; the evaluation reference doc reference/evaluation.md is included unchanged."
+      "zh-CN": "scripts/ 目录（connections.py、evaluation.py、example_evaluation.xml、requirements.txt）不随资源文件收录（构建拒绝脚本文件）；SKILL.md 开头加注说明评测脚本未包含，评测参考文档 reference/evaluation.md 随附（改动见最后一条）。",
+      "en": "The scripts/ directory (connections.py, evaluation.py, example_evaluation.xml, requirements.txt) is not included (build rejects script files); a note is added to SKILL.md stating scripts are excluded; the evaluation reference doc reference/evaluation.md is included (see the last change)."
     },
     {
-      "zh-CN": "reference/ 下四个参考文档原样收录，无修改。",
-      "en": "The four reference docs under reference/ are included unchanged."
+      "zh-CN": "reference/ 下 mcp_best_practices.md、node_mcp_server.md、python_mcp_server.md 三个参考文档原样收录，无修改。",
+      "en": "reference/mcp_best_practices.md, node_mcp_server.md and python_mcp_server.md are included unchanged."
+    },
+    {
+      "zh-CN": "SKILL.md 两个章节标题与十处链接文字前的表情符号去掉，开头的说明同步更新；reference/evaluation.md 开头加修改说明，输出格式里标记答对、答错的两个符号改为文字 correct/incorrect。只改符号，不改内容。",
+      "en": "Emoji before two headings and ten link labels in SKILL.md are removed and the note at the top is updated; reference/evaluation.md gets a change notice at the top, and the two symbols marking right and wrong answers in the output format are written as correct/incorrect. Only symbols change, not content."
     }
   ],
   "license": {
@@ -105,7 +109,7 @@
   },
   "review": {
     "status": "approved",
-    "reviewedAt": "2026-09-25",
+    "reviewedAt": "2026-09-28",
     "reviewer": "Teloa"
   }
 }

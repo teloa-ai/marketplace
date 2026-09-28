@@ -20,8 +20,8 @@
       "en": "Yuque (Knowledge Base)"
     },
     "summary": {
-      "zh-CN": "语雀官方 MCP，通过个人访问令牌读取和搜索团队知识库文档。需要在语雀账户设置 → 开发者配置中生成个人访问令牌。数据经由 yuque.com 传输。",
-      "en": "Yuque official MCP for reading and searching team knowledge base documents via personal access token. Generate a token in Yuque account settings → Developer settings. Data passes through yuque.com."
+      "zh-CN": "语雀官方 MCP，通过个人访问令牌读取和搜索团队知识库文档。需要在语雀账户设置 > 开发者配置中生成个人访问令牌。数据经由 yuque.com 传输。",
+      "en": "Yuque official MCP for reading and searching team knowledge base documents via personal access token. Generate a token in Yuque account settings > Developer settings. Data passes through yuque.com."
     },
     "auth": {
       "kind": "secret",
@@ -30,8 +30,8 @@
           "target": "env",
           "envVarName": "YUQUE_PERSONAL_TOKEN",
           "label": {
-            "zh-CN": "语雀个人访问令牌（账户设置 → 开发者配置中生成）",
-            "en": "Yuque personal access token (generate in account settings → Developer)"
+            "zh-CN": "语雀个人访问令牌（账户设置 > 开发者配置中生成）",
+            "en": "Yuque personal access token (generate in account settings > Developer)"
           },
           "required": true
         }

@@ -3,7 +3,7 @@
   "id": "teloa.support",
   "kind": "solution",
   "delivery": "install",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "taxonomy": {
     "functions": [
       "business-ops",

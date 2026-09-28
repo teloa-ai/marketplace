@@ -3,7 +3,7 @@
   "id": "teloa.role.soc-t1-analyst",
   "kind": "role",
   "delivery": "install",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "upstream": null,
   "taxonomy": {
     "functions": [
@@ -76,7 +76,7 @@
     "preferredModel": null,
     "fromSolution": {
       "packageId": "soc-operations",
-      "version": "1.0.1",
+      "version": "1.0.2",
       "path": "roles/soc-t1-analyst.json"
     }
   },
