@@ -37,11 +37,13 @@
       {
         "path": "LICENSE.txt",
         "gitBlob": "f433b1a53f5b830a205fd2df78e2b34974656c7b",
+        "sha256": "0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594",
         "size": 10174
       },
       {
         "path": "SKILL.md",
         "gitBlob": "a5333457c414d20d625f307df945842c0952ecc3",
+        "sha256": "d91970639e9f5c37682ac7ab60094d35f1c7c1f38d731bd56396563aee10c1d3",
         "size": 9390
       }
     ]
