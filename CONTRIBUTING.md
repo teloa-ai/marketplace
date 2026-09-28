@@ -26,10 +26,24 @@ Contributions are welcome through pull requests to this repository. One pull req
 1. `catalog/<type>/<id>.json` with every field of `teloa.market-catalog-entry/v1`. `<type>` is `solutions`, `roles`, `skills`, `connectors` or `models`, and must match the entry's `kind`. Use `ecosystem.resource` for `id`, for example `hermes.meeting-action-items`. The file name equals the ID.
 2. For hosted entries, `artifacts/<type>/<id>/<version>/` with the complete files to install. Skills have exactly one `SKILL.md` at the root; its frontmatter holds only `name` and `description`, and `name` equals the entry's `skill.name`.
 3. The license file described above.
-4. For content taken from elsewhere, the pinned upstream source: the full 40-character commit and the Git blob digest of each file taken. Mark every changed file at the top of its body and list each change in `modifications`.
+4. For content taken from elsewhere, the pinned upstream source: the full 40-character commit and the Git blob digest of each file taken. Mark every changed file at the top of its body and list each change in `modifications`. Skills that change the original files use the structured change list described in [Derivative resources](#derivative-resources).
 5. stdio connectors (npm packages): the full dependency lock `package-lock.json` in the artifact (lockfile v3, the root depends only on the recipe package at its exact version, every package carries a sha512 integrity and comes from `https://registry.npmjs.org/`). The host installs with `npm ci --ignore-scripts` from this lock and checks every entry; a lock that disagrees with the recipe is refused. Changing the dependency tree requires a new entry version.
 6. Nothing outside `catalog/`, `artifacts/` and `reviews/`. Do not edit `INDEX.md`, `NOTICE`, `catalog-version.txt`, the README catalog version or `CHANGELOG.md`: they are generated after merge (see Review), so parallel pull requests never conflict. Review records use one file per entry, `reviews/<type>/<id>.json`. CI enforces this scope and reports each path outside it. Changes to `tools/`, `.github/` and the documents are made by maintainers from an `infra/*` branch of this repository (pushing one requires write access) and need code owner review; those branches may change anything except `INDEX.md`, `NOTICE` and `catalog-version.txt`. Nobody deletes `README.md` or `README.zh-CN.md`.
 7. A pull request description covering purpose and use cases, required tools and network access, how you tested, and how the entry will be upgraded.
+
+### Derivative resources
+
+Use this form when you publish a skill whose files differ from a pinned original: fixes, adaptations, removals or additions. An upstream entry (`delivery: upstream`) means the listed original files are installed byte for byte; any skill whose bytes changed is a hosted entry (`delivery: install`) with `derivation`. Keep the original ID prefix and skill name (for example `hermes.simplify-code`), use a plain version without a pre-release suffix, and keep one entry per skill.
+
+- **Entry.** `upstream.files` lists every original file with `gitBlob`, `size` and `sha256` of the original bytes at the pinned commit. A license at the original repository root is listed with `repositoryPath` and placed at the artifact root as `LICENSE` or `LICENSE.txt`. `modifications` is `[]`. `derivation.unchangedFiles` lists original files shipped unchanged (their digest must equal the original digest, licenses included). `derivation.changes` lists every change. Derivative entries carry no `origin`: the original's install count is not ours. `compatibility.teloa` must have a lower bound of at least `0.2.0-alpha.7`.
+- **Each change** has `id` (such as `CSB-M01`, unique in the entry), `type`, `path` (one file in the artifact, or the removed original file), optional `section` (language-neutral heading or line numbers; line numbers refer to the original file), `upstream` (`<owner>/<repo>@<commit>:<path>` of the original file, same repository and commit as the entry; `null` only for a file the original does not have), and `summary` and `reason` in Chinese and English, each at most 1000 characters. These texts are public: keep the technical content, leave out internal review bookkeeping.
+- **Seven types, one per change,** chosen by priority: `security` > `fixed` > `removed` > `adapted` > `added` > `improved` > `localized`. Split a change that falls into two types.
+- **Every file is accounted for.** Each file in the artifact other than `MODIFICATIONS.md` is either in `unchangedFiles` or named by a change; each original file that is not shipped has a `removed` change.
+- **`MODIFICATIONS.md`** at the artifact root is the full technical record and mentions every change `id`. Each changed or added file says `MODIFICATIONS.md` within its first 4 KiB (a visible change notice, as Apache-2.0 section 4(b) requires).
+- **Verification record.** `reviews/derivatives/<id>@<version>.json` in format `teloa.derivative-review/v1` (`entryId`, `version`, `reviewedAt`, `reviewer`, `changeChecks`) has exactly one check per change with `result: "pass"`, a `method` of `test`, `reproduction`, `source-check` or `review`, and `evidence` (method and outcome, at most 1000 characters). `security` and `fixed` changes need a test, a reproduction or a check against an authoritative source, not review alone. Do not claim results you have not observed.
+- **Not included:** review material such as tests, machine-readable change files and drafts stays out of the artifact.
+
+Derivative resources reach the Teloa app with the next Teloa release after merge; market.teloa.ai shows them once the index is published.
 
 ### Model references
 
@@ -79,10 +93,24 @@ Use public issues by default to report malicious or unsafe resources. For potent
 1. `catalog/<类型>/<id>.json`：按 `teloa.market-catalog-entry/v1` 填写全部字段。`<类型>` 为 `solutions`、`roles`、`skills`、`connectors`、`models` 之一，且与条目 `kind` 一致。`id` 用「来源生态.资源名」，例如 `hermes.meeting-action-items`，文件名等于 ID。
 2. 托管条目的 `artifacts/<类型>/<id>/<version>/`：实际安装的完整文件。技能根目录有且只有一个 `SKILL.md`，frontmatter 只写 `name` 与 `description`，`name` 与条目 `skill.name` 一致。
 3. 上文要求的许可文件。
-4. 取自别处的内容要写上游固定来源：完整 40 位提交与每个取用文件的 Git blob 摘要。改动过的文件在正文开头注明来源，并在条目 `modifications` 里逐条说明。
+4. 取自别处的内容要写上游固定来源：完整 40 位提交与每个取用文件的 Git blob 摘要。改动过的文件在正文开头注明来源，并在条目 `modifications` 里逐条说明。改动了原版文件的技能改用结构化修改清单，见[二次开发资源](#二次开发资源)。
 5. stdio 连接器（npm 包）：工件里随附完整依赖锁定 `package-lock.json`（lockfile v3，根只精确依赖配方包，每个包带 sha512 integrity、只从 `https://registry.npmjs.org/` 取）。宿主安装时按它 `npm ci --ignore-scripts` 并逐条核对，锁与配方不一致拒绝安装。换依赖树须递增条目版本。
 6. 只改 `catalog/`、`artifacts/`、`reviews/`。不要改 `INDEX.md`、`NOTICE`、`catalog-version.txt`、README 目录版本与 `CHANGELOG.md`：它们在合并后统一生成（见审核流程），并行的 PR 因此不会互相冲突。审查记录每个条目一个文件：`reviews/<类型>/<id>.json`。CI 强制这一范围，并逐个指出越界路径。`tools/`、`.github/` 与文档的改动由维护者从本仓库的 `infra/*` 分支提交（推送该分支需要写权限），并须代码所有者审查；这类分支可以改除 `INDEX.md`、`NOTICE`、`catalog-version.txt` 之外的任何文件。任何 PR 都不得删除 `README.md`、`README.zh-CN.md`。
 7. PR 描述写清：用途与适用场景、依赖的工具与是否联网、你如何测试、以后如何升级。
+
+### 二次开发资源
+
+发布与锁定原版字节不同的技能（修复、适配、移除或新增内容）时用这种形式。上游条目（`delivery: upstream`）的含义是所列原版文件逐字节原样安装；字节改过的技能一律用托管条目（`delivery: install`）加 `derivation`。沿用原版的标识前缀与技能名（例如 `hermes.simplify-code`），版本号不用预发布后缀，同一技能只保留一个条目。
+
+- **条目。** `upstream.files` 列出全部原版文件，每项带锁定提交下原版字节的 `gitBlob`、`size` 与 `sha256`；原版仓库根目录的许可用 `repositoryPath` 登记，并放在资源文件根目录的 `LICENSE` 或 `LICENSE.txt`。`modifications` 为 `[]`。`derivation.unchangedFiles` 列出原样随附的原版文件（摘要必须与原版一致，许可文件也不例外）；`derivation.changes` 逐条列出修改。二次开发条目不写 `origin`：原版的安装量不是我们的安装量。`compatibility.teloa` 的下界至少为 `0.2.0-alpha.7`。
+- **每条修改**包含：`id`（如 `CSB-M01`，条目内唯一）、`type`、`path`（资源文件里的一个文件，或被移除的原版文件）、可选的 `section`（语言中性的章节名或行号，行号指原版文件）、`upstream`（原版文件的 `<owner>/<repo>@<提交>:<路径>`，仓库与提交须与条目一致；只有原版没有的文件写 `null`），以及中英双语的 `summary` 与 `reason`（每语不超过 1000 字）。这些文字会公开展示：保留技术内容，不写内部审查记账。
+- **七类，每条只归一类**，按优先级取：`security` > `fixed` > `removed` > `adapted` > `added` > `improved` > `localized`。一处改动跨两类时拆成两条。
+- **每个文件都有着落。** 资源文件里除 `MODIFICATIONS.md` 外的每个文件，要么在 `unchangedFiles` 里，要么被某条修改引用；没有随附的原版文件都要有一条 `removed` 修改。
+- **`MODIFICATIONS.md`** 放在资源文件根目录，是完整的技术记录，须列出全部修改 `id`。每个改过或新增的文件在前 4 KiB 内写明 `MODIFICATIONS.md`（可见的修改声明，满足 Apache-2.0 第 4(b) 条）。
+- **验证记录。** `reviews/derivatives/<id>@<version>.json`，格式 `teloa.derivative-review/v1`（`entryId`、`version`、`reviewedAt`、`reviewer`、`changeChecks`）：每条修改恰有一条检查，`result` 为 `"pass"`，`method` 取 `test`、`reproduction`、`source-check`、`review` 之一，`evidence` 写方法与结果（不超过 1000 字）。`security` 与 `fixed` 须用测试、复现或对照权威资料，不能只靠审阅。没有观察到的结果不要写。
+- **不放进资源文件：** 测试、机器可读的修改文件、草案等审查材料。
+
+二次开发资源合入后，随下一个 Teloa 发行版进入应用；市场站在索引发布后即可看到。
 
 ### 模型引用
 
