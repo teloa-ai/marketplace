@@ -4,6 +4,15 @@ All notable changes to the catalog are recorded here. The format follows [Keep a
 
 目录的重要变更记录在此，格式遵循 Keep a Changelog，按目录版本（`catalog-version.txt`）分组。全部条目见 [INDEX.md](INDEX.md)。
 
+## [2026.9.28.8] - 2026-09-28
+
+<!-- Catalog-Source: f8e70854caff9416fc0ddc1fea50e0da97a847fe -->
+_Generated after merge from the catalog changes since `08016b2`; details are in the merged pull requests. / 合并后按 `08016b2` 以来的目录变更自动生成，详情见对应 PR。_
+
+### Added
+
+- `anthropic.review-pr` 1.0.0 — Multi-aspect review of local changes · 本地改动分项审查
+
 ## [2026.9.28.7] - 2026-09-28
 
 <!-- Catalog-Source: 08016b2a3b8755ec536b43f976a6d0683182a923 -->
