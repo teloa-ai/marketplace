@@ -4,6 +4,16 @@ All notable changes to the catalog are recorded here. The format follows [Keep a
 
 目录的重要变更记录在此，格式遵循 Keep a Changelog，按目录版本（`catalog-version.txt`）分组。全部条目见 [INDEX.md](INDEX.md)。
 
+## [2026.9.28.10] - 2026-09-28
+
+<!-- Catalog-Source: 84f4f514736feaf3d9e2031ea13ea317f31b99e9 -->
+_Generated after merge from the catalog changes since `b0511f6`; details are in the merged pull requests. / 合并后按 `b0511f6` 以来的目录变更自动生成，详情见对应 PR。_
+
+### Added
+
+- `anthropic.feature-dev` 1.0.0 — Feature development workflow · 功能开发流程
+- `anthropic.modernize-assess` 1.0.0 — Legacy system assessment · 遗留系统评估
+
 ## [2026.9.28.9] - 2026-09-28
 
 <!-- Catalog-Source: b0511f6284de9b2a5e1dcbef4ef36253830b5356 -->
