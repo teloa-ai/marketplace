@@ -1,0 +1,255 @@
+{
+  "format": "teloa.derivative-review/v1",
+  "entryId": "openai.security-best-practices",
+  "version": "1.0.0",
+  "reviewedAt": "2026-09-28",
+  "reviewer": "Teloa",
+  "changeChecks": [
+    {
+      "changeId": "CSB-M01",
+      "method": "test",
+      "result": "pass",
+      "evidence": "复判 derivative-re-review.md §2.2 在 /tmp 副本实跑 node、Python、Go 三套各 65 项（vectors.json：55 个恶意向量 + 10 个合法路径）0 失败，从文档原样提取的片段 react+next 185 项、flask+fastapi 130 项、go 65 项 0 失败；§2.3 复判者自拟 38 个绕过向量共 190 次判定，离开本源 0 次。首轮复审 derivative-review.md C1 的 5 个点段向量全部回退到默认地址；原版正则放过 55 个恶意向量中的 34 个（optimize-codex-hermes.md「CSB-M01 测试向量实跑」）。R2 只改测试说明句并补 Notes 一行，实现者 R2 后重跑三语言与片段全部 0 失败（optimize-codex-hermes.md「复判修复 R2·实跑」）。R2 修订未再经独立复审（复判结论为「改完由主控抽查即可」）。"
+    },
+    {
+      "changeId": "CSB-M02",
+      "method": "test",
+      "result": "pass",
+      "evidence": "规则文字要求的「不以 // 或 /\\ 开头、比较 origin、复验规范化路径」就是 REACT-REDIRECT-001 被测函数的判定；vectors.json 含 //evil、/\\evil 等向量，三语言实跑 0 失败（derivative-re-review.md §2.2）。复判 §2.1 确认 React L314 的 /\\\\ 笔误已改为 /\\。"
+    },
+    {
+      "changeId": "CSB-M03",
+      "method": "test",
+      "result": "pass",
+      "evidence": "Next 片段与被测函数逐字一致（derivative-re-review.md §2.1、§2.2：react+next 片段 185 项 0 失败）。复判 m1–m3 的修正由实现者在 R2 实跑：tsc 5.9.3 strict 对文档整块代码 exit 0，无类型版本对照报 TS7006×2；点段 Location 检查脚本 exit 0（optimize-codex-hermes.md「复判修复 R2·实跑」）。tsc 检查用的是自写 next/server 最小桩，未对真实 next 类型定义检查。R2 修订未再经独立复审（复判结论为「改完由主控抽查即可」）。"
+    },
+    {
+      "changeId": "CSB-M04",
+      "method": "test",
+      "result": "pass",
+      "evidence": "Vue 片段调用与 React 相同的 safeReturnTo / sameOriginPath，该函数 node 实跑 65 项 0 失败（derivative-re-review.md §2.2）；复判 §2.1 确认 Vue L456-457 已改并禁止 router.push(raw)。Vue Router 集成本身未实跑。"
+    },
+    {
+      "changeId": "CSB-M05",
+      "method": "test",
+      "result": "pass",
+      "evidence": "go1.25.9 实跑 go-safe-return-to 65 项 0 失败，文档提取片段再跑 65 项 0 失败；§2.3 新增向量含 Go 实现，离开本源 0 次（derivative-re-review.md §2.2、§2.3）。R2 按复判 m3、m4 改措辞并加注释，实现者实跑 path.Clean(\"/a/b/\") 返回 \"/a/b\"，R2 后三语言重跑 0 失败（optimize-codex-hermes.md「复判修复 R2·实跑」r2-checks）。R2 修订未再经独立复审（复判结论为「改完由主控抽查即可」）。"
+    },
+    {
+      "changeId": "CSB-M06",
+      "method": "test",
+      "result": "pass",
+      "evidence": "Python 3.14.5 实跑 python-safe-return-to 65 项 0 失败，flask+fastapi 片段 130 项 0 失败（derivative-re-review.md §2.2）。R2 按复判 N4 补 import 并改为 maxsplit=1，实现者用 python3 -W error::DeprecationWarning 重跑无告警、0 失败（optimize-codex-hermes.md「复判修复 R2·实跑」）。用法行中的 APP_ORIGIN、current_app.config 为示意名，未纳入实跑；经 Werkzeug redirect 发出的实际 Location 头未实测（本机未安装 Werkzeug）。R2 修订未再经独立复审（复判结论为「改完由主控抽查即可」）。"
+    },
+    {
+      "changeId": "CSB-M07",
+      "method": "test",
+      "result": "pass",
+      "evidence": "FastAPI 片段与 Flask 片段逐字相同，Python 3.14.5 实跑 65 项 0 失败，flask+fastapi 片段 130 项 0 失败（derivative-re-review.md §2.2）。R2 按复判 N4 补 import 并改为 maxsplit=1，-W error::DeprecationWarning 下重跑无告警（optimize-codex-hermes.md「复判修复 R2·实跑」）。经 Starlette RedirectResponse 发出的实际 Location 头未实测（本机未安装 Starlette）。R2 修订未再经独立复审（复判结论为「改完由主控抽查即可」）。"
+    },
+    {
+      "changeId": "CSB-M08",
+      "method": "source-check",
+      "result": "pass",
+      "evidence": "2026-09-28 对照 MDN Subresource Integrity（https://developer.mozilla.org/en-US/docs/Web/Security/Defenses/Subresource_Integrity）：integrity 值带算法前缀（示例 sha384-…）；跨源使用 integrity 必须走 CORS 并带 crossorigin 属性——与改后文字一致。首轮复审 derivative-review.md（当时编号 CSB-M03）判定方向正确并要求补 sha384- 前缀、先排除 CORS，复判 derivative-re-review.md §2.1 确认已修；原版与同节 L198/L202 的矛盾见 codex-security-complete.md CSB-02。未做浏览器实测。"
+    },
+    {
+      "changeId": "CSB-M09",
+      "method": "source-check",
+      "result": "pass",
+      "evidence": "2026-09-28 对照 MDN：frame-ancestors、report-uri、sandbox 三页均写明在 <meta> 中不支持或被忽略，Content-Security-Policy-Report-Only 页写明不支持 <meta>；MDN CSP 指南（https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP）：推荐 nonce/hash 严格 CSP 与 'strict-dynamic'，指出主机允许表难以维护，示例同时设 object-src 'none' 与 base-uri；MDN frame-ancestors 页写明该指令不支持 <meta>，只在响应头中生效。首轮复审 derivative-review.md（当时编号 CSB-M04）判定正确并提出 strict-dynamic 与 report-only 补充，复判 derivative-re-review.md §2.1 确认已修；原问题见 codex-security-complete.md CSB-04。"
+    },
+    {
+      "changeId": "CSB-M10",
+      "method": "source-check",
+      "result": "pass",
+      "evidence": "2026-09-28 对照 MDN CSP 指南（https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP）：推荐 nonce/hash 严格 CSP 与 'strict-dynamic'，指出主机允许表难以维护，示例同时设 object-src 'none' 与 base-uri；MDN frame-ancestors 页写明该指令不支持 <meta>，只在响应头中生效。与 CSB-M09 同一段改写；复判 derivative-re-review.md §2.1 确认 6 条 7 处都改为 nonce/hash + 'strict-dynamic'。首轮复审 derivative-review.md（当时 CSP 组编号 CSB-M04～M09）判定内容正确；原问题见 codex-security-complete.md CSB-04。"
+    },
+    {
+      "changeId": "CSB-M11",
+      "method": "source-check",
+      "result": "pass",
+      "evidence": "2026-09-28 对照 MDN CSP 指南（https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP）：推荐 nonce/hash 严格 CSP 与 'strict-dynamic'，指出主机允许表难以维护，示例同时设 object-src 'none' 与 base-uri；MDN frame-ancestors 页写明该指令不支持 <meta>，只在响应头中生效。与 CSB-M09 同一段改写；复判 derivative-re-review.md §2.1 确认 6 条 7 处都改为 nonce/hash + 'strict-dynamic'。首轮复审 derivative-review.md（当时 CSP 组编号 CSB-M04～M09）判定内容正确；原问题见 codex-security-complete.md CSB-04。"
+    },
+    {
+      "changeId": "CSB-M12",
+      "method": "source-check",
+      "result": "pass",
+      "evidence": "2026-09-28 对照 MDN CSP 指南（https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP）：推荐 nonce/hash 严格 CSP 与 'strict-dynamic'，指出主机允许表难以维护，示例同时设 object-src 'none' 与 base-uri；MDN frame-ancestors 页写明该指令不支持 <meta>，只在响应头中生效。与 CSB-M09 同一段改写；复判 derivative-re-review.md §2.1 确认 6 条 7 处都改为 nonce/hash + 'strict-dynamic'。首轮复审 derivative-review.md（当时 CSP 组编号 CSB-M04～M09）判定内容正确；原问题见 codex-security-complete.md CSB-04。"
+    },
+    {
+      "changeId": "CSB-M13",
+      "method": "source-check",
+      "result": "pass",
+      "evidence": "2026-09-28 对照 MDN CSP 指南（https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP）：推荐 nonce/hash 严格 CSP 与 'strict-dynamic'，指出主机允许表难以维护，示例同时设 object-src 'none' 与 base-uri；MDN frame-ancestors 页写明该指令不支持 <meta>，只在响应头中生效。与 CSB-M09 同一段改写；复判 derivative-re-review.md §2.1 确认 6 条 7 处都改为 nonce/hash + 'strict-dynamic'。首轮复审 derivative-review.md（当时 CSP 组编号 CSB-M04～M09）判定内容正确；原问题见 codex-security-complete.md CSB-04。"
+    },
+    {
+      "changeId": "CSB-M14",
+      "method": "source-check",
+      "result": "pass",
+      "evidence": "2026-09-28 对照 MDN CSP 指南（https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP）：推荐 nonce/hash 严格 CSP 与 'strict-dynamic'，指出主机允许表难以维护，示例同时设 object-src 'none' 与 base-uri；MDN frame-ancestors 页写明该指令不支持 <meta>，只在响应头中生效。与 CSB-M09 同一段改写；复判 derivative-re-review.md §2.1 确认 6 条 7 处都改为 nonce/hash + 'strict-dynamic'。首轮复审 derivative-review.md（当时 CSP 组编号 CSB-M04～M09）判定内容正确；原问题见 codex-security-complete.md CSB-04。"
+    },
+    {
+      "changeId": "CSB-M15",
+      "method": "source-check",
+      "result": "pass",
+      "evidence": "2026-09-28 对照 npm 文档：npm install / npm ci 的 --omit 为「Dependency types to omit from the installation tree on disk」，默认只在 NODE_ENV=production 时省略 dev（https://docs.npmjs.com/cli/v11/commands/npm-install）；npm scripts 文档列出安装时执行的 preinstall/install/postinstall 生命周期脚本——开发依赖被安装时其安装脚本会运行，与改后文字一致。首轮复审 derivative-review.md（当时编号 CSB-M13）要求改正安装脚本措辞并改归 security，复判 derivative-re-review.md §2.1 确认已修；原冲突见 codex-security-complete.md CSB-05。"
+    },
+    {
+      "changeId": "CSB-M16",
+      "method": "source-check",
+      "result": "pass",
+      "evidence": "2026-09-28 对照 Fetch 标准（https://fetch.spec.whatwg.org/）对 credentials 的定义「HTTP cookies, TLS client certificates, and authentication entries (for HTTP authentication)」及 MDN Request.credentials 同义说明：浏览器自动附带的凭据包括 cookie、HTTP 认证与 TLS 客户端证书，与改后口径一致；OWASP CSRF Prevention Cheat Sheet「Custom Headers and CORS」说明只凭脚本设置的头防护依赖 CORS 限制。首轮复审 derivative-review.md（当时 CSRF 组编号 CSB-M15～M22）判定内容正确、应归 security；复判 derivative-re-review.md §2.1 确认已改，全包 grep「no CSRF risk / not a concern / usually not applicable」无残留。"
+    },
+    {
+      "changeId": "CSB-M17",
+      "method": "source-check",
+      "result": "pass",
+      "evidence": "2026-09-28 对照 Fetch 标准（https://fetch.spec.whatwg.org/）对 credentials 的定义「HTTP cookies, TLS client certificates, and authentication entries (for HTTP authentication)」及 MDN Request.credentials 同义说明：浏览器自动附带的凭据包括 cookie、HTTP 认证与 TLS 客户端证书，与改后口径一致；OWASP CSRF Prevention Cheat Sheet「Custom Headers and CORS」说明只凭脚本设置的头防护依赖 CORS 限制。首轮复审 derivative-review.md（当时 CSRF 组编号 CSB-M15～M22）判定内容正确、应归 security；复判 derivative-re-review.md §2.1 确认已改，全包 grep「no CSRF risk / not a concern / usually not applicable」无残留。"
+    },
+    {
+      "changeId": "CSB-M18",
+      "method": "source-check",
+      "result": "pass",
+      "evidence": "2026-09-28 对照 Fetch 标准（https://fetch.spec.whatwg.org/）对 credentials 的定义「HTTP cookies, TLS client certificates, and authentication entries (for HTTP authentication)」及 MDN Request.credentials 同义说明：浏览器自动附带的凭据包括 cookie、HTTP 认证与 TLS 客户端证书，与改后口径一致；OWASP CSRF Prevention Cheat Sheet「Custom Headers and CORS」说明只凭脚本设置的头防护依赖 CORS 限制。首轮复审 derivative-review.md（当时 CSRF 组编号 CSB-M15～M22）判定内容正确、应归 security；复判 derivative-re-review.md §2.1 确认已改，全包 grep「no CSRF risk / not a concern / usually not applicable」无残留。"
+    },
+    {
+      "changeId": "CSB-M19",
+      "method": "source-check",
+      "result": "pass",
+      "evidence": "2026-09-28 对照 Fetch 标准（https://fetch.spec.whatwg.org/）对 credentials 的定义「HTTP cookies, TLS client certificates, and authentication entries (for HTTP authentication)」及 MDN Request.credentials 同义说明：浏览器自动附带的凭据包括 cookie、HTTP 认证与 TLS 客户端证书，与改后口径一致；OWASP CSRF Prevention Cheat Sheet「Custom Headers and CORS」说明只凭脚本设置的头防护依赖 CORS 限制。首轮复审 derivative-review.md（当时 CSRF 组编号 CSB-M15～M22）判定内容正确、应归 security；复判 derivative-re-review.md §2.1 确认已改，全包 grep「no CSRF risk / not a concern / usually not applicable」无残留。复判 m5 指出 Required 首条仍写 rely on cookies，R2 已改为环境凭据口径（optimize-codex-hermes.md「复判修复 R2」）。R2 修订未再经独立复审（复判结论为「改完由主控抽查即可」）。"
+    },
+    {
+      "changeId": "CSB-M20",
+      "method": "source-check",
+      "result": "pass",
+      "evidence": "2026-09-28 对照 Fetch 标准（https://fetch.spec.whatwg.org/）对 credentials 的定义「HTTP cookies, TLS client certificates, and authentication entries (for HTTP authentication)」及 MDN Request.credentials 同义说明：浏览器自动附带的凭据包括 cookie、HTTP 认证与 TLS 客户端证书，与改后口径一致；OWASP CSRF Prevention Cheat Sheet「Custom Headers and CORS」说明只凭脚本设置的头防护依赖 CORS 限制。首轮复审 derivative-review.md（当时 CSRF 组编号 CSB-M15～M22）判定内容正确、应归 security；复判 derivative-re-review.md §2.1 确认已改，全包 grep「no CSRF risk / not a concern / usually not applicable」无残留。"
+    },
+    {
+      "changeId": "CSB-M21",
+      "method": "source-check",
+      "result": "pass",
+      "evidence": "2026-09-28 对照 Fetch 标准（https://fetch.spec.whatwg.org/）对 credentials 的定义「HTTP cookies, TLS client certificates, and authentication entries (for HTTP authentication)」及 MDN Request.credentials 同义说明：浏览器自动附带的凭据包括 cookie、HTTP 认证与 TLS 客户端证书，与改后口径一致；OWASP CSRF Prevention Cheat Sheet「Custom Headers and CORS」说明只凭脚本设置的头防护依赖 CORS 限制。首轮复审 derivative-review.md（当时 CSRF 组编号 CSB-M15～M22）判定内容正确、应归 security；复判 derivative-re-review.md §2.1 确认已改，全包 grep「no CSRF risk / not a concern / usually not applicable」无残留。"
+    },
+    {
+      "changeId": "CSB-M22",
+      "method": "source-check",
+      "result": "pass",
+      "evidence": "2026-09-28 对照 Fetch 标准（https://fetch.spec.whatwg.org/）对 credentials 的定义「HTTP cookies, TLS client certificates, and authentication entries (for HTTP authentication)」及 MDN Request.credentials 同义说明：浏览器自动附带的凭据包括 cookie、HTTP 认证与 TLS 客户端证书，与改后口径一致；OWASP CSRF Prevention Cheat Sheet「Custom Headers and CORS」说明只凭脚本设置的头防护依赖 CORS 限制。首轮复审 derivative-review.md（当时 CSRF 组编号 CSB-M15～M22）判定内容正确、应归 security；复判 derivative-re-review.md §2.1 确认已改，全包 grep「no CSRF risk / not a concern / usually not applicable」无残留。"
+    },
+    {
+      "changeId": "CSB-M23",
+      "method": "source-check",
+      "result": "pass",
+      "evidence": "2026-09-28 对照 Fetch 标准（https://fetch.spec.whatwg.org/）对 credentials 的定义「HTTP cookies, TLS client certificates, and authentication entries (for HTTP authentication)」及 MDN Request.credentials 同义说明：浏览器自动附带的凭据包括 cookie、HTTP 认证与 TLS 客户端证书，与改后口径一致；OWASP CSRF Prevention Cheat Sheet「Custom Headers and CORS」说明只凭脚本设置的头防护依赖 CORS 限制。首轮复审 derivative-review.md（当时 CSRF 组编号 CSB-M15～M22）判定内容正确、应归 security；复判 derivative-re-review.md §2.1 确认已改，全包 grep「no CSRF risk / not a concern / usually not applicable」无残留。首轮复审 MINOR（当时编号 CSB-M21）指出的 L398 残留句已改为引用上文规则（复判 §2.1）。"
+    },
+    {
+      "changeId": "CSB-M24",
+      "method": "source-check",
+      "result": "pass",
+      "evidence": "2026-09-28 联网核对（optimize-codex-hermes.md「N1 联网核对」，原始响应存于审查归档 optimize/r2/）：GitHub Advisory API GHSA-h25m-26qc-wcjf 受影响区间首段 >= 13.0.0, < 15.0.8、首个修复 15.0.8，描述含 13.x/14.x/15.x/16.x App Router；vercel/next.js 仓库公告 cve_id 为 CVE-2026-23864；Vercel 官方摘要与 NVD CVE-2026-23864 一致；npm registry 上 next 14.x 最新为 14.2.35（2025-12-11）；nextjs.org/blog/tag/security 与 §6 其余 6 个链接实测 200。复判 derivative-re-review.md §2.5 联网抽查：CVE-2025-66478 被 NVD 拒绝、react2shell 受影响范围与修复线、2025-12-11 修复线均正确。首轮复审 derivative-review.md §5 联网核对 21 项。R2 修订未再经独立复审（复判结论为「改完由主控抽查即可」）。"
+    },
+    {
+      "changeId": "CSB-M25",
+      "method": "source-check",
+      "result": "pass",
+      "evidence": "2026-09-28 对照 OWASP GenAI Top 10 LLM01:2025 Prompt Injection（https://genai.owasp.org/llmrisk/llm01-prompt-injection/）：外部内容被模型解读时可改变其行为，缓解措施包括隔离并标识不可信内容以限制其影响——改后规则把被审仓库文本一律当作数据、不给覆盖权、要求上报此类文字，与之一致。首轮复审 derivative-review.md M4 指出原文是提示注入入口，复判 derivative-re-review.md §2.1 核对 SKILL.md L46 已修。未做对抗性模型实测。"
+    },
+    {
+      "changeId": "CSB-M40",
+      "method": "source-check",
+      "result": "pass",
+      "evidence": "2026-09-28 对照 OWASP CSRF Prevention Cheat Sheet「Custom Headers and CORS」：CORS 若允许攻击者能控制的源（例如被接管的子域）携带凭据，攻击者就能伪造带自定义头的请求；防护须把 Access-Control-Allow-Origin 限定为自己控制的少数源——与所补前提一致。复判 derivative-re-review.md §2.4 与 m6 要求把该前提从拼写条拆出，R2 已拆出并按优先级归 security（optimize-codex-hermes.md「复判修复 R2」）。R2 修订未再经独立复审（复判结论为「改完由主控抽查即可」）。"
+    },
+    {
+      "changeId": "CSB-M26",
+      "method": "reproduction",
+      "result": "pass",
+      "evidence": "2026-09-28 本机 go1.25.9 复现：exec.Command(\"echo\", \"a;b $HOME `id` | c\").Output() 输出原样字符串「a;b $HOME `id` | c」，没有经过 shell 展开；pkg.go.dev/os/exec 写明 os/exec「intentionally does not invoke the system shell」。首轮复审 derivative-review.md（当时编号 CSB-M10）判定正确；原问题见 codex-security-complete.md CSB-03。"
+    },
+    {
+      "changeId": "CSB-M27",
+      "method": "test",
+      "result": "pass",
+      "evidence": "2026-09-28 本机 go1.25.9 编译运行 http.Cookie{Name: \"s\", Value: \"v\", SameSite: http.SameSiteLaxMode}，String() 输出「s=v; SameSite=Lax」；pkg.go.dev/net/http 列出 SameSiteLaxMode。首轮复审 derivative-review.md（当时编号 CSB-M11）确认该 API 存在。"
+    },
+    {
+      "changeId": "CSB-M28",
+      "method": "source-check",
+      "result": "pass",
+      "evidence": "2026-09-28 在原版锁定文件内核对：javascript-general-web-frontend-security.md L276 定义 JS-URL-001，全文没有 FEJS-URL-001 的定义，只有 L624 这一处引用。首轮复审 derivative-review.md（当时编号 CSB-M12）判定正确。"
+    },
+    {
+      "changeId": "CSB-M29",
+      "method": "source-check",
+      "result": "pass",
+      "evidence": "2026-09-28 对照 hstspreload.org「Deployment Recommendations」：建议分阶段提升 max-age（5 分钟、1 周、1 个月），每阶段检查页面与指标后再提交 preload；改后「先用短 max-age、暂不加 includeSubDomains 与 preload」比它更保守，不冲突。原版 SKILL.md L86「avoid recommending HSTS」与 Django 参考 L115、L257 建议启用 HSTS 相冲突（grep 原版锁定文件）。首轮复审 derivative-review.md（当时编号 CSB-M14）判定正确并建议拆出 Codex 措辞（即 CSB-M31）；原问题见 codex-security-complete.md CSB-06。"
+    },
+    {
+      "changeId": "CSB-M30",
+      "method": "source-check",
+      "result": "pass",
+      "evidence": "2026-09-28 对照 PortSwigger Web Security Academy「Server-side template injection」（https://portswigger.net/web-security/server-side-template-injection）：用户输入被直接拼接进模板、而不是作为数据传入时即产生 SSTI——与改后「无论格式串归谁控制，拼接结果作为模板源即 SSTI」一致。首轮复审 derivative-review.md M2 指出前一版把这种写法降为较低风险，复判 derivative-re-review.md §2.1 核对 Flask L305、L314 已修。本机未安装 Flask/Jinja2，未做复现。"
+    },
+    {
+      "changeId": "CSB-M41",
+      "method": "review",
+      "result": "pass",
+      "evidence": "原版 agents/openai.yaml（237 字节，git blob 1721736a）只含 interface.display_name、short_description、default_prompt 三项 Codex 界面元数据；主控 2026-09-28 裁定不随安装包（optimize-codex-hermes.md「复判修复 R2」）。市场校验器确认资源文件中没有该文件且已登记为 removed。"
+    },
+    {
+      "changeId": "CSB-M31",
+      "method": "review",
+      "result": "pass",
+      "evidence": "复判 derivative-re-review.md §2.1（M5 行）确认 HSTS 条中的 Codex 专属措辞已拆为本条；§2.4 逐文件 diff 每个 hunk 都能对应到修改条目。"
+    },
+    {
+      "changeId": "CSB-M32",
+      "method": "review",
+      "result": "pass",
+      "evidence": "SKILL.md 与 10 份参考文件前 4 KiB 内都有「Derived work: modified by Teloa …」与 MODIFICATIONS.md 字样，2026-09-28 市场校验器 derivative.change-notice 通过；首轮复审 derivative-review.md「许可与声明」确认满足 Apache-2.0 §4(b)；按主控 2026-09-28 裁定归 adapted。"
+    },
+    {
+      "changeId": "CSB-M33",
+      "method": "review",
+      "result": "pass",
+      "evidence": "复判 derivative-re-review.md §2.1 确认插入位置（diff 25a28）与条目一致；该段只要求报告前核实版本与 CVE，不改变任何规则判定。"
+    },
+    {
+      "changeId": "CSB-M34",
+      "method": "source-check",
+      "result": "pass",
+      "evidence": "2026-09-28 对照 pkg.go.dev/net/http：CrossOriginProtection 通过拒绝非安全的跨源浏览器请求防护 CSRF，依据 Sec-Fetch-Site，或比较 Origin 主机名与 Host，并提供 AddTrustedOrigin——与改后描述一致。复判 derivative-re-review.md §2.1、§2.5 第 6 项核对行为与 Go 1.25.0 引入；m5 指出的与 L370 的矛盾和「GET 改状态」措辞已在 R2 修正（optimize-codex-hermes.md「复判修复 R2」）。R2 修订未再经独立复审（复判结论为「改完由主控抽查即可」）。"
+    },
+    {
+      "changeId": "CSB-M35",
+      "method": "source-check",
+      "result": "pass",
+      "evidence": "复判 derivative-re-review.md §2.5 第 5 项经 GitHub Advisory API 与 PyPI 核实：Werkzeug CVE-2025-66221→3.1.4、CVE-2026-21860→3.1.5（2026-01-08）、CVE-2026-27199→3.1.6（2026-02-19）；首轮复审 derivative-review.md §5 第 10 项同。"
+    },
+    {
+      "changeId": "CSB-M36",
+      "method": "test",
+      "result": "pass",
+      "evidence": "测试材料保存在 Teloa 审查归档（codex-security-adapted/tests/，不随安装）。复判 derivative-re-review.md §2.2 在 /tmp 副本重跑三语言各 65 项与文档片段全部 0 失败；R2 删除 __pycache__、去掉输出里的本机路径，并新增片段提取脚本、tsc strict 检查与 r2-checks，实现者重跑全部 0 失败或 exit 0（optimize-codex-hermes.md「复判修复 R2·实跑」）。"
+    },
+    {
+      "changeId": "CSB-M37",
+      "method": "review",
+      "result": "pass",
+      "evidence": "复判 derivative-re-review.md §2.4 核对拼写与语法改动；同一行的安全前提已按 m6 拆到 CSB-M40（optimize-codex-hermes.md「复判修复 R2」）。"
+    },
+    {
+      "changeId": "CSB-M38",
+      "method": "review",
+      "result": "pass",
+      "evidence": "首轮复审 derivative-review.md（当时编号 CSB-M27～M29）判定正确；复判 derivative-re-review.md §2.4 逐文件 diff 可对应到本条。"
+    },
+    {
+      "changeId": "CSB-M39",
+      "method": "review",
+      "result": "pass",
+      "evidence": "首轮复审 derivative-review.md（当时编号 CSB-M27～M29）判定正确；复判 derivative-re-review.md §2.4 逐文件 diff 可对应到本条。"
+    }
+  ]
+}
