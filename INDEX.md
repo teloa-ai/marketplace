@@ -1,6 +1,6 @@
 # Catalog index · 目录索引
 
-_Generated from `catalog/` by `node tools/validate.mjs --write` (source repository: `pnpm build:market-catalog`); do not edit by hand. 144 entries, catalog version 2026.9.28.2. Browse and search: https://market.teloa.ai_
+_Generated from `catalog/` by `node tools/validate.mjs --write` (source repository: `pnpm build:market-catalog`); do not edit by hand. 144 entries, catalog version 2026.9.28.3. Browse and search: https://market.teloa.ai_
 
 _由 `catalog/` 自动生成，请勿手改。在线浏览与搜索：https://market.teloa.ai_
 
@@ -115,7 +115,7 @@ _由 `catalog/` 自动生成，请勿手改。在线浏览与搜索：https://ma
 | Repository threat modeling · 代码仓威胁建模 | `openai.security-threat-model` | Teloa · from GitHub openai/skills | Apache-2.0 | content-only | 1.0.0 | [catalog/skills/openai.security-threat-model.json](catalog/skills/openai.security-threat-model.json) · [files](artifacts/skills/openai.security-threat-model/1.0.0/) |
 | Skill creator · 技能创建器 | `openai.skill-creator` | Teloa · from GitHub openai/skills | Apache-2.0 | verified | 1.0.0 | [catalog/skills/openai.skill-creator.json](catalog/skills/openai.skill-creator.json) · [files](artifacts/skills/openai.skill-creator/1.0.0/) |
 | GitHub CLI workflow · GitHub CLI 工作流 | `openclaw.github` | Teloa · from GitHub openclaw/openclaw | MIT | needs-configuration | 1.0.0 | [catalog/skills/openclaw.github.json](catalog/skills/openclaw.github.json) · [files](artifacts/skills/openclaw.github/1.0.0/) |
-| Dashboard designer · 看板设计 | `teloa.dashboard-designer` | Teloa | Apache-2.0 | verified | 1.0.0 | [catalog/skills/teloa.dashboard-designer.json](catalog/skills/teloa.dashboard-designer.json) · [files](artifacts/skills/teloa.dashboard-designer/1.0.0/) |
+| Dashboard designer · 看板设计 | `teloa.dashboard-designer` | Teloa | Apache-2.0 | verified | 1.1.0 | [catalog/skills/teloa.dashboard-designer.json](catalog/skills/teloa.dashboard-designer.json) · [files](artifacts/skills/teloa.dashboard-designer/1.1.0/) |
 
 ## Connectors · 连接器 (28)
 
