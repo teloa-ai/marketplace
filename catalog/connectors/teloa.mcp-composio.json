@@ -3,7 +3,7 @@
   "id": "teloa.mcp-composio",
   "kind": "connector",
   "delivery": "managed",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "taxonomy": {
     "functions": [
       "automation"
@@ -20,13 +20,13 @@
       "en": "Composio MCP (1500+ App Integrations)"
     },
     "summary": {
-      "zh-CN": "Composio 官方远程 MCP（Composio Connect），以少量元工具发现并执行 1000+ 应用的动作，OAuth 连接由 Composio 平台托管。当前不可用：官方端点已迁至 connect.composio.dev，其 OAuth 授权尚未在 Teloa 实测。",
-      "en": "Composio official remote MCP (Composio Connect) that discovers and runs actions across 1000+ apps through a few meta-tools, with OAuth connections hosted by Composio. Currently unavailable: the official endpoint moved to connect.composio.dev and its OAuth flow has not been tested in Teloa yet."
+      "zh-CN": "Composio 官方远程 MCP（Composio Connect），用少量通用工具发现并执行 1000 多个应用的操作。由 Teloa 以 OAuth（动态客户端注册 + PKCE）授权；各应用的账号连接和令牌由 Composio 平台保管，请求经 Composio 服务器转发。",
+      "en": "Composio's official remote MCP (Composio Connect) that discovers and runs actions across 1000+ apps through a few general tools. Authorized by Teloa via OAuth (dynamic client registration + PKCE); app connections and tokens are held by the Composio platform, and requests are relayed through Composio's servers."
     },
     "auth": {
       "kind": "oauth",
-      "supported": false,
-      "reason": "官方端点已迁至 https://connect.composio.dev/mcp（支持动态客户端注册与 PKCE），OAuth 授权待技术探针实测后开放。"
+      "supported": true,
+      "scopes": []
     },
     "recipe": {
       "transport": "streamable-http",
@@ -60,17 +60,29 @@
     ]
   },
   "compatibility": {
-    "status": "unsupported",
+    "status": "needs-configuration",
     "teloa": ">=0.2.0-alpha.6",
     "dsh": "0.1.7-rc.1",
     "conditions": [
       {
-        "zh-CN": "旧端点 mcp.composio.dev/mcp 已不再提供 MCP 服务；官方端点改为 connect.composio.dev/mcp",
-        "en": "The old endpoint mcp.composio.dev/mcp no longer serves MCP; the official endpoint is now connect.composio.dev/mcp"
+        "zh-CN": "需在 市场 > 连接 页由本人在浏览器中用 Composio 账户完成 OAuth 授权；服务器部署需在配置文件设置 oauth.publicCallbackUrl",
+        "en": "The owner must complete OAuth authorization with a Composio account in a browser from Market > Connections; server deployments must set oauth.publicCallbackUrl in the config file"
       },
       {
-        "zh-CN": "OAuth 授权（动态客户端注册 + PKCE）与本机回环回调待实测后开放",
-        "en": "OAuth authorization (dynamic client registration + PKCE) and the loopback callback will open after testing"
+        "zh-CN": "Composio 是聚合平台：你在 Composio 连接的各个应用，其账号令牌由 Composio 保管，每次调用都经 Composio 服务器转发到对应应用。COMPOSIO_MULTI_EXECUTE_TOOL 可以修改已连接应用里的数据，Teloa 对它的每次调用逐次确认。",
+        "en": "Composio is an aggregation platform: it holds the account tokens of every app you connect there, and each call is relayed through Composio's servers to that app. COMPOSIO_MULTI_EXECUTE_TOOL can change data in connected apps, and Teloa asks for confirmation on every call."
+      },
+      {
+        "zh-CN": "服务地址为 connect.composio.dev/mcp（旧地址 mcp.composio.dev/mcp 已停用）。授权服务器元数据支持动态客户端注册（token_endpoint_auth_method none）与 PKCE S256，令牌与注册由 login.composio.dev 处理；2026-09-27 实测客户端注册成功、授权页正常跳转到 Composio 登录页。",
+        "en": "The service address is connect.composio.dev/mcp (the old address mcp.composio.dev/mcp is retired). Authorization-server metadata supports dynamic client registration (token_endpoint_auth_method none) and PKCE S256, with tokens and registration handled by login.composio.dev; on 2026-09-27 client registration succeeded and the authorization page redirected to the Composio sign-in page."
+      },
+      {
+        "zh-CN": "同一套 OAuth 流程已在 Cloudflare 连接器上用真实账户走通（注册、授权、令牌交换、工具调用）。",
+        "en": "The same OAuth flow has been run end to end with a real account on the Cloudflare connector (registration, consent, token exchange, tool calls)."
+      },
+      {
+        "zh-CN": "登录 Composio 之后的令牌交换与工具调用未经 Teloa 真实账户实测，工具清单按官方文档列出；使用中遇到问题请在资源详情页点「问题反馈」。",
+        "en": "Token exchange and tool calls after signing in to Composio have not been tested with a real account by Teloa, and the tool list follows the official documentation; if something does not work, use Report a problem on the resource page."
       }
     ]
   },
@@ -81,7 +93,7 @@
   },
   "review": {
     "status": "approved",
-    "reviewedAt": "2026-09-25",
+    "reviewedAt": "2026-09-28",
     "reviewer": "Teloa"
   }
 }

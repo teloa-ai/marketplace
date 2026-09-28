@@ -100,26 +100,76 @@
     "files": []
   },
   "compatibility": {
-    "status": "unsupported",
-    "teloa": ">=0.2.0-alpha.6",
+    "status": "needs-configuration",
+    "teloa": ">=0.2.0-alpha.7",
     "dsh": "0.1.7-rc.1",
     "conditions": [
       {
-        "zh-CN": "需通过第三方 Maton 网关授权，账号令牌由 Maton 托管、请求经其服务器中转。建议改用厂商官方连接器。Teloa 暂不支持为技能安全注入密钥，暂不可添加。",
-        "en": "Authorization goes through the third-party Maton gateway — account tokens are held by Maton and requests are routed through its servers. Consider using the vendor's official connector instead. Teloa cannot yet inject secrets into skills safely, so this skill can't be added yet."
+        "zh-CN": "需要 Maton API Key（在 maton.ai 的 Settings 页获取），并先由本人在 maton.ai 网页连接 Microsoft Excel 账号。账号令牌由 Maton 保管，每次请求都经 Maton 服务器转发。",
+        "en": "Requires a Maton API key (from Settings on maton.ai), and you must first connect your Microsoft Excel account on the maton.ai website. Maton holds the account tokens and relays every request through its servers."
+      },
+      {
+        "zh-CN": "由 Teloa 代为发送请求：密钥由 Teloa 保管，只发往 https://api.maton.ai 的 /microsoft-excel/ 路径；新增、修改、删除类请求每次先请你确认。所有 Maton 技能共用同一个 Maton API Key，填一次即可。",
+        "en": "Teloa sends the requests for this skill: it keeps the key and sends it only to paths under /microsoft-excel/ on https://api.maton.ai; every request that creates, changes or deletes data asks for your confirmation first. All Maton skills share one Maton API key, so you enter it once."
+      },
+      {
+        "zh-CN": "正文里安装 maton 命令行工具或 maton-ai Python 包的步骤在 Teloa 中不适用；托管函数（*.maton.app）、触发器和连接管理等依赖命令行工具的功能不可用。同一应用连了多个账号时，可在请求里加 Maton-Connection 指定使用哪一个。",
+        "en": "Steps that install the maton command-line tool or the maton-ai Python package do not apply in Teloa; hosted functions (*.maton.app), triggers, connection management and other features that need the command-line tool are unavailable. If you connected several accounts of the same app, add Maton-Connection to a request to choose one."
+      },
+      {
+        "zh-CN": "单次返回内容超过 256 KiB 会被截断，非文字内容只给出省略提示。",
+        "en": "Responses over 256 KiB are truncated, and non-text content is replaced by a short notice."
+      },
+      {
+        "zh-CN": "未经 Teloa 真实账户实测：请求地址与鉴权方式按服务商官方文档和锁定版本的技能正文核对。使用中遇到问题，请在资源详情页点「问题反馈」。",
+        "en": "Not tested with a real account by Teloa: request addresses and authentication were checked against the provider's official documentation and the pinned skill text. If something does not work, use Report a problem on the resource page."
       }
     ]
   },
   "requires": {
     "tools": [
-      "bash"
+      "teloa_skill_http"
     ],
     "network": true,
     "runtimes": []
   },
+  "secrets": [
+    {
+      "envVarName": "MATON_API_KEY",
+      "label": {
+        "zh-CN": "Maton API Key（在 maton.ai 的 Settings 页获取）",
+        "en": "Maton API key (from Settings on maton.ai)"
+      },
+      "required": true,
+      "target": "bearer",
+      "endpoints": [
+        {
+          "origin": "https://api.maton.ai",
+          "pathPrefixes": [
+            "/microsoft-excel/"
+          ]
+        }
+      ],
+      "methods": [
+        "GET",
+        "POST",
+        "PUT",
+        "PATCH",
+        "DELETE"
+      ],
+      "allowHeaders": [
+        "Maton-Connection"
+      ]
+    }
+  ],
+  "secretGroup": "maton",
+  "httpGuide": {
+    "zh-CN": "正文里的 maton api '<路径>' 命令，在 Teloa 里改用 teloa_skill_http 直接调用：url 写 https://api.maton.ai 加同一路径。\n例如 maton api '/microsoft-excel/<原生接口路径>' 对应 GET https://api.maton.ai/microsoft-excel/<原生接口路径>。\n查询参数要做 URL 编码；写入请求用 POST、PUT、PATCH 或 DELETE，JSON 正文放在 body，headers 写 Content-Type: application/json。\n同一应用连了多个账号时，在 headers 里加一行 Maton-Connection: <连接 ID>。\n不要安装或运行 maton 命令行工具与 maton-ai Python 包，也不要调用 *.maton.app 托管函数；应用连接由本人在 maton.ai 网页创建。",
+    "en": "Where the skill text runs maton api '<path>', call teloa_skill_http instead with the url https://api.maton.ai followed by the same path.\nFor example, maton api '/microsoft-excel/<native-api-path>' becomes GET https://api.maton.ai/microsoft-excel/<native-api-path>.\nURL-encode query values; for writes use POST, PUT, PATCH or DELETE with the JSON body in body and the header Content-Type: application/json.\nIf the same app has several connected accounts, add the header line Maton-Connection: <connection id>.\nDo not install or run the maton command-line tool or the maton-ai Python package, and do not call *.maton.app hosted functions; the owner creates app connections on the maton.ai website."
+  },
   "review": {
     "status": "approved",
-    "reviewedAt": "2026-09-25",
+    "reviewedAt": "2026-09-28",
     "reviewer": "Teloa 内容安全审查（逐文件）"
   }
 }

@@ -64,23 +64,6 @@
         "updateConfluenceContent": "write"
       }
     },
-    "teloa.mcp-composio": {
-      "evidence": "旧端点 mcp.composio.dev/mcp 回 HTML 页；官方现为 https://connect.composio.dev/mcp（401 质询，DCR 在 login.composio.dev，仅 openid/profile/email/offline_access）；Composio Connect 文档列 7 个元工具，其中 COMPOSIO_SEARCH_TOOLS、COMPOSIO_GET_TOOL_SCHEMAS、COMPOSIO_MULTI_EXECUTE_TOOL",
-      "recipe": {
-        "transport": "streamable-http",
-        "url": "https://connect.composio.dev/mcp"
-      },
-      "auth": {
-        "kind": "oauth",
-        "supported": false
-      },
-      "toolFilter": "host-only",
-      "upstreamTools": {
-        "COMPOSIO_SEARCH_TOOLS": "read",
-        "COMPOSIO_GET_TOOL_SCHEMAS": "read",
-        "COMPOSIO_MULTI_EXECUTE_TOOL": "write"
-      }
-    },
     "teloa.mcp-context7": {
       "evidence": "无凭据 initialize + tools/list（Context7 4.1.1）：2 个工具，readOnlyHint 均 true；instructions 636 字节",
       "recipe": {
@@ -382,32 +365,6 @@
         "API-move-page": "write",
         "API-retrieve-page-markdown": "read",
         "API-update-page-markdown": "write"
-      }
-    },
-    "teloa.mcp-notion-remote": {
-      "evidence": "Notion 文档 mcp-supported-tools 列 37 个工具，目录声明的 12 个均在且读写一致；受保护资源元数据 scopes_supported [\"default\"]；配方仍标不支持",
-      "recipe": {
-        "transport": "streamable-http",
-        "url": "https://mcp.notion.com/mcp"
-      },
-      "auth": {
-        "kind": "oauth",
-        "supported": false
-      },
-      "toolFilter": "host-only",
-      "upstreamTools": {
-        "notion-search": "read",
-        "notion-fetch": "read",
-        "notion-query-data-sources": "read",
-        "notion-get-comments": "read",
-        "notion-get-teams": "read",
-        "notion-get-users": "read",
-        "notion-create-pages": "write",
-        "notion-update-page": "write",
-        "notion-move-pages": "write",
-        "notion-duplicate-page": "write",
-        "notion-create-database": "write",
-        "notion-create-comment": "write"
       }
     },
     "teloa.mcp-pagerduty": {
