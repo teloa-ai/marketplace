@@ -1,0 +1,15 @@
+PASS RULE-001
+PASS RULE-001 edge
+PASS RULE-002
+PASS RULE-002 edge grace
+PASS RULE-002 edge full fee
+PASS RULE-003
+PASS RULE-003 edge small
+PASS RULE-004
+PASS RULE-005
+PASS RULE-006
+PASS RULE-007
+PASS RULE-007 edge terminal
+PASS RULE-008
+PASS refuted 90-day penalty (no penalty added)
+14/14 passed
