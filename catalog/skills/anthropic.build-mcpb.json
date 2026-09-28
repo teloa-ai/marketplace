@@ -36,16 +36,19 @@
       {
         "path": "SKILL.md",
         "gitBlob": "772097ddbbd78e8faaad2ff57dc7faa64c7a5ea3",
+        "sha256": "6bb90afd0415754e13f353ee5982d13857c14826edbcbdf5f1481fa5563cd56b",
         "size": 7867
       },
       {
         "path": "references/local-security.md",
         "gitBlob": "6fd756f7a78fa9b09317fe57f67abbd1a3a99295",
+        "sha256": "7813aae1084e050537241956ba835adceb710804871894b53a9adcdeb3736241",
         "size": 5384
       },
       {
         "path": "references/manifest-schema.md",
         "gitBlob": "0a42b84bfb874f765b03252c31a7e611f60cc887",
+        "sha256": "6a97f9481107ebdbe8a75f06a5e126ba28021e1e8652677109e53d63a5793c72",
         "size": 5359
       }
     ]

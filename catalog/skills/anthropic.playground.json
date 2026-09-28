@@ -37,36 +37,43 @@
       {
         "path": "SKILL.md",
         "gitBlob": "e8b2da023f4bfb25907fb7a48e8234bbd0e1cb7d",
+        "sha256": "521a3d62211e5f47b65ed17b660e001b15cf8d88d058cbf31bc00e889bcb63cc",
         "size": 3824
       },
       {
         "path": "templates/code-map.md",
         "gitBlob": "152d9a43ecdec670cbc159115eaf099e4c2f1997",
+        "sha256": "0eb7c0d1ac3dbd1401c4a2348631e7be2a02ec30739dd514aab6f162cfade77f",
         "size": 6196
       },
       {
         "path": "templates/concept-map.md",
         "gitBlob": "83ef2307ae3b032fe520822cd2450d72e70aa15a",
+        "sha256": "153810786435a1f3e3948aba075ebf3c887df827464bebca61f48ce7974e9622",
         "size": 3644
       },
       {
         "path": "templates/data-explorer.md",
         "gitBlob": "dde65467789c0416115f47834056820a5782c821",
+        "sha256": "4b884e4b400f3af82b7f33210c5c2017a5296cab16f1496963bd42061a1fe342",
         "size": 2817
       },
       {
         "path": "templates/design-playground.md",
         "gitBlob": "1d2fefce1650251ed6bc5c8bf71cc6fd5ce1ebb7",
+        "sha256": "190f7da424ebd3226a679045420b64171a98d081b7d84e26be4553de13c91fe7",
         "size": 2719
       },
       {
         "path": "templates/diff-review.md",
         "gitBlob": "db18b2f2f5b3ea0d1666533fb6a1452ff2c9522d",
+        "sha256": "32112ba4e82fbb8b656af166d1e21f8461cedbb4fdb5d2c314c43d210ea7e37d",
         "size": 5733
       },
       {
         "path": "templates/document-critique.md",
         "gitBlob": "d99d77da69bfb6058964d48929508e33a6e64aaf",
+        "sha256": "c5bd7a68a53f2075d127e482c93b5f3d0b51c24bf8d301c1124801cca7be2d41",
         "size": 5154
       }
     ]
