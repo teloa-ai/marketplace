@@ -73,8 +73,8 @@
         "en": "Composio is an aggregation platform: it holds the account tokens of every app you connect there, and each call is relayed through Composio's servers to that app. COMPOSIO_MULTI_EXECUTE_TOOL can change data in connected apps, and Teloa asks for confirmation on every call."
       },
       {
-        "zh-CN": "服务地址为 connect.composio.dev/mcp（旧地址 mcp.composio.dev/mcp 已停用）。授权服务器元数据支持动态客户端注册（token_endpoint_auth_method none）与 PKCE S256，令牌与注册由 login.composio.dev 处理；2026-09-27 实测客户端注册成功、授权页正常跳转到 Composio 登录页。",
-        "en": "The service address is connect.composio.dev/mcp (the old address mcp.composio.dev/mcp is retired). Authorization-server metadata supports dynamic client registration (token_endpoint_auth_method none) and PKCE S256, with tokens and registration handled by login.composio.dev; on 2026-09-27 client registration succeeded and the authorization page redirected to the Composio sign-in page."
+        "zh-CN": "服务地址为 connect.composio.dev/mcp（旧地址 mcp.composio.dev/mcp 已停用）。授权服务器公开的配置信息支持动态客户端注册（token_endpoint_auth_method none）与 PKCE S256，令牌与注册由 login.composio.dev 处理；2026-09-27 实测客户端注册成功、授权页正常跳转到 Composio 登录页。",
+        "en": "The service address is connect.composio.dev/mcp (the old address mcp.composio.dev/mcp is retired). The authorization server's published configuration supports dynamic client registration (token_endpoint_auth_method none) and PKCE S256, with tokens and registration handled by login.composio.dev; on 2026-09-27 client registration succeeded and the authorization page redirected to the Composio sign-in page."
       },
       {
         "zh-CN": "同一套 OAuth 流程已在 Cloudflare 连接器上用真实账户走通（注册、授权、令牌交换、工具调用）。",
