@@ -58,8 +58,8 @@
         "en": "The default INT8 main weight is about 239 MB, plus tokens and VAD. File size is not runtime memory; the native preparer verifies versions, hashes and download progress."
       },
       {
-        "zh-CN": "安装位置是运行 Teloa 的宿主，不是打开网页的设备。首次准备需要下载；就绪后本地识别。停用扩展保留缓存。",
-        "en": "Installation is on the Teloa host, not the device viewing this page. Initial preparation requires a download; recognition then runs locally. Disabling the extension retains cached files."
+        "zh-CN": "安装位置是运行 Teloa 的电脑，不是打开网页的设备。首次准备需要下载；就绪后本地识别。停用扩展保留缓存。",
+        "en": "Installation is on the computer that runs Teloa, not the device viewing this page. Initial preparation requires a download; recognition then runs locally. Disabling the extension retains cached files."
       }
     ],
     "native": {
@@ -79,8 +79,8 @@
     "dsh": "0.1.7-rc.1",
     "conditions": [
       {
-        "zh-CN": "先启用原生「语音输入」扩展并重启 Teloa，再确认准备。原生支持目标含 macOS arm64/x64、Linux glibc arm64/x64、Windows x64；实际就绪状态以宿主检查为准。",
-        "en": "Enable the native Voice Input extension, restart Teloa, then confirm preparation. Native targets include macOS arm64/x64, Linux glibc arm64/x64 and Windows x64; actual readiness is determined by the host."
+        "zh-CN": "先启用原生「语音输入」扩展并重启 Teloa，再确认准备。原生支持目标含 macOS arm64/x64、Linux glibc arm64/x64、Windows x64；实际就绪状态以 Teloa 的检查为准。",
+        "en": "Enable the native Voice Input extension, restart Teloa, then confirm preparation. Native targets include macOS arm64/x64, Linux glibc arm64/x64 and Windows x64; actual readiness is determined by Teloa's check."
       }
     ]
   },

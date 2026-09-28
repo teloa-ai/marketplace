@@ -26,8 +26,8 @@
   "upstream": null,
   "modifications": [
     {
-      "zh-CN": "Teloa 自编内置技能，无外部上游（upstream 为 null），只随发行快照提供，不进在线索引。",
-      "en": "Built-in skill authored by Teloa with no external upstream (upstream is null); shipped only in the release snapshot, not in the online index."
+      "zh-CN": "Teloa 自编内置技能，没有原始来源（upstream 为 null），随 Teloa 安装包提供，不进在线索引。",
+      "en": "Built-in skill authored by Teloa with no original source (upstream is null); it comes with Teloa and is not in the online index."
     }
   ],
   "license": {

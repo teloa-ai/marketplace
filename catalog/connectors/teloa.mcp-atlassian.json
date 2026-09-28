@@ -102,8 +102,8 @@
         "en": "An org admin must enable API token authentication for the Rovo MCP server in Atlassian Administration and create a service-account API key (sent as Bearer)"
       },
       {
-        "zh-CN": "服务端只直接列出常用工具，其余需经发现工具调用；目录声明的工具是否都直接可见待真实租户实测",
-        "en": "The server lists only the most-used tools directly and exposes the rest through discovery; whether every declared tool is directly visible awaits a real-tenant test"
+        "zh-CN": "服务端只直接列出常用工具，其余需经发现工具调用；目录列出的工具是否都直接可见待真实租户实测",
+        "en": "The server lists only the most-used tools directly and exposes the rest through discovery; whether every listed tool is directly visible awaits a real-tenant test"
       },
       {
         "zh-CN": "数据经由 atlassian.com 平台传输",

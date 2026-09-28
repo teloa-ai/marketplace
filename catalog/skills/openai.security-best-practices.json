@@ -140,8 +140,8 @@
         "en": "Documentation lookup, npm audit, govulncheck, project tests and fixes are conditional paths: fixes need editing and running tests or scans needs a shell. Check authorization, tools and network first. npm audit sends the dependency tree to its registry; do not upload source code or secrets."
       },
       {
-        "zh-CN": "所附参考为 2026 年 1 月固定快照并经 Teloa 二次开发修正；版本号与 CVE 需对照当前官方公告复核；静态发现不是安全认证。未完成真实模型任务验证。",
-        "en": "The included references are a January 2026 snapshot corrected by Teloa; verify version and CVE statements against current official advisories. Static findings are not a security certification. A real-model task has not been validated."
+        "zh-CN": "所附参考资料的内容截至 2026 年 1 月，并经 Teloa 二次开发修正；版本号与 CVE 需对照当前官方公告复核；静态发现不是安全认证。未完成真实模型任务验证。",
+        "en": "The included references reflect January 2026 and were corrected by Teloa; verify version and CVE statements against current official advisories. Static findings are not a security certification. A real-model task has not been validated."
       }
     ]
   },
@@ -279,8 +279,8 @@
         "section": "§JQ-SUPPLY-002 Note (L215)",
         "upstream": "openai/skills@49f948faa9258a0c61caceaf225e179651397431:skills/.curated/security-best-practices/references/javascript-jquery-web-frontend-security.md",
         "summary": {
-          "zh-CN": "删除「拿不到 SRI 哈希就跳过；用错导致无法加载时去掉 integrity」。改为：integrity 不匹配说明字节与哈希不符——先确认固定的版本与文件，从官方下载页取哈希或自行计算并带算法前缀（如 `integrity=\"sha384-…\"`，可用 `openssl dgst -sha384 -binary … | openssl base64 -A` 计算），保留 `crossorigin=\"anonymous\"`；没有可信哈希就改用 npm 打包或自托管；哈希正确仍失败时先排除 CORS（缺 `crossorigin` 或 CDN 未返回 ACAO，控制台会报与 CORS 相关的错误），确认是 integrity 错误后保持失败，并按供应链事件上报。",
-          "en": "Removes \"skip SRI if you cannot get the hash; remove integrity if it breaks loading\". An integrity mismatch now means the bytes do not match the hash: confirm the pinned version and file, take the hash from the official download page or compute it with the algorithm prefix (for example `integrity=\"sha384-…\"` via `openssl dgst -sha384 -binary … | openssl base64 -A`), and keep `crossorigin=\"anonymous\"`; without a trusted hash, bundle through npm or self-host; if a correct hash still fails, rule out CORS first (missing `crossorigin` or no ACAO from the CDN shows a CORS-related error in the console), and once it is an integrity error, keep failing and report it as a supply-chain incident."
+          "zh-CN": "删除「拿不到 SRI 哈希就跳过；用错导致无法加载时去掉 integrity」。改为：integrity 不匹配说明字节与哈希不符——先确认锁定的版本与文件，从官方下载页取哈希或自行计算并带算法前缀（如 `integrity=\"sha384-…\"`，可用 `openssl dgst -sha384 -binary … | openssl base64 -A` 计算），保留 `crossorigin=\"anonymous\"`；没有可信哈希就改用 npm 打包或自托管；哈希正确仍失败时先排除 CORS（缺 `crossorigin` 或 CDN 未返回 ACAO，控制台会报与 CORS 相关的错误），确认是 integrity 错误后保持失败，并按供应链事件上报。",
+          "en": "Removes \"skip SRI if you cannot get the hash; remove integrity if it breaks loading\". An integrity mismatch now means the bytes do not match the hash: confirm the locked version and file, take the hash from the official download page or compute it with the algorithm prefix (for example `integrity=\"sha384-…\"` via `openssl dgst -sha384 -binary … | openssl base64 -A`), and keep `crossorigin=\"anonymous\"`; without a trusted hash, bundle through npm or self-host; if a correct hash still fails, rule out CORS first (missing `crossorigin` or no ACAO from the CDN shows a CORS-related error in the console), and once it is an integrity error, keep failing and report it as a supply-chain incident."
         },
         "reason": {
           "zh-CN": "原建议会让字节完整性校验失效，且与同一节前文要求使用 SRI 的写法（L198、L202）矛盾。",
@@ -654,8 +654,8 @@
         "section": "whole file",
         "upstream": "openai/skills@49f948faa9258a0c61caceaf225e179651397431:skills/.curated/security-best-practices/agents/openai.yaml",
         "summary": {
-          "zh-CN": "不再随附 `agents/openai.yaml`（Codex 客户端的界面展示元数据：display_name、short_description、default_prompt）。",
-          "en": "`agents/openai.yaml` (Codex client display metadata: display_name, short_description, default_prompt) is no longer included."
+          "zh-CN": "不再随附 `agents/openai.yaml`（Codex 客户端的界面展示信息：display_name、short_description、default_prompt）。",
+          "en": "`agents/openai.yaml` (Codex client display information: display_name, short_description, default_prompt) is no longer included."
         },
         "reason": {
           "zh-CN": "该文件只被 Codex 客户端读取，Teloa 不使用；标题与简介由市场目录条目提供。",
@@ -673,8 +673,8 @@
           "en": "Removes the Codex-specific wording \"not generally recommended for the scope of projects being reviewed by codex\"."
         },
         "reason": {
-          "zh-CN": "让说明对 Teloa 等其他宿主保持中性；HSTS 建议本身的更正见 CSB-M29。",
-          "en": "Keeps the text neutral for other hosts such as Teloa; the HSTS correction itself is CSB-M29."
+          "zh-CN": "让说明对 Teloa 等其他客户端应用保持中性；HSTS 建议本身的更正见 CSB-M29。",
+          "en": "Keeps the text neutral for other client apps such as Teloa; the HSTS correction itself is CSB-M29."
         }
       },
       {
@@ -849,8 +849,8 @@
         "section": "§Workflow (after L25)",
         "upstream": "openai/skills@49f948faa9258a0c61caceaf225e179651397431:skills/.curated/security-best-practices/SKILL.md",
         "summary": {
-          "zh-CN": "新增一段：参考文件是 2026 年 1 月的快照，报告中涉及版本号、最新版本与 CVE 时，须先对照当前官方公告核实并引用出处。",
-          "en": "Adds a paragraph: the references are a January 2026 snapshot, so version numbers, latest releases and CVEs must be checked against current official advisories and cited before reporting."
+          "zh-CN": "新增一段：参考文件的内容截至 2026 年 1 月，报告中涉及版本号、最新版本与 CVE 时，须先对照当前官方公告核实并引用出处。",
+          "en": "Adds a paragraph: the references reflect January 2026, so version numbers, latest releases and CVEs must be checked against current official advisories and cited before reporting."
         },
         "reason": {
           "zh-CN": "参考文件中的版本与漏洞事实会过时，直接引用可能给出错误的升级建议。",

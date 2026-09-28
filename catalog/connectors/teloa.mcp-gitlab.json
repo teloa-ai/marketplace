@@ -20,8 +20,8 @@
       "en": "GitLab (OAuth, Beta)"
     },
     "summary": {
-      "zh-CN": "GitLab 官方 MCP 服务（GitLab.com），可查看项目、代码、提交、合并请求、流水线与工作项，并可创建或更新工作项、合并请求与评论。由宿主以 OAuth（动态客户端注册 + PKCE）授权，令牌自动刷新。",
-      "en": "GitLab's official MCP server (GitLab.com) for browsing projects, code, commits, merge requests, pipelines and work items, and for creating or updating work items, merge requests and notes. Authorized by the host via OAuth (dynamic client registration + PKCE) with automatic token refresh."
+      "zh-CN": "GitLab 官方 MCP 服务（GitLab.com），可查看项目、代码、提交、合并请求、流水线与工作项，并可创建或更新工作项、合并请求与评论。由 Teloa 以 OAuth（动态客户端注册 + PKCE）授权，令牌自动刷新。",
+      "en": "GitLab's official MCP server (GitLab.com) for browsing projects, code, commits, merge requests, pipelines and work items, and for creating or updating work items, merge requests and notes. Authorized by Teloa via OAuth (dynamic client registration + PKCE) with automatic token refresh."
     },
     "auth": {
       "kind": "oauth",

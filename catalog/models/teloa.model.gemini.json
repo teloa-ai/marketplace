@@ -45,8 +45,8 @@
     "support": "supported",
     "notes": [
       {
-        "zh-CN": "2026-09-26 按官方文档核实端点与模型名。",
-        "en": "Endpoint and model ids verified against official docs on 2026-09-26."
+        "zh-CN": "2026-09-26 按官方文档核实服务地址与模型名。",
+        "en": "Service address and model ids verified against official docs on 2026-09-26."
       },
       {
         "zh-CN": "按条款须年满 18 岁；免费档提交的内容可能被用于改进 Google 产品并经人工审阅。",

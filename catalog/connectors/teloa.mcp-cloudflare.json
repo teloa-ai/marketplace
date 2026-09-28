@@ -21,8 +21,8 @@
       "en": "Cloudflare API (OAuth)"
     },
     "summary": {
-      "zh-CN": "Cloudflare 官方托管的 API 服务，用三个工具覆盖 Cloudflare API：检索开发者文档、查询 API 规范、执行 API 调用（可读写 Workers、DNS、KV、R2、D1、防火墙等账户资源）。由宿主以 OAuth（动态客户端注册 + PKCE）授权，授权时由本人在 Cloudflare 页面勾选权限。",
-      "en": "Cloudflare's official hosted API service, covering the Cloudflare API with three tools: search developer docs, query the API spec, and execute API calls (read and write Workers, DNS, KV, R2, D1, firewall and other account resources). Authorized by the host via OAuth (dynamic client registration + PKCE); the owner picks permissions on Cloudflare's consent page."
+      "zh-CN": "Cloudflare 官方托管的 API 服务，用三个工具覆盖 Cloudflare API：检索开发者文档、查询 API 规范、执行 API 调用（可读写 Workers、DNS、KV、R2、D1、防火墙等账户资源）。由 Teloa 以 OAuth（动态客户端注册 + PKCE）授权，授权时由本人在 Cloudflare 页面勾选权限。",
+      "en": "Cloudflare's official hosted API service, covering the Cloudflare API with three tools: search developer docs, query the API spec, and execute API calls (read and write Workers, DNS, KV, R2, D1, firewall and other account resources). Authorized by Teloa via OAuth (dynamic client registration + PKCE); the owner picks permissions on Cloudflare's consent page."
     },
     "auth": {
       "kind": "oauth",
@@ -46,7 +46,7 @@
         "name": "search",
         "description": {
           "zh-CN": "在服务端沙箱中用 JavaScript 查询 Cloudflare API 规范，查找所需接口；不访问账户",
-          "en": "Run JavaScript in a server-side sandbox to query the Cloudflare API spec for endpoints; never touches the account"
+          "en": "Run JavaScript in a server-side sandbox to query the Cloudflare API spec for the operations it needs; never touches the account"
         },
         "readOnly": true
       },
@@ -78,8 +78,8 @@
         "en": "The owner must complete OAuth authorization in a browser from Market → Connections; server deployments must set oauth.publicCallbackUrl in the config file"
       },
       {
-        "zh-CN": "授权服务器元数据实测支持动态客户端注册（token_endpoint_auth_method none）与 PKCE S256；本机回环回调（127.0.0.1）尚未实测",
-        "en": "Authorization-server metadata confirms dynamic client registration (token_endpoint_auth_method none) and PKCE S256; the loopback callback (127.0.0.1) has not been tested yet"
+        "zh-CN": "授权服务器公开的配置信息实测支持动态客户端注册（token_endpoint_auth_method none）与 PKCE S256；本机回环回调（127.0.0.1）尚未实测",
+        "en": "The authorization server's published configuration confirms dynamic client registration (token_endpoint_auth_method none) and PKCE S256; the loopback callback (127.0.0.1) has not been tested yet"
       },
       {
         "zh-CN": "服务端不提供 scope 列表，权限在 Cloudflare 授权页勾选：授权时只勾选需要的权限，优先使用非生产账户",

@@ -52,8 +52,8 @@
       "en": "read_file, teams-meeting-pipeline and dedicated tracker connectors were replaced with user-provided materials and tools already authorized in the conversation; each external write needs confirmation."
     },
     {
-      "zh-CN": "仓库根 LICENSE（MIT，Nous Research 版权声明）随工件收录。",
-      "en": "The repository root LICENSE (MIT, Nous Research copyright notice) is included with the artifact."
+      "zh-CN": "仓库根 LICENSE（MIT，Nous Research 版权声明）随资源文件收录。",
+      "en": "The repository root LICENSE (MIT, Nous Research copyright notice) is included with the resource files."
     }
   ],
   "license": {

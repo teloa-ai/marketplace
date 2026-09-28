@@ -109,8 +109,8 @@
         "en": "The document-critique and diff-review templates do not require escaping embedded content; for third-party documents or diffs, ask the assistant to embed the content as JSON and render it with textContent"
       },
       {
-        "zh-CN": "许可为上游仓库根目录的 LICENSE（Apache-2.0），不在技能目录内",
-        "en": "The license is the LICENSE (Apache-2.0) at the upstream repository root, outside the skill directory"
+        "zh-CN": "许可为原始仓库根目录的 LICENSE（Apache-2.0），不在技能目录内",
+        "en": "The license is the LICENSE (Apache-2.0) at the root of the original repository, outside the skill directory"
       }
     ]
   },

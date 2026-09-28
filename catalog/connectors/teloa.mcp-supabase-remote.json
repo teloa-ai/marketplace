@@ -21,8 +21,8 @@
       "en": "Supabase Remote (OAuth)"
     },
     "summary": {
-      "zh-CN": "Supabase 官方托管远程 MCP 服务，默认以只读模式（read_only=true）连接：可查看项目与数据表、以只读数据库用户执行查询、查看日志与安全建议、查看边缘函数。由宿主以 OAuth（动态客户端注册 + PKCE）授权，令牌自动刷新，不需要填写访问令牌。",
-      "en": "Supabase's official hosted remote MCP service, connected in read-only mode (read_only=true) by default: browse projects and tables, run queries as a read-only database user, read logs and advisors, and view Edge Functions. Authorized by the host via OAuth (dynamic client registration + PKCE) with automatic token refresh; no access token needs to be entered."
+      "zh-CN": "Supabase 官方托管远程 MCP 服务，默认以只读模式（read_only=true）连接：可查看项目与数据表、以只读数据库用户执行查询、查看日志与安全建议、查看边缘函数。由 Teloa 以 OAuth（动态客户端注册 + PKCE）授权，令牌自动刷新，不需要填写访问令牌。",
+      "en": "Supabase's official hosted remote MCP service, connected in read-only mode (read_only=true) by default: browse projects and tables, run queries as a read-only database user, read logs and advisors, and view Edge Functions. Authorized by Teloa via OAuth (dynamic client registration + PKCE) with automatic token refresh; no access token needs to be entered."
     },
     "auth": {
       "kind": "oauth",
@@ -185,8 +185,8 @@
         "en": "Official docs confirm the hosted server uses dynamic client registration by default; the loopback callback (127.0.0.1) has not been tested yet"
       },
       {
-        "zh-CN": "授权只申请受保护资源元数据列出的只读 scope（组织、项目、数据库、分析、边缘函数、环境）；服务端是否按 scope 收窄令牌尚未实测，未收窄时令牌仍具全部权限。配方另带 read_only=true（官方参数：以只读 Postgres 用户执行查询，写工具不注册）",
-        "en": "Authorization requests only the read scopes listed in the protected-resource metadata (organizations, projects, database, analytics, edge functions, environment); whether the server narrows the token by scope is untested, and without narrowing the token still carries full permissions. The recipe also sets read_only=true (official parameter: queries run as a read-only Postgres user and write tools are not registered)"
+        "zh-CN": "授权只申请服务端公开的资源配置里列出的只读 scope（组织、项目、数据库、分析、边缘函数、环境）；服务端是否按 scope 收窄令牌尚未实测，未收窄时令牌仍具全部权限。连接设置另带 read_only=true（官方参数：以只读 Postgres 用户执行查询，写工具不注册）",
+        "en": "Authorization requests only the read scopes listed in the server's published resource configuration (organizations, projects, database, analytics, edge functions, environment); whether the server narrows the token by scope is untested, and without narrowing the token still carries full permissions. The connection settings also set read_only=true (official parameter: queries run as a read-only Postgres user and write tools are not registered)"
       },
       {
         "zh-CN": "建议只连接非生产项目；只读模式下迁移、部署函数等写工具不可用，存储功能组不在默认启用范围",

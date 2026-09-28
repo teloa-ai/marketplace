@@ -58,7 +58,7 @@
       "en": "Frontmatter keeps only name and description; Hermes-specific fields version, author, license, platforms, and metadata.hermes removed."
     },
     {
-      "zh-CN": "scripts/sources.py 与 scripts/_hermes_home.py 不随工件收录（构建拒绝脚本文件）；原流程中由脚本维护的 URL→编号账本改为由模型在上下文中用编号列表自行维护，Quick Reference 与 Procedure 各节已据此重写。",
+      "zh-CN": "scripts/sources.py 与 scripts/_hermes_home.py 不随资源文件收录（构建拒绝脚本文件）；原流程中由脚本维护的 URL 到编号的账本改为由模型在上下文中用编号列表自行维护，Quick Reference 与 Procedure 各节已据此重写。",
       "en": "scripts/sources.py and scripts/_hermes_home.py are not included (build rejects script files); the URL-to-number ledger previously managed by the script is now maintained by the model in-context as a numbered list; Quick Reference and Procedure sections rewritten accordingly."
     },
     {
@@ -66,8 +66,8 @@
       "en": "Removed HERMES_HOME path references, hermes skills install directives, and install links for related skills; replaced with 'use if available' phrasing."
     },
     {
-      "zh-CN": "仓库根 LICENSE（MIT，Nous Research 版权声明）随工件收录，路径为 LICENSE。",
-      "en": "The repository root LICENSE (MIT, Nous Research copyright notice) is included with the artifact at path LICENSE."
+      "zh-CN": "仓库根 LICENSE（MIT，Nous Research 版权声明）随资源文件收录，路径为 LICENSE。",
+      "en": "The repository root LICENSE (MIT, Nous Research copyright notice) is included with the resource files at path LICENSE."
     }
   ],
   "license": {

@@ -21,8 +21,8 @@
       "en": "Consensus Academic Search (OAuth)"
     },
     "summary": {
-      "zh-CN": "Consensus 官方托管的学术检索服务，可按问题检索同行评审论文，支持年份、研究类型、期刊、样本量、引用数、开放获取等筛选，返回带链接与摘要的排序结果。由宿主以 OAuth（动态客户端注册 + PKCE）授权，免费 Consensus 账户即可使用。",
-      "en": "Consensus's official hosted academic search service: search peer-reviewed papers by question with filters for year, study type, journal, sample size, citations, open access and more, returning ranked results with links and abstracts. Authorized by the host via OAuth (dynamic client registration + PKCE); a free Consensus account is enough."
+      "zh-CN": "Consensus 官方托管的学术检索服务，可按问题检索同行评审论文，支持年份、研究类型、期刊、样本量、引用数、开放获取等筛选，返回带链接与摘要的排序结果。由 Teloa 以 OAuth（动态客户端注册 + PKCE）授权，免费 Consensus 账户即可使用。",
+      "en": "Consensus's official hosted academic search service: search peer-reviewed papers by question with filters for year, study type, journal, sample size, citations, open access and more, returning ranked results with links and abstracts. Authorized by Teloa via OAuth (dynamic client registration + PKCE); a free Consensus account is enough."
     },
     "auth": {
       "kind": "oauth",
@@ -64,8 +64,8 @@
         "en": "The owner must complete OAuth authorization in a browser with a Consensus account from Market → Connections; server deployments must set oauth.publicCallbackUrl in the config file"
       },
       {
-        "zh-CN": "授权服务器元数据实测支持动态客户端注册（token_endpoint_auth_method none）与 PKCE S256，只申请 search 权限；本机回环回调与 resource 参数（服务端声明为站点根地址）尚未实测",
-        "en": "Authorization-server metadata confirms dynamic client registration (token_endpoint_auth_method none) and PKCE S256, and only the search scope is requested; the loopback callback and the resource parameter (the server declares the site root) have not been tested yet"
+        "zh-CN": "授权服务器公开的配置信息实测支持动态客户端注册（token_endpoint_auth_method none）与 PKCE S256，只申请 search 权限；本机回环回调与 resource 参数（服务端声明为站点根地址）尚未实测",
+        "en": "The authorization server's published configuration confirms dynamic client registration (token_endpoint_auth_method none) and PKCE S256, and only the search scope is requested; the loopback callback and the resource parameter (the server declares the site root) have not been tested yet"
       },
       {
         "zh-CN": "免费账户有调用额度，详见官方；DOI、全文摘录与第二页起的翻页需付费计划",

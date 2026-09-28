@@ -135,8 +135,8 @@
         "en": "Requires Node.js 20+"
       },
       {
-        "zh-CN": "配方以 -t 只启用目录列出的工具；Teloa 宿主另外只注册目录声明的工具",
-        "en": "The recipe enables only the listed tools via -t; the Teloa host additionally registers only catalog-declared tools"
+        "zh-CN": "连接设置以 -t 只启用目录列出的工具；Teloa 另外只注册目录列出的工具",
+        "en": "The connection settings enable only the listed tools via -t; Teloa additionally registers only the tools listed in the catalog"
       }
     ]
   },

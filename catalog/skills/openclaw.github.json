@@ -52,8 +52,8 @@
       "en": "Removed the OpenClaw session footer template from the body (the 'View the OpenClaw team session' paragraph); it depends on OpenClaw Runtime's sessionUrl injection, which is not applicable in Teloa."
     },
     {
-      "zh-CN": "仓库根 LICENSE（MIT）与 THIRD_PARTY_NOTICES.md 随工件收录。",
-      "en": "The repository root LICENSE (MIT) and THIRD_PARTY_NOTICES.md are included with the artifact."
+      "zh-CN": "仓库根 LICENSE（MIT）与 THIRD_PARTY_NOTICES.md 随资源文件收录。",
+      "en": "The repository root LICENSE (MIT) and THIRD_PARTY_NOTICES.md are included with the resource files."
     }
   ],
   "license": {
