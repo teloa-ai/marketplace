@@ -203,7 +203,7 @@ IMPORTANT — "react2shell" (React Server Components RCE; CVE-2025-55182 for Rea
 * First patched releases for the RCE: 15.0.5 / 15.1.9 / 15.2.6 / 15.3.6 / 15.4.8 / 15.5.7 / 16.0.7. This list is only the RCE fix line and is **not** a safe baseline. By this reference's capture date (2026-01-27) two later batches had been published:
   * 2025-12-11 advisories (CVE-2025-55184 / CVE-2025-55183 / CVE-2025-67779 — DoS and source exposure in RSC): fixed in 15.0.7 / 15.1.11 / 15.2.8 / 15.3.8 / 15.4.10 / 15.5.9 / 16.0.10, and in 14.2.35 for 14.x. The 14.2.35 fix applies to this batch only.
   * 2026-01-26 advisory CVE-2026-23864 (GHSA-h25m-26qc-wcjf — DoS via crafted requests to App Router Server Function endpoints): affected range `next >= 13.0.0, < 15.0.8`, i.e. **13.x and 14.x App Router apps are affected too, including 14.2.35**, plus 15.x/16.x below 15.0.8 / 15.1.12 / 15.2.9 / 15.3.9 / 15.4.11 / 15.5.10 / 16.0.11 / 16.1.5. There is no 13.x or 14.x fix: a 13.x/14.x app using the App Router must upgrade to 15.0.8 or later (preferably the current supported line). Do not treat 14.2.35 as safe for this issue.
-* Always compare the installed version against the current Next.js security page and advisory list (https://nextjs.org/blog/tag/security, https://github.com/vercel/next.js/security/advisories) before reporting, and cite the advisory you checked; versions listed here were verified on 2026-09-28 and will go stale.
+* Always compare the installed version against the current Next.js security page and advisory list (https://nextjs.org/blog/tag/security, https://github.com/vercel/next.js/security/advisories) before reporting, and cite the advisory you checked. The three batches above were checked on 2026-09-28; newer advisories have been published since, so this list is not a security baseline and the official advisories take precedence.
 
 Fix:
 
@@ -792,7 +792,7 @@ Fix:
   }
   ```
 
-  This code was executed against 55 hostile inputs (protocol-relative, backslash, dot-segment, `%2e`/`%2E`/`%252e`, `%2f`, `%5c`, tab/newline/NUL/DEL/space, `///`, `\\`, `https:`/`javascript:`/`data:` schemes, userinfo tricks, empty string) and 10 legitimate paths; every hostile input returned the fallback and every accepted value stayed on the current origin (the test vectors and run outputs are kept in Teloa's review record for this derived skill; they are not installed with it).
+  This code was executed against 55 hostile inputs (protocol-relative, backslash, dot-segment, `%2e`/`%2E`/`%252e`, `%2f`, `%5c`, tab/newline/NUL/DEL/space, `///`, `\\`, `https:`/`javascript:`/`data:` schemes, userinfo tricks, empty string) and 10 legitimate paths; every hostile input returned the fallback and every accepted value stayed on the current origin (the test vectors and run outputs are kept in the Teloa marketplace repository under `reviews/derivatives/openai.security-best-practices/tests/`; they are not installed with this skill).
 * If absolute URLs must be allowed, compare `url.origin` against an exact-origin allowlist; never match on prefixes or substrings.
 * If invalid, fall back to a safe default (home/dashboard).
 

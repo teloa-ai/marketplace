@@ -367,7 +367,7 @@ Required:
 
 * MUST keep `django.middleware.csrf.CsrfViewMiddleware` enabled (it is activated by default). ([Django Project][4])
 * MUST include `{% csrf_token %}` in internal POST forms; MUST NOT include it in forms that POST to external URLs (Django warns this leaks the token). ([Django Project][4])
-* MUST protect all state-changing endpoints (POST/PUT/PATCH/DELETE) that rely on cookies for authentication.
+* MUST protect all state-changing endpoints (POST/PUT/PATCH/DELETE) that rely on ambient credentials (cookies, HTTP Basic/Digest, TLS client certificates) for authentication.
 * For AJAX/SPA calls, MUST send the CSRF token via the `X-CSRFToken` header (or configured header name) as documented. ([Django Project][4])
 * MUST be very careful with `@csrf_exempt` and use it only when absolutely necessary; if used, MUST replace CSRF with an appropriate alternative control (e.g., request signing for webhooks). Django explicitly warns about `csrf_exempt`. ([Django Project][2])
 

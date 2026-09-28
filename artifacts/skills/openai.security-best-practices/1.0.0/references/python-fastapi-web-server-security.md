@@ -394,7 +394,7 @@ Note: CSRF applies whenever the browser attaches a credential automatically: ses
 
 Required:
 
-* MUST protect all state-changing endpoints (POST/PUT/PATCH/DELETE) that rely on cookies for authentication.
+* MUST protect all state-changing endpoints (POST/PUT/PATCH/DELETE) that rely on ambient credentials (cookies, HTTP Basic/Digest, TLS client certificates) for authentication.
 * SHOULD use a proven CSRF approach (synchronizer token pattern, or well-reviewed middleware) rather than rolling your own. ([OWASP Cheat Sheet Series][2])
 * MAY add defense-in-depth (Origin/Referer checks, SameSite cookies, Fetch Metadata), but tokens are the primary defense for cookie-authenticated apps. ([OWASP Cheat Sheet Series][2])
 * IMPORTANT NOTE: See the ambient-credential rule in the Note above — header-only bearer auth with no cookie, HTTP-auth or client-certificate credential accepted means classic browser CSRF does not apply. ([FastAPI][11])
@@ -886,7 +886,7 @@ Fix:
   return RedirectResponse(safe_return_to(request.query_params.get("next"), settings.APP_ORIGIN or str(request.base_url).rstrip("/")))
   ```
 
-  This function was executed against 55 hostile inputs (protocol-relative, backslash, dot-segment, `%2e`/`%2E`/`%252e`, `%2f`, `%5c`, tab/newline/NUL/DEL/space, `///`, `\\`, `https:`/`javascript:`/`data:` schemes, userinfo tricks, empty string) and 10 legitimate paths; every hostile input returned the fallback and every accepted value stayed on the current origin (the test vectors and run outputs are kept in Teloa's review record for this derived skill; they are not installed with it).
+  This function was executed against 55 hostile inputs (protocol-relative, backslash, dot-segment, `%2e`/`%2E`/`%252e`, `%2f`, `%5c`, tab/newline/NUL/DEL/space, `///`, `\\`, `https:`/`javascript:`/`data:` schemes, userinfo tricks, empty string) and 10 legitimate paths; every hostile input returned the fallback and every accepted value stayed on the current origin (the test vectors and run outputs are kept in the Teloa marketplace repository under `reviews/derivatives/openai.security-best-practices/tests/`; they are not installed with this skill).
 * If cross-origin redirects are required, allowlist exact `(scheme, netloc)` pairs; fall back to a safe default otherwise. ([OWASP Cheat Sheet Series][24])
 
 ---

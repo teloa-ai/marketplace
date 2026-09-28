@@ -1,0 +1,14 @@
+{"location":"/.//evil.example","asSentOrigin":"https://app.example","normalizedPath":"//evil.example","reserializedOrigin":"https://evil.example"}
+{"location":"/a/..//evil.example","asSentOrigin":"https://app.example","normalizedPath":"//evil.example","reserializedOrigin":"https://evil.example"}
+{"location":"/%2e//evil.example","asSentOrigin":"https://app.example","normalizedPath":"//evil.example","reserializedOrigin":"https://evil.example"}
+{"location":"/%2e%2e//evil.example","asSentOrigin":"https://app.example","normalizedPath":"//evil.example","reserializedOrigin":"https://evil.example"}
+{"location":"//evil.example","asSentOrigin":"https://evil.example","normalizedPath":"/","reserializedOrigin":"https://app.example"}
+{"location":"/\\evil.example","asSentOrigin":"https://evil.example","normalizedPath":"/","reserializedOrigin":"https://app.example"}
+{"node":"v24.15.0","claimHolds":true}
+exit 0
+{'python': '3.14.5', 'positional': {'result': ['/a', 'b#c'], 'warnings': ["DeprecationWarning: 'maxsplit' is passed as positional argument"]}, 'keyword': {'result': ['/a', 'b#c'], 'warnings': []}}
+exit 0
+path.Clean("/a/b/") = "/a/b"
+path.Clean("/a/b") = "/a/b"
+path.Clean("/") = "/"
+exit 0

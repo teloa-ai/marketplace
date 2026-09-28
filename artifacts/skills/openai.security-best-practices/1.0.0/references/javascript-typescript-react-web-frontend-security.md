@@ -708,7 +708,7 @@ Fix:
   }
   ```
 
-  This code was executed against 55 hostile inputs (protocol-relative, backslash, dot-segment, `%2e`/`%2E`/`%252e`, `%2f`, `%5c`, tab/newline/NUL/DEL/space, `///`, `\\`, `https:`/`javascript:`/`data:` schemes, userinfo tricks, empty string) and 10 legitimate paths; every hostile input returned the fallback and every accepted value stayed on the current origin (the test vectors and run outputs are kept in Teloa's review record for this derived skill; they are not installed with it). The same policy is given for Next.js, Vue, Go, Flask and FastAPI in their references. The version above is identical to the tested one except that `window.location.origin` replaces the tested function's `origin` parameter.
+  This code was executed against 55 hostile inputs (protocol-relative, backslash, dot-segment, `%2e`/`%2E`/`%252e`, `%2f`, `%5c`, tab/newline/NUL/DEL/space, `///`, `\\`, `https:`/`javascript:`/`data:` schemes, userinfo tricks, empty string) and 10 legitimate paths; every hostile input returned the fallback and every accepted value stayed on the current origin (the test vectors and run outputs are kept in the Teloa marketplace repository under `reviews/derivatives/openai.security-best-practices/tests/`; they are not installed with this skill). The same policy is given for Next.js, Vue, Go, Flask and FastAPI in their references. The version above is identical to the tested one except that `window.location.origin` replaces the tested function's `origin` parameter.
 * If absolute URLs must be allowed, compare `url.origin` against a strict allowlist of exact origins (scheme + host + port); never match on prefixes or substrings.
 * Fall back to a safe default (e.g., `/`) when invalid.
 

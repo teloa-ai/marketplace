@@ -189,8 +189,8 @@
         "section": "§REACT-URL-001 Fix (L312)",
         "upstream": "openai/skills@49f948faa9258a0c61caceaf225e179651397431:skills/.curated/security-best-practices/references/javascript-typescript-react-web-frontend-security.md",
         "summary": {
-          "zh-CN": "把「只允许以 `/` 开头的相对路径」补充为「以 `/` 开头但不以 `//`、`/\\` 开头，解析后比较 origin 并复验规范化路径」，并指向 REACT-REDIRECT-001；同时修正 `/\\\\` 笔误为 `/\\`。",
-          "en": "Extends \"allow only relative paths starting with `/`\" to \"starting with `/` but not `//` or `/\\`, compare origins after parsing and re-check the normalised path\", pointing to REACT-REDIRECT-001, and fixes the `/\\\\` typo to `/\\`."
+          "zh-CN": "把「只允许以 `/` 开头的相对路径」补充为「以 `/` 开头但不以 `//`、`/\\` 开头，解析后比较 origin 并复验规范化路径」，并指向 REACT-REDIRECT-001。",
+          "en": "Extends \"allow only relative paths starting with `/`\" to \"starting with `/` but not `//` or `/\\`, compare origins after parsing and re-check the normalised path\", pointing to REACT-REDIRECT-001."
         },
         "reason": {
           "zh-CN": "与 REACT-REDIRECT-001 同一类开放重定向问题：只检查 `/` 开头会放过协议相对地址。",
@@ -219,8 +219,8 @@
         "section": "§VUE-ROUTER-002 Fix (L454-455)",
         "upstream": "openai/skills@49f948faa9258a0c61caceaf225e179651397431:skills/.curated/security-best-practices/references/javascript-typescript-vue-web-frontend-security.md",
         "summary": {
-          "zh-CN": "删除「以 `/` 开头且拒绝 `//host`」的简单口径，改为引用 REACT-REDIRECT-001 的三步校验：`window.location.href = safeReturnTo(route.query.next)`、`router.push(sameOriginPath(route.query.next))`，并禁止 `router.push(route.query.next as string)`。",
-          "en": "Replaces \"starts with `/` and reject `//host`\" with the three-step check from REACT-REDIRECT-001: `window.location.href = safeReturnTo(route.query.next)` and `router.push(sameOriginPath(route.query.next))`, and forbids `router.push(route.query.next as string)`."
+          "zh-CN": "删除「以 `/` 开头且拒绝 `//host`」的简单口径，改为引用 REACT-REDIRECT-001 的三步校验：`window.location.href = safeReturnTo(route.query.next)`、`router.push(sameOriginPath(route.query.next))`，并禁止 `router.push(route.query.next as string)`。并分开说明：`/\\evil.example` 会被浏览器当作 `//evil.example`，无需重新序列化即离开本源；点段形式在重新序列化为相对串后才离开本源。",
+          "en": "Replaces \"starts with `/` and reject `//host`\" with the three-step check from REACT-REDIRECT-001: `window.location.href = safeReturnTo(route.query.next)` and `router.push(sameOriginPath(route.query.next))`, and forbids `router.push(route.query.next as string)`. It also separates the cases: browsers treat `/\\evil.example` as `//evil.example`, so it leaves the origin without any re-serialisation, while dot-segment forms leave it only after re-serialisation to a relative string."
         },
         "reason": {
           "zh-CN": "同类写法漏掉 `/\\` 与点段形式；改为与 React 共用同一个经过测试的函数。",
@@ -279,8 +279,8 @@
         "section": "§JQ-SUPPLY-002 Note (L215)",
         "upstream": "openai/skills@49f948faa9258a0c61caceaf225e179651397431:skills/.curated/security-best-practices/references/javascript-jquery-web-frontend-security.md",
         "summary": {
-          "zh-CN": "删除「拿不到 SRI 哈希就跳过；用错导致无法加载时去掉 integrity」。改为：integrity 不匹配说明字节与哈希不符——先确认固定的版本与文件，从官方下载页取哈希或自行计算并带算法前缀（如 `integrity=\"sha384-…\"`，可用 `openssl dgst -sha384 -binary … | openssl base64 -A` 计算），保留 `crossorigin=\"anonymous\"`；没有可信哈希就改用 npm 打包或自托管；哈希正确仍失败时先排除 CORS（缺 `crossorigin` 或 CDN 未返回 ACAO，控制台会报 CORS 错误），确认是 integrity 错误后保持失败，并按供应链事件上报。",
-          "en": "Removes \"skip SRI if you cannot get the hash; remove integrity if it breaks loading\". An integrity mismatch now means the bytes do not match the hash: confirm the pinned version and file, take the hash from the official download page or compute it with the algorithm prefix (for example `integrity=\"sha384-…\"` via `openssl dgst -sha384 -binary … | openssl base64 -A`), and keep `crossorigin=\"anonymous\"`; without a trusted hash, bundle through npm or self-host; if a correct hash still fails, rule out CORS first (missing `crossorigin` or no ACAO from the CDN shows a CORS error in the console), and once it is an integrity error, keep failing and report it as a supply-chain incident."
+          "zh-CN": "删除「拿不到 SRI 哈希就跳过；用错导致无法加载时去掉 integrity」。改为：integrity 不匹配说明字节与哈希不符——先确认固定的版本与文件，从官方下载页取哈希或自行计算并带算法前缀（如 `integrity=\"sha384-…\"`，可用 `openssl dgst -sha384 -binary … | openssl base64 -A` 计算），保留 `crossorigin=\"anonymous\"`；没有可信哈希就改用 npm 打包或自托管；哈希正确仍失败时先排除 CORS（缺 `crossorigin` 或 CDN 未返回 ACAO，控制台会报与 CORS 相关的错误），确认是 integrity 错误后保持失败，并按供应链事件上报。",
+          "en": "Removes \"skip SRI if you cannot get the hash; remove integrity if it breaks loading\". An integrity mismatch now means the bytes do not match the hash: confirm the pinned version and file, take the hash from the official download page or compute it with the algorithm prefix (for example `integrity=\"sha384-…\"` via `openssl dgst -sha384 -binary … | openssl base64 -A`), and keep `crossorigin=\"anonymous\"`; without a trusted hash, bundle through npm or self-host; if a correct hash still fails, rule out CORS first (missing `crossorigin` or no ACAO from the CDN shows a CORS-related error in the console), and once it is an integrity error, keep failing and report it as a supply-chain incident."
         },
         "reason": {
           "zh-CN": "原建议会让字节完整性校验失效，且与同一节前文要求使用 SRI 的写法（L198、L202）矛盾。",
@@ -426,11 +426,11 @@
         "id": "CSB-M18",
         "type": "security",
         "path": "references/javascript-express-web-server-security.md",
-        "section": "§EXPRESS-CSRF-001 IMPORTANT NOTE (L368, L379)",
+        "section": "§EXPRESS-CSRF-001 IMPORTANT NOTE (L368, L379); Required #1 (L372)",
         "upstream": "openai/skills@49f948faa9258a0c61caceaf225e179651397431:skills/.curated/security-best-practices/references/javascript-express-web-server-security.md",
         "summary": {
-          "zh-CN": "把「不用 cookie 认证就没有 CSRF 风险」的绝对表述改为：浏览器会自动附带的凭据（会话 cookie、HTTP Basic/Digest、TLS 客户端证书）都会引发 CSRF；只有当所有受保护端点只接受脚本显式设置的 `Authorization: Bearer`、不接受任何自动附带的凭据时，经典的浏览器 CSRF 才不适用，并要求确认这些端点没有同时接受 cookie 会话。",
-          "en": "Replaces the absolute claim \"no cookie authentication means no CSRF risk\" with: any credential the browser attaches automatically (session cookies, HTTP Basic/Digest, TLS client certificates) enables CSRF; classic browser CSRF does not apply only when every protected endpoint accepts nothing but an `Authorization: Bearer` header set explicitly by script and no ambient credential, and the reviewer must confirm those endpoints do not also accept a cookie session."
+          "zh-CN": "把「不用 cookie 认证就没有 CSRF 风险」的绝对表述改为：浏览器会自动附带的凭据（会话 cookie、HTTP Basic/Digest、TLS 客户端证书）都会引发 CSRF；只有当所有受保护端点只接受脚本显式设置的 `Authorization: Bearer`、不接受任何自动附带的凭据时，经典的浏览器 CSRF 才不适用，并要求确认这些端点没有同时接受 cookie 会话。Required 首条的「that rely on cookies for authentication」同步改为「rely on ambient credentials (cookies, HTTP Basic/Digest, TLS client certificates)」。",
+          "en": "Replaces the absolute claim \"no cookie authentication means no CSRF risk\" with: any credential the browser attaches automatically (session cookies, HTTP Basic/Digest, TLS client certificates) enables CSRF; classic browser CSRF does not apply only when every protected endpoint accepts nothing but an `Authorization: Bearer` header set explicitly by script and no ambient credential, and the reviewer must confirm those endpoints do not also accept a cookie session. The first Required item, \"that rely on cookies for authentication\", now reads \"rely on ambient credentials (cookies, HTTP Basic/Digest, TLS client certificates)\"."
         },
         "reason": {
           "zh-CN": "原口径会让审查者对使用 HTTP Basic/Digest、客户端证书以及混用 cookie 的端点跳过 CSRF 检查，得出不安全的结论；各参考文件在这一点上统一为完整口径。",
@@ -441,11 +441,11 @@
         "id": "CSB-M19",
         "type": "security",
         "path": "references/golang-general-backend-security.md",
-        "section": "§GO-HTTP-006 IMPORTANT NOTE (L365); Required #1 (L368)",
+        "section": "§GO-HTTP-006 IMPORTANT NOTE (L365); Required #1 (L368); \"If tokens are impractical\" (L372)",
         "upstream": "openai/skills@49f948faa9258a0c61caceaf225e179651397431:skills/.curated/security-best-practices/references/golang-general-backend-security.md",
         "summary": {
-          "zh-CN": "把「不用 cookie 认证就没有 CSRF 风险」的绝对表述改为：浏览器会自动附带的凭据（会话 cookie、HTTP Basic/Digest、TLS 客户端证书）都会引发 CSRF；只有当所有受保护端点只接受脚本显式设置的 `Authorization: Bearer`、不接受任何自动附带的凭据时，经典的浏览器 CSRF 才不适用，并要求确认这些端点没有同时接受 cookie 会话。Required 首条的「that rely on cookies for authentication」同步改为「rely on ambient credentials (cookies, HTTP Basic/Digest, TLS client certificates)」，与上方说明一致。",
-          "en": "Replaces the absolute claim \"no cookie authentication means no CSRF risk\" with: any credential the browser attaches automatically (session cookies, HTTP Basic/Digest, TLS client certificates) enables CSRF; classic browser CSRF does not apply only when every protected endpoint accepts nothing but an `Authorization: Bearer` header set explicitly by script and no ambient credential, and the reviewer must confirm those endpoints do not also accept a cookie session. The first Required item, \"that rely on cookies for authentication\", now reads \"rely on ambient credentials (cookies, HTTP Basic/Digest, TLS client certificates)\" to match the note above."
+          "zh-CN": "把「不用 cookie 认证就没有 CSRF 风险」的绝对表述改为：浏览器会自动附带的凭据（会话 cookie、HTTP Basic/Digest、TLS 客户端证书）都会引发 CSRF；只有当所有受保护端点只接受脚本显式设置的 `Authorization: Bearer`、不接受任何自动附带的凭据时，经典的浏览器 CSRF 才不适用，并要求确认这些端点没有同时接受 cookie 会话。Required 首条的「that rely on cookies for authentication」同步改为「rely on ambient credentials (cookies, HTTP Basic/Digest, TLS client certificates)」，与上方说明一致。「If tokens are impractical」一条中的自定义请求头要求补上前提「(combined with strict CORS and `SameSite` cookies)」，与 Express 参考一致。",
+          "en": "Replaces the absolute claim \"no cookie authentication means no CSRF risk\" with: any credential the browser attaches automatically (session cookies, HTTP Basic/Digest, TLS client certificates) enables CSRF; classic browser CSRF does not apply only when every protected endpoint accepts nothing but an `Authorization: Bearer` header set explicitly by script and no ambient credential, and the reviewer must confirm those endpoints do not also accept a cookie session. The first Required item, \"that rely on cookies for authentication\", now reads \"rely on ambient credentials (cookies, HTTP Basic/Digest, TLS client certificates)\" to match the note above. The custom-header requirement under \"If tokens are impractical\" adds the precondition \"(combined with strict CORS and `SameSite` cookies)\", as in the Express reference."
         },
         "reason": {
           "zh-CN": "原口径会让审查者对使用 HTTP Basic/Digest、客户端证书以及混用 cookie 的端点跳过 CSRF 检查，得出不安全的结论；各参考文件在这一点上统一为完整口径。",
@@ -486,11 +486,11 @@
         "id": "CSB-M22",
         "type": "security",
         "path": "references/python-flask-web-server-security.md",
-        "section": "§FLASK-CSRF-001 IMPORTANT NOTE (L240); Fix, last item (L260)",
+        "section": "§FLASK-CSRF-001 IMPORTANT NOTE (L240); Required #1 (L243); \"If tokens are impractical\" (L247); Fix, last item (L260)",
         "upstream": "openai/skills@49f948faa9258a0c61caceaf225e179651397431:skills/.curated/security-best-practices/references/python-flask-web-server-security.md",
         "summary": {
-          "zh-CN": "把「不用 cookie 认证就没有 CSRF 风险」的绝对表述改为：浏览器会自动附带的凭据（会话 cookie、HTTP Basic/Digest、TLS 客户端证书）都会引发 CSRF；只有当所有受保护端点只接受脚本显式设置的 `Authorization: Bearer`、不接受任何自动附带的凭据时，经典的浏览器 CSRF 才不适用，并要求确认这些端点没有同时接受 cookie 会话。",
-          "en": "Replaces the absolute claim \"no cookie authentication means no CSRF risk\" with: any credential the browser attaches automatically (session cookies, HTTP Basic/Digest, TLS client certificates) enables CSRF; classic browser CSRF does not apply only when every protected endpoint accepts nothing but an `Authorization: Bearer` header set explicitly by script and no ambient credential, and the reviewer must confirm those endpoints do not also accept a cookie session."
+          "zh-CN": "把「不用 cookie 认证就没有 CSRF 风险」的绝对表述改为：浏览器会自动附带的凭据（会话 cookie、HTTP Basic/Digest、TLS 客户端证书）都会引发 CSRF；只有当所有受保护端点只接受脚本显式设置的 `Authorization: Bearer`、不接受任何自动附带的凭据时，经典的浏览器 CSRF 才不适用，并要求确认这些端点没有同时接受 cookie 会话。Required 首条的「that rely on cookies for authentication」同步改为「rely on ambient credentials (cookies, HTTP Basic/Digest, TLS client certificates)」。「If tokens are impractical」一条中的自定义请求头要求补上前提「(combined with strict CORS and `SameSite` cookies)」，与 Express 参考一致。",
+          "en": "Replaces the absolute claim \"no cookie authentication means no CSRF risk\" with: any credential the browser attaches automatically (session cookies, HTTP Basic/Digest, TLS client certificates) enables CSRF; classic browser CSRF does not apply only when every protected endpoint accepts nothing but an `Authorization: Bearer` header set explicitly by script and no ambient credential, and the reviewer must confirm those endpoints do not also accept a cookie session. The first Required item, \"that rely on cookies for authentication\", now reads \"rely on ambient credentials (cookies, HTTP Basic/Digest, TLS client certificates)\". The custom-header requirement under \"If tokens are impractical\" adds the precondition \"(combined with strict CORS and `SameSite` cookies)\", as in the Express reference."
         },
         "reason": {
           "zh-CN": "原口径会让审查者对使用 HTTP Basic/Digest、客户端证书以及混用 cookie 的端点跳过 CSRF 检查，得出不安全的结论；各参考文件在这一点上统一为完整口径。",
@@ -501,11 +501,11 @@
         "id": "CSB-M23",
         "type": "security",
         "path": "references/python-fastapi-web-server-security.md",
-        "section": "§FASTAPI-CSRF-001 Note (L391); Required, last item (L398)",
+        "section": "§FASTAPI-CSRF-001 Note (L391); Required #1 (L395); Required, last item (L398)",
         "upstream": "openai/skills@49f948faa9258a0c61caceaf225e179651397431:skills/.curated/security-best-practices/references/python-fastapi-web-server-security.md",
         "summary": {
-          "zh-CN": "把「不用 cookie 认证就没有 CSRF 风险」的绝对表述改为：浏览器会自动附带的凭据（会话 cookie、HTTP Basic/Digest、TLS 客户端证书）都会引发 CSRF；只有当所有受保护端点只接受脚本显式设置的 `Authorization: Bearer`、不接受任何自动附带的凭据时，经典的浏览器 CSRF 才不适用，并要求确认这些端点没有同时接受 cookie 会话。同时把 L398 残留的「If cookies are not used for auth … CSRF is usually not applicable」改为指向上文的自动附带凭据规则。",
-          "en": "Replaces the absolute claim \"no cookie authentication means no CSRF risk\" with: any credential the browser attaches automatically (session cookies, HTTP Basic/Digest, TLS client certificates) enables CSRF; classic browser CSRF does not apply only when every protected endpoint accepts nothing but an `Authorization: Bearer` header set explicitly by script and no ambient credential, and the reviewer must confirm those endpoints do not also accept a cookie session. The leftover L398 sentence \"If cookies are not used for auth … CSRF is usually not applicable\" now points to the ambient-credential rule above."
+          "zh-CN": "把「不用 cookie 认证就没有 CSRF 风险」的绝对表述改为：浏览器会自动附带的凭据（会话 cookie、HTTP Basic/Digest、TLS 客户端证书）都会引发 CSRF；只有当所有受保护端点只接受脚本显式设置的 `Authorization: Bearer`、不接受任何自动附带的凭据时，经典的浏览器 CSRF 才不适用，并要求确认这些端点没有同时接受 cookie 会话。同时把 L398 残留的「If cookies are not used for auth … CSRF is usually not applicable」改为指向上文的自动附带凭据规则。Required 首条的「that rely on cookies for authentication」同步改为「rely on ambient credentials (cookies, HTTP Basic/Digest, TLS client certificates)」。",
+          "en": "Replaces the absolute claim \"no cookie authentication means no CSRF risk\" with: any credential the browser attaches automatically (session cookies, HTTP Basic/Digest, TLS client certificates) enables CSRF; classic browser CSRF does not apply only when every protected endpoint accepts nothing but an `Authorization: Bearer` header set explicitly by script and no ambient credential, and the reviewer must confirm those endpoints do not also accept a cookie session. The leftover L398 sentence \"If cookies are not used for auth … CSRF is usually not applicable\" now points to the ambient-credential rule above. The first Required item, \"that rely on cookies for authentication\", now reads \"rely on ambient credentials (cookies, HTTP Basic/Digest, TLS client certificates)\"."
         },
         "reason": {
           "zh-CN": "原口径会让审查者对使用 HTTP Basic/Digest、客户端证书以及混用 cookie 的端点跳过 CSRF 检查，得出不安全的结论；各参考文件在这一点上统一为完整口径。L398 的残留句与新口径矛盾。",
@@ -519,8 +519,8 @@
         "section": "§NEXT-SUPPLY-001 IMPORTANT (L198-205); §6 Sources (L1126)",
         "upstream": "openai/skills@49f948faa9258a0c61caceaf225e179651397431:skills/.curated/security-best-practices/references/javascript-typescript-nextjs-web-server-security.md",
         "summary": {
-          "zh-CN": "重写 react2shell 段：编号改为 CVE-2025-55182（React）/ GHSA-9qr9-h5gf-34mp（Next.js），注明 CVE-2025-66478 已被 NVD 以重复为由拒绝；写明受影响范围（15.x、16.x、14.3.0-canary.77 及以上，且使用 App Router）与不受影响范围（13.x、14.x 稳定版、Pages Router、Edge）；说明 15.0.5/15.1.9/15.2.6/15.3.6/15.4.8/15.5.7/16.0.7 只是这次远程代码执行漏洞的修复线，不是安全基线。后续两批分列：① 2025-12-11（CVE-2025-55184/55183/67779）修复线 15.0.7/15.1.11/15.2.8/15.3.8/15.4.10/15.5.9/16.0.10，14.x 为 14.2.35，且 14.2.35 只对应这一批；② CVE-2026-23864（GHSA-h25m-26qc-wcjf）影响 `next >= 13.0.0, < 15.0.8`，使用 App Router 的 13.x/14.x 应用（含 14.2.35）同样受影响且没有线内修复，须升级到 15.0.8 及以上；15.x/16.x 修复线为 15.0.8/15.1.12/15.2.9/15.3.9/15.4.11/15.5.10/16.0.11/16.1.5。报告前核对入口改为 https://nextjs.org/blog/tag/security；§6 的 CVE-2026-23864 链接改为 GHSA-h25m-26qc-wcjf（React 侧 GHSA-83fc-fqcc-2hmg），并新增 NVD CVE-2025-55182 来源。",
-          "en": "Rewrites the react2shell section: CVE-2025-55182 (React) / GHSA-9qr9-h5gf-34mp (Next.js), noting that NVD rejected CVE-2025-66478 as a duplicate; affected: 15.x, 16.x and 14.3.0-canary.77+ with the App Router; unaffected: 13.x, 14.x stable, Pages Router, Edge; 15.0.5/15.1.9/15.2.6/15.3.6/15.4.8/15.5.7/16.0.7 fix only this RCE and are not a security baseline. Later batches: (1) 2025-12-11 (CVE-2025-55184/55183/67779): 15.0.7/15.1.11/15.2.8/15.3.8/15.4.10/15.5.9/16.0.10, and 14.2.35 for 14.x, which covers only this batch; (2) CVE-2026-23864 (GHSA-h25m-26qc-wcjf) affects `next >= 13.0.0, < 15.0.8`: 13.x/14.x App Router apps, including 14.2.35, have no fix on their line and must move to 15.0.8+; 15.x/16.x fixes: 15.0.8/15.1.12/15.2.9/15.3.9/15.4.11/15.5.10/16.0.11/16.1.5. The pre-report check link becomes https://nextjs.org/blog/tag/security; §6 links CVE-2026-23864 to GHSA-h25m-26qc-wcjf (React: GHSA-83fc-fqcc-2hmg) and adds NVD CVE-2025-55182."
+          "zh-CN": "重写 react2shell 段：编号改为 CVE-2025-55182（React）/ GHSA-9qr9-h5gf-34mp（Next.js），注明 CVE-2025-66478 已被 NVD 以重复为由拒绝；写明受影响范围（15.x、16.x、14.3.0-canary.77 及以上，且使用 App Router）与不受影响范围（13.x、14.x 稳定版、Pages Router、Edge）；说明 15.0.5/15.1.9/15.2.6/15.3.6/15.4.8/15.5.7/16.0.7 只是这次远程代码执行漏洞的修复线，不是安全基线。后续两批分列：① 2025-12-11（CVE-2025-55184/55183/67779）修复线 15.0.7/15.1.11/15.2.8/15.3.8/15.4.10/15.5.9/16.0.10，14.x 为 14.2.35，且 14.2.35 只对应这一批；② CVE-2026-23864（GHSA-h25m-26qc-wcjf）影响 `next >= 13.0.0, < 15.0.8`，使用 App Router 的 13.x/14.x 应用（含 14.2.35）同样受影响且没有线内修复，须升级到 15.0.8 及以上；15.x/16.x 修复线为 15.0.8/15.1.12/15.2.9/15.3.9/15.4.11/15.5.10/16.0.11/16.1.5。报告前核对入口改为 https://nextjs.org/blog/tag/security；§6 的 CVE-2026-23864 链接改为 GHSA-h25m-26qc-wcjf（React 侧 GHSA-83fc-fqcc-2hmg），并新增 NVD CVE-2025-55182 来源。核对日期句改为：以上三批于 2026-09-28 核对，此后另有更新的公告，本列表不是安全基线，以官方公告为准。",
+          "en": "Rewrites the react2shell section: CVE-2025-55182 (React) / GHSA-9qr9-h5gf-34mp (Next.js); NVD rejected CVE-2025-66478 as a duplicate. Affected: 15.x, 16.x, 14.3.0-canary.77+ with the App Router; unaffected: 13.x, 14.x stable, Pages Router, Edge. 15.0.5/15.1.9/15.2.6/15.3.6/15.4.8/15.5.7/16.0.7 fix only this RCE. Later batches: (1) 2025-12-11 (CVE-2025-55184/55183/67779): 15.0.7/15.1.11/15.2.8/15.3.8/15.4.10/15.5.9/16.0.10, and 14.2.35 for 14.x (this batch only); (2) CVE-2026-23864 (GHSA-h25m-26qc-wcjf) affects `next >= 13.0.0, < 15.0.8`: 13.x/14.x App Router apps, 14.2.35 included, have no fix on their line and must move to 15.0.8+; 15.x/16.x fixes: 15.0.8/15.1.12/15.2.9/15.3.9/15.4.11/15.5.10/16.0.11/16.1.5. The check link becomes https://nextjs.org/blog/tag/security; §6 links GHSA-h25m-26qc-wcjf (React: GHSA-83fc-fqcc-2hmg) and NVD CVE-2025-55182. The three batches were checked on 2026-09-28; newer advisories exist, so the list is no security baseline."
         },
         "reason": {
           "zh-CN": "原文会把 13.x/14.x 误报为受这次远程代码执行漏洞影响，又把 15.5.7/16.0.7 当作安全基线；所用 CVE 编号已被 NVD 拒绝，GHSA 链接无法打开。只补修复线而漏写 CVE-2026-23864 对 13.x/14.x App Router 的影响时，装着 14.2.35 的项目会被误判为无需处理。版本事实已于 2026-09-28 对照 GitHub Advisory、vercel/next.js 仓库公告、Vercel 官方摘要、NVD 与 npm registry 核实。",
@@ -555,6 +555,21 @@
         "reason": {
           "zh-CN": "自定义请求头只有在 CORS 不允许攻击者的源携带凭据发送该头时才有效；原版只说这是次强的方法而不写前提，遇到反射 Origin 且允许凭据的 CORS 配置时会得出不安全的结论。",
           "en": "A custom header only protects when CORS does not let an attacker's origin send it with credentials; the original calls it the next strongest method without that precondition, which leads to unsafe conclusions for CORS setups that reflect Origin and allow credentials."
+        }
+      },
+      {
+        "id": "CSB-M52",
+        "type": "security",
+        "path": "references/python-django-web-server-security.md",
+        "section": "§DJANGO-CSRF-001 Required #1 (L368)",
+        "upstream": "openai/skills@49f948faa9258a0c61caceaf225e179651397431:skills/.curated/security-best-practices/references/python-django-web-server-security.md",
+        "summary": {
+          "zh-CN": "Required 首条的「MUST protect all state-changing endpoints … that rely on cookies for authentication」改为「rely on ambient credentials (cookies, HTTP Basic/Digest, TLS client certificates)」，与其他参考文件的 CSRF 口径一致。",
+          "en": "The first Required item, \"MUST protect all state-changing endpoints … that rely on cookies for authentication\", now reads \"rely on ambient credentials (cookies, HTTP Basic/Digest, TLS client certificates)\", matching the CSRF rule in the other references."
+        },
+        "reason": {
+          "zh-CN": "只写 cookie 会让审查者对使用 HTTP Basic/Digest 或客户端证书的端点跳过 CSRF 检查。",
+          "en": "Naming only cookies leads reviewers to skip CSRF checks for endpoints that use HTTP Basic/Digest or client certificates."
         }
       },
       {
@@ -624,8 +639,8 @@
         "section": "§FLASK-SSTI-001 Required (L303); Insecure patterns (L311)",
         "upstream": "openai/skills@49f948faa9258a0c61caceaf225e179651397431:skills/.curated/security-best-practices/references/python-flask-web-server-security.md",
         "summary": {
-          "zh-CN": "原句「MUST NOT use use `.format()` on user controlled strings」改为：格式串本身受用户控制属于格式串注入；并且无论格式串归谁控制，只要格式化或拼接的结果作为模板源传给 `render_template_string`/`Environment.from_string`，就是 SSTI（Critical），例如 `render_template_string(f\"Hello {request.args['name']}\")`；只有结果作为普通字符串输出时，才属于按输出上下文转义的较低风险问题。Insecure patterns 补上 `render_template_string(\"Hello %s\" % name)` 与 f-string 拼接两种写法。",
-          "en": "The sentence \"MUST NOT use use `.format()` on user controlled strings\" is rewritten: a user-controlled format string is format-string injection, and whoever controls the format string, passing the formatted or concatenated result as a template source to `render_template_string`/`Environment.from_string` is SSTI (Critical), for example `render_template_string(f\"Hello {request.args['name']}\")`; only when the result is output as a plain string is it a lower-risk output-encoding issue. Insecure patterns add `render_template_string(\"Hello %s\" % name)` and f-string concatenation."
+          "zh-CN": "原句「MUST NOT use use `.format()` on user controlled strings」改为：格式串本身受用户控制属于格式串注入；并且无论格式串归谁控制，只要格式化或拼接的结果作为模板源传给 `render_template_string`/`Environment.from_string`，就是 SSTI（Critical），例如 `render_template_string(f\"Hello {request.args['name']}\")`；只有结果作为普通字符串输出时，才属于按输出上下文转义的较低风险问题。Insecure patterns 补上 `render_template_string(\"Hello %s\" % name)` 与 f-string 拼接两种写法。并补一句：用户控制的格式串即使结果只作为字符串输出，仍属格式串注入。",
+          "en": "The sentence \"MUST NOT use use `.format()` on user controlled strings\" is rewritten: a user-controlled format string is format-string injection, and whoever controls the format string, passing the formatted or concatenated result as a template source to `render_template_string`/`Environment.from_string` is SSTI (Critical), for example `render_template_string(f\"Hello {request.args['name']}\")`; only when the result is output as a plain string is it a lower-risk output-encoding issue. Insecure patterns add `render_template_string(\"Hello %s\" % name)` and f-string concatenation. It adds that a user-controlled format string is still format-string injection even when the result is only emitted as a string."
         },
         "reason": {
           "zh-CN": "原句有重复词，且没有说清风险在哪里；Flask 最常见的 SSTI 写法（开发者写的格式串拼进用户值，再作为模板源）容易被当作较低风险，从而降级一条 Critical 规则。",
@@ -666,11 +681,161 @@
         "id": "CSB-M32",
         "type": "adapted",
         "path": "SKILL.md",
-        "section": "below the title; same line below the title of each of the 10 references/*.md",
+        "section": "below the title",
         "upstream": "openai/skills@49f948faa9258a0c61caceaf225e179651397431:skills/.curated/security-best-practices/SKILL.md",
         "summary": {
-          "zh-CN": "在 SKILL.md 与 10 份参考文件的标题下方各加一行显著的修改声明「Derived work: modified by Teloa from openai/skills@49f948fa…」，并指向 MODIFICATIONS.md。",
-          "en": "Adds a prominent change notice, \"Derived work: modified by Teloa from openai/skills@49f948fa…\", below the title of SKILL.md and of each of the 10 reference files, pointing to MODIFICATIONS.md."
+          "zh-CN": "在 SKILL.md 标题下方加一行显著的修改声明「Derived work: modified by Teloa from openai/skills@49f948fa…」，并指向 MODIFICATIONS.md；10 份参考文件的同一声明分别见 CSB-M42～CSB-M51。",
+          "en": "Adds a prominent change notice below the title of SKILL.md, \"Derived work: modified by Teloa from openai/skills@49f948fa…\", pointing to MODIFICATIONS.md; the same notice in each of the 10 reference files is CSB-M42 to CSB-M51."
+        },
+        "reason": {
+          "zh-CN": "Apache-2.0 第 4(b) 条要求被修改的文件带有显著的修改声明。",
+          "en": "Apache-2.0 section 4(b) requires modified files to carry prominent notices that they were changed."
+        }
+      },
+      {
+        "id": "CSB-M42",
+        "type": "adapted",
+        "path": "references/golang-general-backend-security.md",
+        "section": "below the title",
+        "upstream": "openai/skills@49f948faa9258a0c61caceaf225e179651397431:skills/.curated/security-best-practices/references/golang-general-backend-security.md",
+        "summary": {
+          "zh-CN": "在标题下方加一行显著的修改声明「Derived work: modified by Teloa from openai/skills@49f948fa…」，并指向 MODIFICATIONS.md。",
+          "en": "Adds a prominent change notice below the title, \"Derived work: modified by Teloa from openai/skills@49f948fa…\", pointing to MODIFICATIONS.md."
+        },
+        "reason": {
+          "zh-CN": "Apache-2.0 第 4(b) 条要求被修改的文件带有显著的修改声明。",
+          "en": "Apache-2.0 section 4(b) requires modified files to carry prominent notices that they were changed."
+        }
+      },
+      {
+        "id": "CSB-M43",
+        "type": "adapted",
+        "path": "references/javascript-express-web-server-security.md",
+        "section": "below the title",
+        "upstream": "openai/skills@49f948faa9258a0c61caceaf225e179651397431:skills/.curated/security-best-practices/references/javascript-express-web-server-security.md",
+        "summary": {
+          "zh-CN": "在标题下方加一行显著的修改声明「Derived work: modified by Teloa from openai/skills@49f948fa…」，并指向 MODIFICATIONS.md。",
+          "en": "Adds a prominent change notice below the title, \"Derived work: modified by Teloa from openai/skills@49f948fa…\", pointing to MODIFICATIONS.md."
+        },
+        "reason": {
+          "zh-CN": "Apache-2.0 第 4(b) 条要求被修改的文件带有显著的修改声明。",
+          "en": "Apache-2.0 section 4(b) requires modified files to carry prominent notices that they were changed."
+        }
+      },
+      {
+        "id": "CSB-M44",
+        "type": "adapted",
+        "path": "references/javascript-general-web-frontend-security.md",
+        "section": "below the title",
+        "upstream": "openai/skills@49f948faa9258a0c61caceaf225e179651397431:skills/.curated/security-best-practices/references/javascript-general-web-frontend-security.md",
+        "summary": {
+          "zh-CN": "在标题下方加一行显著的修改声明「Derived work: modified by Teloa from openai/skills@49f948fa…」，并指向 MODIFICATIONS.md。",
+          "en": "Adds a prominent change notice below the title, \"Derived work: modified by Teloa from openai/skills@49f948fa…\", pointing to MODIFICATIONS.md."
+        },
+        "reason": {
+          "zh-CN": "Apache-2.0 第 4(b) 条要求被修改的文件带有显著的修改声明。",
+          "en": "Apache-2.0 section 4(b) requires modified files to carry prominent notices that they were changed."
+        }
+      },
+      {
+        "id": "CSB-M45",
+        "type": "adapted",
+        "path": "references/javascript-jquery-web-frontend-security.md",
+        "section": "below the title",
+        "upstream": "openai/skills@49f948faa9258a0c61caceaf225e179651397431:skills/.curated/security-best-practices/references/javascript-jquery-web-frontend-security.md",
+        "summary": {
+          "zh-CN": "在标题下方加一行显著的修改声明「Derived work: modified by Teloa from openai/skills@49f948fa…」，并指向 MODIFICATIONS.md。",
+          "en": "Adds a prominent change notice below the title, \"Derived work: modified by Teloa from openai/skills@49f948fa…\", pointing to MODIFICATIONS.md."
+        },
+        "reason": {
+          "zh-CN": "Apache-2.0 第 4(b) 条要求被修改的文件带有显著的修改声明。",
+          "en": "Apache-2.0 section 4(b) requires modified files to carry prominent notices that they were changed."
+        }
+      },
+      {
+        "id": "CSB-M46",
+        "type": "adapted",
+        "path": "references/javascript-typescript-nextjs-web-server-security.md",
+        "section": "below the title",
+        "upstream": "openai/skills@49f948faa9258a0c61caceaf225e179651397431:skills/.curated/security-best-practices/references/javascript-typescript-nextjs-web-server-security.md",
+        "summary": {
+          "zh-CN": "在标题下方加一行显著的修改声明「Derived work: modified by Teloa from openai/skills@49f948fa…」，并指向 MODIFICATIONS.md。",
+          "en": "Adds a prominent change notice below the title, \"Derived work: modified by Teloa from openai/skills@49f948fa…\", pointing to MODIFICATIONS.md."
+        },
+        "reason": {
+          "zh-CN": "Apache-2.0 第 4(b) 条要求被修改的文件带有显著的修改声明。",
+          "en": "Apache-2.0 section 4(b) requires modified files to carry prominent notices that they were changed."
+        }
+      },
+      {
+        "id": "CSB-M47",
+        "type": "adapted",
+        "path": "references/javascript-typescript-react-web-frontend-security.md",
+        "section": "below the title",
+        "upstream": "openai/skills@49f948faa9258a0c61caceaf225e179651397431:skills/.curated/security-best-practices/references/javascript-typescript-react-web-frontend-security.md",
+        "summary": {
+          "zh-CN": "在标题下方加一行显著的修改声明「Derived work: modified by Teloa from openai/skills@49f948fa…」，并指向 MODIFICATIONS.md。",
+          "en": "Adds a prominent change notice below the title, \"Derived work: modified by Teloa from openai/skills@49f948fa…\", pointing to MODIFICATIONS.md."
+        },
+        "reason": {
+          "zh-CN": "Apache-2.0 第 4(b) 条要求被修改的文件带有显著的修改声明。",
+          "en": "Apache-2.0 section 4(b) requires modified files to carry prominent notices that they were changed."
+        }
+      },
+      {
+        "id": "CSB-M48",
+        "type": "adapted",
+        "path": "references/javascript-typescript-vue-web-frontend-security.md",
+        "section": "below the title",
+        "upstream": "openai/skills@49f948faa9258a0c61caceaf225e179651397431:skills/.curated/security-best-practices/references/javascript-typescript-vue-web-frontend-security.md",
+        "summary": {
+          "zh-CN": "在标题下方加一行显著的修改声明「Derived work: modified by Teloa from openai/skills@49f948fa…」，并指向 MODIFICATIONS.md。",
+          "en": "Adds a prominent change notice below the title, \"Derived work: modified by Teloa from openai/skills@49f948fa…\", pointing to MODIFICATIONS.md."
+        },
+        "reason": {
+          "zh-CN": "Apache-2.0 第 4(b) 条要求被修改的文件带有显著的修改声明。",
+          "en": "Apache-2.0 section 4(b) requires modified files to carry prominent notices that they were changed."
+        }
+      },
+      {
+        "id": "CSB-M49",
+        "type": "adapted",
+        "path": "references/python-django-web-server-security.md",
+        "section": "below the title",
+        "upstream": "openai/skills@49f948faa9258a0c61caceaf225e179651397431:skills/.curated/security-best-practices/references/python-django-web-server-security.md",
+        "summary": {
+          "zh-CN": "在标题下方加一行显著的修改声明「Derived work: modified by Teloa from openai/skills@49f948fa…」，并指向 MODIFICATIONS.md。",
+          "en": "Adds a prominent change notice below the title, \"Derived work: modified by Teloa from openai/skills@49f948fa…\", pointing to MODIFICATIONS.md."
+        },
+        "reason": {
+          "zh-CN": "Apache-2.0 第 4(b) 条要求被修改的文件带有显著的修改声明。",
+          "en": "Apache-2.0 section 4(b) requires modified files to carry prominent notices that they were changed."
+        }
+      },
+      {
+        "id": "CSB-M50",
+        "type": "adapted",
+        "path": "references/python-fastapi-web-server-security.md",
+        "section": "below the title",
+        "upstream": "openai/skills@49f948faa9258a0c61caceaf225e179651397431:skills/.curated/security-best-practices/references/python-fastapi-web-server-security.md",
+        "summary": {
+          "zh-CN": "在标题下方加一行显著的修改声明「Derived work: modified by Teloa from openai/skills@49f948fa…」，并指向 MODIFICATIONS.md。",
+          "en": "Adds a prominent change notice below the title, \"Derived work: modified by Teloa from openai/skills@49f948fa…\", pointing to MODIFICATIONS.md."
+        },
+        "reason": {
+          "zh-CN": "Apache-2.0 第 4(b) 条要求被修改的文件带有显著的修改声明。",
+          "en": "Apache-2.0 section 4(b) requires modified files to carry prominent notices that they were changed."
+        }
+      },
+      {
+        "id": "CSB-M51",
+        "type": "adapted",
+        "path": "references/python-flask-web-server-security.md",
+        "section": "below the title",
+        "upstream": "openai/skills@49f948faa9258a0c61caceaf225e179651397431:skills/.curated/security-best-practices/references/python-flask-web-server-security.md",
+        "summary": {
+          "zh-CN": "在标题下方加一行显著的修改声明「Derived work: modified by Teloa from openai/skills@49f948fa…」，并指向 MODIFICATIONS.md。",
+          "en": "Adds a prominent change notice below the title, \"Derived work: modified by Teloa from openai/skills@49f948fa…\", pointing to MODIFICATIONS.md."
         },
         "reason": {
           "zh-CN": "Apache-2.0 第 4(b) 条要求被修改的文件带有显著的修改声明。",
@@ -720,21 +885,6 @@
         "reason": {
           "zh-CN": "原版文件的抓取日（2026-01-26）之前 CVE-2026-21860 已经发布，但文中没有列出。",
           "en": "CVE-2026-21860 was published before the original file's retrieval date (2026-01-26) but was not listed."
-        }
-      },
-      {
-        "id": "CSB-M36",
-        "type": "added",
-        "path": "tests",
-        "section": "new directory; not installed",
-        "upstream": null,
-        "summary": {
-          "zh-CN": "新增重定向校验的测试材料：55 个恶意向量与 10 个合法路径，Node、Python、Go 三套测试及输出，从参考文件原样提取代码片段的复测，以及 TypeScript strict 类型检查。这些材料保存在 Teloa 的审查记录中，不随技能安装。",
-          "en": "Adds test material for the redirect checks: 55 hostile vectors and 10 legitimate paths, test suites and outputs for Node, Python and Go, re-runs of code snippets extracted verbatim from the references, and a TypeScript strict type check. They are kept in Teloa's review records and are not installed with the skill."
-        },
-        "reason": {
-          "zh-CN": "重定向校验代码改写后必须实跑证明；参考文件中的代码片段也须能核对与被测函数一致。",
-          "en": "Rewritten redirect-validation code must be proven by running it, and the snippets in the references must be verifiably identical to the tested functions."
         }
       },
       {

@@ -372,7 +372,7 @@ Required:
 - MAY use additional defenses (Origin/Referer checks, hand-written Fetch Metadata checks, SameSite cookies), but the primary defense for cookie-authenticated apps is a CSRF token or, on Go 1.25+, `http.CrossOriginProtection` (next item); the other measures are defense in depth.
 - SHOULD (Go 1.25+) wrap the mux with `http.NewCrossOriginProtection().Handler(mux)`: it rejects unsafe cross-origin requests using `Sec-Fetch-Site`, falls back to comparing `Origin` with `Host` when `Sec-Fetch-Site` is absent, and allows requests that carry neither header; GET/HEAD/OPTIONS are never blocked, so it does not protect state changes wrongly made via GET. Register additional trusted origins with `AddTrustedOrigin` when a proxy rewrites `Host`. Use tokens instead (or in addition) where you must support clients that send neither header. Do not use GET for state changes: neither CrossOriginProtection nor `SameSite=Lax` stops a cross-site top-level GET, so move such endpoints to POST/PUT/PATCH/DELETE.
 If tokens are impractical, or for small applications:
-- MUST at a minimum require a custom request header on state-changing requests and set the session cookie's `SameSite` attribute to `Lax` (`http.Cookie{SameSite: http.SameSiteLaxMode}`), as this is the strongest method besides requiring a form token, and may be much easier to implement.
+- MUST at a minimum require a custom request header on state-changing requests (combined with strict CORS and `SameSite` cookies) and set the session cookie's `SameSite` attribute to `Lax` (`http.Cookie{SameSite: http.SameSiteLaxMode}`), as this is the strongest method besides requiring a form token, and may be much easier to implement.
 
 
 Insecure patterns:
@@ -673,7 +673,7 @@ Fix:
   var encodedSpecial = regexp.MustCompile(`(?i)%(2e|2f|5c|25)`)
   ```
 
-  This function was executed against 55 hostile inputs (protocol-relative, backslash, dot-segment, `%2e`/`%2E`/`%252e`, `%2f`, `%5c`, tab/newline/NUL/DEL/space, `///`, `\\`, `https:`/`javascript:`/`data:` schemes, userinfo tricks, empty string) and 10 legitimate paths; every hostile input returned the fallback and every accepted value stayed on the current origin (the test vectors and run outputs are kept in Teloa's review record for this derived skill; they are not installed with it).
+  This function was executed against 55 hostile inputs (protocol-relative, backslash, dot-segment, `%2e`/`%2E`/`%252e`, `%2f`, `%5c`, tab/newline/NUL/DEL/space, `///`, `\\`, `https:`/`javascript:`/`data:` schemes, userinfo tricks, empty string) and 10 legitimate paths; every hostile input returned the fallback and every accepted value stayed on the current origin (the test vectors and run outputs are kept in the Teloa marketplace repository under `reviews/derivatives/openai.security-best-practices/tests/`; they are not installed with this skill).
 - If cross-origin redirects are a product requirement, `url.Parse` the value, require `u.Scheme == "https"` and `u.Host` to be in an exact allowlist, and never use `strings.HasPrefix`/`strings.Contains` on the host.
 - Reject absolute URLs unless explicitly needed and allowlisted.
 

@@ -219,7 +219,7 @@ Note: A load failure caused by an `integrity` mismatch means the bytes the brows
 * Never remove `integrity` (or switch to a `<script>` tag without it) to "make the app work".
 * First confirm the exact pinned version and file (e.g., `jquery-4.0.0.min.js`, not a `latest` alias), then take the `integrity` value from the official download page or compute it yourself from a verified copy and prefix the algorithm name (`integrity="sha384-$(openssl dgst -sha384 -binary jquery.min.js | openssl base64 -A)"`), and keep `crossorigin="anonymous"` so the hash can be checked on a cross-origin fetch.
 * If you cannot obtain a hash you trust, bundle jQuery through npm with a lockfile or self-host the verified file instead of loading it unchecked from a CDN.
-* If the hash is correct and the load still fails, first rule out a CORS problem: the tag lacks `crossorigin`, or the CDN response has no `Access-Control-Allow-Origin` header (the browser console reports a CORS error rather than an integrity mismatch). If CORS is fine and the console reports an integrity mismatch, the CDN is serving different bytes than expected; keep the load failing and report it to the user as a possible supply-chain incident.
+* If the hash is correct and the load still fails, first rule out a CORS problem: the tag lacks `crossorigin`, or the CDN response has no `Access-Control-Allow-Origin` header (the browser console reports a CORS-related error rather than an integrity mismatch). If CORS is fine and the console reports an integrity mismatch, the CDN is serving different bytes than expected; keep the load failing and report it to the user as a possible supply-chain incident.
 
 ---
 

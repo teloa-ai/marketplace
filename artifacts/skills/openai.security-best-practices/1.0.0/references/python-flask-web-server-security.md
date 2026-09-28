@@ -242,11 +242,11 @@ Severity: High
 - IMPORTANT NOTE: CSRF applies whenever the browser attaches a credential automatically: session cookies, HTTP Basic/Digest auth, or TLS client certificates. If every protected endpoint authenticates only with an explicit `Authorization: Bearer` header set by script and accepts no ambient credential, classic browser CSRF does not apply; confirm that cookie-based sessions are not also accepted on those endpoints.
 
 Required:
-- MUST protect all state-changing endpoints (POST/PUT/PATCH/DELETE) that rely on cookies for authentication.
+- MUST protect all state-changing endpoints (POST/PUT/PATCH/DELETE) that rely on ambient credentials (cookies, HTTP Basic/Digest, TLS client certificates) for authentication.
 - MAY use a well-tested CSRF library/integration (form framework or middleware) rather than rolling your own.
 - MAY use additional defenses (Origin/Referer checking, SameSite cookies, Fetch Metadata headers, custom headers for AJAX/API), but tokens remain the primary defense for cookie-authenticated apps.
 If tokens are impractical, or for small applications:
-* MUST at a minimum require a custom header to be set and set the session cookie SESSION_COOKIE_SAMESITE=lax, as this is the strongest method besides requiring a form token, and may be much easier to implement.
+* MUST at a minimum require a custom header to be set (combined with strict CORS and `SameSite` cookies) and set the session cookie SESSION_COOKIE_SAMESITE=lax, as this is the strongest method besides requiring a form token, and may be much easier to implement.
 
 Insecure patterns:
 - Cookie-authenticated endpoints that change state with no CSRF protection.
@@ -302,7 +302,7 @@ Severity: Critical
 Required:
 - MUST NOT render templates that contain user-controlled template syntax.
 - MUST treat `render_template_string` and `Environment.from_string(...).render(...)` as dangerous if the template string is influenced by untrusted input.
-- MUST NOT call `.format()` (or `%`-formatting / `str.format_map`) where the *format string itself* is user-controlled (format-string injection). Regardless of who controls the format string, if the formatted or concatenated result is then passed as template *source* to `render_template_string` / `Environment.from_string`, it is SSTI (Critical): `render_template_string(f"Hello {request.args['name']}")` lets `name` inject Jinja syntax. Only when the formatted result is emitted as an ordinary string (never compiled as a template) does it drop to an output-encoding concern
+- MUST NOT call `.format()` (or `%`-formatting / `str.format_map`) where the *format string itself* is user-controlled (format-string injection). Regardless of who controls the format string, if the formatted or concatenated result is then passed as template *source* to `render_template_string` / `Environment.from_string`, it is SSTI (Critical): `render_template_string(f"Hello {request.args['name']}")` lets `name` inject Jinja syntax. Only when the formatted result is emitted as an ordinary string (never compiled as a template) does it drop to an output-encoding concern. A user-controlled format string is still format-string injection even when the result is only emitted as a string.
 - If untrusted templates are absolutely required, treat it as a special high-risk design:
   - MUST use a sandboxed templating approach and restrict capabilities.
   - MUST keep Jinja updated and assume sandbox escapes are possible; isolate further.
@@ -603,7 +603,7 @@ Fix:
   return redirect(safe_return_to(request.args.get("next"), current_app.config.get("APP_ORIGIN") or request.host_url.rstrip("/")))
   ```
 
-  This function was executed against 55 hostile inputs (protocol-relative, backslash, dot-segment, `%2e`/`%2E`/`%252e`, `%2f`, `%5c`, tab/newline/NUL/DEL/space, `///`, `\\`, `https:`/`javascript:`/`data:` schemes, userinfo tricks, empty string) and 10 legitimate paths; every hostile input returned the fallback and every accepted value stayed on the current origin (the test vectors and run outputs are kept in Teloa's review record for this derived skill; they are not installed with it).
+  This function was executed against 55 hostile inputs (protocol-relative, backslash, dot-segment, `%2e`/`%2E`/`%252e`, `%2f`, `%5c`, tab/newline/NUL/DEL/space, `///`, `\\`, `https:`/`javascript:`/`data:` schemes, userinfo tricks, empty string) and 10 legitimate paths; every hostile input returned the fallback and every accepted value stayed on the current origin (the test vectors and run outputs are kept in the Teloa marketplace repository under `reviews/derivatives/openai.security-best-practices/tests/`; they are not installed with this skill).
 - If cross-origin redirects are required, allowlist exact `(scheme, netloc)` pairs; never compare hosts with `startswith`/`in`.
 - Fall back to a safe default if validation fails.
 

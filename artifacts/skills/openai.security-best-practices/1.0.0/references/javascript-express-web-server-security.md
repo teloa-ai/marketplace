@@ -371,7 +371,7 @@ Severity: High
 
 Required:
 
-* MUST protect all state-changing endpoints (POST/PUT/PATCH/DELETE) that rely on cookies for authentication.
+* MUST protect all state-changing endpoints (POST/PUT/PATCH/DELETE) that rely on ambient credentials (cookies, HTTP Basic/Digest, TLS client certificates) for authentication.
 * SHOULD use a well-understood CSRF mitigation (token-based is the typical baseline).
 * MAY add defense-in-depth: Origin/Referer validation, Fetch Metadata enforcement, SameSite cookies, custom header requirements for XHR/fetch—**but do not treat these as a full replacement** unless explicitly designed and justified.
 * If form-based CSRF tokens are not practical, MUST at a minimum require a custom HTTP header on state-changing requests (combined with strict CORS and `SameSite` cookies), as this is the next strongest method.

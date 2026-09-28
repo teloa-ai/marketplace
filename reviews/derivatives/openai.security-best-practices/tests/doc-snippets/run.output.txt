@@ -1,0 +1,6 @@
+{"source":"doc-extracted react.ts + nextjs.ts","checks":185,"failures":0}
+node exit 0
+{"source": "doc-extracted flask.py + fastapi.py", "checks": 130, "failures": 0}
+python exit 0
+{"checks":65,"failures":0,"source":"doc-extracted go snippet"}
+go exit 0
