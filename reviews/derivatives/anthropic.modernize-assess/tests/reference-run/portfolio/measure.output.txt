@@ -1,0 +1,25 @@
+$ subdirectories (plain names only)
+system: billing
+system: orders
+== billing
+$ source lines (find + wc -l, *.py)
+     104 total
+$ source files
+       5
+$ decision keywords (if|elif|for|while|except|and|or) summed, and the most complex file
+total 19 max 6 billing/validation.py
+$ dependency manifest
+none
+$ architecture docs
+README.md
+== orders
+$ source lines (find + wc -l, *.py)
+      21 total
+$ source files
+       4
+$ decision keywords (if|elif|for|while|except|and|or) summed, and the most complex file
+total 2 max 2 orders/orders/service.py
+$ dependency manifest
+none
+$ architecture docs
+AGENTS.md

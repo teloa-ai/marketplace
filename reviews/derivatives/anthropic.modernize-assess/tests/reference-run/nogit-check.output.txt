@@ -1,0 +1,3 @@
+$ (no .git) git check-ignore -q analysis/billing/SECRETS.local.md; echo $?
+fatal: not a git repository (or any of the parent directories): .git
+128
