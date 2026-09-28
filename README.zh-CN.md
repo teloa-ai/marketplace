@@ -13,7 +13,7 @@
 - 每个 Teloa 发行固定一份来自本仓库某个确定提交的目录快照。目录更新不会改动你已安装的版本。
 - 校验规则在 Teloa 源码仓（[teloa-ai/teloa](https://github.com/teloa-ai/teloa)）维护，打包为 [`tools/validate.mjs`](tools/validate.mjs)，请勿手改该文件。
 
-**发布状态：** 本仓库于 2026-09-27、市场正式开放前，由 Teloa 源码仓的 `marketplace/` 目录连同历史首次发布。当前目录版本：<!-- catalog-version -->2026.9.28.5<!-- /catalog-version -->（由校验器与 `catalog-version.txt` 同步）。此后本仓库是唯一事实源，源码仓只固定从这里取得的快照。market.teloa.ai 的条目页链接到这里；应用内在线索引本期需显式开启。
+**发布状态：** 本仓库于 2026-09-27、市场正式开放前，由 Teloa 源码仓的 `marketplace/` 目录连同历史首次发布。当前目录版本：<!-- catalog-version -->2026.9.28.6<!-- /catalog-version -->（由校验器与 `catalog-version.txt` 同步）。此后本仓库是唯一事实源，源码仓只固定从这里取得的快照。market.teloa.ai 的条目页链接到这里；应用内在线索引本期需显式开启。
 
 ## 目录结构
 

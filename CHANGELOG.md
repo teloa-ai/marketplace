@@ -4,6 +4,118 @@ All notable changes to the catalog are recorded here. The format follows [Keep a
 
 目录的重要变更记录在此，格式遵循 Keep a Changelog，按目录版本（`catalog-version.txt`）分组。全部条目见 [INDEX.md](INDEX.md)。
 
+## [2026.9.28.6] - 2026-09-28
+
+<!-- Catalog-Source: 7f648734670b81750e86be0b3052787cf3a17a0e -->
+_Generated after merge from the catalog changes since `be2a207`; details are in the merged pull requests. / 合并后按 `be2a207` 以来的目录变更自动生成，详情见对应 PR。_
+
+### Changed
+
+- `anthropic.build-mcpb` 1.0.0 — MCPB bundle builder · MCPB 本地服务器打包
+- `anthropic.mcp-builder` 1.0.0 → 1.0.1 — MCP server builder · MCP 服务器构建指南
+- `anthropic.playground` 1.0.0 — Interactive HTML playground · 交互式 HTML 演练页
+- `clawhub.byungkyu.api-gateway` 1.2.23 — API Gateway · API 网关（Maton）
+- `clawhub.byungkyu.calendly-api` 1.2.5 — Calendly · Calendly 日程管理
+- `clawhub.byungkyu.clickup-api` 1.2.3 — ClickUp · ClickUp 任务管理
+- `clawhub.byungkyu.fathom-api` 1.2.6 — Fathom · Fathom 会议记录
+- `clawhub.byungkyu.gmail` 1.2.3 — gmail · Gmail 邮件收发
+- `clawhub.byungkyu.google-drive` 1.2.9 — google-drive · Google Drive 文件管理
+- `clawhub.byungkyu.google-meet` 1.2.3 — google-meet · Google Meet 视频会议
+- `clawhub.byungkyu.google-play` 1.2.3 — google-play · Google Play 应用管理
+- `clawhub.byungkyu.google-sheets` 1.2.3 — google-sheets · Google Sheets 表格处理
+- `clawhub.byungkyu.google-slides` 1.2.3 — google-slides · Google Slides 演示文稿
+- `clawhub.byungkyu.google-workspace-admin` 1.2.8 — google-workspace-admin · Google Workspace 管理员
+- `clawhub.byungkyu.klaviyo` 1.2.6 — klaviyo · Klaviyo 邮件营销
+- `clawhub.byungkyu.mailchimp` 1.2.3 — mailchimp · Mailchimp 邮件营销
+- `clawhub.byungkyu.microsoft-excel` 1.2.3 — microsoft-excel · Microsoft Excel 表格处理
+- `clawhub.byungkyu.monday` 1.2.4 — Monday.com · Monday.com 工作管理
+- `clawhub.byungkyu.outlook-api` 1.2.3 — Outlook · Outlook 邮件管理
+- `clawhub.byungkyu.pipedrive-api` 1.2.3 — Pipedrive · Pipedrive 销售 CRM
+- `clawhub.byungkyu.salesforce-api` 1.2.5 — Salesforce · Salesforce CRM
+- `clawhub.byungkyu.typeform` 1.2.3 — typeform · Typeform 在线表单
+- `clawhub.byungkyu.whatsapp-business` 1.2.6 — WhatsApp Business · WhatsApp Business 消息
+- `clawhub.byungkyu.woocommerce` 1.2.3 — WooCommerce · WooCommerce 在线商城
+- `clawhub.byungkyu.xero` 1.2.3 — xero · Xero 云会计
+- `clawhub.byungkyu.youtube-api-skill` 1.2.3 — YouTube · YouTube 视频管理
+- `clawhub.byungkyu.zoho-crm` 1.2.3 — Zoho CRM · Zoho CRM 客户管理
+- `clawhub.byungkyu.zoho-mail` 1.2.3 — zoho-mail · Zoho Mail 企业邮箱
+- `clawhub.cellcog.cellcog` 2.0.21 — cellcog · CellCog AI 代理
+- `clawhub.financial-ai-analyst.mx-finance-search` 1.0.9 — Financial Search Engine · 金融搜索引擎
+- `clawhub.financial-ai-analyst.mx-macro-data` 1.0.12 — Global Macro Database Assistant · 全球宏观数据助手
+- `clawhub.jaaneek.x-search` 1.0.0 — X Search · X（Twitter）搜索
+- `hermes.grounded-citations` 1.0.0 — Grounded citations · 有据引用
+- `hermes.meeting-action-items` 1.0.0 — Meeting action items · 会议行动项
+- `hermes.simplify-code` 1.1.0 — Code change cleanup · 代码变更清理
+- `openai.security-best-practices` 1.0.0 — Language and framework security review · 语言与框架安全实践审查
+- `openclaw.github` 1.0.0 — GitHub CLI workflow · GitHub CLI 工作流
+- `teloa.appsec` 1.0.1 — Application security · 应用安全
+- `teloa.cn-workspace` 1.0.0 — China workplace collaboration · 中国企业办公协同
+- `teloa.code-review` 1.0.0 — Code review &amp; release · 研发协作与代码评审
+- `teloa.dashboard-designer` 1.1.0 — Dashboard designer · 看板设计
+- `teloa.detection` 1.0.1 → 1.0.2 — Detection engineering · 检测工程
+- `teloa.ecommerce` 1.0.0 — E-commerce operations · 电商运营
+- `teloa.finance` 1.0.0 — Finance reconciliation · 财务对账
+- `teloa.grc` 1.0.2 → 1.0.3 — Governance, risk and compliance (GRC) · 治理、风险与合规（GRC）
+- `teloa.growth` 1.0.0 — Product ops &amp; growth · 产品运营与增长分析
+- `teloa.incident` 1.0.0 — Engineering incident response · 研发事件响应
+- `teloa.marketing` 1.0.0 → 1.0.1 — Content marketing · 新媒体营销
+- `teloa.mcp-amap` 1.0.1 — Amap Maps (Official MCP) · 高德地图（官方 MCP）
+- `teloa.mcp-atlassian` 1.0.0 — Atlassian (Jira &amp; Confluence) · Atlassian（Jira &amp; Confluence）
+- `teloa.mcp-cloudflare` 1.0.0 — Cloudflare API (OAuth) · Cloudflare API（OAuth）
+- `teloa.mcp-composio` 1.0.1 → 1.0.2 — Composio MCP (1500+ App Integrations) · Composio MCP（1500+ 应用集成）
+- `teloa.mcp-consensus` 1.0.0 — Consensus Academic Search (OAuth) · Consensus 学术检索（OAuth）
+- `teloa.mcp-dingtalk` 1.0.2 — DingTalk (Enterprise Communication) · 钉钉（企业通讯与协作）
+- `teloa.mcp-figma` 1.0.0 — Figma Remote (OAuth, Vendor Allowlist Required) · Figma 远程（OAuth，需厂商白名单）
+- `teloa.mcp-gitlab` 1.0.0 — GitLab (OAuth, Beta) · GitLab（OAuth，Beta）
+- `teloa.mcp-greptile` 1.0.0 — Greptile (Codebase Semantic Search) · Greptile（代码库语义搜索）
+- `teloa.mcp-lark` 1.0.1 — Feishu/Lark (Official MCP) · 飞书/Lark（官方 MCP）
+- `teloa.mcp-linear` 1.0.0 — Linear (Official Remote MCP) · Linear（官方远程 MCP）
+- `teloa.mcp-microsoft-learn` 1.0.0 — Microsoft Learn Docs (Official Remote) · Microsoft Learn 文档（官方远程）
+- `teloa.mcp-notion-remote` 1.0.0 → 1.0.1 — Notion Remote (OAuth) · Notion 远程（OAuth）
+- `teloa.mcp-posthog` 1.0.0 — PostHog (Product Analytics) · PostHog（产品分析）
+- `teloa.mcp-sentry` 1.0.0 — Sentry (Error Monitoring) · Sentry（错误监控）
+- `teloa.mcp-slack` 1.0.0 — Slack (OAuth, Bring Your Own Slack App) · Slack（OAuth，需自建 Slack 应用）
+- `teloa.mcp-supabase-remote` 1.0.0 — Supabase Remote (OAuth) · Supabase 远程（OAuth）
+- `teloa.mcp-yuque` 1.0.2 — Yuque (Knowledge Base) · 语雀（知识库）
+- `teloa.mcp-zapier` 1.0.1 — Zapier MCP (9000+ App Automations) · Zapier MCP（9000+ 应用自动化）
+- `teloa.model.claude` 1.0.0 — Claude (Anthropic) · Claude（Anthropic）
+- `teloa.model.deepseek` 1.0.0 — DeepSeek · DeepSeek
+- `teloa.model.doubao` 1.0.0 — Doubao (Volcengine Ark) · 豆包（火山方舟）
+- `teloa.model.gemini` 1.0.0 — Gemini (Google) · Gemini（Google）
+- `teloa.model.glm` 1.0.0 — Zhipu GLM · 智谱 GLM
+- `teloa.model.grok` 1.0.0 — Grok (xAI) · Grok（xAI）
+- `teloa.model.kimi` 1.0.0 — Kimi (Moonshot) · Kimi（Moonshot）
+- `teloa.model.local.deepseek-r1` 1.0.0 — DeepSeek-R1 (local) · DeepSeek-R1（本机）
+- `teloa.model.local.gemma3` 1.0.0 — Gemma 3 (local) · Gemma 3（本机）
+- `teloa.model.local.llama3.1` 1.0.0 — Llama 3.1 (local) · Llama 3.1（本机）
+- `teloa.model.local.phi4` 1.0.0 — Phi-4 (local) · Phi-4（本机）
+- `teloa.model.local.qwen3` 1.0.0 — Qwen3 (local) · Qwen3（本机）
+- `teloa.model.minimax` 1.0.0 — MiniMax · MiniMax
+- `teloa.model.openai` 1.0.0 — OpenAI · OpenAI
+- `teloa.model.openrouter` 1.0.0 — OpenRouter (aggregator) · OpenRouter（聚合）
+- `teloa.model.qwen` 1.0.0 — Qwen (Model Studio) · 通义千问（百炼）
+- `teloa.model.sensevoice` 1.0.0 — SenseVoice local speech · SenseVoice 本地语音
+- `teloa.model.siliconflow` 1.0.0 — SiliconFlow (aggregator) · 硅基流动（聚合）
+- `teloa.office` 1.0.0 → 1.0.1 — General office · 通用办公
+- `teloa.project` 1.0.0 — Project management · 项目管理
+- `teloa.recruiting` 1.0.0 — HR recruiting · HR 招聘
+- `teloa.research` 1.0.0 — Knowledge and research · 知识库与研究
+- `teloa.role.bd-collaborator` 1.0.0 — Business development collaborator · 商务协作员
+- `teloa.role.content-marketer` 1.0.0 → 1.0.1 — Content marketer · 内容运营员
+- `teloa.role.detection-engineer` 1.0.1 → 1.0.2 — Detection engineer · 检测工程师
+- `teloa.role.grc-collaborator` 1.0.2 → 1.0.3 — GRC collaborator · GRC 协作员
+- `teloa.role.office-collaborator` 1.0.0 → 1.0.1 — Office collaborator · 办公协作员
+- `teloa.role.project-coordinator` 1.0.0 — Project coordinator · 项目协调员
+- `teloa.role.reconciliation-collaborator` 1.0.0 — Reconciliation collaborator · 对账协作员
+- `teloa.role.recruiting-collaborator` 1.0.0 — Recruiting collaborator · 招聘协作员
+- `teloa.role.research-collaborator` 1.0.0 — Research collaborator · 研究协作员
+- `teloa.role.soc-t1-analyst` 1.0.1 → 1.0.2 — T1 triage analyst · T1 告警研判员
+- `teloa.role.soc-t2-investigator` 1.0.1 → 1.0.2 — T2 incident investigator · T2 事件调查员
+- `teloa.role.support-knowledge-collaborator` 1.0.0 → 1.0.1 — Support knowledge collaborator · 客服知识协作员
+- `teloa.sales` 1.0.0 — Sales and business development · 销售与商务
+- `teloa.soc` 1.0.1 → 1.0.2 — Security operations (SOC T1/T2/T3) · 安全运营（SOC T1/T2/T3）
+- `teloa.support` 1.0.0 → 1.0.1 — Customer support · 客户支持
+
 ## [2026.9.28.5] - 2026-09-28
 
 <!-- Catalog-Source: be2a2077e76ff609c2adc7dc9dad67b16de68abd -->
