@@ -1,9 +1,11 @@
 name: Validate
 
+# Pushes to main are validated strictly by generate.yml before it proposes the generated files. workflow_dispatch
+# lets that workflow run these checks on bot/generated-files, whose GITHUB_TOKEN pull request only gets a
+# pull_request run held for approval; the dispatched run satisfies the required check.
 on:
-  push:
-    branches: [main]
   pull_request:
+  workflow_dispatch:
 
 # Least privilege: the workflow only reads the repository and has no secrets. On pull requests it runs
 # the validator from the base branch (main), never a copy modified inside the submission.
@@ -33,18 +35,62 @@ jobs:
         with:
           node-version: 24
 
-      # Pull requests: take tools/validate.mjs from the base branch so a submission cannot change the
-      # rules it is checked against, then validate the checked-out pull request content with --root.
+      # Scope guard, fast feedback only: a pull request can edit this file, so the hard gate is scope.yml
+      # (pull_request_target, runs from main). Submissions change only catalog/, artifacts/ and reviews/: generated files are produced after
+      # merge by generate.yml (editing them makes parallel pull requests conflict), and tools/, .github/ and the
+      # documents run or ship with write permissions after merge. Two same-repository branch families are
+      # different, and only people with write access can push them:
+      #   bot/generated-files  only the six generated files (normally checked through workflow_dispatch instead);
+      #   infra/*              maintainer infrastructure changes, anything except the generated files; code owner
+      #                        review (CODEOWNERS) is the gate for tools/ and .github/.
+      # Nobody may delete README.md or README.zh-CN.md (the validator skips missing files).
+      - name: Pull request scope (catalog/, artifacts/, reviews/ only)
+        if: github.event_name == 'pull_request'
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          HEAD_REF: ${{ github.event.pull_request.head.ref }}
+          HEAD_REPO: ${{ github.event.pull_request.head.repo.full_name }}
+          REPO: ${{ github.repository }}
+        run: |
+          generated='^(INDEX\.md|NOTICE|catalog-version\.txt|CHANGELOG\.md|README\.md|README\.zh-CN\.md)$'
+          if [ "$HEAD_REPO" = "$REPO" ] && [ "$HEAD_REF" = bot/generated-files ]; then
+            mode=bot allowed=$generated
+          elif [ "$HEAD_REPO" = "$REPO" ] && [[ "$HEAD_REF" == infra/* ]]; then
+            mode=infra allowed='.'
+          else
+            mode=submission allowed='^(catalog|artifacts|reviews)/'
+          fi
+          changes=$(git diff --name-status --no-renames "$BASE_SHA...$HEAD_SHA")
+          status=0
+          while IFS=$'\t' read -r change path; do
+            if [ -z "$path" ]; then
+              continue
+            elif [ "$change" = D ] && [[ "$path" =~ ^README(\.zh-CN)?\.md$ ]]; then
+              echo "::error file=$path::$path must not be deleted. / 不得删除 $path。"; status=1
+            elif [ "$mode" = infra ] && [[ "$path" =~ ^(INDEX\.md|NOTICE|catalog-version\.txt)$ ]]; then
+              echo "::error file=$path::$path is generated after merge by generate.yml; do not edit it in a pull request. / 生成文件由合并后工作流生成，PR 里请勿改动。"; status=1
+            elif ! [[ "$path" =~ $allowed ]]; then
+              echo "::error file=$path::$path is outside what a $mode pull request may change (submissions: catalog/, artifacts/, reviews/ only; generated files are produced after merge; see CONTRIBUTING.md). / 投稿只能改 catalog/、artifacts/、reviews/，见 CONTRIBUTING.md。"; status=1
+            fi
+          done <<< "$changes"
+          [ "$status" = 0 ] && echo "Scope OK ($mode pull request)."
+          exit "$status"
+
+      # Pull requests: take tools/validate.mjs from the base branch so a submission cannot change the rules it is
+      # checked against, then validate the checked-out content with --root. --write regenerates INDEX.md, NOTICE and
+      # the README catalog version inside this throwaway checkout instead of requiring them to be current; every
+      # other check (structure, paths, sizes, digests, license files) still applies.
       - name: Validate catalog (pull request, validator from base branch)
         if: github.event_name == 'pull_request'
         env:
           BASE_SHA: ${{ github.event.pull_request.base.sha }}
         run: |
           git show "$BASE_SHA:tools/validate.mjs" > "$RUNNER_TEMP/validate.mjs"
-          node "$RUNNER_TEMP/validate.mjs" --root "$GITHUB_WORKSPACE"
+          node "$RUNNER_TEMP/validate.mjs" --write --root "$GITHUB_WORKSPACE"
 
-      # Structure, type directories, paths, sizes, digests, license files, and INDEX.md / NOTICE / README drift.
-      - name: Validate catalog (main)
+      # Strict: structure, type directories, paths, sizes, digests, license files, and INDEX.md / NOTICE / README drift.
+      - name: Validate catalog (strict, generated files must be current)
         if: github.event_name != 'pull_request'
         run: node tools/validate.mjs
 

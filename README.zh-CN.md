@@ -22,8 +22,8 @@
 | `catalog/<类型>/<id>.json` | 一个条目一份，格式 `teloa.market-catalog-entry/v1`。`<类型>` 只能是 `solutions`、`roles`、`skills`、`connectors`、`models`，且必须与条目 `kind` 一致。上游技能同样放在 `catalog/skills/`，以 `delivery: upstream` 区分。 |
 | `artifacts/<类型>/<id>/<version>/` | Teloa 托管并安装的文件，只有 `solutions`、`roles`、`skills`、`connectors` 四类。每个版本目录自带 `LICENSE` 或 `LICENSE.txt`。上游条目与模型引用没有工件。 |
 | `reviews/<类型>/` | 审核与核对记录，例如连接器配方核对。 |
-| `INDEX.md`、`NOTICE` | 由 `node tools/validate.mjs --write` 从 `catalog/` 生成，请勿手改。 |
-| `catalog-version.txt` | 目录版本，改动目录时递增。 |
+| `INDEX.md`、`NOTICE` | 由 `node tools/validate.mjs --write` 从 `catalog/` 生成，合并后由 `.github/workflows/generate.yml` 运行。请勿手改，也不要在 PR 里改。 |
+| `catalog-version.txt` | 目录版本，合并后由 `.github/workflows/generate.yml` 递增，并同时写入 `CHANGELOG.md` 一节。 |
 | `tools/validate.mjs` | 由 Teloa 源码仓生成的单文件校验器。 |
 
 条目 ID 形如 `ecosystem.resource`，例如 `openai.skill-creator`。发布后 ID 与文件名不再改变。
@@ -63,7 +63,7 @@
 
 ## 贡献
 
-见 [CONTRIBUTING.md](CONTRIBUTING.md)。自 2026-09-27 本仓库公开起，所有新贡献都须按 Developer Certificate of Origin 签署（`git commit -s`），不设 CLA；此前的历史提交是 Teloa 从源码仓导入的内部整理记录，不在要求之内；CI 只对 PR 新增的提交检查签署。提 PR 前请运行 `node tools/validate.mjs`。
+见 [CONTRIBUTING.md](CONTRIBUTING.md)。自 2026-09-27 本仓库公开起，所有新贡献都须按 Developer Certificate of Origin 签署（`git commit -s`），不设 CLA；此前的历史提交是 Teloa 从源码仓导入的内部整理记录，不在要求之内；CI 只对 PR 新增的提交检查签署。提 PR 前请运行 `node tools/validate.mjs --write`，只提交 `catalog/`、`artifacts/`、`reviews/`。
 
 ## 安全
 

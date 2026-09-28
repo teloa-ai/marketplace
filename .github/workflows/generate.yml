@@ -1,0 +1,145 @@
+name: Generate
+
+# Submission pull requests change only catalog/, artifacts/ and reviews/, so they never conflict with each other.
+# After they land on main, this workflow bumps catalog-version.txt, prepends a CHANGELOG.md section, regenerates
+# INDEX.md, NOTICE and the README catalog version, validates the result strictly and proposes it in one pull request
+# from bot/generated-files. The main branch ruleset accepts changes only through pull requests and GitHub Actions
+# cannot bypass it, so the workflow opens a pull request instead of pushing to main; a maintainer or the operations
+# harness merges it. No loop: merging that pull request re-runs this workflow, which finds nothing to change.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# One run at a time; a newer push replaces a queued run, and every run starts from the latest main.
+concurrency:
+  group: generate-main
+  cancel-in-progress: false
+
+jobs:
+  generate:
+    name: Generated files
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write # push bot/generated-files (not main)
+      pull-requests: write # open or update the generated-files pull request
+      actions: write # dispatch Validate and Scope on bot/generated-files: the GITHUB_TOKEN pull request starts no pull_request_target run and only an approval-pending pull_request run
+      issues: write # open or update the generated-check-failed issue when strict validation fails
+    env:
+      BRANCH: bot/generated-files
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          ref: main
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 24
+
+      - name: Bump catalog version and prepend changelog section
+        run: node .github/scripts/prepare-generated.mjs
+
+      # Regenerate INDEX.md, NOTICE and the README catalog version, then validate strictly. A failure (for example
+      # two pull requests that pass on their own but clash once both are merged) opens no generated-files pull
+      # request; the next step reports it in an issue instead.
+      - name: Regenerate and validate strictly
+        id: check
+        run: |
+          if node tools/validate.mjs --write && node tools/validate.mjs; then
+            echo "ok=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          echo "ok=false" >> "$GITHUB_OUTPUT"
+          # Machine-readable report when the validator supports it; older validators reject the argument (exit 2).
+          status=0
+          node tools/validate.mjs --format json > "$RUNNER_TEMP/report.txt" 2>&1 || status=$?
+          if [ "$status" = 2 ]; then node tools/validate.mjs > "$RUNNER_TEMP/report.txt" 2>&1 || true; fi
+
+      - name: Open or update the generated-check-failed issue
+        if: steps.check.outputs.ok != 'true'
+        env:
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          # The report quotes catalog content written by contributors: keep it inside a fence longer than any
+          # backtick run it contains, and neutralise HTML comment openers.
+          # shellcheck disable=SC2016 # the single-quoted program is JavaScript
+          MAIN_SHA=$(git rev-parse HEAD) REPORT="$RUNNER_TEMP/report.txt" node --input-type=module -e '
+            import { readFileSync } from "node:fs";
+            const report = readFileSync(process.env.REPORT, "utf8").slice(0, 60000).replaceAll("<!--", "< !--");
+            const fence = "`".repeat(Math.max(3, ...[...report.matchAll(/`+/g)].map((run) => run[0].length + 1)));
+            process.stdout.write([
+              `Strict validation failed on main at ${process.env.MAIN_SHA}, so no generated-files pull request was opened. Fix it with a pull request; this issue is updated on every failing run and closed by the next passing run.`,
+              "",
+              `main ${process.env.MAIN_SHA} 严格校验失败，未开生成物 PR。请提 PR 修复；每次失败运行都会更新本 Issue，下次通过时自动关闭。`,
+              "",
+              `Run: ${process.env.RUN_URL}`,
+              "",
+              fence, report.trimEnd(), fence, ""
+            ].join("\n"));
+          ' > "$RUNNER_TEMP/issue.md"
+          gh label create generated-check-failed --color B60205 --description "Strict validation failed after merge (generate.yml)" --force
+          issue=$(gh issue list --label generated-check-failed --state open --json number --jq '.[0].number // empty')
+          if [ -n "$issue" ]; then
+            gh issue edit "$issue" --body-file "$RUNNER_TEMP/issue.md"
+          else
+            gh issue create --title "Generated files check failed on main" --label generated-check-failed --body-file "$RUNNER_TEMP/issue.md"
+          fi
+          echo "::error::Strict validation failed on main; see the generated-check-failed issue."
+          exit 1
+
+      - name: Commit, push and open the pull request
+        if: steps.check.outputs.ok == 'true'
+        run: |
+          issue=$(gh issue list --label generated-check-failed --state open --json number --jq '.[0].number // empty' 2>/dev/null || true)
+          if [ -n "$issue" ]; then
+            gh issue close "$issue" --comment "Strict validation passes on main at $(git rev-parse HEAD). / 严格校验已通过。"
+          fi
+          if git diff --quiet; then
+            echo "Generated files are up to date; nothing to propose."
+            exit 0
+          fi
+          source=$(git rev-parse HEAD)
+          version=$(cat catalog-version.txt)
+          git add -- INDEX.md NOTICE README.md README.zh-CN.md catalog-version.txt CHANGELOG.md
+          if ! git diff --quiet; then
+            echo "::error::Unexpected changes outside the generated files:"; git status --short; exit 1
+          fi
+          git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' \
+            commit -s -m "chore(catalog): generated files for $version" -m "Catalog-Source: $source"
+          # The token goes into a header for this one command only; it is never written to .git/config or a URL.
+          auth=$(printf 'x-access-token:%s' "$GH_TOKEN" | base64 | tr -d '\n')
+          echo "::add-mask::$auth"
+          git -c "http.https://github.com/.extraheader=AUTHORIZATION: basic $auth" push --force origin "HEAD:refs/heads/$BRANCH"
+
+          title="chore(catalog): generated files for $version"
+          body=$(printf '%s\n\n%s\n\n%s\n\n%s' \
+            "Generated by the Generate workflow from main at $source: catalog-version.txt, CHANGELOG.md, INDEX.md, NOTICE and the README catalog version. Do not edit this branch by hand; it is rebuilt after every merge to main. Merging publishes catalog version $version." \
+            "由 Generate 工作流从 main $source 生成：目录版本、变更日志、INDEX.md、NOTICE 与 README 目录版本。请勿手改本分支，每次合入 main 后会重建。合并即发布目录版本 $version。" \
+            "Merge with a merge commit. The required checks (Catalog, Scope) come from the workflow_dispatch runs on this branch; the DCO job is skipped there and the bot commit is signed off. GitHub also shows a pull_request run awaiting approval because GITHUB_TOKEN opened this pull request: approve it or ignore it, the dispatched runs already satisfy the required checks. / 请以 merge commit 方式合并；必需检查由本分支上的 workflow_dispatch 运行满足，PR 上「等待审批」的 pull_request 运行可批准也可忽略。" \
+            "Catalog-Source: $source")
+          # Looked up after the push. If the pull request was merged or closed in between, editing fails and a new
+          # one is opened for the pushed commit.
+          pr=$(gh pr list --head "$BRANCH" --base main --state open --json number --jq '.[0].number // empty')
+          if [ -n "$pr" ] && gh pr edit "$pr" --title "$title" --body "$body"; then
+            echo "Updated pull request #$pr."
+          elif ! gh pr create --base main --head "$BRANCH" --title "$title" --body "$body"; then
+            echo "::warning::GITHUB_TOKEN could not open the pull request. Enable 'Allow GitHub Actions to create and approve pull requests' in the repository settings, or open it from https://github.com/${GH_REPO}/compare/main...${BRANCH}"
+          fi
+          # GITHUB_TOKEN events start no workflow runs, except that the pull request it opens or updates
+          # (opened/synchronize/reopened) produces a pull_request run held for approval, and no pull_request_target
+          # run at all (GitHub Docs, "Automatic token authentication"). Start Validate and Scope on the branch
+          # explicitly; their check runs attach to the pushed commit and satisfy the required status checks, so the
+          # approval banner on the pull request can be approved or ignored.
+          gh workflow run validate.yml --ref "$BRANCH"
+          gh workflow run scope.yml --ref "$BRANCH"

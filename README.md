@@ -22,8 +22,8 @@ Browse and search online: **https://market.teloa.ai** · Full entry list: [INDEX
 | `catalog/<type>/<id>.json` | One file per entry, format `teloa.market-catalog-entry/v1`. `<type>` is one of `solutions`, `roles`, `skills`, `connectors`, `models` and must match the entry's `kind`. Upstream skills live in `catalog/skills/` too and are marked `delivery: upstream`. |
 | `artifacts/<type>/<id>/<version>/` | Files that Teloa hosts and installs, for `solutions`, `roles`, `skills` and `connectors`. Every version directory ships its own `LICENSE` or `LICENSE.txt`. Upstream entries and model references have no artifacts. |
 | `reviews/<type>/` | Review and verification records, for example connector recipe checks. |
-| `INDEX.md`, `NOTICE` | Generated from `catalog/` by `node tools/validate.mjs --write`. Do not edit by hand. |
-| `catalog-version.txt` | Catalog version, bumped on every change. |
+| `INDEX.md`, `NOTICE` | Generated from `catalog/` by `node tools/validate.mjs --write`, run after merge by `.github/workflows/generate.yml`. Do not edit by hand or in pull requests. |
+| `catalog-version.txt` | Catalog version, bumped after merge by `.github/workflows/generate.yml` together with a `CHANGELOG.md` section. |
 | `tools/validate.mjs` | Single-file validator generated from the Teloa source repository. |
 
 Entry IDs follow `ecosystem.resource`, for example `openai.skill-creator`. IDs and file names never change once published.
@@ -63,7 +63,7 @@ Entries marked `unsupported` cannot be added. Each entry page on market.teloa.ai
 
 ## Contributing
 
-See [CONTRIBUTING.md](CONTRIBUTING.md). Since the repository was published on 2026-09-27, every new contribution must be signed off under the Developer Certificate of Origin (`git commit -s`); there is no CLA. Commits before that date are Teloa's internal curation history imported from the source repository and predate the requirement; CI checks the sign-off only on the commits a pull request adds. Run `node tools/validate.mjs` before opening a pull request.
+See [CONTRIBUTING.md](CONTRIBUTING.md). Since the repository was published on 2026-09-27, every new contribution must be signed off under the Developer Certificate of Origin (`git commit -s`); there is no CLA. Commits before that date are Teloa's internal curation history imported from the source repository and predate the requirement; CI checks the sign-off only on the commits a pull request adds. Run `node tools/validate.mjs --write` before opening a pull request, and commit only `catalog/`, `artifacts/` and `reviews/`.
 
 ## Security
 
