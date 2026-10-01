@@ -27,7 +27,7 @@ _由 `catalog/` 自动生成，请勿手改。在线浏览与搜索：https://ma
 | Customer support · 客户支持 | `teloa.support` | Teloa | Apache-2.0 | verified | 1.0.1 | [catalog/solutions/teloa.support.json](catalog/solutions/teloa.support.json) · [files](artifacts/solutions/teloa.support/1.0.1/) |
 | Video editing · 视频剪辑 | `teloa.video` | Teloa | Apache-2.0 | content-only | 1.0.0 | [catalog/solutions/teloa.video.json](catalog/solutions/teloa.video.json) · [files](artifacts/solutions/teloa.video/1.0.0/) |
 
-## AI teammates · AI 同事 (14)
+## AI employees · AI 员工 (14)
 
 | Name · 名称 | ID | Source · 来源 | License · 许可 | Compatibility · 兼容 | Version · 版本 | Entry · 条目 |
 | --- | --- | --- | --- | --- | --- | --- |
