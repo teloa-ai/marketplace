@@ -2,7 +2,7 @@
 // GENERATED FILE - DO NOT EDIT. / 生成文件，请勿手改。
 // Built in teloa-ai/teloa from scripts/市场目录校验.mjs and packages/contract by `node scripts/生成市场仓校验器.mjs`
 // (pnpm build:market-validator). Validation rules are maintained only in that repository.
-// Source commit: 7ac49823ba8932097aaf18df6eea97c87436914c
+// Source commit: 33209f3c767bfa3c0b283382e82cdfab921cb048
 // Usage: node tools/validate.mjs [--write | --pr] [--format text|json|github]   (--write regenerates INDEX.md and NOTICE; --pr skips them for pull requests; json/github for automated review)
 import { access, lstat, readFile, readdir, realpath, writeFile } from "node:fs/promises";
 import { basename, dirname, isAbsolute, join, relative, resolve, sep } from "node:path";
@@ -85,7 +85,7 @@ function isMarketIndustryRoot(value) {
 	if (typeof value !== "string") return false;
 	return marketIndustryKeys.includes(value) && !value.includes("/");
 }
-const bad$6 = (message) => new WorkError("teloa/invalid-input", message);
+const bad$16 = (message) => new WorkError("teloa/invalid-input", message);
 /**
 * 读取并校验 taxonomy 对象。
 * - 只接受 functions、industries 两个键。
@@ -94,18 +94,18 @@ const bad$6 = (message) => new WorkError("teloa/invalid-input", message);
 * - 遇到未知键、数量违规、重复键或多余属性，抛 WorkError('teloa/invalid-input', …)。
 */
 function readMarketTaxonomy(value) {
-	if (!isRecord(value)) throw bad$6("taxonomy 格式不正确。");
-	if (Object.keys(value).length !== 2 || !Object.hasOwn(value, "functions") || !Object.hasOwn(value, "industries")) throw bad$6("taxonomy 只能包含 functions 与 industries 两个键。");
+	if (!isRecord(value)) throw bad$16("taxonomy 格式不正确。");
+	if (Object.keys(value).length !== 2 || !Object.hasOwn(value, "functions") || !Object.hasOwn(value, "industries")) throw bad$16("taxonomy 只能包含 functions 与 industries 两个键。");
 	const rawFn = value.functions;
 	const rawInd = value.industries;
-	if (!Array.isArray(rawFn) || rawFn.length < 1 || rawFn.length > 2) throw bad$6("taxonomy.functions 必须是 1–2 个功能键。");
-	if (!Array.isArray(rawInd) || rawInd.length < 1 || rawInd.length > 4) throw bad$6("taxonomy.industries 必须是 1–4 个行业键。");
+	if (!Array.isArray(rawFn) || rawFn.length < 1 || rawFn.length > 2) throw bad$16("taxonomy.functions 必须是 1–2 个功能键。");
+	if (!Array.isArray(rawInd) || rawInd.length < 1 || rawInd.length > 4) throw bad$16("taxonomy.industries 必须是 1–4 个行业键。");
 	const fnKeys = rawFn;
-	for (const k of fnKeys) if (!marketFunctionKeys.includes(k)) throw bad$6("taxonomy.functions 包含未知键：" + String(k));
-	if (new Set(fnKeys).size !== fnKeys.length) throw bad$6("taxonomy.functions 不能有重复键。");
+	for (const k of fnKeys) if (!marketFunctionKeys.includes(k)) throw bad$16("taxonomy.functions 包含未知键：" + String(k));
+	if (new Set(fnKeys).size !== fnKeys.length) throw bad$16("taxonomy.functions 不能有重复键。");
 	const indKeys = rawInd;
-	for (const k of indKeys) if (!marketIndustryKeys.includes(k)) throw bad$6("taxonomy.industries 包含未知键：" + String(k));
-	if (new Set(indKeys).size !== indKeys.length) throw bad$6("taxonomy.industries 不能有重复键。");
+	for (const k of indKeys) if (!marketIndustryKeys.includes(k)) throw bad$16("taxonomy.industries 包含未知键：" + String(k));
+	if (new Set(indKeys).size !== indKeys.length) throw bad$16("taxonomy.industries 不能有重复键。");
 	return {
 		functions: [...fnKeys],
 		industries: [...indKeys]
@@ -114,6 +114,7 @@ function readMarketTaxonomy(value) {
 /** 目录条目类型第一层（规格 §4）：应用 MARKET_CATEGORIES 与网站 kindLabel 的相对顺序都以此为准。 */
 const marketEntryKinds = [
 	"solution",
+	"dashboard",
 	"role",
 	"skill",
 	"connector",
@@ -126,14 +127,14 @@ const fields = (value, keys) => {
 	if (!value || typeof value !== "object" || Array.isArray(value) || Object.keys(value).some((key) => !keys.includes(key))) throw new WorkError("teloa/invalid-input", "模型配置格式不正确。");
 	return value;
 };
-const token = (value, max) => typeof value === "string" && value.length > 0 && value.length <= max && value.trim() === value && !/[\s\x00-\x1f\x7f]/.test(value);
+const token$1 = (value, max) => typeof value === "string" && value.length > 0 && value.length <= max && value.trim() === value && !/[\s\x00-\x1f\x7f]/.test(value);
 function readModelReference(value) {
 	const row = fields(value, [
 		"provider",
 		"model",
 		"reasoningEffort"
 	]);
-	if (!token(row.provider, 128) || !token(row.model, 256) || row.reasoningEffort !== void 0 && !token(row.reasoningEffort, 128)) throw new WorkError("teloa/invalid-input", "请选择有效的模型。");
+	if (!token$1(row.provider, 128) || !token$1(row.model, 256) || row.reasoningEffort !== void 0 && !token$1(row.reasoningEffort, 128)) throw new WorkError("teloa/invalid-input", "请选择有效的模型。");
 	return {
 		provider: row.provider,
 		model: row.model,
@@ -145,7 +146,7 @@ const sameModelRoute = (a, b) => a.provider === b.provider && a.model === b.mode
 //#endregion
 //#region packages/contract/src/roles.ts
 function roleInput(value, keys) {
-	if (!value || typeof value !== "object" || Array.isArray(value) || Object.keys(value).some((key) => !keys.includes(key))) throw new WorkError("teloa/invalid-input", "同事请求包含未知字段或格式不正确。");
+	if (!value || typeof value !== "object" || Array.isArray(value) || Object.keys(value).some((key) => !keys.includes(key))) throw new WorkError("teloa/invalid-input", "员工请求包含未知字段或格式不正确。");
 	return value;
 }
 function readRoleRuntimeConfig(value) {
@@ -154,7 +155,7 @@ function readRoleRuntimeConfig(value) {
 		"model",
 		"fallbackModel"
 	]);
-	if (!Object.keys(source).length || source.agentPresetId !== void 0 && (typeof source.agentPresetId !== "string" || !/^[a-z0-9][-a-z0-9]{0,119}$/.test(source.agentPresetId))) throw new WorkError("teloa/invalid-input", "同事运行配置不合法。");
+	if (!Object.keys(source).length || source.agentPresetId !== void 0 && (typeof source.agentPresetId !== "string" || !/^[a-z0-9][-a-z0-9]{0,119}$/.test(source.agentPresetId))) throw new WorkError("teloa/invalid-input", "员工运行配置不合法。");
 	const model = source.model === void 0 ? void 0 : readModelReference(source.model), fallbackModel = source.fallbackModel === void 0 ? void 0 : readModelReference(source.fallbackModel);
 	if (model && fallbackModel && sameModelRoute(model, fallbackModel)) throw new WorkError("teloa/invalid-input", "备用模型不能与首选模型相同。");
 	const result = {
@@ -162,7 +163,7 @@ function readRoleRuntimeConfig(value) {
 		...model ? { model } : {},
 		...fallbackModel ? { fallbackModel } : {}
 	};
-	if (!Object.keys(result).length) throw new WorkError("teloa/invalid-input", "同事运行配置不合法。");
+	if (!Object.keys(result).length) throw new WorkError("teloa/invalid-input", "员工运行配置不合法。");
 	return result;
 }
 function roleDefinition(value) {
@@ -179,7 +180,7 @@ function roleDefinition(value) {
 		"runtimeConfig"
 	]);
 	const fail = () => {
-		throw new WorkError("teloa/invalid-input", "同事职责、范围或能力声明不合法。");
+		throw new WorkError("teloa/invalid-input", "员工职责、范围或能力声明不合法。");
 	};
 	const text = (v, max) => typeof v === "string" && v.trim().length > 0 && v.length <= max ? v.trim() : fail();
 	const list = (v, ids = false) => {
@@ -233,10 +234,10 @@ function roleDefinition(value) {
 * 只支持空格分隔的 >=、>、<=、<、= 比较子与 `*`；不支持 ^ ~ x-range ||，避免引入依赖。
 */
 const semverPattern = /^(\d+)\.(\d+)\.(\d+)(?:-([0-9A-Za-z.-]+))?(?:\+[0-9A-Za-z.-]+)?$/;
-const bad$5 = (message) => new WorkError("teloa/invalid-input", message);
+const bad$15 = (message) => new WorkError("teloa/invalid-input", message);
 function parse(version) {
 	const match = semverPattern.exec(version);
-	if (!match) throw bad$5("版本号格式不正确：" + version);
+	if (!match) throw bad$15("版本号格式不正确：" + version);
 	return {
 		main: [
 			Number(match[1]),
@@ -278,11 +279,11 @@ function compareSemver(a, b) {
 /** 解析范围；`*` 返回空数组（恒满足）。语法错误抛 teloa/invalid-input。 */
 function parseTeloaRange(range) {
 	const trimmed = range.trim();
-	if (!trimmed) throw bad$5("版本范围不能为空。");
+	if (!trimmed) throw bad$15("版本范围不能为空。");
 	if (trimmed === "*") return [];
 	return trimmed.split(/\s+/).map((part) => {
 		const match = /^(>=|>|<=|<|=)?(.+)$/.exec(part);
-		if (!match) throw bad$5("版本范围格式不正确：" + part);
+		if (!match) throw bad$15("版本范围格式不正确：" + part);
 		const version = match[2];
 		parse(version);
 		return {
@@ -364,25 +365,25 @@ const marketDerivativeChangeTypes = [
 /** 二期本机模型（模型二期规格 §4）：Ollama 唯一运行时；名称必须带 tag，digest 为 registry 清单摘要或 null（发布前由脚本填写）。 */
 const ollamaModelNamePattern = /^[a-z0-9][a-z0-9._-]*:[a-z0-9._-]+$/;
 const ollamaDigestPattern = /^sha256:[0-9a-f]{64}$/;
-const bad$4 = (message) => new WorkError("teloa/invalid-input", message);
-const exact$4 = (value, keys, label) => {
-	if (!isRecord(value) || Object.keys(value).length !== keys.length || keys.some((key) => !Object.hasOwn(value, key))) throw bad$4(label + "格式不正确或包含未知字段。");
+const bad$14 = (message) => new WorkError("teloa/invalid-input", message);
+const exact$9 = (value, keys, label) => {
+	if (!isRecord(value) || Object.keys(value).length !== keys.length || keys.some((key) => !Object.hasOwn(value, key))) throw bad$14(label + "格式不正确或包含未知字段。");
 	return value;
 };
-const text = (value, label, max = 500) => {
-	if (typeof value !== "string" || !value.trim() || value !== value.trim() || value.length > max || /[\x00-\x1f\x7f]/.test(value)) throw bad$4(label + "必须填写且不超过 " + max + " 字。");
+const text$2 = (value, label, max = 500) => {
+	if (typeof value !== "string" || !value.trim() || value !== value.trim() || value.length > max || /[\x00-\x1f\x7f]/.test(value)) throw bad$14(label + "必须填写且不超过 " + max + " 字。");
 	return value;
 };
 const list$1 = (value, label, max) => {
-	if (!Array.isArray(value) || value.length > max) throw bad$4(label + "最多 " + max + " 项。");
+	if (!Array.isArray(value) || value.length > max) throw bad$14(label + "最多 " + max + " 项。");
 	return value;
 };
 const distinct = (values, label) => {
-	if (new Set(values).size !== values.length) throw bad$4(label + "不能重复。");
+	if (new Set(values).size !== values.length) throw bad$14(label + "不能重复。");
 	return values;
 };
 const pattern = (value, regex, label) => {
-	if (typeof value !== "string" || !regex.test(value)) throw bad$4(label + "格式不正确。");
+	if (typeof value !== "string" || !regex.test(value)) throw bad$14(label + "格式不正确。");
 	return value;
 };
 const catalogId = /^(?=.{1,120}$)[a-z0-9]+(?:-[a-z0-9]+)*(?:\.[a-z0-9]+(?:-[a-z0-9]+)*){1,2}$/;
@@ -395,7 +396,7 @@ const marketCatalogSkillName = /^(?=.{1,64}$)[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const packageIdPattern = /^[a-zA-Z0-9][a-zA-Z0-9-]{0,119}$/;
 /** 业务范围（与 validateManifest scope 一致）。 */
 const scopePattern = /^[a-zA-Z0-9_-]{1,64}$/;
-const semver$1 = /^(?=.{1,80}$)\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?(?:\+[0-9A-Za-z.-]+)?$/;
+const semver$4 = /^(?=.{1,80}$)\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?(?:\+[0-9A-Za-z.-]+)?$/;
 const hex40 = /^[0-9a-f]{40}$/;
 const hex64 = /^[0-9a-f]{64}$/;
 const githubName = /^[A-Za-z0-9](?:[A-Za-z0-9._-]{0,98}[A-Za-z0-9])?$/;
@@ -415,13 +416,13 @@ const MARKET_CATALOG_LEGAL_FILENAME = /^(?:(?:licen[sc]e|notice|copying)(?:\.(?:
 const MAX_FILE = MARKET_CATALOG_MAX_FILE_SIZE;
 const MAX_TOTAL = MARKET_CATALOG_MAX_TOTAL_SIZE;
 const size = (value, label) => {
-	if (!Number.isSafeInteger(value) || value < 0 || value > MAX_FILE) throw bad$4(label + "大小不正确。");
+	if (!Number.isSafeInteger(value) || value < 0 || value > MAX_FILE) throw bad$14(label + "大小不正确。");
 	return value;
 };
 const invisiblePathCharacter = /[\u0080-\u009f\u200e\u200f\u2028\u2029\u202a-\u202e\u2066-\u2069]/;
 function path(value, label) {
-	const result = text(value, label, 500);
-	if (result.startsWith("/") || result.split("/").some((part) => !part || part === "." || part === "..") || /[\\:?%#]/.test(result) || invisiblePathCharacter.test(result)) throw bad$4(label + "必须是安全的相对路径。");
+	const result = text$2(value, label, 500);
+	if (result.startsWith("/") || result.split("/").some((part) => !part || part === "." || part === "..") || /[\\:?%#]/.test(result) || invisiblePathCharacter.test(result)) throw bad$14(label + "必须是安全的相对路径。");
 	return result;
 }
 /**
@@ -433,15 +434,15 @@ function marketCatalogGithubFileRepositoryPath(directory, file, shape = "upstrea
 	if (file.repositoryPath === void 0) return root + "/" + target;
 	const source = path(file.repositoryPath, "许可文件仓库路径"), parts = source.split("/"), name = parts.at(-1), parent = parts.slice(0, -1).join("/");
 	const placed = target === "licenses/upstream/" + source || shape === "install" && (target === "LICENSE" || target === "LICENSE.txt") && /^licen[sc]e(?:\.(?:txt|md))?$/i.test(name);
-	if (!MARKET_CATALOG_LEGAL_FILENAME.test(name) || parent !== "" && !root.startsWith(parent + "/") || parts.some((part) => part.startsWith(".") || part === "scripts") || !placed) throw bad$4("目录外引用仅允许祖先目录的许可文件，并保留规范安装路径。");
-	if (file.size === null) throw bad$4("目录外许可文件必须固定大小。");
+	if (!MARKET_CATALOG_LEGAL_FILENAME.test(name) || parent !== "" && !root.startsWith(parent + "/") || parts.some((part) => part.startsWith(".") || part === "scripts") || !placed) throw bad$14("目录外引用仅允许祖先目录的许可文件，并保留规范安装路径。");
+	if (file.size === null) throw bad$14("目录外许可文件必须固定大小。");
 	return source;
 }
 function localized(value, label, max = 500) {
-	const row = exact$4(value, ["zh-CN", "en"], label);
+	const row = exact$9(value, ["zh-CN", "en"], label);
 	return {
-		"zh-CN": text(row["zh-CN"], label + "（简体中文）", max),
-		en: text(row.en, label + "（英文）", max)
+		"zh-CN": text$2(row["zh-CN"], label + "（简体中文）", max),
+		en: text$2(row.en, label + "（英文）", max)
 	};
 }
 const secretEnvVar = /^[A-Z][A-Z0-9_]{1,63}$/;
@@ -585,14 +586,14 @@ function skillSecretPathSafe(pathname) {
 	}
 }
 function readSecretPathPrefix(value) {
-	if (typeof value !== "string" || value.length > 256 || !skillSecretPathSafe(value)) throw bad$4("技能密钥路径前缀格式不正确。");
+	if (typeof value !== "string" || value.length > 256 || !skillSecretPathSafe(value)) throw bad$14("技能密钥路径前缀格式不正确。");
 	return value;
 }
 /** 技能密钥声明：只声明变量名、注入位置与目标地址，绝不含值。 */
 function readSkillSecrets(value, skillName) {
 	const rows = list$1(value, "技能密钥声明", 8);
-	if (!rows.length) throw bad$4("技能密钥声明至少一项。");
-	if (!secretSkillName.test(skillName)) throw bad$4("声明密钥的技能名必须是小写字母开头的连字符标识。");
+	if (!rows.length) throw bad$14("技能密钥声明至少一项。");
+	if (!secretSkillName.test(skillName)) throw bad$14("声明密钥的技能名必须是小写字母开头的连字符标识。");
 	const secrets = rows.map((input) => {
 		const named = isRecord(input) && (input.target === "header" || input.target === "query");
 		const keys = [
@@ -605,17 +606,17 @@ function readSkillSecrets(value, skillName) {
 			...isRecord(input) && input.methods !== void 0 ? ["methods"] : [],
 			...isRecord(input) && input.allowHeaders !== void 0 ? ["allowHeaders"] : []
 		];
-		const row = exact$4(input, keys, "技能密钥声明");
-		if (row.target !== "bearer" && row.target !== "header" && row.target !== "query") throw bad$4("技能密钥注入位置只能是 bearer、header 或 query。");
-		if (typeof row.required !== "boolean") throw bad$4("技能密钥 required 必须是布尔值。");
+		const row = exact$9(input, keys, "技能密钥声明");
+		if (row.target !== "bearer" && row.target !== "header" && row.target !== "query") throw bad$14("技能密钥注入位置只能是 bearer、header 或 query。");
+		if (typeof row.required !== "boolean") throw bad$14("技能密钥 required 必须是布尔值。");
 		const endpointRows = list$1(row.endpoints, "技能密钥目标地址", 4);
-		if (!endpointRows.length) throw bad$4("技能密钥目标地址至少一项。");
+		if (!endpointRows.length) throw bad$14("技能密钥目标地址至少一项。");
 		const endpoints = endpointRows.map((item) => {
-			const ep = exact$4(item, ["origin", "pathPrefixes"], "技能密钥目标地址");
+			const ep = exact$9(item, ["origin", "pathPrefixes"], "技能密钥目标地址");
 			const origin = pattern(ep.origin, secretOrigin, "技能密钥目标地址 origin");
-			if (secretForbiddenTlds.has(origin.slice(origin.lastIndexOf(".") + 1))) throw bad$4("技能密钥目标地址 origin 不能是本地或特殊用途域名。");
+			if (secretForbiddenTlds.has(origin.slice(origin.lastIndexOf(".") + 1))) throw bad$14("技能密钥目标地址 origin 不能是本地或特殊用途域名。");
 			const prefixes = distinct(list$1(ep.pathPrefixes, "技能密钥路径前缀", 8).map(readSecretPathPrefix), "技能密钥路径前缀");
-			if (!prefixes.length) throw bad$4("技能密钥路径前缀至少一项。");
+			if (!prefixes.length) throw bad$14("技能密钥路径前缀至少一项。");
 			return {
 				origin,
 				pathPrefixes: prefixes
@@ -623,12 +624,12 @@ function readSkillSecrets(value, skillName) {
 		});
 		distinct(endpoints.map((ep) => ep.origin), "技能密钥目标地址 origin");
 		const methods = row.methods === void 0 ? ["GET", "POST"] : distinct(list$1(row.methods, "技能密钥方法", 5).map((m) => {
-			if (!skillSecretMethods.includes(m)) throw bad$4("技能密钥方法只能是 GET、POST、PUT、PATCH、DELETE。");
+			if (!skillSecretMethods.includes(m)) throw bad$14("技能密钥方法只能是 GET、POST、PUT、PATCH、DELETE。");
 			return m;
 		}), "技能密钥方法");
-		if (!methods.length) throw bad$4("技能密钥方法至少一项。");
+		if (!methods.length) throw bad$14("技能密钥方法至少一项。");
 		const envVarName = pattern(row.envVarName, secretEnvVar, "技能密钥变量名");
-		if (envVarName === "TELOA_BINDING_SHA256") throw bad$4("技能密钥变量名为保留名。");
+		if (envVarName === "TELOA_BINDING_SHA256") throw bad$14("技能密钥变量名为保留名。");
 		const secret = {
 			envVarName,
 			label: localized(row.label, "技能密钥名称", 120),
@@ -639,16 +640,16 @@ function readSkillSecrets(value, skillName) {
 		};
 		if (named) {
 			const name = pattern(row.name, row.target === "header" ? secretHeaderName : secretQueryName, "技能密钥注入名");
-			if (row.target === "header" && isForbiddenSecretHeader(name)) throw bad$4("技能密钥注入头名不允许。");
+			if (row.target === "header" && isForbiddenSecretHeader(name)) throw bad$14("技能密钥注入头名不允许。");
 			secret.name = name;
 		}
 		if (row.allowHeaders !== void 0) {
 			const allowHeaders = list$1(row.allowHeaders, "附加请求头", 8).map((item) => pattern(item, secretHeaderName, "附加请求头名"));
-			if (!allowHeaders.length) throw bad$4("附加请求头至少一项。");
+			if (!allowHeaders.length) throw bad$14("附加请求头至少一项。");
 			distinct(allowHeaders.map(normalizedHeaderName), "附加请求头");
 			for (const header of allowHeaders) {
-				if (isForbiddenModelHeader(header)) throw bad$4("附加请求头不能是模型禁用头：" + header + "。");
-				if (skillHttpBaseHeaders.has(normalizedHeaderName(header))) throw bad$4("附加请求头已在基础白名单内，不必重复声明：" + header + "。");
+				if (isForbiddenModelHeader(header)) throw bad$14("附加请求头不能是模型禁用头：" + header + "。");
+				if (skillHttpBaseHeaders.has(normalizedHeaderName(header))) throw bad$14("附加请求头已在基础白名单内，不必重复声明：" + header + "。");
 			}
 			secret.allowHeaders = allowHeaders;
 		}
@@ -657,18 +658,18 @@ function readSkillSecrets(value, skillName) {
 	distinct(secrets.map((secret) => secret.envVarName), "技能密钥变量名");
 	distinct(secrets.map((secret) => secret.target === "bearer" ? "header:authorization" : secret.target === "header" ? "header:" + normalizedHeaderName(secret.name) : "query:" + secret.name), "技能密钥注入位置");
 	const injected = new Set(secrets.filter((secret) => secret.target === "header").map((secret) => normalizedHeaderName(secret.name)));
-	for (const secret of secrets) for (const header of secret.allowHeaders ?? []) if (injected.has(normalizedHeaderName(header))) throw bad$4("附加请求头不能与本条目的注入头重名：" + header + "。");
+	for (const secret of secrets) for (const header of secret.allowHeaders ?? []) if (injected.has(normalizedHeaderName(header))) throw bad$14("附加请求头不能与本条目的注入头重名：" + header + "。");
 	return secrets;
 }
 /** 带 `secrets` 的条目版本闸（计划关键决定 9）：旧应用不认识 secrets，条目必须把不认识的版本排除在兼容范围外，并声明依赖宿主工具。 */
 function readSkillSecretGate(entry) {
-	if (entry.compatibility.status !== "needs-configuration") throw bad$4("声明密钥的技能条目兼容状态必须是 needs-configuration。");
-	if (teloaRangeSatisfies(entry.compatibility.teloa, "0.2.0-alpha.6")) throw bad$4("声明密钥的技能条目 Teloa 兼容范围不能包含 0.2.0-alpha.6 及更早版本。");
-	if (!entry.requires.tools.includes("teloa_skill_http")) throw bad$4("声明密钥的技能条目 requires.tools 必须包含 teloa_skill_http。");
+	if (entry.compatibility.status !== "needs-configuration") throw bad$14("声明密钥的技能条目兼容状态必须是 needs-configuration。");
+	if (teloaRangeSatisfies(entry.compatibility.teloa, "0.2.0-alpha.6")) throw bad$14("声明密钥的技能条目 Teloa 兼容范围不能包含 0.2.0-alpha.6 及更早版本。");
+	if (!entry.requires.tools.includes("teloa_skill_http")) throw bad$14("声明密钥的技能条目 requires.tools 必须包含 teloa_skill_http。");
 }
 /** 目录扩展字段的版本闸（规格 2026-09-27 §3）：旧读取器按 exact 键整份拒收未知字段，条目必须把不认识的版本排除在兼容范围外。 */
 function readExtensionsGate(entry) {
-	if (teloaRangeSatisfies(entry.compatibility.teloa, "0.2.0-alpha.6")) throw bad$4("使用目录扩展字段的条目 Teloa 兼容范围不能包含 0.2.0-alpha.6 及更早版本。");
+	if (teloaRangeSatisfies(entry.compatibility.teloa, "0.2.0-alpha.6")) throw bad$14("使用目录扩展字段的条目 Teloa 兼容范围不能包含 0.2.0-alpha.6 及更早版本。");
 }
 /**
 * 代发调用指引正文：1–2000 字符、至多 40 行，只允许 `\n`，首尾不留空白；C1 控制字符与双向覆盖 / 隔离字符会在模型提示里视觉隐藏内容，一并拒绝。
@@ -676,13 +677,13 @@ function readExtensionsGate(entry) {
 * 可藏在【】之间——与宿主确认卡预览的替换集（U+2060–U+2069 整段）对齐，一并拒绝（复审 LOW-2、审查 R1 L5）。
 */
 function guideText(value, label) {
-	if (typeof value !== "string" || !value.trim() || value !== value.trim() || value.length > httpGuideMaxLength || /[\x00-\x09\x0b-\x1f\x7f-\x9f\xad\u200b-\u200f\u2028-\u202e\u2060-\u2069\ufeff]/.test(value) || value.split("\n").length > httpGuideMaxLines) throw bad$4(label + "必须填写，不超过 2000 字、40 行，且只允许换行一种控制字符，不得含双向覆盖字符或零宽字符。");
-	if (value.split("\n").some((line) => hostPrefixLine.test(line))) throw bad$4(label + "的任何一行都不得以【Teloa】开头（该前缀保留给宿主提示）。");
+	if (typeof value !== "string" || !value.trim() || value !== value.trim() || value.length > httpGuideMaxLength || /[\x00-\x09\x0b-\x1f\x7f-\x9f\xad\u200b-\u200f\u2028-\u202e\u2060-\u2069\ufeff]/.test(value) || value.split("\n").length > httpGuideMaxLines) throw bad$14(label + "必须填写，不超过 2000 字、40 行，且只允许换行一种控制字符，不得含双向覆盖字符或零宽字符。");
+	if (value.split("\n").some((line) => hostPrefixLine.test(line))) throw bad$14(label + "的任何一行都不得以【Teloa】开头（该前缀保留给宿主提示）。");
 	return value;
 }
 const hostPrefixLine = /^\s*【\s*teloa\s*】/i;
 function readHttpGuide(value) {
-	const row = exact$4(value, ["zh-CN", "en"], "调用指引");
+	const row = exact$9(value, ["zh-CN", "en"], "调用指引");
 	return {
 		"zh-CN": guideText(row["zh-CN"], "调用指引（简体中文）"),
 		en: guideText(row.en, "调用指引（英文）")
@@ -715,6 +716,7 @@ function usesConnectorExtensions(connector) {
 }
 /** v1 冻结索引不能收的条目：旧应用按 exact 键整份拒收未知字段（secrets、全部目录扩展字段与二次开发相关字段），旧版连接器读取器也不认识 OAuth 的 supported 字段。 */
 function marketEntryNeedsV2(entry) {
+	if (entry.kind === "dashboard") return true;
 	if (entry.kind === "skill") return entry.secrets !== void 0 || entry.httpGuide !== void 0 || entry.secretGroup !== void 0 || marketEntryUsesDerivativeFields(entry);
 	if (entry.kind !== "connector") return false;
 	return entry.connector.auth.kind === "oauth" || usesConnectorExtensions(entry.connector);
@@ -744,12 +746,12 @@ function assertSecretGroupsConsistent(entries) {
 			});
 			continue;
 		}
-		if (first.shape !== shape) throw bad$4("共享密钥组 " + entry.secretGroup + " 的声明不一致：" + first.id + " 与 " + entry.id + " 的变量集合或目标 origin 集合不同。");
+		if (first.shape !== shape) throw bad$14("共享密钥组 " + entry.secretGroup + " 的声明不一致：" + first.id + " 与 " + entry.id + " 的变量集合或目标 origin 集合不同。");
 	}
 }
 /** 推荐替代与连接器其他来源的版本闸：带这些新字段的条目，兼容范围须有不低于 marketAlternativesMinimumTeloa 的下界。 */
 function readAlternativesGate(entry) {
-	if ((entry.kind === "connector" ? entry.alternatives !== void 0 : "alternatives" in entry && !!entry.alternatives?.some((item) => item.recommended)) && !teloaRangeHasLowerBound(entry.compatibility.teloa, "0.2.0-alpha.7")) throw bad$4("带推荐替代或连接器其他来源的条目，Teloa 兼容下界须为 0.2.0-alpha.7 或更高（旧版应用不认识这些字段）。");
+	if ((entry.kind === "connector" ? entry.alternatives !== void 0 : "alternatives" in entry && !!entry.alternatives?.some((item) => item.recommended)) && !teloaRangeHasLowerBound(entry.compatibility.teloa, "0.2.0-alpha.7")) throw bad$14("带推荐替代或连接器其他来源的条目，Teloa 兼容下界须为 0.2.0-alpha.7 或更高（旧版应用不认识这些字段）。");
 }
 /** 条目是否用了二次开发相关新字段（版本闸用它；v1 过滤经 marketEntryNeedsV2 并入同一判定）。 */
 function marketEntryUsesDerivativeFields(entry) {
@@ -759,74 +761,74 @@ function marketEntryUsesDerivativeFields(entry) {
 }
 /** 二次开发相关新字段的版本闸：兼容范围须有不低于 marketDerivativeMinimumTeloa 的下界。 */
 function readDerivativeGate(entry) {
-	if (marketEntryUsesDerivativeFields(entry) && !teloaRangeHasLowerBound(entry.compatibility.teloa, "0.2.0-alpha.7")) throw bad$4("用到二次开发说明、原版文件摘要、许可映射或安装量来源的条目，Teloa 兼容下界须为 0.2.0-alpha.7 或更高（旧版应用不认识这些字段）。");
+	if (marketEntryUsesDerivativeFields(entry) && !teloaRangeHasLowerBound(entry.compatibility.teloa, "0.2.0-alpha.7")) throw bad$14("用到二次开发说明、原版文件摘要、许可映射或安装量来源的条目，Teloa 兼容下界须为 0.2.0-alpha.7 或更高（旧版应用不认识这些字段）。");
 }
 function date(value, label) {
 	const result = pattern(value, /^\d{4}-\d{2}-\d{2}$/, label), parsed = /* @__PURE__ */ new Date(result + "T00:00:00.000Z");
-	if (!Number.isFinite(parsed.getTime()) || parsed.toISOString().slice(0, 10) !== result) throw bad$4(label + "不是有效日期。");
+	if (!Number.isFinite(parsed.getTime()) || parsed.toISOString().slice(0, 10) !== result) throw bad$14(label + "不是有效日期。");
 	return result;
 }
 function readCommonFields(row, opts = {}) {
-	const licenseRow = exact$4(row.license, opts.licenseUrl ? [
+	const licenseRow = exact$9(row.license, opts.licenseUrl ? [
 		"spdx",
 		"files",
 		"url"
 	] : ["spdx", "files"], "许可");
 	const licenseFiles = distinct(list$1(licenseRow.files, "许可文件", 20).map((file) => path(file, "许可文件路径")), "许可文件");
-	const compatibilityRow = exact$4(row.compatibility, [
+	const compatibilityRow = exact$9(row.compatibility, [
 		"status",
 		"teloa",
 		"dsh",
 		"conditions"
 	], "兼容声明");
-	if (!marketCatalogCompatibility.includes(compatibilityRow.status)) throw bad$4("兼容状态只能是 verified、needs-configuration、content-only 或 unsupported。");
-	if (licenseRow.spdx === "NOASSERTION" && (row.kind !== "skill" || row.delivery !== "upstream" || compatibilityRow.status !== "unsupported" || licenseFiles.length !== 0)) throw bad$4("NOASSERTION 只用于不可添加的上游仅出处条目。");
-	if (!licenseFiles.length && !opts.allowEmptyLicenseFiles) throw bad$4("许可文件至少一项。");
-	const teloaRange = text(compatibilityRow.teloa, "Teloa 兼容范围", 120);
+	if (!marketCatalogCompatibility.includes(compatibilityRow.status)) throw bad$14("兼容状态只能是 verified、needs-configuration、content-only 或 unsupported。");
+	if (licenseRow.spdx === "NOASSERTION" && (row.kind !== "skill" || row.delivery !== "upstream" || compatibilityRow.status !== "unsupported" || licenseFiles.length !== 0)) throw bad$14("NOASSERTION 只用于不可添加的上游仅出处条目。");
+	if (!licenseFiles.length && !opts.allowEmptyLicenseFiles) throw bad$14("许可文件至少一项。");
+	const teloaRange = text$2(compatibilityRow.teloa, "Teloa 兼容范围", 120);
 	try {
 		parseTeloaRange(teloaRange);
 	} catch {
-		throw bad$4("Teloa 兼容范围格式不正确：" + teloaRange);
+		throw bad$14("Teloa 兼容范围格式不正确：" + teloaRange);
 	}
-	const requiresRow = exact$4(row.requires, [
+	const requiresRow = exact$9(row.requires, [
 		"tools",
 		"network",
 		"runtimes"
 	], "运行需求");
-	if (typeof requiresRow.network !== "boolean") throw bad$4("联网需求必须是布尔值。");
-	const reviewRow = exact$4(row.review, [
+	if (typeof requiresRow.network !== "boolean") throw bad$14("联网需求必须是布尔值。");
+	const reviewRow = exact$9(row.review, [
 		"status",
 		"reviewedAt",
 		"reviewer"
 	], "审核记录");
-	if (reviewRow.status !== "approved") throw bad$4("目录只收录审核通过的条目。");
+	if (reviewRow.status !== "approved") throw bad$14("目录只收录审核通过的条目。");
 	return {
 		modifications: list$1(row.modifications, "修改说明", 50).map((item) => localized(item, "修改说明", 1e3)),
 		license: {
-			spdx: text(licenseRow.spdx, "许可", 200),
+			spdx: text$2(licenseRow.spdx, "许可", 200),
 			files: licenseFiles,
 			...opts.licenseUrl ? { url: pattern(licenseRow.url, httpsUrl, "许可链接") } : {}
 		},
 		compatibility: {
 			status: compatibilityRow.status,
 			teloa: teloaRange,
-			dsh: text(compatibilityRow.dsh, "DSH 兼容范围", 120),
+			dsh: text$2(compatibilityRow.dsh, "DSH 兼容范围", 120),
 			conditions: list$1(compatibilityRow.conditions, "兼容条件", 20).map((item) => localized(item, "兼容条件"))
 		},
 		requires: {
 			tools: distinct(list$1(requiresRow.tools, "所需工具", 50).map((item) => pattern(item, /^[A-Za-z0-9_:.-]{1,120}$/, "工具名")), "所需工具"),
 			network: requiresRow.network,
-			runtimes: distinct(list$1(requiresRow.runtimes, "运行时", 20).map((item) => text(item, "运行时", 120)), "运行时")
+			runtimes: distinct(list$1(requiresRow.runtimes, "运行时", 20).map((item) => text$2(item, "运行时", 120)), "运行时")
 		},
 		review: {
 			status: "approved",
 			reviewedAt: date(reviewRow.reviewedAt, "审核日期"),
-			reviewer: text(reviewRow.reviewer, "审核人", 200)
+			reviewer: text$2(reviewRow.reviewer, "审核人", 200)
 		}
 	};
 }
 function readSkillUpstream(value) {
-	const upstreamRow = exact$4(value, [
+	const upstreamRow = exact$9(value, [
 		"ecosystem",
 		"author",
 		"repository",
@@ -835,15 +837,15 @@ function readSkillUpstream(value) {
 		"license",
 		"files"
 	], "上游来源");
-	const repositoryRow = exact$4(upstreamRow.repository, [
+	const repositoryRow = exact$9(upstreamRow.repository, [
 		"host",
 		"owner",
 		"repo"
 	], "上游仓库");
-	if (repositoryRow.host !== "github.com") throw bad$4("上游仓库目前只支持 github.com。");
+	if (repositoryRow.host !== "github.com") throw bad$14("上游仓库目前只支持 github.com。");
 	const upstreamFiles = list$1(upstreamRow.files, "上游文件", 500).map((input) => {
 		const present = (key) => isRecord(input) && Object.hasOwn(input, key) ? [key] : [];
-		const file = exact$4(input, [
+		const file = exact$9(input, [
 			"path",
 			"gitBlob",
 			"size",
@@ -858,13 +860,13 @@ function readSkillUpstream(value) {
 			...Object.hasOwn(file, "repositoryPath") ? { repositoryPath: path(file.repositoryPath, "许可文件仓库路径") } : {}
 		};
 	});
-	if (!upstreamFiles.length) throw bad$4("上游文件至少一项。");
+	if (!upstreamFiles.length) throw bad$14("上游文件至少一项。");
 	distinct(upstreamFiles.map((file) => file.path), "上游文件路径");
 	const directory = path(upstreamRow.path, "上游目录");
 	distinct(upstreamFiles.map((file) => marketCatalogGithubFileRepositoryPath(directory, file, "install").normalize("NFC").toLocaleLowerCase("en-US")), "上游仓库文件路径");
 	return {
 		ecosystem: pattern(upstreamRow.ecosystem, /^[a-z0-9-]{1,40}$/, "上游生态"),
-		author: text(upstreamRow.author, "上游作者", 200),
+		author: text$2(upstreamRow.author, "上游作者", 200),
 		repository: {
 			host: "github.com",
 			owner: pattern(repositoryRow.owner, githubName, "上游仓库 owner"),
@@ -872,7 +874,7 @@ function readSkillUpstream(value) {
 		},
 		commit: pattern(upstreamRow.commit, hex40, "上游提交"),
 		path: directory,
-		license: text(upstreamRow.license, "上游许可", 200),
+		license: text$2(upstreamRow.license, "上游许可", 200),
 		files: upstreamFiles
 	};
 }
@@ -882,18 +884,18 @@ const foldPath = (value) => value.normalize("NFC").toLocaleLowerCase("en-US");
 const derivativeUpstreamRef = /^([^/@:\s]+)\/([^/@:\s]+)@([0-9a-f]{40}):(.+)$/;
 /** 二次开发说明（规格 D2、D3、D5）：修改只登记在 changes；每条 upstream 指向本条目锁定的同一仓库、提交与某个原版文件，null 只给原版没有的新文件。 */
 function readDerivation(value, upstream, modifications) {
-	const row = exact$4(value, ["unchangedFiles", "changes"], "二次开发说明");
-	if (modifications.length) throw bad$4("二次开发条目的修改只登记在 derivation.changes，modifications 必须为空。");
-	if (upstream.files.some((file) => file.sha256 === void 0)) throw bad$4("二次开发条目的每个原版文件都必须固定 sha256 摘要。");
+	const row = exact$9(value, ["unchangedFiles", "changes"], "二次开发说明");
+	if (modifications.length) throw bad$14("二次开发条目的修改只登记在 derivation.changes，modifications 必须为空。");
+	if (upstream.files.some((file) => file.sha256 === void 0)) throw bad$14("二次开发条目的每个原版文件都必须固定 sha256 摘要。");
 	const originals = new Set(upstream.files.map((file) => file.path));
 	const repositoryPathOf = new Map(upstream.files.map((file) => [file.path, marketCatalogGithubFileRepositoryPath(upstream.path, file, "install")]));
 	const repositoryPaths = new Set(repositoryPathOf.values());
 	const originalByFold = new Map(upstream.files.map((file) => [foldPath(file.path), file.path]));
 	const changeRows = list$1(row.changes, "修改清单", 200);
-	if (!changeRows.length) throw bad$4("修改清单至少一项。");
+	if (!changeRows.length) throw bad$14("修改清单至少一项。");
 	const changes = changeRows.map((input) => {
 		const hasSection = isRecord(input) && Object.hasOwn(input, "section");
-		const item = exact$4(input, [
+		const item = exact$9(input, [
 			"id",
 			"type",
 			"path",
@@ -903,23 +905,23 @@ function readDerivation(value, upstream, modifications) {
 			"reason"
 		], "修改条目");
 		const id = pattern(item.id, derivativeChangeId, "修改编号");
-		if (!marketDerivativeChangeTypes.includes(item.type)) throw bad$4("修改类型只能是 " + marketDerivativeChangeTypes.join("、") + "。");
+		if (!marketDerivativeChangeTypes.includes(item.type)) throw bad$14("修改类型只能是 " + marketDerivativeChangeTypes.join("、") + "。");
 		const filePath = path(item.path, "修改文件路径");
-		const section = hasSection ? text(item.section, "修改位置", 200) : void 0;
-		if (section !== void 0 && invisiblePathCharacter.test(section)) throw bad$4("修改位置不能含不可见或双向控制字符。");
+		const section = hasSection ? text$2(item.section, "修改位置", 200) : void 0;
+		if (section !== void 0 && invisiblePathCharacter.test(section)) throw bad$14("修改位置不能含不可见或双向控制字符。");
 		const sameFold = originalByFold.get(foldPath(filePath));
-		if (sameFold !== void 0 && sameFold !== filePath) throw bad$4("修改 " + id + " 的文件 " + filePath + " 与原版文件 " + sameFold + " 只差大小写，会在不区分大小写的文件系统上覆盖原版文件。");
+		if (sameFold !== void 0 && sameFold !== filePath) throw bad$14("修改 " + id + " 的文件 " + filePath + " 与原版文件 " + sameFold + " 只差大小写，会在不区分大小写的文件系统上覆盖原版文件。");
 		if (item.upstream === null) {
-			if (originals.has(filePath)) throw bad$4("修改 " + id + " 的文件 " + filePath + " 是原版文件，upstream 必须指向原版文件。");
-			if (item.type === "removed") throw bad$4("removed 修改 " + id + " 必须用 upstream 指明被移除的原版文件。");
+			if (originals.has(filePath)) throw bad$14("修改 " + id + " 的文件 " + filePath + " 是原版文件，upstream 必须指向原版文件。");
+			if (item.type === "removed") throw bad$14("removed 修改 " + id + " 必须用 upstream 指明被移除的原版文件。");
 		} else {
 			const ref = typeof item.upstream === "string" ? derivativeUpstreamRef.exec(item.upstream) : null;
-			if (!ref || ref[1] !== upstream.repository.owner || ref[2] !== upstream.repository.repo || ref[3] !== upstream.commit) throw bad$4("修改 " + id + " 的 upstream 必须写成 <owner>/<repo>@<40 位提交>:<仓库内路径>，且与条目锁定的仓库和提交一致。");
+			if (!ref || ref[1] !== upstream.repository.owner || ref[2] !== upstream.repository.repo || ref[3] !== upstream.commit) throw bad$14("修改 " + id + " 的 upstream 必须写成 <owner>/<repo>@<40 位提交>:<仓库内路径>，且与条目锁定的仓库和提交一致。");
 			const source = path(ref[4], "修改的原版文件路径");
-			if (!repositoryPaths.has(source)) throw bad$4("修改 " + id + " 的 upstream 必须指向本条目的某个原版文件。");
-			if (originals.has(filePath) && repositoryPathOf.get(filePath) !== source) throw bad$4("修改 " + id + " 改的是原版文件 " + filePath + "，upstream 必须指向该文件在原版仓库里的路径。");
+			if (!repositoryPaths.has(source)) throw bad$14("修改 " + id + " 的 upstream 必须指向本条目的某个原版文件。");
+			if (originals.has(filePath) && repositoryPathOf.get(filePath) !== source) throw bad$14("修改 " + id + " 改的是原版文件 " + filePath + "，upstream 必须指向该文件在原版仓库里的路径。");
 		}
-		if (item.type === "removed" && !originals.has(filePath)) throw bad$4("removed 修改 " + id + " 的文件 " + filePath + " 必须是原版文件。");
+		if (item.type === "removed" && !originals.has(filePath)) throw bad$14("removed 修改 " + id + " 的文件 " + filePath + " 必须是原版文件。");
 		return {
 			id,
 			type: item.type,
@@ -933,35 +935,35 @@ function readDerivation(value, upstream, modifications) {
 	distinct(changes.map((change) => change.id), "修改编号");
 	const unchangedFiles = distinct(list$1(row.unchangedFiles, "未修改文件", 500).map((item) => path(item, "未修改文件路径")), "未修改文件");
 	for (const file of unchangedFiles) {
-		if (!originals.has(file)) throw bad$4("未修改文件 " + file + " 不是原版文件。");
-		if (changes.some((change) => change.path === file)) throw bad$4("未修改文件 " + file + " 同时被修改清单引用。");
+		if (!originals.has(file)) throw bad$14("未修改文件 " + file + " 不是原版文件。");
+		if (changes.some((change) => change.path === file)) throw bad$14("未修改文件 " + file + " 同时被修改清单引用。");
 	}
-	if (originals.has("MODIFICATIONS.md") && !changes.some((change) => change.path === "MODIFICATIONS.md")) throw bad$4("原版自带 MODIFICATIONS.md，须在修改清单里登记对它的改写。");
+	if (originals.has("MODIFICATIONS.md") && !changes.some((change) => change.path === "MODIFICATIONS.md")) throw bad$14("原版自带 MODIFICATIONS.md，须在修改清单里登记对它的改写。");
 	return {
 		unchangedFiles,
 		changes
 	};
 }
 function readSkillEntry(row) {
-	if (row.format !== "teloa.market-catalog-entry/v1") throw bad$4("目录条目格式版本不受支持。");
-	if (row.delivery !== "builtin" && row.delivery !== "install") throw bad$4("目录条目交付方式只能是 builtin 或 install。");
-	const skillRow = exact$4(row.skill, [
+	if (row.format !== "teloa.market-catalog-entry/v1") throw bad$14("目录条目格式版本不受支持。");
+	if (row.delivery !== "builtin" && row.delivery !== "install") throw bad$14("目录条目交付方式只能是 builtin 或 install。");
+	const skillRow = exact$9(row.skill, [
 		"name",
 		"title",
 		"summary"
 	], "技能信息");
 	const name = pattern(skillRow.name, marketCatalogSkillName, "技能名");
-	if (row.delivery === "builtin" && !name.startsWith("teloa-")) throw bad$4("内置技能名必须以 teloa- 开头。");
-	if (row.delivery === "install" && name.startsWith("teloa-")) throw bad$4("teloa- 前缀保留给内置技能，安装型条目不能使用。");
-	if (row.upstream === null && row.delivery !== "builtin") throw bad$4("只有 Teloa 内置技能的 upstream 可以为 null。");
-	if (Object.hasOwn(row, "derivation") && (row.delivery !== "install" || row.upstream === null)) throw bad$4("二次开发说明只用于有原版来源的安装型技能条目。");
+	if (row.delivery === "builtin" && !name.startsWith("teloa-")) throw bad$14("内置技能名必须以 teloa- 开头。");
+	if (row.delivery === "install" && name.startsWith("teloa-")) throw bad$14("teloa- 前缀保留给内置技能，安装型条目不能使用。");
+	if (row.upstream === null && row.delivery !== "builtin") throw bad$14("只有 Teloa 内置技能的 upstream 可以为 null。");
+	if (Object.hasOwn(row, "derivation") && (row.delivery !== "install" || row.upstream === null)) throw bad$14("二次开发说明只用于有原版来源的安装型技能条目。");
 	const upstream = row.upstream === null ? null : readSkillUpstream(row.upstream), common = readCommonFields(row);
 	return {
 		format: "teloa.market-catalog-entry/v1",
 		id: pattern(row.id, catalogId, "目录条目标识"),
 		kind: "skill",
 		delivery: row.delivery,
-		version: pattern(row.version, semver$1, "条目版本"),
+		version: pattern(row.version, semver$4, "条目版本"),
 		taxonomy: readMarketTaxonomy(row.taxonomy),
 		skill: {
 			name,
@@ -974,10 +976,10 @@ function readSkillEntry(row) {
 	};
 }
 function readSolutionEntry(row) {
-	if (row.format !== "teloa.market-catalog-entry/v1") throw bad$4("目录条目格式版本不受支持。");
-	if (row.delivery !== "install") throw bad$4("方案条目只能以 install 方式交付。");
-	if (row.upstream !== null) throw bad$4("方案条目的 upstream 必须为 null。");
-	const solutionRow = exact$4(row.solution, [
+	if (row.format !== "teloa.market-catalog-entry/v1") throw bad$14("目录条目格式版本不受支持。");
+	if (row.delivery !== "install") throw bad$14("方案条目只能以 install 方式交付。");
+	if (row.upstream !== null) throw bad$14("方案条目的 upstream 必须为 null。");
+	const solutionRow = exact$9(row.solution, [
 		"packageId",
 		"title",
 		"summary",
@@ -985,14 +987,14 @@ function readSolutionEntry(row) {
 		"capabilities"
 	], "方案信息");
 	const packageId = pattern(solutionRow.packageId, packageIdPattern, "方案包标识");
-	const capabilitiesRow = exact$4(solutionRow.capabilities, [
+	const capabilitiesRow = exact$9(solutionRow.capabilities, [
 		"now",
 		"needs",
 		"permissions"
 	], "方案能力说明");
 	const capabilityList = (value, label) => {
 		const items = list$1(value, label, 20);
-		if (!items.length) throw bad$4(label + "至少一项。");
+		if (!items.length) throw bad$14(label + "至少一项。");
 		return items.map((item) => localized(item, label, 300));
 	};
 	return {
@@ -1000,7 +1002,7 @@ function readSolutionEntry(row) {
 		id: pattern(row.id, catalogId, "目录条目标识"),
 		kind: "solution",
 		delivery: "install",
-		version: pattern(row.version, semver$1, "条目版本"),
+		version: pattern(row.version, semver$4, "条目版本"),
 		upstream: null,
 		taxonomy: readMarketTaxonomy(row.taxonomy),
 		solution: {
@@ -1015,6 +1017,22 @@ function readSolutionEntry(row) {
 			}
 		},
 		...readCommonFields(row)
+	};
+}
+/** alpha.7 尚未发行；新类型与完整配置资源同批提供，不冒充旧安装器可以读取。 */
+const marketDashboardMinimumTeloa = "0.2.0-alpha.7";
+function readDashboardEntry(row) {
+	const { dashboard, ...rest } = row;
+	const { solution, ...entry } = readSolutionEntry({
+		...rest,
+		kind: "solution",
+		solution: dashboard
+	});
+	if (!teloaRangeHasLowerBound(entry.compatibility.teloa, "0.2.0-alpha.7")) throw bad$14("业务看板资源的 Teloa 兼容下界须为 0.2.0-alpha.7 或更高。");
+	return {
+		...entry,
+		kind: "dashboard",
+		dashboard: solution
 	};
 }
 const npmPackageName = /^(?:@[a-z0-9-~][a-z0-9-._~]*\/)?[a-z0-9-~][a-z0-9-._~]*$/;
@@ -1090,40 +1108,40 @@ function isForbiddenConnectorHeader(name) {
 /** OAuth scope 记号：RFC 6749 §3.3 scope-token 字符集（不含空格、引号、反斜杠）。 */
 const oauthScope = /^[\x21\x23-\x5B\x5D-\x7E]{1,200}$/;
 function unreservedEnvVarName(name) {
-	if (reservedEnvVarPrefix.test(name)) throw bad$4("环境变量名不得以 oauth_ 开头（为宿主 OAuth 凭据槽保留）。");
+	if (reservedEnvVarPrefix.test(name)) throw bad$14("环境变量名不得以 oauth_ 开头（为宿主 OAuth 凭据槽保留）。");
 	const upper = name.toUpperCase();
-	if (reservedEnvVarNames.has(upper) || reservedEnvVarNamePrefixes.some((prefix) => upper.startsWith(prefix))) throw bad$4("环境变量名 " + name + " 为宿主或运行时保留（PATH、HOME、NODE_OPTIONS、代理与证书变量，以及 LD_、DYLD_、TELOA_、DSH_、NPM_CONFIG_ 开头），不能用作连接器凭据变量。");
+	if (reservedEnvVarNames.has(upper) || reservedEnvVarNamePrefixes.some((prefix) => upper.startsWith(prefix))) throw bad$14("环境变量名 " + name + " 为宿主或运行时保留（PATH、HOME、NODE_OPTIONS、代理与证书变量，以及 LD_、DYLD_、TELOA_、DSH_、NPM_CONFIG_ 开头），不能用作连接器凭据变量。");
 	return name;
 }
 const clientIdPatternAtom = /^(?:[^\\^$.|?*+()[\]{}]|\.|\\[dDwWsS]|\\[-\\^$.|?*+()[\]{}/]|\[\^?(?:[^\\[\]]|\\[dDwWsS]|\\[-\\^$.|?*+()[\]{}/])+\])/;
 const clientIdPatternQuantifier = /^(?:[*+?]|\{\d{1,3}(,(\d{1,3})?)?\})/;
 /** 配方声明的 client_id 正则：首尾锚定的短正则，只由简单原子加至多一层贪婪量词组成，可变长量词至多 2 个，避免回溯爆炸 */
 function safeClientIdPattern(value) {
-	if (typeof value !== "string" || value.length < 3 || value.length > 100) throw bad$4("clientIdPattern 必须是 3 到 100 个字符的正则。");
-	if (!value.startsWith("^") || !value.endsWith("$") || value.endsWith("\\$")) throw bad$4("clientIdPattern 必须首尾锚定（^…$）。");
+	if (typeof value !== "string" || value.length < 3 || value.length > 100) throw bad$14("clientIdPattern 必须是 3 到 100 个字符的正则。");
+	if (!value.startsWith("^") || !value.endsWith("$") || value.endsWith("\\$")) throw bad$14("clientIdPattern 必须首尾锚定（^…$）。");
 	let rest = value.slice(1, -1), variable = 0;
 	while (rest) {
 		const atom = clientIdPatternAtom.exec(rest);
-		if (!atom) throw bad$4("clientIdPattern 只能由字面字符、\\d \\w \\s、字符类加单层量词组成（不得使用分组、选择、反向引用或嵌套 / 相邻量词）。");
+		if (!atom) throw bad$14("clientIdPattern 只能由字面字符、\\d \\w \\s、字符类加单层量词组成（不得使用分组、选择、反向引用或嵌套 / 相邻量词）。");
 		rest = rest.slice(atom[0].length);
 		const quantifier = clientIdPatternQuantifier.exec(rest);
 		if (!quantifier) continue;
 		rest = rest.slice(quantifier[0].length);
 		if (!quantifier[0].startsWith("{") || quantifier[1] !== void 0) variable++;
-		if (variable > 2) throw bad$4("clientIdPattern 的可变长量词不得超过 2 个。");
+		if (variable > 2) throw bad$14("clientIdPattern 的可变长量词不得超过 2 个。");
 	}
 	try {
 		new RegExp(value, "u");
 	} catch {
-		throw bad$4("clientIdPattern 不是合法正则。");
+		throw bad$14("clientIdPattern 不是合法正则。");
 	}
 	return value;
 }
 function readConnectorEntry(row) {
-	if (row.format !== "teloa.market-catalog-entry/v1") throw bad$4("目录条目格式版本不受支持。");
-	if (row.delivery !== "managed") throw bad$4("连接器条目只能以 managed 方式交付。");
-	if (row.upstream !== null) throw bad$4("连接器条目的 upstream 必须为 null。");
-	const connRow = exact$4(row.connector, [
+	if (row.format !== "teloa.market-catalog-entry/v1") throw bad$14("目录条目格式版本不受支持。");
+	if (row.delivery !== "managed") throw bad$14("连接器条目只能以 managed 方式交付。");
+	if (row.upstream !== null) throw bad$14("连接器条目的 upstream 必须为 null。");
+	const connRow = exact$9(row.connector, [
 		"serverName",
 		"title",
 		"summary",
@@ -1135,19 +1153,19 @@ function readConnectorEntry(row) {
 	], "连接器信息");
 	const serverName = pattern(connRow.serverName, connectorServerName, "连接器服务名");
 	const authRow = isRecord(connRow.auth) ? connRow.auth : null;
-	if (!authRow) throw bad$4("连接器认证格式不正确。");
+	if (!authRow) throw bad$14("连接器认证格式不正确。");
 	let auth;
 	if (authRow.kind === "none") {
-		exact$4(connRow.auth, ["kind"], "none 认证");
+		exact$9(connRow.auth, ["kind"], "none 认证");
 		auth = { kind: "none" };
 	} else if (authRow.kind === "secret") {
-		const ar = exact$4(connRow.auth, ["kind", "vars"], "secret 认证");
+		const ar = exact$9(connRow.auth, ["kind", "vars"], "secret 认证");
 		const vars = list$1(ar.vars, "凭据变量", 20).map((v) => {
 			const vRow = isRecord(v) ? v : null;
-			if (!vRow) throw bad$4("凭据变量格式不正确。");
-			if (typeof vRow.required !== "boolean") throw bad$4("凭据 required 必须是布尔值。");
+			if (!vRow) throw bad$14("凭据变量格式不正确。");
+			if (typeof vRow.required !== "boolean") throw bad$14("凭据 required 必须是布尔值。");
 			if (vRow.target === "env") {
-				const vr = exact$4(v, [
+				const vr = exact$9(v, [
 					"target",
 					"envVarName",
 					"label",
@@ -1160,7 +1178,7 @@ function readConnectorEntry(row) {
 					required: vr.required
 				};
 			} else if (vRow.target === "bearer") {
-				const vr = exact$4(v, [
+				const vr = exact$9(v, [
 					"target",
 					"label",
 					"required"
@@ -1171,7 +1189,7 @@ function readConnectorEntry(row) {
 					required: vr.required
 				};
 			} else if (vRow.target === "url-path") {
-				const vr = exact$4(v, [
+				const vr = exact$9(v, [
 					"target",
 					"label",
 					"required"
@@ -1182,7 +1200,7 @@ function readConnectorEntry(row) {
 					required: vr.required
 				};
 			} else if (vRow.target === "header") {
-				const vr = exact$4(v, [
+				const vr = exact$9(v, [
 					"target",
 					"name",
 					"label",
@@ -1190,7 +1208,7 @@ function readConnectorEntry(row) {
 					...vRow.scheme !== void 0 ? ["scheme"] : []
 				], "header 凭据变量");
 				const name = pattern(vr.name, connectorHeaderName, "鉴权头名");
-				if (isForbiddenConnectorHeader(name)) throw bad$4("鉴权头名不允许：" + name + "。");
+				if (isForbiddenConnectorHeader(name)) throw bad$14("鉴权头名不允许：" + name + "。");
 				const item = {
 					target: "header",
 					name,
@@ -1200,7 +1218,7 @@ function readConnectorEntry(row) {
 				if (vr.scheme !== void 0) item.scheme = pattern(vr.scheme, connectorHeaderScheme, "鉴权头 scheme");
 				return item;
 			} else if (vRow.target === "basic") {
-				const vr = exact$4(v, [
+				const vr = exact$9(v, [
 					"target",
 					"userLabel",
 					"label",
@@ -1213,16 +1231,16 @@ function readConnectorEntry(row) {
 					required: vr.required
 				};
 			}
-			throw bad$4("凭据变量 target 只支持 env、bearer、url-path、header 或 basic。");
+			throw bad$14("凭据变量 target 只支持 env、bearer、url-path、header 或 basic。");
 		});
-		if (vars.filter((item) => item.target === "bearer" || item.target === "basic" || item.target === "header" && item.name.toLowerCase() === "authorization").length > 1) throw bad$4("产生 Authorization 头的凭据变量（bearer、authorization 头、basic）至多一个。");
+		if (vars.filter((item) => item.target === "bearer" || item.target === "basic" || item.target === "header" && item.name.toLowerCase() === "authorization").length > 1) throw bad$14("产生 Authorization 头的凭据变量（bearer、authorization 头、basic）至多一个。");
 		distinct(vars.flatMap((item) => item.target === "header" ? [item.name.toLowerCase()] : []), "鉴权头名");
 		auth = {
 			kind: "secret",
 			vars
 		};
 	} else if (authRow.kind === "oauth") {
-		if (typeof authRow.supported !== "boolean") throw bad$4("oauth 认证的 supported 必须是布尔值。");
+		if (typeof authRow.supported !== "boolean") throw bad$14("oauth 认证的 supported 必须是布尔值。");
 		if (authRow.supported) {
 			const ar = authRow;
 			if (Object.keys(ar).some((key) => ![
@@ -1232,29 +1250,29 @@ function readConnectorEntry(row) {
 				"requiresUserClientId",
 				"requiresAllowlist",
 				"clientIdPattern"
-			].includes(key))) throw bad$4("oauth 认证格式不正确或包含未知字段。");
+			].includes(key))) throw bad$14("oauth 认证格式不正确或包含未知字段。");
 			const scopes = list$1(ar.scopes, "OAuth scope", 50).map((s) => pattern(s, oauthScope, "OAuth scope"));
-			if (new Set(scopes).size !== scopes.length) throw bad$4("OAuth scope 不能重复。");
+			if (new Set(scopes).size !== scopes.length) throw bad$14("OAuth scope 不能重复。");
 			const oauth = {
 				kind: "oauth",
 				supported: true,
 				scopes
 			};
 			if (ar.requiresUserClientId !== void 0) {
-				if (typeof ar.requiresUserClientId !== "boolean") throw bad$4("requiresUserClientId 必须是布尔值。");
+				if (typeof ar.requiresUserClientId !== "boolean") throw bad$14("requiresUserClientId 必须是布尔值。");
 				oauth.requiresUserClientId = ar.requiresUserClientId;
 			}
 			if (ar.clientIdPattern !== void 0) {
-				if (oauth.requiresUserClientId !== true) throw bad$4("clientIdPattern 只能用于 requiresUserClientId:true 的连接器。");
+				if (oauth.requiresUserClientId !== true) throw bad$14("clientIdPattern 只能用于 requiresUserClientId:true 的连接器。");
 				oauth.clientIdPattern = safeClientIdPattern(ar.clientIdPattern);
 			}
 			if (ar.requiresAllowlist !== void 0) {
-				if (typeof ar.requiresAllowlist !== "boolean") throw bad$4("requiresAllowlist 必须是布尔值。");
+				if (typeof ar.requiresAllowlist !== "boolean") throw bad$14("requiresAllowlist 必须是布尔值。");
 				oauth.requiresAllowlist = ar.requiresAllowlist;
 			}
 			auth = oauth;
 		} else {
-			const ar = exact$4(connRow.auth, [
+			const ar = exact$9(connRow.auth, [
 				"kind",
 				"supported",
 				"reason"
@@ -1262,15 +1280,15 @@ function readConnectorEntry(row) {
 			auth = {
 				kind: "oauth",
 				supported: false,
-				reason: text(ar.reason, "OAuth 不支持原因", 500)
+				reason: text$2(ar.reason, "OAuth 不支持原因", 500)
 			};
 		}
-	} else throw bad$4("连接器认证类型只支持 none、secret 或 oauth。");
+	} else throw bad$14("连接器认证类型只支持 none、secret 或 oauth。");
 	const recipeRow = isRecord(connRow.recipe) ? connRow.recipe : null;
-	if (!recipeRow) throw bad$4("连接器配方格式不正确。");
+	if (!recipeRow) throw bad$14("连接器配方格式不正确。");
 	let recipe;
 	if (recipeRow.transport === "stdio") {
-		const r = exact$4(connRow.recipe, [
+		const r = exact$9(connRow.recipe, [
 			"transport",
 			"package",
 			"version",
@@ -1279,15 +1297,15 @@ function readConnectorEntry(row) {
 			"args"
 		], "stdio 配方");
 		const pkg = pattern(r.package, npmPackageName, "npm 包名");
-		const ver = pattern(r.version, semver$1, "npm 包版本");
+		const ver = pattern(r.version, semver$4, "npm 包版本");
 		const integ = pattern(r.integrity, sha512Integrity, "npm 包 integrity");
 		const binPath = path(r.bin, "bin 路径");
-		const args = list$1(r.args, "固定参数", 50).map((a) => text(a, "参数", 1e3));
+		const args = list$1(r.args, "固定参数", 50).map((a) => text$2(a, "参数", 1e3));
 		const declaredEnv = new Set(auth.kind === "secret" ? auth.vars.flatMap((item) => item.target === "env" ? [item.envVarName] : []) : []);
 		for (const arg of args) {
 			const refs = stdioArgEnvRefs(arg);
-			if (refs === void 0) throw bad$4("参数里的 ${ 必须构成 ${NAME} 引用（大写字母、数字、下划线）：" + arg);
-			for (const name of refs) if (!declaredEnv.has(name)) throw bad$4("参数引用了未声明的 env 凭据变量 " + name + "：" + arg);
+			if (refs === void 0) throw bad$14("参数里的 ${ 必须构成 ${NAME} 引用（大写字母、数字、下划线）：" + arg);
+			for (const name of refs) if (!declaredEnv.has(name)) throw bad$14("参数引用了未声明的 env 凭据变量 " + name + "：" + arg);
 		}
 		recipe = {
 			transport: "stdio",
@@ -1298,60 +1316,60 @@ function readConnectorEntry(row) {
 			args
 		};
 	} else if (recipeRow.transport === "streamable-http") {
-		const r = exact$4(connRow.recipe, ["transport", "url"], "streamable-http 配方");
+		const r = exact$9(connRow.recipe, ["transport", "url"], "streamable-http 配方");
 		recipe = {
 			transport: "streamable-http",
 			url: pattern(r.url, httpsUrl, "远程地址")
 		};
 	} else if (recipeRow.transport === "streamable-http-template") {
-		const r = exact$4(connRow.recipe, ["transport", "urlTemplate"], "streamable-http-template 配方");
-		const tmpl = text(r.urlTemplate, "URL 模板", 500);
+		const r = exact$9(connRow.recipe, ["transport", "urlTemplate"], "streamable-http-template 配方");
+		const tmpl = text$2(r.urlTemplate, "URL 模板", 500);
 		const parts = tmpl.split("{secret}");
-		if (parts.length !== 2) throw bad$4("URL 模板必须恰好包含一个 {secret} 占位符。");
+		if (parts.length !== 2) throw bad$14("URL 模板必须恰好包含一个 {secret} 占位符。");
 		const prefix = parts[0];
-		if (!/^https:\/\/[^/]/.test(prefix)) throw bad$4("URL 模板的固定前缀必须以有效的 https:// 主机名开头。");
+		if (!/^https:\/\/[^/]/.test(prefix)) throw bad$14("URL 模板的固定前缀必须以有效的 https:// 主机名开头。");
 		recipe = {
 			transport: "streamable-http-template",
 			urlTemplate: tmpl
 		};
-	} else throw bad$4("连接器传输类型只支持 stdio、streamable-http 或 streamable-http-template。");
+	} else throw bad$14("连接器传输类型只支持 stdio、streamable-http 或 streamable-http-template。");
 	if (auth.kind === "secret") for (const v of auth.vars) {
-		if (v.target === "env" && recipe.transport !== "stdio") throw bad$4(`env 凭据变量只对 stdio 传输有意义（当前传输：${recipe.transport}）。`);
-		if (v.target === "bearer" && recipe.transport === "stdio") throw bad$4("bearer 凭据变量对 stdio 传输无意义（stdio 通过环境变量传递凭据）。");
-		if (v.target === "bearer" && recipe.transport === "streamable-http-template") throw bad$4("bearer 凭据变量对 streamable-http-template 无意义，请改用 url-path。");
-		if (v.target === "url-path" && recipe.transport !== "streamable-http-template") throw bad$4(`url-path 凭据变量只对 streamable-http-template 传输有意义（当前传输：${recipe.transport}）。`);
-		if ((v.target === "header" || v.target === "basic") && recipe.transport !== "streamable-http") throw bad$4(`${v.target} 凭据变量只对 streamable-http 传输有意义（当前传输：${recipe.transport}）。`);
+		if (v.target === "env" && recipe.transport !== "stdio") throw bad$14(`env 凭据变量只对 stdio 传输有意义（当前传输：${recipe.transport}）。`);
+		if (v.target === "bearer" && recipe.transport === "stdio") throw bad$14("bearer 凭据变量对 stdio 传输无意义（stdio 通过环境变量传递凭据）。");
+		if (v.target === "bearer" && recipe.transport === "streamable-http-template") throw bad$14("bearer 凭据变量对 streamable-http-template 无意义，请改用 url-path。");
+		if (v.target === "url-path" && recipe.transport !== "streamable-http-template") throw bad$14(`url-path 凭据变量只对 streamable-http-template 传输有意义（当前传输：${recipe.transport}）。`);
+		if ((v.target === "header" || v.target === "basic") && recipe.transport !== "streamable-http") throw bad$14(`${v.target} 凭据变量只对 streamable-http 传输有意义（当前传输：${recipe.transport}）。`);
 	}
 	let instructionsMaxBytes;
 	if (connRow.instructionsMaxBytes !== void 0) {
 		const n = connRow.instructionsMaxBytes;
-		if (!Number.isSafeInteger(n) || n <= 4096 || n > 32768 || n % 1024 !== 0) throw bad$4("instructionsMaxBytes 必须是大于 4096、不超过 32768 且为 1024 整数倍的整数。");
+		if (!Number.isSafeInteger(n) || n <= 4096 || n > 32768 || n % 1024 !== 0) throw bad$14("instructionsMaxBytes 必须是大于 4096、不超过 32768 且为 1024 整数倍的整数。");
 		instructionsMaxBytes = n;
 	}
 	const tools = list$1(connRow.tools, "工具列表", 200).map((t) => {
-		const tr = exact$4(t, [
+		const tr = exact$9(t, [
 			"name",
 			"description",
 			"readOnly"
 		], "工具");
-		if (typeof tr.readOnly !== "boolean") throw bad$4("工具 readOnly 必须是布尔值。");
+		if (typeof tr.readOnly !== "boolean") throw bad$14("工具 readOnly 必须是布尔值。");
 		return {
-			name: text(tr.name, "工具名", 120),
+			name: text$2(tr.name, "工具名", 120),
 			description: localized(tr.description, "工具说明"),
 			readOnly: tr.readOnly
 		};
 	});
-	const upstreamUrl = text(connRow.upstreamUrl, "上游地址", 500);
+	const upstreamUrl = text$2(connRow.upstreamUrl, "上游地址", 500);
 	const common = readCommonFields(row);
-	if (auth.kind === "oauth" && auth.supported && auth.requiresAllowlist && (common.compatibility.status !== "needs-configuration" || common.compatibility.conditions.length === 0)) throw bad$4("requiresAllowlist 的连接器兼容状态必须是 needs-configuration，并在兼容条件中写明白名单要求。");
-	if (auth.kind === "oauth" && auth.supported && recipe.transport !== "streamable-http") throw bad$4("supported:true 的 OAuth 连接器配方必须是 streamable-http（固定 https 地址）。");
-	if (auth.kind === "oauth" && !auth.supported && common.compatibility.status !== "unsupported") throw bad$4("supported:false 的 OAuth 连接器兼容状态必须是 unsupported。");
+	if (auth.kind === "oauth" && auth.supported && auth.requiresAllowlist && (common.compatibility.status !== "needs-configuration" || common.compatibility.conditions.length === 0)) throw bad$14("requiresAllowlist 的连接器兼容状态必须是 needs-configuration，并在兼容条件中写明白名单要求。");
+	if (auth.kind === "oauth" && auth.supported && recipe.transport !== "streamable-http") throw bad$14("supported:true 的 OAuth 连接器配方必须是 streamable-http（固定 https 地址）。");
+	if (auth.kind === "oauth" && !auth.supported && common.compatibility.status !== "unsupported") throw bad$14("supported:false 的 OAuth 连接器兼容状态必须是 unsupported。");
 	const entry = {
 		format: "teloa.market-catalog-entry/v1",
 		id: pattern(row.id, catalogId, "目录条目标识"),
 		kind: "connector",
 		delivery: "managed",
-		version: pattern(row.version, semver$1, "条目版本"),
+		version: pattern(row.version, semver$4, "条目版本"),
 		upstream: null,
 		taxonomy: readMarketTaxonomy(row.taxonomy),
 		connector: {
@@ -1383,15 +1401,15 @@ function readAlternatives(value) {
 	];
 	const alternatives = list$1(value, "其他来源", 50).map((input) => {
 		const hasRecommended = isRecord(input) && Object.hasOwn(input, "recommended");
-		const alt = exact$4(input, [
+		const alt = exact$9(input, [
 			"entryId",
 			"marketplace",
 			"installs",
 			...hasRecommended ? ["recommended"] : []
 		], "替代条目");
-		if (!marketplaces.includes(alt.marketplace)) throw bad$4("替代条目来源不支持。");
-		if (alt.installs !== null && (!Number.isSafeInteger(alt.installs) || alt.installs < 0)) throw bad$4("替代安装量必须是非负整数或 null。");
-		if (hasRecommended && alt.recommended !== true) throw bad$4("推荐替代只能为 true 或省略。");
+		if (!marketplaces.includes(alt.marketplace)) throw bad$14("替代条目来源不支持。");
+		if (alt.installs !== null && (!Number.isSafeInteger(alt.installs) || alt.installs < 0)) throw bad$14("替代安装量必须是非负整数或 null。");
+		if (hasRecommended && alt.recommended !== true) throw bad$14("推荐替代只能为 true 或省略。");
 		return {
 			entryId: pattern(alt.entryId, catalogId, "替代条目标识"),
 			marketplace: alt.marketplace,
@@ -1400,7 +1418,7 @@ function readAlternatives(value) {
 		};
 	});
 	distinct(alternatives.map((item) => item.entryId), "替代条目标识");
-	if (alternatives.filter((item) => item.recommended).length > 1) throw bad$4("推荐替代最多一项。");
+	if (alternatives.filter((item) => item.recommended).length > 1) throw bad$14("推荐替代最多一项。");
 	return alternatives;
 }
 /** 完整目录检查关联；v2 读取端传原始标识集，避免把按版本跳过的目标误判为源数据缺失。 */
@@ -1408,40 +1426,40 @@ function validateMarketCatalogAlternatives(entries, availableIds = new Set(entri
 	for (const entry of entries) {
 		if (!("alternatives" in entry)) continue;
 		for (const alternative of entry.alternatives ?? []) {
-			if (alternative.entryId === entry.id) throw bad$4("条目 " + entry.id + " 的替代资源不能指向自身。");
-			if (!availableIds.has(alternative.entryId)) throw bad$4("替代条目 " + alternative.entryId + " 不在目录中。");
+			if (alternative.entryId === entry.id) throw bad$14("条目 " + entry.id + " 的替代资源不能指向自身。");
+			if (!availableIds.has(alternative.entryId)) throw bad$14("替代条目 " + alternative.entryId + " 不在目录中。");
 		}
 	}
 }
 function readUpstreamSkillEntry(row) {
-	if (row.format !== "teloa.market-catalog-entry/v1") throw bad$4("目录条目格式版本不受支持。");
-	if (row.delivery !== "upstream") throw bad$4("上游条目交付方式必须是 upstream。");
-	const skillRow = exact$4(row.skill, [
+	if (row.format !== "teloa.market-catalog-entry/v1") throw bad$14("目录条目格式版本不受支持。");
+	if (row.delivery !== "upstream") throw bad$14("上游条目交付方式必须是 upstream。");
+	const skillRow = exact$9(row.skill, [
 		"name",
 		"title",
 		"summary"
 	], "技能信息");
 	const name = pattern(skillRow.name, marketCatalogSkillName, "技能名");
-	if (name.startsWith("teloa-")) throw bad$4("teloa- 前缀保留给内置技能，上游条目不能使用。");
+	if (name.startsWith("teloa-")) throw bad$14("teloa- 前缀保留给内置技能，上游条目不能使用。");
 	const upRow = isRecord(row.upstream) ? row.upstream : null;
-	if (!upRow) throw bad$4("上游来源格式不正确。");
+	if (!upRow) throw bad$14("上游来源格式不正确。");
 	let upstream;
 	if (upRow.kind === "github") {
-		const u = exact$4(row.upstream, [
+		const u = exact$9(row.upstream, [
 			"kind",
 			"repository",
 			"commit",
 			"path",
 			"files"
 		], "GitHub 上游");
-		const repoRow = exact$4(u.repository, [
+		const repoRow = exact$9(u.repository, [
 			"host",
 			"owner",
 			"repo"
 		], "上游仓库");
-		if (repoRow.host !== "github.com") throw bad$4("上游仓库目前只支持 github.com。");
+		if (repoRow.host !== "github.com") throw bad$14("上游仓库目前只支持 github.com。");
 		const files = list$1(u.files, "上游文件", 500).map((input) => {
-			const file = exact$4(input, [
+			const file = exact$9(input, [
 				"path",
 				"gitBlob",
 				"sha256",
@@ -1471,7 +1489,7 @@ function readUpstreamSkillEntry(row) {
 			files
 		};
 	} else if (upRow.kind === "clawhub") {
-		const u = exact$4(row.upstream, [
+		const u = exact$9(row.upstream, [
 			"kind",
 			"owner",
 			"slug",
@@ -1479,7 +1497,7 @@ function readUpstreamSkillEntry(row) {
 			"files"
 		], "ClawHub 上游");
 		const files = list$1(u.files, "上游文件", 500).map((input) => {
-			const file = exact$4(input, [
+			const file = exact$9(input, [
 				"path",
 				"sha256",
 				"size"
@@ -1493,14 +1511,14 @@ function readUpstreamSkillEntry(row) {
 		distinct(files.map((f) => f.path), "上游文件路径");
 		upstream = {
 			kind: "clawhub",
-			owner: text(u.owner, "ClawHub 作者", 200),
+			owner: text$2(u.owner, "ClawHub 作者", 200),
 			slug: pattern(u.slug, marketCatalogSkillName, "ClawHub 技能名"),
-			version: text(u.version, "ClawHub 版本", 80),
+			version: text$2(u.version, "ClawHub 版本", 80),
 			files
 		};
-	} else throw bad$4("上游来源类型只支持 github 或 clawhub。");
+	} else throw bad$14("上游来源类型只支持 github 或 clawhub。");
 	const hasInstallsSource = isRecord(row.origin) && Object.hasOwn(row.origin, "installsSource");
-	const origRow = exact$4(row.origin, [
+	const origRow = exact$9(row.origin, [
 		"marketplace",
 		"installs",
 		"installsLabel",
@@ -1514,18 +1532,18 @@ function readUpstreamSkillEntry(row) {
 		"openclaw",
 		"clawhub",
 		"hermes"
-	].includes(origRow.marketplace)) throw bad$4("来源市场不支持。");
-	if (origRow.installs !== null && (!Number.isSafeInteger(origRow.installs) || origRow.installs < 0)) throw bad$4("安装量必须是非负整数或 null。");
+	].includes(origRow.marketplace)) throw bad$14("来源市场不支持。");
+	if (origRow.installs !== null && (!Number.isSafeInteger(origRow.installs) || origRow.installs < 0)) throw bad$14("安装量必须是非负整数或 null。");
 	const origin = {
 		marketplace: origRow.marketplace,
 		installs: origRow.installs,
-		installsLabel: text(origRow.installsLabel, "安装量显示文本", 200),
+		installsLabel: text$2(origRow.installsLabel, "安装量显示文本", 200),
 		countedAt: date(origRow.countedAt, "统计日期")
 	};
 	if (hasInstallsSource) {
-		if (origin.installs === null) throw bad$4("安装量为 null 时不能写安装量来源。");
+		if (origin.installs === null) throw bad$14("安装量为 null 时不能写安装量来源。");
 		origin.installsSource = readInstallsSource(origRow.installsSource);
-	} else if (origin.installs !== null && origin.marketplace !== "clawhub") throw bad$4("非 ClawHub 来源的安装量必须写明可复核的安装量来源（origin.installsSource）。");
+	} else if (origin.installs !== null && origin.marketplace !== "clawhub") throw bad$14("非 ClawHub 来源的安装量必须写明可复核的安装量来源（origin.installsSource）。");
 	const alternatives = readAlternatives(row.alternatives);
 	const unsupportedKinds = [
 		"agents",
@@ -1536,23 +1554,23 @@ function readUpstreamSkillEntry(row) {
 		"mcp"
 	];
 	const unsupportedComponents = list$1(row.unsupportedComponents, "不支持的组件", 20).map((input) => {
-		const comp = exact$4(input, ["kind", "count"], "不支持的组件");
-		if (!unsupportedKinds.includes(comp.kind)) throw bad$4("不支持的组件类型不正确。");
-		if (!Number.isSafeInteger(comp.count) || comp.count < 1) throw bad$4("不支持的组件数量必须是正整数。");
+		const comp = exact$9(input, ["kind", "count"], "不支持的组件");
+		if (!unsupportedKinds.includes(comp.kind)) throw bad$14("不支持的组件类型不正确。");
+		if (!Number.isSafeInteger(comp.count) || comp.count < 1) throw bad$14("不支持的组件数量必须是正整数。");
 		return {
 			kind: comp.kind,
 			count: comp.count
 		};
 	});
 	const common = readCommonFields(row, { allowEmptyLicenseFiles: true });
-	if (common.license.files.some((name) => !upstream.files.some((file) => file.path === name))) throw bad$4("上游许可文件必须包含在固定文件清单中。");
-	if (upstream.kind === "github" && upstream.files.some((file) => file.repositoryPath !== void 0 && !common.license.files.includes(file.path))) throw bad$4("目录外许可映射必须列入许可文件清单。");
+	if (common.license.files.some((name) => !upstream.files.some((file) => file.path === name))) throw bad$14("上游许可文件必须包含在固定文件清单中。");
+	if (upstream.kind === "github" && upstream.files.some((file) => file.repositoryPath !== void 0 && !common.license.files.includes(file.path))) throw bad$14("目录外许可映射必须列入许可文件清单。");
 	return {
 		format: "teloa.market-catalog-entry/v1",
 		id: pattern(row.id, catalogId, "目录条目标识"),
 		kind: "skill",
 		delivery: "upstream",
-		version: pattern(row.version, semver$1, "条目版本"),
+		version: pattern(row.version, semver$4, "条目版本"),
 		taxonomy: readMarketTaxonomy(row.taxonomy),
 		skill: {
 			name,
@@ -1568,29 +1586,29 @@ function readUpstreamSkillEntry(row) {
 }
 /** 安装量来源地址：https、规范形式（`new URL` 往返不变），不带账号、端口、查询或片段，≤1000。 */
 function readInstallsSource(value) {
-	const row = exact$4(value, ["url", "scope"], "安装量来源");
-	if (row.scope !== "resource" && row.scope !== "plugin") throw bad$4("安装量口径只能是 resource 或 plugin。");
-	const url = text(row.url, "安装量来源地址", 1e3);
+	const row = exact$9(value, ["url", "scope"], "安装量来源");
+	if (row.scope !== "resource" && row.scope !== "plugin") throw bad$14("安装量口径只能是 resource 或 plugin。");
+	const url = text$2(row.url, "安装量来源地址", 1e3);
 	let parsed;
 	try {
 		parsed = new URL(url);
 	} catch {
-		throw bad$4("安装量来源地址格式不正确。");
+		throw bad$14("安装量来源地址格式不正确。");
 	}
-	if (parsed.protocol !== "https:" || parsed.username || parsed.password || parsed.port || parsed.search || parsed.hash || url.includes("?") || url.includes("#") || parsed.href !== url) throw bad$4("安装量来源地址必须是 https，且不带账号、端口、查询或片段。");
+	if (parsed.protocol !== "https:" || parsed.username || parsed.password || parsed.port || parsed.search || parsed.hash || url.includes("?") || url.includes("#") || parsed.href !== url) throw bad$14("安装量来源地址必须是 https，且不带账号、端口、查询或片段。");
 	const host = parsed.hostname;
-	if (host.startsWith("[") || /^\d+(?:\.\d+){3}$/.test(host) || host === "localhost" || host.endsWith(".localhost")) throw bad$4("安装量来源地址必须是公开域名，不能是 IP 地址或 localhost。");
+	if (host.startsWith("[") || /^\d+(?:\.\d+){3}$/.test(host) || host === "localhost" || host.endsWith(".localhost")) throw bad$14("安装量来源地址必须是公开域名，不能是 IP 地址或 localhost。");
 	return {
 		url,
 		scope: row.scope
 	};
 }
-const roleIdPattern = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+const roleIdPattern$1 = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 function readRoleEntry(row) {
-	if (row.format !== "teloa.market-catalog-entry/v1") throw bad$4("目录条目格式版本不受支持。");
-	if (row.delivery !== "install") throw bad$4("AI 同事条目只能以 install 方式交付。");
-	if (row.upstream !== null) throw bad$4("AI 同事条目的 upstream 必须为 null。");
-	const roleRow = exact$4(row.role, [
+	if (row.format !== "teloa.market-catalog-entry/v1") throw bad$14("目录条目格式版本不受支持。");
+	if (row.delivery !== "install") throw bad$14("AI 员工条目只能以 install 方式交付。");
+	if (row.upstream !== null) throw bad$14("AI 员工条目的 upstream 必须为 null。");
+	const roleRow = exact$9(row.role, [
 		"roleId",
 		"title",
 		"summary",
@@ -1600,7 +1618,7 @@ function readRoleEntry(row) {
 		"preferredModel",
 		"fromSolution"
 	], "岗位信息");
-	const definitionRow = exact$4(roleRow.definition, [
+	const definitionRow = exact$9(roleRow.definition, [
 		"name",
 		"kind",
 		"duty",
@@ -1617,9 +1635,9 @@ function readRoleEntry(row) {
 			knowledge: []
 		});
 	} catch {
-		throw bad$4("岗位定义不合法。");
+		throw bad$14("岗位定义不合法。");
 	}
-	if (!checked.responsibility) throw bad$4("岗位定义必须包含结构化职责。");
+	if (!checked.responsibility) throw bad$14("岗位定义必须包含结构化职责。");
 	const definition = {
 		name: checked.name,
 		kind: checked.kind,
@@ -1631,34 +1649,34 @@ function readRoleEntry(row) {
 	const skills = distinct(list$1(roleRow.skills, "依赖技能", 30).map((item) => pattern(item, marketCatalogSkillName, "技能名")), "依赖技能");
 	let preferredModel = null;
 	if (roleRow.preferredModel !== null) {
-		const pm = exact$4(roleRow.preferredModel, ["entryId", "fallback"], "首选模型");
-		if (pm.fallback !== "default" && pm.fallback !== "refuse") throw bad$4("首选模型回退策略只能是 default 或 refuse。");
+		const pm = exact$9(roleRow.preferredModel, ["entryId", "fallback"], "首选模型");
+		if (pm.fallback !== "default" && pm.fallback !== "refuse") throw bad$14("首选模型回退策略只能是 default 或 refuse。");
 		preferredModel = {
 			entryId: pattern(pm.entryId, catalogId, "首选模型条目标识"),
 			fallback: pm.fallback
 		};
 	}
-	const fromRow = exact$4(roleRow.fromSolution, [
+	const fromRow = exact$9(roleRow.fromSolution, [
 		"packageId",
 		"version",
 		"path"
 	], "来源方案");
 	const fromSolution = {
 		packageId: pattern(fromRow.packageId, packageIdPattern, "来源方案包标识"),
-		version: pattern(fromRow.version, semver$1, "来源方案版本"),
+		version: pattern(fromRow.version, semver$4, "来源方案版本"),
 		path: path(fromRow.path, "来源方案内路径")
 	};
-	if (!/^roles\/[a-z0-9-]+\.json$/.test(fromSolution.path)) throw bad$4("来源方案内路径必须是 roles/<id>.json。");
+	if (!/^roles\/[a-z0-9-]+\.json$/.test(fromSolution.path)) throw bad$14("来源方案内路径必须是 roles/<id>.json。");
 	return {
 		format: "teloa.market-catalog-entry/v1",
 		id: pattern(row.id, catalogId, "目录条目标识"),
 		kind: "role",
 		delivery: "install",
-		version: pattern(row.version, semver$1, "条目版本"),
+		version: pattern(row.version, semver$4, "条目版本"),
 		upstream: null,
 		taxonomy: readMarketTaxonomy(row.taxonomy),
 		role: {
-			roleId: pattern(roleRow.roleId, roleIdPattern, "岗位标识"),
+			roleId: pattern(roleRow.roleId, roleIdPattern$1, "岗位标识"),
 			title: localized(roleRow.title, "岗位标题", 120),
 			summary: localized(roleRow.summary, "岗位用途"),
 			definition,
@@ -1680,12 +1698,12 @@ const modelApis = [
 ];
 const piAiProviderId = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const bool = (value, label) => {
-	if (typeof value !== "boolean") throw bad$4(label + "必须是布尔值。");
+	if (typeof value !== "boolean") throw bad$14(label + "必须是布尔值。");
 	return value;
 };
 const nullableInt = (value, label) => {
 	if (value === null) return null;
-	if (!Number.isSafeInteger(value) || value < 1) throw bad$4(label + "必须是正整数或 null。");
+	if (!Number.isSafeInteger(value) || value < 1) throw bad$14(label + "必须是正整数或 null。");
 	return value;
 };
 const localSpecialistBindings = [{
@@ -1702,25 +1720,25 @@ const localSpecialistBindings = [{
 	}
 }];
 function readNativeModel(value, usage) {
-	const native = exact$4(value, ["kind", "providerId"], "原生模型");
+	const native = exact$9(value, ["kind", "providerId"], "原生模型");
 	const binding = localSpecialistBindings.find((item) => item.native.kind === native.kind && item.native.providerId === native.providerId);
-	if (!binding) throw bad$4("尚不支持这个原生模型准备器。");
-	if (usage.length !== 1 || usage[0] !== binding.usage[0]) throw bad$4("模型用法与原生模型准备器不匹配。");
+	if (!binding) throw bad$14("尚不支持这个原生模型准备器。");
+	if (usage.length !== 1 || usage[0] !== binding.usage[0]) throw bad$14("模型用法与原生模型准备器不匹配。");
 	return structuredClone(binding);
 }
 function readModelEntry(row) {
-	if (row.format !== "teloa.market-catalog-entry/v1") throw bad$4("目录条目格式版本不受支持。");
-	if (row.delivery !== "reference") throw bad$4("模型条目只能以 reference 方式交付，准备过程由原生服务管理。");
-	if (row.upstream !== null) throw bad$4("模型条目的 upstream 必须为 null。");
-	if (!isRecord(row.model)) throw bad$4("模型信息格式不正确。");
-	if (row.model.form === "local-vertical") throw bad$4("form local-vertical 属三期，本期不收。");
+	if (row.format !== "teloa.market-catalog-entry/v1") throw bad$14("目录条目格式版本不受支持。");
+	if (row.delivery !== "reference") throw bad$14("模型条目只能以 reference 方式交付，准备过程由原生服务管理。");
+	if (row.upstream !== null) throw bad$14("模型条目的 upstream 必须为 null。");
+	if (!isRecord(row.model)) throw bad$14("模型信息格式不正确。");
+	if (row.model.form === "local-vertical") throw bad$14("form local-vertical 属三期，本期不收。");
 	if (![
 		"cloud",
 		"local-general",
 		"local-specialist"
-	].includes(String(row.model.form))) throw bad$4("模型形态只支持 cloud、local-general 或 local-specialist。");
+	].includes(String(row.model.form))) throw bad$14("模型形态只支持 cloud、local-general 或 local-specialist。");
 	const specialist = row.model.form === "local-specialist";
-	const m = specialist ? exact$4(row.model, [
+	const m = specialist ? exact$9(row.model, [
 		"modelId",
 		"title",
 		"summary",
@@ -1733,7 +1751,7 @@ function readModelEntry(row) {
 		"support",
 		"notes",
 		"native"
-	], "模型信息") : exact$4({
+	], "模型信息") : exact$9({
 		local: null,
 		variants: null,
 		...row.model
@@ -1754,35 +1772,35 @@ function readModelEntry(row) {
 		"variants"
 	], "模型信息");
 	const usage = distinct(list$1(m.usage, "模型用法", 3).map((item) => {
-		if (specialist ? item !== "speech-to-text" && item !== "embedding" : item !== "chat" && item !== "embedding" && item !== "tool") throw bad$4(specialist ? "模型用法与运行形态不匹配。" : "模型用法只能是 chat、embedding 或 tool。");
+		if (specialist ? item !== "speech-to-text" && item !== "embedding" : item !== "chat" && item !== "embedding" && item !== "tool") throw bad$14(specialist ? "模型用法与运行形态不匹配。" : "模型用法只能是 chat、embedding 或 tool。");
 		return item;
 	}), "模型用法");
-	if (!usage.length) throw bad$4("模型用法至少一项。");
-	const cap = exact$4(m.capabilities, [
+	if (!usage.length) throw bad$14("模型用法至少一项。");
+	const cap = exact$9(m.capabilities, [
 		"tools",
 		"vision",
 		"reasoning",
 		"structured"
 	], "模型能力");
-	const lic = exact$4(m.license, [
+	const lic = exact$9(m.license, [
 		"spdx",
 		"name",
 		"url",
 		"tier",
 		"restrictions"
 	], "模型许可");
-	if (lic.tier !== "commercial" && lic.tier !== "restricted") throw bad$4("许可层级只收 commercial 或 restricted，不收 non-commercial。");
+	if (lic.tier !== "commercial" && lic.tier !== "restricted") throw bad$14("许可层级只收 commercial 或 restricted，不收 non-commercial。");
 	const restrictions = list$1(lic.restrictions, "许可限制", 10).map((item) => localized(item, "许可限制", 300));
-	if (lic.tier === "restricted" && !restrictions.length) throw bad$4("restricted 许可必须列出至少一条限制。");
+	if (lic.tier === "restricted" && !restrictions.length) throw bad$14("restricted 许可必须列出至少一条限制。");
 	if (![
 		"direct",
 		"mirror",
 		"proxy-required"
-	].includes(String(m.cnReachable))) throw bad$4("国内可达性只能是 direct、mirror 或 proxy-required。");
-	if (m.support !== "experimental" && m.support !== "supported") throw bad$4("支持状态只能是 experimental 或 supported。");
-	if (specialist && (m.contextWindow !== null || Object.values(cap).some((value) => value !== false))) throw bad$4("本地垂类模型不声明聊天上下文或聊天能力。");
+	].includes(String(m.cnReachable))) throw bad$14("国内可达性只能是 direct、mirror 或 proxy-required。");
+	if (m.support !== "experimental" && m.support !== "supported") throw bad$14("支持状态只能是 experimental 或 supported。");
+	if (specialist && (m.contextWindow !== null || Object.values(cap).some((value) => value !== false))) throw bad$14("本地垂类模型不声明聊天上下文或聊天能力。");
 	const base = {
-		modelId: pattern(m.modelId, roleIdPattern, "模型标识"),
+		modelId: pattern(m.modelId, roleIdPattern$1, "模型标识"),
 		title: localized(m.title, "模型标题", 120),
 		summary: localized(m.summary, "模型用途"),
 		capabilities: {
@@ -1793,8 +1811,8 @@ function readModelEntry(row) {
 		},
 		contextWindow: nullableInt(m.contextWindow, "上下文窗口"),
 		license: {
-			spdx: text(lic.spdx, "许可标识", 200),
-			name: text(lic.name, "许可名称", 200),
+			spdx: text$2(lic.spdx, "许可标识", 200),
+			name: text$2(lic.name, "许可名称", 200),
 			url: pattern(lic.url, httpsUrl, "许可链接"),
 			tier: lic.tier,
 			restrictions
@@ -1812,7 +1830,7 @@ function readModelEntry(row) {
 		id: pattern(row.id, modelCatalogId, "目录条目标识"),
 		kind: "model",
 		delivery: "reference",
-		version: pattern(row.version, semver$1, "条目版本"),
+		version: pattern(row.version, semver$4, "条目版本"),
 		upstream: null,
 		taxonomy: readMarketTaxonomy(row.taxonomy)
 	};
@@ -1830,7 +1848,7 @@ function readModelEntry(row) {
 		usage
 	};
 	if (m.form === "cloud") {
-		if (m.local !== null || m.variants !== null) throw bad$4("云端模型的 local 与 variants 必须为 null。");
+		if (m.local !== null || m.variants !== null) throw bad$14("云端模型的 local 与 variants 必须为 null。");
 		return {
 			...head,
 			model: {
@@ -1843,19 +1861,19 @@ function readModelEntry(row) {
 			...commonFields
 		};
 	}
-	if (m.cloud !== null) throw bad$4("本机模型的 cloud 必须为 null。");
-	if (exact$4(m.local, ["runtime"], "本机运行时").runtime !== "ollama") throw bad$4("本机运行时只支持 ollama。");
-	if (!commonFields.requires.runtimes.includes("ollama")) throw bad$4("本机模型的 requires.runtimes 必须包含 ollama。");
+	if (m.cloud !== null) throw bad$14("本机模型的 cloud 必须为 null。");
+	if (exact$9(m.local, ["runtime"], "本机运行时").runtime !== "ollama") throw bad$14("本机运行时只支持 ollama。");
+	if (!commonFields.requires.runtimes.includes("ollama")) throw bad$14("本机模型的 requires.runtimes 必须包含 ollama。");
 	const gb = (x, label) => {
-		if (!Number.isInteger(x) || x < 1 || x > 1024) throw bad$4(label + "须为 1–1024 的整数。");
+		if (!Number.isInteger(x) || x < 1 || x > 1024) throw bad$14(label + "须为 1–1024 的整数。");
 		return x;
 	};
 	const gb2 = (x, label) => {
-		if (!Number.isInteger(x) || x < 256 || x > 2e6) throw bad$4(label + "须为 256–2000000 的整数。");
+		if (!Number.isInteger(x) || x < 256 || x > 2e6) throw bad$14(label + "须为 256–2000000 的整数。");
 		return x;
 	};
 	const variants = list$1(m.variants, "模型变体", 6).map((item) => {
-		const v = exact$4(item, [
+		const v = exact$9(item, [
 			"quant",
 			"format",
 			"sizeBytes",
@@ -1863,43 +1881,43 @@ function readModelEntry(row) {
 			"hardware",
 			"models"
 		], "模型变体");
-		if (v.format !== "gguf") throw bad$4("模型变体格式只收 gguf。");
+		if (v.format !== "gguf") throw bad$14("模型变体格式只收 gguf。");
 		const sources = list$1(v.sources, "来源", 1).map((item) => {
-			if (!isRecord(item) || item.kind !== "ollama") throw bad$4("本期来源只支持 ollama。");
-			const s = exact$4(item, [
+			if (!isRecord(item) || item.kind !== "ollama") throw bad$14("本期来源只支持 ollama。");
+			const s = exact$9(item, [
 				"kind",
 				"name",
 				"digest"
 			], "来源");
 			const name = pattern(s.name, ollamaModelNamePattern, "Ollama 模型名称（必须带 tag）");
-			if (s.digest !== null && (typeof s.digest !== "string" || !ollamaDigestPattern.test(s.digest))) throw bad$4("来源摘要必须为 sha256:64 位十六进制或 null。");
+			if (s.digest !== null && (typeof s.digest !== "string" || !ollamaDigestPattern.test(s.digest))) throw bad$14("来源摘要必须为 sha256:64 位十六进制或 null。");
 			return {
 				kind: "ollama",
 				name,
 				digest: s.digest
 			};
 		});
-		if (!sources.length) throw bad$4("来源至少一项。");
-		const hardware = exact$4(v.hardware, [
+		if (!sources.length) throw bad$14("来源至少一项。");
+		const hardware = exact$9(v.hardware, [
 			"minRamGb",
 			"recommendedRamGb",
 			"vramGb"
 		], "硬件条件");
-		const models = exact$4(v.models, [
+		const models = exact$9(v.models, [
 			"id",
 			"contextWindow",
 			"maxTokens",
 			"input"
 		], "路由模型");
-		if (models.id !== sources[0].name) throw bad$4("路由模型 id 必须与 Ollama 名称一致。");
+		if (models.id !== sources[0].name) throw bad$14("路由模型 id 必须与 Ollama 名称一致。");
 		const input = distinct(list$1(models.input, "输入类型", 2).map((t) => {
-			if (t !== "text" && t !== "image") throw bad$4("输入类型只支持 text/image。");
+			if (t !== "text" && t !== "image") throw bad$14("输入类型只支持 text/image。");
 			return t;
 		}), "输入类型");
-		if (!input.includes("text")) throw bad$4("输入类型必须包含 text。");
-		if (!Number.isSafeInteger(v.sizeBytes) || v.sizeBytes <= 0) throw bad$4("sizeBytes 须为正整数。");
-		if (hardware.minRamGb > hardware.recommendedRamGb) throw bad$4("最低内存不能高于推荐内存。");
-		if (models.maxTokens > models.contextWindow) throw bad$4("最大输出不能超过上下文窗口。");
+		if (!input.includes("text")) throw bad$14("输入类型必须包含 text。");
+		if (!Number.isSafeInteger(v.sizeBytes) || v.sizeBytes <= 0) throw bad$14("sizeBytes 须为正整数。");
+		if (hardware.minRamGb > hardware.recommendedRamGb) throw bad$14("最低内存不能高于推荐内存。");
+		if (models.maxTokens > models.contextWindow) throw bad$14("最大输出不能超过上下文窗口。");
 		return {
 			quant: pattern(v.quant, /^[A-Za-z0-9_]{1,16}$/, "量化标识"),
 			format: "gguf",
@@ -1918,7 +1936,7 @@ function readModelEntry(row) {
 			}
 		};
 	});
-	if (!variants.length) throw bad$4("模型变体至少一项。");
+	if (!variants.length) throw bad$14("模型变体至少一项。");
 	distinct(variants.map((v) => v.sources[0].name), "Ollama 模型名称");
 	return {
 		...head,
@@ -1933,7 +1951,7 @@ function readModelEntry(row) {
 	};
 }
 function readModelCloud(value) {
-	const cloud = exact$4(value, [
+	const cloud = exact$9(value, [
 		"provider",
 		"models",
 		"priceBand",
@@ -1941,29 +1959,29 @@ function readModelCloud(value) {
 		"signupUrl"
 	], "云端接入");
 	const providerRow = isRecord(cloud.provider) ? cloud.provider : null;
-	if (!providerRow) throw bad$4("云端 provider 格式不正确。");
+	if (!providerRow) throw bad$14("云端 provider 格式不正确。");
 	let provider;
 	if (providerRow.kind === "pi-ai") {
-		const p = exact$4(cloud.provider, ["kind", "id"], "pi-ai provider");
+		const p = exact$9(cloud.provider, ["kind", "id"], "pi-ai provider");
 		provider = {
 			kind: "pi-ai",
 			id: pattern(p.id, piAiProviderId, "pi-ai provider 标识")
 		};
 	} else if (providerRow.kind === "custom") {
-		const p = exact$4(cloud.provider, [
+		const p = exact$9(cloud.provider, [
 			"kind",
 			"api",
 			"baseURL"
 		], "自定义 provider");
-		if (!modelApis.includes(p.api)) throw bad$4("自定义 provider 协议只支持 openai-completions、openai-responses 或 anthropic-messages。");
+		if (!modelApis.includes(p.api)) throw bad$14("自定义 provider 协议只支持 openai-completions、openai-responses 或 anthropic-messages。");
 		provider = {
 			kind: "custom",
 			api: p.api,
 			baseURL: pattern(p.baseURL, httpsUrl, "自定义端点（必须 https）")
 		};
-	} else throw bad$4("云端 provider 类型只支持 pi-ai 或 custom。");
+	} else throw bad$14("云端 provider 类型只支持 pi-ai 或 custom。");
 	const models = list$1(cloud.models, "起始模型列表", 50).map((input) => {
-		const r = exact$4(input, [
+		const r = exact$9(input, [
 			"id",
 			"name",
 			"contextWindow",
@@ -1971,24 +1989,24 @@ function readModelCloud(value) {
 			"input"
 		], "模型");
 		const inputs = distinct(list$1(r.input, "模型输入类型", 2).map((item) => {
-			if (item !== "text" && item !== "image") throw bad$4("模型输入类型只能是 text 或 image。");
+			if (item !== "text" && item !== "image") throw bad$14("模型输入类型只能是 text 或 image。");
 			return item;
 		}), "模型输入类型");
 		return {
-			id: text(r.id, "模型 id", 120),
-			name: text(r.name, "模型名称", 120),
+			id: text$2(r.id, "模型 id", 120),
+			name: text$2(r.name, "模型名称", 120),
 			contextWindow: nullableInt(r.contextWindow, "上下文窗口"),
 			maxTokens: nullableInt(r.maxTokens, "最大输出"),
 			input: inputs
 		};
 	});
-	if (!models.length) throw bad$4("起始模型列表至少一项。");
+	if (!models.length) throw bad$14("起始模型列表至少一项。");
 	distinct(models.map((item) => item.id), "模型 id");
 	if (cloud.priceBand !== null && ![
 		"low",
 		"mid",
 		"high"
-	].includes(String(cloud.priceBand))) throw bad$4("价格档只能是 low、mid、high 或 null。");
+	].includes(String(cloud.priceBand))) throw bad$14("价格档只能是 low、mid、high 或 null。");
 	return {
 		provider,
 		models,
@@ -1998,10 +2016,10 @@ function readModelCloud(value) {
 	};
 }
 function readMarketCatalogEntry(value) {
-	if (!isRecord(value)) throw bad$4("目录条目格式不正确或包含未知字段。");
+	if (!isRecord(value)) throw bad$14("目录条目格式不正确或包含未知字段。");
 	if (value.kind === "skill") {
 		const { secrets, httpGuide, secretGroup, ...rest } = value;
-		const entry = rest.delivery === "upstream" ? readUpstreamSkillEntry(exact$4(rest, [
+		const entry = rest.delivery === "upstream" ? readUpstreamSkillEntry(exact$9(rest, [
 			"format",
 			"id",
 			"kind",
@@ -2018,7 +2036,7 @@ function readMarketCatalogEntry(value) {
 			"compatibility",
 			"requires",
 			"review"
-		], "上游技能条目")) : readSkillEntry(exact$4(rest, [
+		], "上游技能条目")) : readSkillEntry(exact$9(rest, [
 			"format",
 			"id",
 			"kind",
@@ -2037,8 +2055,8 @@ function readMarketCatalogEntry(value) {
 		readAlternativesGate(entry);
 		readDerivativeGate(entry);
 		if (secrets === void 0) {
-			if (httpGuide !== void 0) throw bad$4("调用指引 httpGuide 只能与 secrets 同时出现。");
-			if (secretGroup !== void 0) throw bad$4("共享密钥组 secretGroup 只能与 secrets 同时出现。");
+			if (httpGuide !== void 0) throw bad$14("调用指引 httpGuide 只能与 secrets 同时出现。");
+			if (secretGroup !== void 0) throw bad$14("共享密钥组 secretGroup 只能与 secrets 同时出现。");
 			return entry;
 		}
 		readSkillSecretGate(entry);
@@ -2052,7 +2070,7 @@ function readMarketCatalogEntry(value) {
 		if (httpGuide !== void 0 || secretGroup !== void 0 || read.some((secret) => secret.allowHeaders !== void 0 || secret.target === "header" && secret.name.includes("_"))) readExtensionsGate(entry);
 		return result;
 	}
-	if (value.kind === "solution") return readSolutionEntry(exact$4(value, [
+	if (value.kind === "solution") return readSolutionEntry(exact$9(value, [
 		"format",
 		"id",
 		"kind",
@@ -2067,8 +2085,23 @@ function readMarketCatalogEntry(value) {
 		"requires",
 		"review"
 	], "方案条目"));
+	if (value.kind === "dashboard") return readDashboardEntry(exact$9(value, [
+		"format",
+		"id",
+		"kind",
+		"delivery",
+		"version",
+		"taxonomy",
+		"dashboard",
+		"upstream",
+		"modifications",
+		"license",
+		"compatibility",
+		"requires",
+		"review"
+	], "业务看板条目"));
 	if (value.kind === "connector") {
-		const entry = readConnectorEntry(exact$4(value, [
+		const entry = readConnectorEntry(exact$9(value, [
 			"format",
 			"id",
 			"kind",
@@ -2087,7 +2120,7 @@ function readMarketCatalogEntry(value) {
 		readAlternativesGate(entry);
 		return entry;
 	}
-	if (value.kind === "role") return readRoleEntry(exact$4(value, [
+	if (value.kind === "role") return readRoleEntry(exact$9(value, [
 		"format",
 		"id",
 		"kind",
@@ -2101,8 +2134,8 @@ function readMarketCatalogEntry(value) {
 		"compatibility",
 		"requires",
 		"review"
-	], "AI 同事条目"));
-	if (value.kind === "model") return readModelEntry(exact$4(value, [
+	], "AI 员工条目"));
+	if (value.kind === "model") return readModelEntry(exact$9(value, [
 		"format",
 		"id",
 		"kind",
@@ -2117,7 +2150,7 @@ function readMarketCatalogEntry(value) {
 		"requires",
 		"review"
 	], "模型条目"));
-	throw bad$4("目录条目类型只支持 solution、role、skill、connector 或 model。");
+	throw bad$14("目录条目类型只支持 solution、dashboard、role、skill、connector 或 model。");
 }
 /** 工件树摘要：按路径排序后对 [path,sha256,size] 序列求摘要；由调用方提供 sha256，契约包不依赖运行时加密库。 */
 function marketCatalogTreeHash(files, sha256) {
@@ -2130,9 +2163,9 @@ function marketCatalogTreeHash(files, sha256) {
 }
 /** 读取条目工件清单并核对入口、许可与树摘要；不接触字节，字节摘要由持有字节的一方核对。 */
 function readMarketCatalogArtifact(value, entry, sha256) {
-	const row = exact$4(value, ["files", "treeHash"], "条目工件");
+	const row = exact$9(value, ["files", "treeHash"], "条目工件");
 	const files = list$1(row.files, "工件文件", 500).map((input) => {
-		const file = exact$4(input, [
+		const file = exact$9(input, [
 			"path",
 			"sha256",
 			"size"
@@ -2146,26 +2179,26 @@ function readMarketCatalogArtifact(value, entry, sha256) {
 	distinct(files.map((file) => file.path), "工件文件路径");
 	if (entry.kind === "skill" && entry.delivery !== "upstream") {
 		const skillEntries = files.filter((file) => file.path.split("/").at(-1) === "SKILL.md");
-		if (skillEntries.length !== 1 || skillEntries[0].path !== "SKILL.md") throw bad$4("条目工件必须恰有一个位于根目录的 SKILL.md。");
+		if (skillEntries.length !== 1 || skillEntries[0].path !== "SKILL.md") throw bad$14("条目工件必须恰有一个位于根目录的 SKILL.md。");
 		if (entry.derivation) {
 			distinct(files.map((file) => foldPath(file.path)), "工件文件路径（不区分大小写）");
 			readDerivativeArtifact(files, entry.derivation, entry.upstream.files);
 		}
-	} else if (entry.kind === "solution") {
-		if (!files.some((file) => file.path === "teloa.json")) throw bad$4("方案条目工件必须包含根目录的 teloa.json。");
+	} else if (entry.kind === "solution" || entry.kind === "dashboard") {
+		if (!files.some((file) => file.path === "teloa.json")) throw bad$14("方案条目工件必须包含根目录的 teloa.json。");
 	} else if (entry.kind === "role") {
-		if (!files.some((file) => file.path === "role.json")) throw bad$4("AI 同事条目工件必须包含根目录的 role.json。");
+		if (!files.some((file) => file.path === "role.json")) throw bad$14("AI 员工条目工件必须包含根目录的 role.json。");
 		if (files.some((file) => ![
 			"role.json",
 			"README.md",
 			"LICENSE",
 			"LICENSE.txt"
-		].includes(file.path))) throw bad$4("AI 同事条目工件只允许 role.json、README.md 与许可文件（LICENSE 或 LICENSE.txt）。");
-	} else if (entry.kind === "model") throw bad$4("模型条目没有工件。");
-	if (entry.license.files.some((license) => !files.some((file) => file.path === license))) throw bad$4("许可文件必须包含在条目工件中。");
-	if (files.reduce((total, file) => total + file.size, 0) > MAX_TOTAL) throw bad$4("条目工件总大小不能超过 20 MiB。");
+		].includes(file.path))) throw bad$14("AI 员工条目工件只允许 role.json、README.md 与许可文件（LICENSE 或 LICENSE.txt）。");
+	} else if (entry.kind === "model") throw bad$14("模型条目没有工件。");
+	if (entry.license.files.some((license) => !files.some((file) => file.path === license))) throw bad$14("许可文件必须包含在条目工件中。");
+	if (files.reduce((total, file) => total + file.size, 0) > MAX_TOTAL) throw bad$14("条目工件总大小不能超过 20 MiB。");
 	const treeHash = pattern(row.treeHash, hex64, "工件树摘要");
-	if (marketCatalogTreeHash(files, sha256) !== treeHash) throw bad$4("工件树摘要与文件清单不一致。");
+	if (marketCatalogTreeHash(files, sha256) !== treeHash) throw bad$14("工件树摘要与文件清单不一致。");
 	return {
 		files,
 		treeHash
@@ -2174,29 +2207,29 @@ function readMarketCatalogArtifact(value, entry, sha256) {
 /** 二次开发条目的工件清单（规格 D6、D7）：未修改文件摘要等于原版锁定摘要；除根目录 MODIFICATIONS.md 外每个文件都已登记；不在工件里的原版文件都有 removed 修改。 */
 function readDerivativeArtifact(files, derivation, originals) {
 	const byPath = new Map(files.map((file) => [file.path, file]));
-	if (!byPath.has("MODIFICATIONS.md")) throw bad$4("二次开发条目工件必须包含根目录的 MODIFICATIONS.md。");
-	for (const name of derivation.unchangedFiles) if (byPath.get(name)?.sha256 !== originals.find((file) => file.path === name).sha256) throw bad$4("未修改文件 " + name + " 与原版锁定摘要不一致（工件缺少该文件或内容已改动）。");
+	if (!byPath.has("MODIFICATIONS.md")) throw bad$14("二次开发条目工件必须包含根目录的 MODIFICATIONS.md。");
+	for (const name of derivation.unchangedFiles) if (byPath.get(name)?.sha256 !== originals.find((file) => file.path === name).sha256) throw bad$14("未修改文件 " + name + " 与原版锁定摘要不一致（工件缺少该文件或内容已改动）。");
 	const shipped = derivation.changes.find((change) => change.type === "removed" && byPath.has(change.path));
-	if (shipped) throw bad$4("工件文件 " + shipped.path + " 登记为移除（" + shipped.id + "），但仍随附。");
+	if (shipped) throw bad$14("工件文件 " + shipped.path + " 登记为移除（" + shipped.id + "），但仍随附。");
 	const listed = /* @__PURE__ */ new Set([...derivation.unchangedFiles, ...derivation.changes.map((change) => change.path)]);
 	const unlisted = files.find((file) => file.path !== "MODIFICATIONS.md" && !listed.has(file.path));
-	if (unlisted) throw bad$4("工件文件 " + unlisted.path + " 既不在未修改文件中，也没有被任何修改登记。");
+	if (unlisted) throw bad$14("工件文件 " + unlisted.path + " 既不在未修改文件中，也没有被任何修改登记。");
 	const removed = originals.find((file) => !byPath.has(file.path) && !derivation.changes.some((change) => change.type === "removed" && change.path === file.path));
-	if (removed) throw bad$4("原版文件 " + removed.path + " 不在工件中，须登记一条 removed 修改。");
+	if (removed) throw bad$14("原版文件 " + removed.path + " 不在工件中，须登记一条 removed 修改。");
 }
 function readMarketCatalogIndex(value, sha256) {
-	const row = exact$4(value, [
+	const row = exact$9(value, [
 		"format",
 		"catalogVersion",
 		"entries"
 	], "目录快照");
-	if (row.format !== "teloa.market-catalog/v1") throw bad$4("目录快照格式版本不受支持。");
+	if (row.format !== "teloa.market-catalog/v1") throw bad$14("目录快照格式版本不受支持。");
 	const catalogVersion = pattern(row.catalogVersion, /^[0-9A-Za-z][0-9A-Za-z.-]{0,39}$/, "目录版本");
 	const entries = list$1(row.entries, "目录条目", 500).map((input) => {
-		if (!isRecord(input)) throw bad$4("目录条目格式不正确。");
+		if (!isRecord(input)) throw bad$14("目录条目格式不正确。");
 		const { artifact, ...rest } = input, entry = readMarketCatalogEntry(rest);
 		if (entry.kind === "model") {
-			if (artifact !== null) throw bad$4("模型条目的 artifact 必须为 null。");
+			if (artifact !== null) throw bad$14("模型条目的 artifact 必须为 null。");
 			return {
 				...entry,
 				artifact: null
@@ -2211,6 +2244,7 @@ function readMarketCatalogIndex(value, sha256) {
 	validateMarketCatalogAlternatives(entries);
 	distinct(entries.filter((e) => e.kind === "skill").map((e) => e.skill.name), "目录技能名");
 	distinct(entries.filter((e) => e.kind === "solution").map((e) => e.solution.packageId), "方案包标识");
+	distinct(entries.filter((e) => e.kind === "dashboard").map((e) => e.dashboard.packageId), "看板包标识");
 	distinct(entries.filter((e) => e.kind === "connector").map((e) => e.connector.serverName), "连接器服务名");
 	distinct(entries.filter((e) => e.kind === "role").map((e) => e.role.roleId), "岗位标识");
 	distinct(entries.filter((e) => e.kind === "model").map((e) => e.model.modelId), "模型标识");
@@ -2245,13 +2279,13 @@ const MARKET_INDEX_V1_INDUSTRIES = [
 	"marketing/new-media",
 	"media/video"
 ];
-const bad$3 = (message) => new WorkError("teloa/invalid-input", message);
+const bad$13 = (message) => new WorkError("teloa/invalid-input", message);
 const catalogVersionPattern = /^[0-9A-Za-z][0-9A-Za-z.-]{0,39}$/;
 function envelope(value, format) {
-	if (!isRecord(value) || Object.keys(value).length !== 3 || !Object.hasOwn(value, "format") || !Object.hasOwn(value, "catalogVersion") || !Object.hasOwn(value, "entries")) throw bad$3("市场索引格式不正确或包含未知字段。");
-	if (value.format !== format) throw bad$3("市场索引格式版本不受支持。");
-	if (typeof value.catalogVersion !== "string" || !catalogVersionPattern.test(value.catalogVersion)) throw bad$3("市场索引目录版本格式不正确。");
-	if (!Array.isArray(value.entries) || value.entries.length > 1e3) throw bad$3("市场索引条目最多 1000 项。");
+	if (!isRecord(value) || Object.keys(value).length !== 3 || !Object.hasOwn(value, "format") || !Object.hasOwn(value, "catalogVersion") || !Object.hasOwn(value, "entries")) throw bad$13("市场索引格式不正确或包含未知字段。");
+	if (value.format !== format) throw bad$13("市场索引格式版本不受支持。");
+	if (typeof value.catalogVersion !== "string" || !catalogVersionPattern.test(value.catalogVersion)) throw bad$13("市场索引目录版本格式不正确。");
+	if (!Array.isArray(value.entries) || value.entries.length > 1e3) throw bad$13("市场索引条目最多 1000 项。");
 	return {
 		catalogVersion: value.catalogVersion,
 		entries: value.entries
@@ -2259,19 +2293,19 @@ function envelope(value, format) {
 }
 /** Teloa 自编的内置技能没有外部固定来源（upstream 为 null），只随发行快照提供，不进在线索引（v1 / v2 都不收；旧版读取器要求 upstream）。 */
 function noBuiltinWithoutUpstream(entries) {
-	if (entries.some((entry) => entry.kind === "skill" && entry.upstream === null)) throw bad$3("市场索引不收无上游来源的 Teloa 内置技能。");
+	if (entries.some((entry) => entry.kind === "skill" && entry.upstream === null)) throw bad$13("市场索引不收无上游来源的 Teloa 内置技能。");
 }
 function orderedIds(ids) {
-	if (new Set(ids).size !== ids.length) throw bad$3("市场索引条目标识不能重复。");
-	for (let at = 1; at < ids.length; at += 1) if (ids[at - 1] >= ids[at]) throw bad$3("市场索引条目必须按标识升序排列。");
+	if (new Set(ids).size !== ids.length) throw bad$13("市场索引条目标识不能重复。");
+	for (let at = 1; at < ids.length; at += 1) if (ids[at - 1] >= ids[at]) throw bad$13("市场索引条目必须按标识升序排列。");
 }
 function readMarketIndex(value) {
 	const { catalogVersion, entries: raw } = envelope(value, "teloa.market-index/v1");
 	const entries = raw.map((item) => readMarketCatalogEntry(item));
-	if (entries.some((entry) => !MARKET_INDEX_V1_KINDS.includes(entry.kind))) throw bad$3("v1 索引只收 skill、solution、connector；其余类型请发布到 v2 索引。");
-	if (entries.some(marketEntryNeedsV2)) throw bad$3("v1 索引不收声明密钥、使用目录扩展字段、二次开发相关字段（二次开发说明、原版文件摘要、许可映射、安装量来源）或 OAuth 认证的条目；请发布到 v2 索引。");
-	if (entries.some((entry) => entry.kind === "connector" && entry.alternatives !== void 0)) throw bad$3("v1 索引不收连接器其他来源；请发布到 v2 索引。");
-	if (entries.some((entry) => "alternatives" in entry && entry.alternatives?.some((item) => item.recommended))) throw bad$3("v1 索引不收推荐替代标记；请发布到 v2 索引。");
+	if (entries.some((entry) => !MARKET_INDEX_V1_KINDS.includes(entry.kind))) throw bad$13("v1 索引只收 skill、solution、connector；其余类型请发布到 v2 索引。");
+	if (entries.some(marketEntryNeedsV2)) throw bad$13("v1 索引不收声明密钥、使用目录扩展字段、二次开发相关字段（二次开发说明、原版文件摘要、许可映射、安装量来源）或 OAuth 认证的条目；请发布到 v2 索引。");
+	if (entries.some((entry) => entry.kind === "connector" && entry.alternatives !== void 0)) throw bad$13("v1 索引不收连接器其他来源；请发布到 v2 索引。");
+	if (entries.some((entry) => "alternatives" in entry && entry.alternatives?.some((item) => item.recommended))) throw bad$13("v1 索引不收推荐替代标记；请发布到 v2 索引。");
 	noBuiltinWithoutUpstream(entries);
 	orderedIds(entries.map((entry) => entry.id));
 	validateMarketCatalogAlternatives(entries);
@@ -2285,13 +2319,13 @@ function readMarketIndex(value) {
 function assembleMarketIndexV2(value) {
 	const { catalogVersion, entries: raw } = envelope(value, "teloa.market-index/v2");
 	const entries = raw.map((item) => {
-		if (!isRecord(item) || typeof item.id !== "string") throw bad$3("市场索引条目格式不正确。");
-		if (!marketEntryKinds.includes(item.kind)) throw bad$3("市场索引条目类型不受支持：" + item.id);
+		if (!isRecord(item) || typeof item.id !== "string") throw bad$13("市场索引条目格式不正确。");
+		if (!marketEntryKinds.includes(item.kind)) throw bad$13("市场索引条目类型不受支持：" + item.id);
 		const range = isRecord(item.compatibility) ? item.compatibility.teloa : void 0;
 		if (typeof range === "string") try {
 			parseTeloaRange(range);
 		} catch {
-			throw bad$3("市场索引条目 Teloa 兼容范围语法不正确：" + item.id);
+			throw bad$13("市场索引条目 Teloa 兼容范围语法不正确：" + item.id);
 		}
 		return readMarketCatalogEntry(item);
 	});
@@ -2307,82 +2341,94 @@ function assembleMarketIndexV2(value) {
 
 //#endregion
 //#region packages/contract/src/industry-definitions.ts
-const bad$2 = (message) => new WorkError("teloa/invalid-input", message);
-const exact$3 = (value, keys, message) => {
-	if (!isRecord(value) || Object.keys(value).length !== keys.length || keys.some((key) => !(key in value))) throw bad$2(message);
+const bad$12 = (message) => new WorkError("teloa/invalid-input", message);
+const exact$8 = (value, keys, message) => {
+	if (!isRecord(value) || Object.keys(value).length !== keys.length || keys.some((key) => !(key in value))) throw bad$12(message);
 	return value;
 };
 /** 服务名不得含 `__`：公开名以 `mcp__<server>__` 分段，含 `__` 的服务名能对上别的服务器命名空间里原始名含 `__` 的工具。 */
 const serverName = /^(?!.*__)[A-Za-z0-9_-]{1,32}$/;
 /** MCP 原始工具名：允许点号分段（飞书官方 MCP 形如 `im.v1.message.list`），但不能以点开头、结尾或连续两点。 */
-const toolName = /^(?!.*\.\.)[A-Za-z0-9_-][A-Za-z0-9_.-]{0,62}[A-Za-z0-9_-]$|^[A-Za-z0-9_-]$/;
+const toolName$1 = /^(?!.*\.\.)[A-Za-z0-9_-][A-Za-z0-9_.-]{0,62}[A-Za-z0-9_-]$|^[A-Za-z0-9_-]$/;
 const list = (value, pattern, max, message) => {
-	if (!Array.isArray(value) || !value.length || value.length > max || value.some((item) => typeof item !== "string" || !pattern.test(item)) || new Set(value).size !== value.length) throw bad$2(message);
+	if (!Array.isArray(value) || !value.length || value.length > max || value.some((item) => typeof item !== "string" || !pattern.test(item)) || new Set(value).size !== value.length) throw bad$12(message);
 	return [...value];
 };
 function readIndustryMcpConnectionDefinition(value) {
-	const row = exact$3(value, [
+	const row = exact$8(value, [
 		"format",
 		"serverName",
 		"tools"
 	], "行业 MCP 连接定义格式不正确。");
-	if (row.format !== "teloa.mcp-connection/v1" || typeof row.serverName !== "string" || !serverName.test(row.serverName)) throw bad$2("行业 MCP 连接定义格式不正确。");
+	if (row.format !== "teloa.mcp-connection/v1" || typeof row.serverName !== "string" || !serverName.test(row.serverName)) throw bad$12("行业 MCP 连接定义格式不正确。");
 	return {
 		format: "teloa.mcp-connection/v1",
 		serverName: row.serverName,
-		tools: list(row.tools, toolName, 64, "行业 MCP 连接工具名必须非空、去重且只含字母数字下划线连字符与点号。")
+		tools: list(row.tools, toolName$1, 64, "行业 MCP 连接工具名必须非空、去重且只含字母数字下划线连字符与点号。")
 	};
 }
 
 //#endregion
-//#region packages/contract/src/group-attachments.ts
-const groupAttachmentFileMaxBytes = 16 * 1024 * 1024;
+//#region packages/contract/src/industry-update-compare.ts
+/** 稳定序列化：对象按键名排序后展开，`undefined` 也有确定写法，供摘要与逐项比较共用。 */
+function industryUpdateCanonical(value) {
+	if (Array.isArray(value)) return "[" + value.map(industryUpdateCanonical).join(",") + "]";
+	if (value && typeof value === "object") return "{" + Object.entries(value).sort(([a], [b]) => a.localeCompare(b)).map(([key, item]) => JSON.stringify(key) + ":" + industryUpdateCanonical(item)).join(",") + "}";
+	return JSON.stringify(value) ?? "undefined";
+}
+
+//#endregion
+//#region packages/contract/src/business-scopes.ts
 /**
-* 上传请求体上限，防的是「超限的请求在被拒之前先吃掉宿主内存」：取满额文件档的 base64 长度，外加 64 KiB 字段余量
-* （requestId、groupId、版本、MIME、≤120 字文件名经 JSON 转义，远小于这个量）。超过即在读请求体之前拒绝。
+* 业务范围键（机器键；显示名另存于范围标签的 title）：1–64 位字母、数字、下划线或连字符。
+* 行业模板加载、页内新建业务、业务声明的 `domain`、看板与同步的读写、客户端一律按它校验——声明处就拒收不合规的范围，
+* 不会出现「草案能确认、看板读不出」。与任务、资料等范围列的正则取交集（见 backend `isBusinessScopeDomain`）。
 */
-const groupAttachmentUploadMaxBodyBytes = 4 * Math.ceil(groupAttachmentFileMaxBytes / 3) + 64 * 1024;
+const businessScopeKeyPattern = /^[a-zA-Z0-9_-]{1,64}$/;
+const isBusinessScopeKey = (value) => typeof value === "string" && businessScopeKeyPattern.test(value);
+/** 业务范围键不合规时的统一文案。 */
+const businessScopeKeyRule = "业务范围只能是 1–64 位字母、数字、下划线或连字符";
 
 //#endregion
 //#region packages/contract/src/localized-metadata.ts
-const bad$1 = (message) => new WorkError("teloa/invalid-input", message);
+const bad$11 = (message) => new WorkError("teloa/invalid-input", message);
 const record = (value) => {
-	if (!value || typeof value !== "object" || Array.isArray(value)) throw bad$1("本地化元数据格式不正确。");
+	if (!value || typeof value !== "object" || Array.isArray(value)) throw bad$11("本地化元数据格式不正确。");
 	return value;
 };
-const exact$2 = (value, keys) => {
+const exact$7 = (value, keys) => {
 	const row = record(value);
-	if (Object.keys(row).some((key) => !keys.includes(key))) throw bad$1("本地化元数据格式不正确或包含未知字段。");
+	if (Object.keys(row).some((key) => !keys.includes(key))) throw bad$11("本地化元数据格式不正确或包含未知字段。");
 	return row;
 };
 const locale = (value) => {
-	if (typeof value !== "string" || !value.trim() || value.length > 80) throw bad$1("locale 标识不正确。");
+	if (typeof value !== "string" || !value.trim() || value.length > 80) throw bad$11("locale 标识不正确。");
 	try {
 		const values = Intl.getCanonicalLocales(value.trim());
 		if (values.length !== 1) throw Error();
 		return values[0];
 	} catch {
-		throw bad$1("locale 标识不正确。");
+		throw bad$11("locale 标识不正确。");
 	}
 };
 function localizedMetadata(input) {
-	const row = exact$2(input, [
+	const row = exact$7(input, [
 		"original",
 		"defaultLocale",
 		"locales"
 	]);
-	if (typeof row.original !== "string" || !row.original.trim() || new TextEncoder().encode(row.original).byteLength > 16 * 1024) throw bad$1("本地化元数据稳定原文不能为空或超过限制。");
+	if (typeof row.original !== "string" || !row.original.trim() || new TextEncoder().encode(row.original).byteLength > 16 * 1024) throw bad$11("本地化元数据稳定原文不能为空或超过限制。");
 	const defaultLocale = locale(row.defaultLocale), raw = record(row.locales), entries = {};
-	if (Object.keys(raw).length > 100) throw bad$1("本地化 locale map 不能超过 100 项。");
+	if (Object.keys(raw).length > 100) throw bad$11("本地化 locale map 不能超过 100 项。");
 	for (const [key, inputValue] of Object.entries(raw)) {
 		const normalized = locale(key);
-		if (Object.hasOwn(entries, normalized)) throw bad$1("本地化 locale map 包含重复的规范 locale。");
+		if (Object.hasOwn(entries, normalized)) throw bad$11("本地化 locale map 包含重复的规范 locale。");
 		if (typeof inputValue === "string") {
-			if (!inputValue.trim() || new TextEncoder().encode(inputValue).byteLength > 16 * 1024) throw bad$1("本地化 locale 值不能为空或超过限制。");
+			if (!inputValue.trim() || new TextEncoder().encode(inputValue).byteLength > 16 * 1024) throw bad$11("本地化 locale 值不能为空或超过限制。");
 			entries[normalized] = inputValue;
 			continue;
 		}
-		const alias = exact$2(inputValue, ["fallback"]);
+		const alias = exact$7(inputValue, ["fallback"]);
 		entries[normalized] = { fallback: locale(alias.fallback) };
 	}
 	const sorted = Object.fromEntries(Object.entries(entries).sort(([a], [b]) => a < b ? -1 : a > b ? 1 : 0));
@@ -2390,10 +2436,10 @@ function localizedMetadata(input) {
 		const seen = /* @__PURE__ */ new Set();
 		let current = start;
 		while (typeof sorted[current] !== "string") {
-			if (seen.has(current)) throw bad$1("本地化 fallback 不能形成环。");
+			if (seen.has(current)) throw bad$11("本地化 fallback 不能形成环。");
 			seen.add(current);
 			const value = sorted[current];
-			if (!value || typeof value === "string" || !Object.hasOwn(sorted, value.fallback)) throw bad$1("本地化 fallback 必须指向 locale map 中的已声明项。");
+			if (!value || typeof value === "string" || !Object.hasOwn(sorted, value.fallback)) throw bad$11("本地化 fallback 必须指向 locale map 中的已声明项。");
 			current = value.fallback;
 		}
 	}
@@ -2405,23 +2451,613 @@ function localizedMetadata(input) {
 }
 
 //#endregion
+//#region packages/contract/src/plan-schedule.ts
+/** 时区白名单的唯一真源：判据与界面下拉都从这里取，不各自抄一份。 */
+const scheduleTimezones = [
+	"Asia/Singapore",
+	"Asia/Shanghai",
+	"UTC"
+];
+
+//#endregion
+//#region packages/contract/src/business-sync-schedule.ts
+/** 默认最小 60 秒，短于 600 秒提示外部 API 额度与本机资源，上限 30 天；全是字面量常量，不做设置项。 */
+const businessSyncLimits = {
+	minIntervalSeconds: 60,
+	warnIntervalSeconds: 600,
+	maxIntervalSeconds: 2592e3
+};
+const bad$10 = (message) => new WorkError("teloa/invalid-input", message);
+const exact$6 = (value, keys, message) => {
+	if (!isRecord(value)) throw bad$10(message);
+	const missing = keys.filter((key) => !(key in value)), extra = Object.keys(value).filter((key) => !keys.includes(key));
+	if (missing.length || extra.length) throw bad$10(message.replace(/。$/, "") + "：" + [...missing.length ? ["缺少字段 " + missing.join("、")] : [], ...extra.length ? ["不认识的字段 " + extra.join("、")] : []].join("；") + "。");
+	return value;
+};
+const timezone = (value) => scheduleTimezones.includes(value);
+const clockTime = /^([01]\d|2[0-3]):[0-5]\d$/;
+const cronFieldText = /^[0-9*,/-]+$/;
+const cronBounds = [
+	{
+		key: "minute",
+		min: 0,
+		max: 59
+	},
+	{
+		key: "hour",
+		min: 0,
+		max: 23
+	},
+	{
+		key: "dayOfMonth",
+		min: 1,
+		max: 31
+	},
+	{
+		key: "month",
+		min: 1,
+		max: 12
+	},
+	{
+		key: "dayOfWeek",
+		min: 0,
+		max: 7
+	}
+];
+function cronField(text, min, max) {
+	if (!cronFieldText.test(text)) return void 0;
+	const values = /* @__PURE__ */ new Set();
+	let any = false;
+	for (const item of text.split(",")) {
+		const [range, step, ...rest] = item.split("/");
+		if (rest.length || range === void 0 || range === "" || step === "") return void 0;
+		let from, to;
+		if (range === "*") {
+			from = min;
+			to = max;
+			if (step === void 0) any = true;
+		} else {
+			const bounds = range.split("-");
+			if (bounds.length > 2 || bounds.some((bound) => !/^\d{1,2}$/.test(bound))) return void 0;
+			from = Number(bounds[0]);
+			to = bounds.length === 2 ? Number(bounds[1]) : step === void 0 ? from : max;
+			if (from < min || to > max || from > to) return void 0;
+		}
+		const by = step === void 0 ? 1 : /^\d{1,2}$/.test(step) ? Number(step) : 0;
+		if (by < 1) return void 0;
+		for (let value = from; value <= to; value += by) values.add(value);
+	}
+	return {
+		values,
+		any
+	};
+}
+function cronSpec(expression) {
+	if (expression.length > 128) return void 0;
+	const fields = expression.split(" ");
+	if (fields.length !== 5) return void 0;
+	const spec = {};
+	for (const [index, { key, min, max }] of cronBounds.entries()) {
+		const field = cronField(fields[index], min, max);
+		if (!field) return void 0;
+		spec[key] = field;
+	}
+	if (spec.dayOfWeek.values.delete(7)) spec.dayOfWeek.values.add(0);
+	return spec;
+}
+/**
+* 读取即核对可达性：只看日 / 月 / 周三段能否在日历上同时成立（时分两段总有取值）。
+* 从闰年 2024-01-01 起扫 1461 天，覆盖四年一次的 2 月 29 日与每个日期落在每个星期几的情形；
+* `0 0 31 2 *` 这类永不触发的组合在读取时就拒绝，不留到调度时才发现。日与周的「或」规则与 `nextCronOccurrence` 同一条。
+*/
+const cronReachDays = 1461;
+function cronReachable(spec) {
+	for (let offset = 0; offset < cronReachDays; offset++) {
+		const calendar = new Date(Date.UTC(2024, 0, 1 + offset));
+		if (!spec.month.values.has(calendar.getUTCMonth() + 1)) continue;
+		const dayMatch = spec.dayOfMonth.values.has(calendar.getUTCDate()), weekMatch = spec.dayOfWeek.values.has(calendar.getUTCDay());
+		if (spec.dayOfMonth.any ? weekMatch : spec.dayOfWeek.any ? dayMatch : dayMatch || weekMatch) return true;
+	}
+	return false;
+}
+/**
+* `acknowledgeShortInterval` 与周期本体写在同一个对象里：周期短于 60 秒必须为 true
+* （规格：短于默认最小值须显式覆盖并再次确认），其余情况可缺省（按 false 读）。
+*/
+function readBusinessSyncSchedule(value) {
+	if (!isRecord(value)) throw bad$10("同步周期格式不正确。");
+	const hasAck = value.acknowledgeShortInterval !== void 0, ack = hasAck ? ["acknowledgeShortInterval"] : [];
+	if (hasAck && typeof value.acknowledgeShortInterval !== "boolean") throw bad$10("同步周期的短周期确认位必须是布尔值。");
+	const acknowledgeShortInterval = value.acknowledgeShortInterval === true;
+	let schedule;
+	if (value.kind === "every") {
+		const row = exact$6(value, [
+			"kind",
+			"seconds",
+			...ack
+		], "同步周期格式不正确。");
+		if (!Number.isSafeInteger(row.seconds) || Number(row.seconds) < 1 || Number(row.seconds) > businessSyncLimits.maxIntervalSeconds) throw bad$10("同步间隔秒数必须是 1 到 2592000（30 天）之间的整数。");
+		if (Number(row.seconds) < businessSyncLimits.minIntervalSeconds && !acknowledgeShortInterval) throw bad$10("同步间隔短于默认最小值 60 秒，必须把 acknowledgeShortInterval 设为 true 以确认接受外部 API 额度与本机资源占用。");
+		schedule = {
+			kind: "every",
+			seconds: row.seconds
+		};
+	} else if (value.kind === "hourly") {
+		const row = exact$6(value, [
+			"kind",
+			"minute",
+			...ack
+		], "同步周期格式不正确。");
+		if (!Number.isSafeInteger(row.minute) || Number(row.minute) < 0 || Number(row.minute) > 59) throw bad$10("每小时同步的分钟必须是 0 到 59 之间的整数。");
+		schedule = {
+			kind: "hourly",
+			minute: row.minute
+		};
+	} else if (value.kind === "daily") {
+		const row = exact$6(value, [
+			"kind",
+			"time",
+			"timezone",
+			...ack
+		], "同步周期格式不正确。");
+		if (typeof row.time !== "string" || !clockTime.test(row.time)) throw bad$10("每日同步时刻必须写成 HH:MM。");
+		if (!timezone(row.timezone)) throw bad$10("同步时区不在白名单内，允许：" + scheduleTimezones.join(" / ") + "。");
+		schedule = {
+			kind: "daily",
+			time: row.time,
+			timezone: row.timezone
+		};
+	} else if (value.kind === "cron") {
+		const row = exact$6(value, [
+			"kind",
+			"expression",
+			"timezone",
+			...ack
+		], "同步周期格式不正确。");
+		const spec = typeof row.expression === "string" ? cronSpec(row.expression) : void 0;
+		if (!spec) throw bad$10("cron 表达式必须是 5 段（分 时 日 月 周），只认数字、*、,、-、/，不支持名称与 L/W/#。");
+		if (!cronReachable(spec)) throw bad$10("cron 表达式的日、月与周组合在日历上永远不会触发，请核对。");
+		if (!timezone(row.timezone)) throw bad$10("同步时区不在白名单内，允许：" + scheduleTimezones.join(" / ") + "。");
+		schedule = {
+			kind: "cron",
+			expression: row.expression,
+			timezone: row.timezone
+		};
+	} else throw bad$10("同步周期种类不合法，当前为「" + String(value.kind) + "」，允许：every / hourly / daily / cron。");
+	return {
+		schedule,
+		acknowledgeShortInterval
+	};
+}
+
+//#endregion
 //#region packages/contract/src/business-source-mapping.ts
-const maxNamedFields = 8;
+/** 资源上限，全是字面量常量，不做设置项。 */
+const businessSourceMappingLimits = {
+	mappings: 64,
+	primaryKeys: 3,
+	pathLength: 256,
+	mappingsPerScope: 32
+};
+/** 除对象类型字段 `name` 外可作映射目标的平台列。 */
+const businessMappingPlatformFields = [
+	"title",
+	"summary",
+	"observedAt"
+];
+const bad$9 = (message) => new WorkError("teloa/invalid-input", message);
+const maxNamedFields$2 = 8;
 /** 缺键/多键都指出具体字段名，照 `business-definitions.ts` 的 `exact`。 */
 const exactWith = (code) => (value, keys, message) => {
 	if (!isRecord(value)) throw new WorkError(code, message);
 	const missing = keys.filter((key) => !(key in value)), extra = Object.keys(value).filter((key) => !keys.includes(key));
 	if (!missing.length && !extra.length) return value;
 	const parts = [];
-	if (missing.length) parts.push("缺少字段 " + missing.slice(0, maxNamedFields).join("、"));
-	if (extra.length) parts.push("不认识的字段 " + extra.slice(0, maxNamedFields).join("、"));
+	if (missing.length) parts.push("缺少字段 " + missing.slice(0, maxNamedFields$2).join("、"));
+	if (extra.length) parts.push("不认识的字段 " + extra.slice(0, maxNamedFields$2).join("、"));
 	throw new WorkError(code, message.replace(/。$/, "") + "：" + parts.join("；") + "。");
 };
-const exact$1 = exactWith("teloa/invalid-input");
+const exact$5 = exactWith("teloa/invalid-input");
+/** 回显原值只取前 80 字：原值来自声明正文，整段回显会把任意长的文本带进错误文案与模型上下文。 */
+const invalidEnum$2 = (message, value, allowed) => {
+	const shown = String(value);
+	return bad$9(message.replace(/。$/, "") + "，当前为「" + (shown.length > 80 ? shown.slice(0, 80) + "…" : shown) + "」，允许：" + allowed.join(" / ") + "。");
+};
+function atPath$2(path, run) {
+	try {
+		return run();
+	} catch (error) {
+		if (error instanceof WorkError) throw new WorkError(error.code, path + "：" + error.message);
+		throw error;
+	}
+}
+/** 以下判据与 `business-definitions.ts` 逐字相同：字段标识、本地标识、数据源标识、精确三段号、单行标签、业务范围。 */
+const fieldName$4 = /^[a-z0-9][a-z0-9_-]{0,62}$/;
+const localId$3 = /^[a-zA-Z0-9][a-zA-Z0-9-]{0,119}$/;
+const sourceIdPattern$1 = /^[a-zA-Z0-9][a-zA-Z0-9._-]{0,119}$/;
+const exactSemver$2 = /^\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?(?:\+[0-9A-Za-z.-]+)?$/;
+const label$3 = (value, max) => typeof value === "string" && !!value.trim() && value === value.trim() && value.length <= max && !/[\x00-\x08\x0a-\x1f\x7f]/.test(value);
+const domainText$2 = (value) => isBusinessScopeKey(value) && value !== "general";
+const semver$3 = (value) => typeof value === "string" && value.length <= 80 && exactSemver$2.test(value);
+/** MCP 服务器名与 `mcp__<server>__<tool>` 全名里的服务器段同规矩（`isCapabilitySnapshot`）。 */
+const mcpServerName = /^[A-Za-z0-9_-]{1,64}$/;
+/** 角色标识与会话等资源标识同规矩。 */
+const roleIdPattern = /^[a-zA-Z0-9_-]{1,128}$/;
+const positiveInt = (value, min, max) => Number.isSafeInteger(value) && Number(value) >= min && Number(value) <= max;
+const segmentPattern = /\.([A-Za-z_][A-Za-z0-9_-]*)|\['((?:[^'\\]|\\['\\])*)'\]|\[(0|[1-9]\d*)\]|\[(\*)\]/y;
+function parseJsonPath(path) {
+	if (typeof path !== "string" || !path.length || path.length > businessSourceMappingLimits.pathLength || path[0] !== "$") return void 0;
+	const segments = [];
+	segmentPattern.lastIndex = 1;
+	while (segmentPattern.lastIndex < path.length) {
+		const start = segmentPattern.lastIndex, match = segmentPattern.exec(path);
+		if (!match || match.index !== start) return void 0;
+		if (match[1] !== void 0) segments.push({
+			kind: "key",
+			name: match[1]
+		});
+		else if (match[2] !== void 0) segments.push({
+			kind: "key",
+			name: match[2].replace(/\\(['\\])/g, "$1")
+		});
+		else if (match[3] !== void 0) segments.push({
+			kind: "index",
+			index: Number(match[3])
+		});
+		else segments.push({ kind: "all" });
+	}
+	if (segments.some((segment, index) => segment.kind === "all" && index !== segments.length - 1)) return void 0;
+	return segments;
+}
+/** 声明里的单值路径：合法且不带 `[*]`。 */
+function valuePath(value, message) {
+	const segments = typeof value === "string" ? parseJsonPath(value) : void 0;
+	if (!segments || segments.some((segment) => segment.kind === "all")) throw bad$9(message);
+	return value;
+}
+function mappingSource(value) {
+	if (!isRecord(value)) throw bad$9("数据源映射的来源定义格式不正确。");
+	if (value.kind === "business-data-port") {
+		const row = exact$5(value, ["kind", "sourceId"], "数据源映射的来源定义格式不正确。");
+		if (typeof row.sourceId !== "string" || !sourceIdPattern$1.test(row.sourceId)) throw bad$9("业务数据端口标识不合法。");
+		return {
+			kind: "business-data-port",
+			sourceId: row.sourceId
+		};
+	}
+	if (value.kind === "mcp-tool") {
+		const hasPagination = value.pagination !== void 0;
+		const row = exact$5(value, [
+			"kind",
+			"serverName",
+			"tool",
+			"arguments",
+			"itemsPath",
+			...hasPagination ? ["pagination"] : []
+		], "数据源映射的来源定义格式不正确。");
+		if (typeof row.serverName !== "string" || !mcpServerName.test(row.serverName)) throw bad$9("MCP 服务器名不合法。");
+		if (!label$3(row.tool, 128)) throw bad$9("MCP 工具名不合法。");
+		if (!isRecord(row.arguments) || Object.keys(row.arguments).length > 32) throw bad$9("MCP 工具参数必须是不超过 32 项的对象。");
+		const args = {};
+		for (const [key, item] of Object.entries(row.arguments)) {
+			if (!label$3(key, 64)) throw bad$9("MCP 工具参数名不合法。");
+			if (typeof item === "string") {
+				if (item.length > 4e3 || /[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]/.test(item)) throw bad$9("MCP 工具参数「" + key + "」的取值不合法。");
+			} else if (typeof item === "number") {
+				if (!Number.isFinite(item)) throw bad$9("MCP 工具参数「" + key + "」的取值不合法。");
+			} else if (typeof item !== "boolean") throw bad$9("MCP 工具参数「" + key + "」只能是字符串、数字或布尔值，不接受对象、数组与 null。");
+			args[key] = item;
+		}
+		if (!(typeof row.itemsPath === "string" ? parseJsonPath(row.itemsPath) : void 0)) throw bad$9("MCP 工具结果的记录路径（itemsPath）不合法。");
+		let pagination;
+		if (hasPagination) {
+			const item = atPath$2("pagination", () => exact$5(row.pagination, ["cursorArgument", "nextCursorPath"], "MCP 工具分页声明格式不正确。"));
+			if (!label$3(item.cursorArgument, 64)) throw bad$9("pagination：续页参数名（cursorArgument）不合法。");
+			if (Object.hasOwn(args, item.cursorArgument)) throw bad$9("pagination：续页参数名「" + item.cursorArgument + "」与 arguments 里已有的参数重名。");
+			const nextCursorPath = atPath$2("pagination", () => valuePath(item.nextCursorPath, "下一页游标路径（nextCursorPath）不合法：只支持 $、.name、['name'] 与 [n]，不带 [*]。"));
+			pagination = {
+				cursorArgument: item.cursorArgument,
+				nextCursorPath
+			};
+		}
+		return {
+			kind: "mcp-tool",
+			serverName: row.serverName,
+			tool: row.tool,
+			arguments: args,
+			itemsPath: row.itemsPath,
+			...pagination ? { pagination } : {}
+		};
+	}
+	if (value.kind === "role-result") {
+		const hasRoleId = value.roleId !== void 0;
+		const row = exact$5(value, ["kind", ...hasRoleId ? ["roleId"] : []], "数据源映射的来源定义格式不正确。");
+		if (hasRoleId && (typeof row.roleId !== "string" || !roleIdPattern.test(row.roleId))) throw bad$9("AI 员工标识不合法。");
+		return {
+			kind: "role-result",
+			...hasRoleId ? { roleId: row.roleId } : {}
+		};
+	}
+	throw invalidEnum$2("数据源映射的来源种类不在白名单内。", value.kind, [
+		"business-data-port",
+		"mcp-tool",
+		"role-result"
+	]);
+}
+function fieldMapping(value) {
+	const row = exact$5(value, ["path", "field"], "字段映射格式不正确。");
+	const path = valuePath(row.path, "字段映射路径不合法：只支持 $、.name、['name'] 与 [n]，不带 [*]。");
+	if (typeof row.field !== "string" || !(fieldName$4.test(row.field) || businessMappingPlatformFields.includes(row.field))) throw bad$9("字段映射目标必须是对象类型字段标识或 " + businessMappingPlatformFields.join(" / ") + "。");
+	return {
+		path,
+		field: row.field
+	};
+}
+function readBusinessSourceMappingDefinition(value) {
+	if (!isRecord(value)) throw bad$9("数据源映射声明格式不正确。");
+	const hasLocalized = value.localized !== void 0, hasCursor = value.incrementalCursor !== void 0, hasDeletedAt = value.deletedAtPath !== void 0, hasRetention = value.retentionDays !== void 0, hasPageSize = value.pageSize !== void 0;
+	const keys = [
+		"format",
+		"id",
+		"version",
+		"domain",
+		"title",
+		...hasLocalized ? ["localized"] : [],
+		"objectType",
+		"source",
+		"mapping",
+		"primaryKey",
+		...hasCursor ? ["incrementalCursor"] : [],
+		"deletionSemantics",
+		...hasDeletedAt ? ["deletedAtPath"] : [],
+		"schedule",
+		"acknowledgeShortInterval",
+		...hasRetention ? ["retentionDays"] : [],
+		...hasPageSize ? ["pageSize"] : []
+	];
+	const row = exact$5(value, keys, "数据源映射声明格式不正确。");
+	if (row.format !== "teloa.business-source-mapping/v1") throw invalidEnum$2("数据源映射声明格式不正确。", row.format, ["teloa.business-source-mapping/v1"]);
+	if (typeof row.id !== "string" || !localId$3.test(row.id)) throw bad$9("数据源映射标识不合法。");
+	if (!semver$3(row.version)) throw bad$9("数据源映射版本必须是精确三段号。");
+	if (!domainText$2(row.domain)) throw bad$9("数据源映射所属业务范围不合法：" + businessScopeKeyRule + "，general 一律拒绝。");
+	if (!label$3(row.title, 120)) throw bad$9("数据源映射标题不合法。");
+	if (typeof row.objectType !== "string" || !localId$3.test(row.objectType)) throw bad$9("数据源映射的目标对象类型标识不合法。");
+	const source = atPath$2("source", () => mappingSource(row.source));
+	/**
+	* 空映射 = 原样落库：只给业务数据端口，端口回包已是快照形状、自带 id 与 version（端口是版本权威）。
+	* 因此主键固定为快照自身的 `id`，删除语义只有 compare（端口不返回删除时刻）。
+	*/
+	const raw = source.kind === "business-data-port" && Array.isArray(row.mapping) && row.mapping.length === 0;
+	if (!Array.isArray(row.mapping) || !raw && row.mapping.length < 1 || row.mapping.length > businessSourceMappingLimits.mappings) throw bad$9("字段映射必须是 1–" + businessSourceMappingLimits.mappings + " 项（只有业务数据端口来源可写空数组，表示原样落库）。");
+	const mapping = row.mapping.map((item, index) => atPath$2(`mapping[${index}]`, () => fieldMapping(item)));
+	const fields = mapping.map((item) => item.field);
+	if (new Set(fields).size !== fields.length) throw bad$9("字段映射的目标字段不得重复。");
+	if (!Array.isArray(row.primaryKey) || row.primaryKey.length < 1 || row.primaryKey.length > businessSourceMappingLimits.primaryKeys || new Set(row.primaryKey).size !== row.primaryKey.length) throw bad$9("主键必须是 1–" + businessSourceMappingLimits.primaryKeys + " 个去重字段。");
+	if (raw) {
+		if (row.primaryKey.length !== 1 || row.primaryKey[0] !== "id") throw bad$9("原样落库的映射主键固定为 ['id']（端口快照自带对象标识）。");
+		if (row.deletionSemantics !== "compare") throw bad$9("原样落库的映射只支持 compare 删除语义（业务数据端口不返回删除时刻）。");
+	} else if (row.primaryKey.some((key) => typeof key !== "string" || !fields.includes(key))) throw bad$9("主键引用的字段必须出现在字段映射的目标里。");
+	let incrementalCursor;
+	if (hasCursor) {
+		const cursor = atPath$2("incrementalCursor", () => exact$5(row.incrementalCursor, ["path", "kind"], "增量游标格式不正确。"));
+		const path = atPath$2("incrementalCursor", () => valuePath(cursor.path, "增量游标路径不合法。"));
+		if (cursor.kind !== "timestamp" && cursor.kind !== "sequence") throw invalidEnum$2("增量游标种类不合法。", cursor.kind, ["timestamp", "sequence"]);
+		incrementalCursor = {
+			path,
+			kind: cursor.kind
+		};
+		if (source.kind === "mcp-tool" && source.pagination?.cursorArgument === "cursor") throw bad$9("带增量游标（incrementalCursor）的映射，续页参数名（source.pagination.cursorArgument）不得为 cursor：水位固定以参数 cursor 透传，请换一个续页参数名。");
+	}
+	if (row.deletionSemantics !== "tombstone" && row.deletionSemantics !== "compare") throw invalidEnum$2("删除语义不合法。", row.deletionSemantics, ["tombstone", "compare"]);
+	if (row.deletionSemantics === "tombstone") {
+		if (!hasDeletedAt) throw bad$9("tombstone 删除语义必须声明 deletedAtPath。");
+	} else if (hasDeletedAt) throw bad$9("compare 删除语义不得声明 deletedAtPath。");
+	const deletedAtPath = hasDeletedAt ? atPath$2("deletedAtPath", () => valuePath(row.deletedAtPath, "删除时刻路径不合法。")) : void 0;
+	if (typeof row.acknowledgeShortInterval !== "boolean") throw bad$9("acknowledgeShortInterval 必须是布尔值。");
+	if (!isRecord(row.schedule)) throw bad$9("同步周期格式不正确。");
+	if ("acknowledgeShortInterval" in row.schedule) throw bad$9("schedule：短周期确认位请写在声明顶层的 acknowledgeShortInterval，不写进 schedule 里。");
+	const { schedule, acknowledgeShortInterval } = atPath$2("schedule", () => readBusinessSyncSchedule({
+		...row.schedule,
+		acknowledgeShortInterval: row.acknowledgeShortInterval
+	}));
+	if (hasRetention && !positiveInt(row.retentionDays, 1, 365)) throw bad$9("保留天数必须是 1 到 365 之间的整数。");
+	if (hasPageSize && !positiveInt(row.pageSize, 1, 100)) throw bad$9("每页条数必须是 1 到 100 之间的整数。");
+	let localized;
+	if (hasLocalized) {
+		if (!isRecord(row.localized) || !Object.keys(row.localized).length || Object.keys(row.localized).some((key) => key !== "title")) throw bad$9("数据源映射本地化元数据不合法。");
+		const result = {};
+		if (row.localized.title !== void 0) {
+			let metadata;
+			try {
+				metadata = localizedMetadata(row.localized.title);
+			} catch {
+				throw bad$9("数据源映射标题本地化元数据不合法。");
+			}
+			if (metadata.original !== row.title || Object.values(metadata.locales).some((item) => typeof item === "string" && !label$3(item, 120))) throw bad$9("数据源映射标题本地化元数据不合法。");
+			result.title = metadata;
+		}
+		localized = result;
+	}
+	return {
+		format: "teloa.business-source-mapping/v1",
+		id: row.id,
+		version: row.version,
+		domain: row.domain,
+		title: row.title,
+		...localized ? { localized } : {},
+		objectType: row.objectType,
+		source,
+		mapping,
+		primaryKey: [...row.primaryKey],
+		...incrementalCursor ? { incrementalCursor } : {},
+		deletionSemantics: row.deletionSemantics,
+		...deletedAtPath !== void 0 ? { deletedAtPath } : {},
+		schedule,
+		acknowledgeShortInterval,
+		...hasRetention ? { retentionDays: row.retentionDays } : {},
+		...hasPageSize ? { pageSize: row.pageSize } : {}
+	};
+}
 const exactHost = exactWith("teloa/invalid-host-response");
 
 //#endregion
 //#region packages/contract/src/business-chart-spec.ts
+/**
+* 白名单语义：不在允许集内的键一律拒绝；`forbiddenAnywhere` 是在任意深度额外做的显式拦截（`axis.format` 除外）。
+* `allowedMarkKeys` / `allowedTransformKeys` 是结论 §3.1 里 mark 对象与 transform 项的允许键，一并导出供客户端对照。
+*/
+const businessChartSpecKeys = {
+	allowedTopLevel: [
+		"mark",
+		"encoding",
+		"transform",
+		"width",
+		"height",
+		"title"
+	],
+	allowedMarkTypes: [
+		"bar",
+		"line",
+		"arc",
+		"area",
+		"point"
+	],
+	allowedMarkKeys: [
+		"type",
+		"point",
+		"interpolate",
+		"tooltip",
+		"innerRadius"
+	],
+	allowedEncodingChannels: [
+		"x",
+		"y",
+		"color",
+		"theta",
+		"size",
+		"tooltip"
+	],
+	allowedEncodingKeys: [
+		"field",
+		"type",
+		"timeUnit",
+		"aggregate",
+		"title",
+		"sort",
+		"scale",
+		"axis"
+	],
+	allowedTransforms: [
+		"aggregate",
+		"timeUnit",
+		"fold",
+		"window",
+		"stack"
+	],
+	allowedTransformKeys: [
+		"aggregate",
+		"groupby",
+		"timeUnit",
+		"field",
+		"as",
+		"fold",
+		"window",
+		"stack",
+		"sort",
+		"offset"
+	],
+	forbiddenAnywhere: [
+		"data",
+		"url",
+		"values",
+		"datasets",
+		"content",
+		"usermeta",
+		"params",
+		"selection",
+		"calculate",
+		"filter",
+		"loader",
+		"href",
+		"description",
+		"expr",
+		"signal",
+		"format",
+		"layer",
+		"repeat",
+		"facet",
+		"concat",
+		"hconcat",
+		"vconcat",
+		"spec",
+		"resolve",
+		"config",
+		"autosize",
+		"padding",
+		"background",
+		"projection",
+		"lookup",
+		"loess",
+		"regression",
+		"density",
+		"quantile",
+		"sample",
+		"impute",
+		"bin",
+		"joinaggregate",
+		"flatten",
+		"pivot",
+		"extent",
+		"condition",
+		"test",
+		"labelExpr"
+	]
+};
+const businessChartSpecLimits = {
+	depth: 8,
+	nodes: 400,
+	bytes: 16384
+};
+/** 结论 §3.1 未逐项列出、但允许键的值对象必需的下一层键：`scale.type`、`axis.format`、聚合/窗口算子项、排序项。 */
+const scaleKeys = ["type"];
+const axisKeys = ["format"];
+const operationKeys = [
+	"op",
+	"field",
+	"as"
+];
+const sortKeys = ["field", "order"];
+const encodingTypes = [
+	"quantitative",
+	"ordinal",
+	"nominal",
+	"temporal"
+];
+const functionLike = /^\s*(function\b|\(?[\w$,\s]*\)?\s*=>)/;
+const token = /^[A-Za-z][A-Za-z0-9_-]{0,63}$/;
+/** Vega-Lite 合法枚举：编码通道的聚合算子（不含返回数组的 `values` 与对象形态的 argmin/argmax）、时间单位（含 utc 前缀）、比例尺种类。 */
+const aggregateOps = [
+	"count",
+	"valid",
+	"missing",
+	"distinct",
+	"sum",
+	"product",
+	"mean",
+	"average",
+	"variance",
+	"variancep",
+	"stdev",
+	"stdevp",
+	"stderr",
+	"median",
+	"q1",
+	"q3",
+	"ci0",
+	"ci1",
+	"min",
+	"max"
+];
 const localTimeUnits = [
 	"year",
 	"quarter",
@@ -2465,6 +3101,1517 @@ const localTimeUnits = [
 	"secondsmilliseconds"
 ];
 const timeUnits = [...localTimeUnits, ...localTimeUnits.map((unit) => "utc" + unit)];
+const scaleTypes = [
+	"linear",
+	"log",
+	"sqrt",
+	"pow",
+	"symlog",
+	"time",
+	"utc",
+	"band",
+	"point",
+	"ordinal"
+];
+/**
+* `axis.format` 是任意深度禁止键 `format` 的唯一例外，因此只放行两种格式串（≤ 32 字）：
+* d3-format 数值格式，或 d3-time-format 时间格式（`%` 指令与日期常用分隔符交替，`%%` 为字面百分号，悬空的 `%` 不收）。
+* 时间轴（`type:'temporal'` 的 x / y）上的 `axis.format` 在客户端渲染时由平台按界面语言与数据粒度覆盖（规格 2026-09-28 §6），
+* 数值轴的照旧生效；这里仍照上面两种格式校验并放行——改成拒收会让已生效的声明读不出来。
+*/
+const numberFormat = /^(?:(.)?([<>=^]))?([+\-( ])?([$#])?(0)?(\d+)?(,)?(\.\d+)?(~)?([a-z%])?$/;
+const timeFormat = /^(?:%[-_0]?[aAbBcdefgGHIjLmMpqQsSuUVwWxXyYZ%]|[A-Za-z0-9 :\/.,\-])+$/;
+const axisFormat = (value) => typeof value === "string" && value.length >= 1 && value.length <= 32 && (numberFormat.test(value) || timeFormat.test(value));
+const reject = (path, message) => new WorkError("teloa/invalid-input", "图表规范 " + path + " " + message);
+const text$1 = (value) => typeof value === "string" && value.length <= 200 && !/[\x00-\x08\x0a-\x1f\x7f]/.test(value);
+const strings = (value, item = text$1) => Array.isArray(value) && value.length >= 1 && value.length <= 32 && value.every(item);
+function keysIn(value, allowed, path) {
+	if (!isRecord(value)) throw reject(path, "必须是对象。");
+	for (const key of Object.keys(value)) if (!allowed.includes(key)) throw reject(path + "." + key, "不在允许键内，允许：" + allowed.join(" / ") + "。");
+	return value;
+}
+function stringAt(value, path, pattern) {
+	if (!text$1(value) || pattern && !pattern.test(value)) throw reject(path, "取值不合法。");
+}
+function enumAt(value, path, allowed) {
+	if (typeof value !== "string" || !allowed.includes(value)) throw reject(path, "取值不在 Vega-Lite 允许的取值内。");
+}
+/** 第一遍：规模上限，与任意深度的禁止键和形如函数的字符串；禁止键按子先于父报告，路径写到最深那一层。 */
+function scan(value, path, depth, state) {
+	if (++state.nodes > businessChartSpecLimits.nodes) throw reject("spec", "节点数超过 " + businessChartSpecLimits.nodes + "。");
+	if (typeof value === "string") {
+		if (functionLike.test(value)) throw reject(path, "取值形如函数，不允许。");
+		return;
+	}
+	if (value === null || typeof value === "boolean") return;
+	if (typeof value === "number") {
+		if (!Number.isFinite(value)) throw reject(path, "取值必须是有限数字。");
+		return;
+	}
+	if (!Array.isArray(value) && !isRecord(value)) throw reject(path, "取值类型不允许。");
+	if (depth > businessChartSpecLimits.depth) throw reject(path, "嵌套深度超过 " + businessChartSpecLimits.depth + "。");
+	if (Array.isArray(value)) {
+		value.forEach((item, index) => scan(item, path + "[" + index + "]", depth + 1, state));
+		return;
+	}
+	for (const [key, item] of Object.entries(value)) {
+		const child = path + "." + key;
+		scan(item, child, depth + 1, state);
+		if (businessChartSpecKeys.forbiddenAnywhere.includes(key) && !(key === "format" && path.endsWith(".axis"))) throw reject(child, "是禁止键。");
+	}
+}
+function mark(value, path) {
+	if (typeof value === "string") {
+		if (!businessChartSpecKeys.allowedMarkTypes.includes(value)) throw reject(path, "图形种类不允许，允许：" + businessChartSpecKeys.allowedMarkTypes.join(" / ") + "。");
+		return;
+	}
+	const row = keysIn(value, businessChartSpecKeys.allowedMarkKeys, path);
+	if (!businessChartSpecKeys.allowedMarkTypes.includes(row.type)) throw reject(path + ".type", "图形种类不允许，允许：" + businessChartSpecKeys.allowedMarkTypes.join(" / ") + "。");
+	if (row.point !== void 0 && typeof row.point !== "boolean") throw reject(path + ".point", "必须是布尔值。");
+	if (row.tooltip !== void 0 && typeof row.tooltip !== "boolean") throw reject(path + ".tooltip", "必须是布尔值。");
+	if (row.interpolate !== void 0) stringAt(row.interpolate, path + ".interpolate", token);
+	if (row.innerRadius !== void 0 && !(typeof row.innerRadius === "number" && row.innerRadius >= 0)) throw reject(path + ".innerRadius", "必须是非负数。");
+}
+function channel(value, path) {
+	const row = keysIn(value, businessChartSpecKeys.allowedEncodingKeys, path);
+	if (row.field !== void 0) stringAt(row.field, path + ".field");
+	if (row.type !== void 0 && !encodingTypes.includes(row.type)) throw reject(path + ".type", "取值不允许，允许：" + encodingTypes.join(" / ") + "。");
+	if (row.timeUnit !== void 0) enumAt(row.timeUnit, path + ".timeUnit", timeUnits);
+	if (row.aggregate !== void 0) enumAt(row.aggregate, path + ".aggregate", aggregateOps);
+	if (row.title !== void 0) stringAt(row.title, path + ".title");
+	if (row.sort !== void 0 && !text$1(row.sort) && !strings(row.sort)) throw reject(path + ".sort", "只允许字符串或字符串数组。");
+	if (row.scale !== void 0) {
+		const scale = keysIn(row.scale, scaleKeys, path + ".scale");
+		if (scale.type !== void 0) enumAt(scale.type, path + ".scale.type", scaleTypes);
+	}
+	if (row.axis !== void 0) {
+		const axis = keysIn(row.axis, axisKeys, path + ".axis");
+		if (axis.format !== void 0 && !axisFormat(axis.format)) throw reject(path + ".axis.format", "只允许 32 字以内的 d3 数值格式或时间格式。");
+	}
+}
+function encoding(value, path) {
+	const row = keysIn(value, businessChartSpecKeys.allowedEncodingChannels, path);
+	for (const [key, item] of Object.entries(row)) {
+		if (key === "tooltip" && Array.isArray(item)) {
+			item.forEach((entry, index) => channel(entry, path + ".tooltip[" + index + "]"));
+			continue;
+		}
+		channel(item, path + "." + key);
+	}
+}
+function operations(value, path) {
+	if (!Array.isArray(value) || !value.length || value.length > 16) throw reject(path, "必须是 1–16 项算子。");
+	value.forEach((item, index) => {
+		const row = keysIn(item, operationKeys, path + "[" + index + "]");
+		stringAt(row.op, path + "[" + index + "].op", token);
+		if (row.field !== void 0) stringAt(row.field, path + "[" + index + "].field");
+		stringAt(row.as, path + "[" + index + "].as");
+	});
+}
+function transform(value, path) {
+	if (!Array.isArray(value) || value.length > 8) throw reject(path, "必须是不超过 8 项的数组。");
+	value.forEach((item, index) => {
+		const at = path + "[" + index + "]", row = keysIn(item, businessChartSpecKeys.allowedTransformKeys, at);
+		if (!businessChartSpecKeys.allowedTransforms.some((key) => key in row)) throw reject(at, "必须含 " + businessChartSpecKeys.allowedTransforms.join(" / ") + " 之一。");
+		if (row.aggregate !== void 0) operations(row.aggregate, at + ".aggregate");
+		if (row.window !== void 0) operations(row.window, at + ".window");
+		for (const key of ["groupby", "fold"]) if (row[key] !== void 0 && !strings(row[key])) throw reject(at + "." + key, "必须是 1–32 个字符串。");
+		for (const key of [
+			"timeUnit",
+			"stack",
+			"offset"
+		]) if (row[key] !== void 0) stringAt(row[key], at + "." + key, key === "stack" ? void 0 : token);
+		if (row.field !== void 0) stringAt(row.field, at + ".field");
+		if (row.as !== void 0 && !text$1(row.as) && !strings(row.as)) throw reject(at + ".as", "只允许字符串或字符串数组。");
+		if (row.sort !== void 0) {
+			if (!Array.isArray(row.sort) || !row.sort.length || row.sort.length > 8) throw reject(at + ".sort", "必须是 1–8 项排序。");
+			row.sort.forEach((entry, position) => {
+				const sort = keysIn(entry, sortKeys, at + ".sort[" + position + "]");
+				stringAt(sort.field, at + ".sort[" + position + "].field");
+				if (sort.order !== void 0 && sort.order !== "ascending" && sort.order !== "descending") throw reject(at + ".sort[" + position + "].order", "只允许 ascending / descending。");
+			});
+		}
+	});
+}
+/**
+* 深度遍历：任何键不在白名单、任何字符串值形如函数、任何禁止键（含 `url`/`values`/`datasets`）→ `teloa/invalid-input`，
+* reason 写明路径（如 `spec.encoding.tooltip.content`）。序列化 ≤ 16 KiB、深度 ≤ 8、节点 ≤ 400。
+* 先序列化出副本、只在副本上校验并返回副本：原对象上的取值器与 `toJSON` 因此只被读一次，校验的与返回的是同一份字节。
+*/
+function readBusinessChartSpec(value) {
+	if (!isRecord(value)) throw new WorkError("teloa/invalid-input", "图表规范格式不正确。");
+	const extra = Object.keys(value).filter((key) => key !== "engine" && key !== "spec"), missing = ["engine", "spec"].filter((key) => !(key in value));
+	if (extra.length || missing.length) throw new WorkError("teloa/invalid-input", "图表规范格式不正确：" + [...missing.length ? ["缺少字段 " + missing.join("、")] : [], ...extra.length ? ["不认识的字段 " + extra.join("、")] : []].join("；") + "。");
+	if (value.engine !== "vega-lite") throw new WorkError("teloa/invalid-input", "图表规范引擎不合法，当前为「" + String(value.engine) + "」，允许：vega-lite。");
+	let serialized;
+	try {
+		serialized = JSON.stringify(value.spec);
+	} catch {
+		throw reject("spec", "无法序列化。");
+	}
+	if (typeof serialized !== "string") throw reject("spec", "必须是对象。");
+	if (new TextEncoder().encode(serialized).byteLength > businessChartSpecLimits.bytes) throw reject("spec", "序列化后超过 16 KiB（" + businessChartSpecLimits.bytes + " 字节）。");
+	const copy = JSON.parse(serialized);
+	if (!isRecord(copy)) throw reject("spec", "必须是对象。");
+	scan(copy, "spec", 1, { nodes: 0 });
+	const spec = keysIn(copy, businessChartSpecKeys.allowedTopLevel, "spec");
+	if (spec.mark === void 0) throw reject("spec.mark", "缺失，mark 必填。");
+	mark(spec.mark, "spec.mark");
+	if (spec.encoding !== void 0) encoding(spec.encoding, "spec.encoding");
+	if (spec.transform !== void 0) transform(spec.transform, "spec.transform");
+	for (const key of ["width", "height"]) if (spec[key] !== void 0 && !(typeof spec[key] === "number" && spec[key] > 0 && spec[key] <= 4096)) throw reject("spec." + key, "必须是 1–4096 的数字。");
+	if (spec.title !== void 0) stringAt(spec.title, "spec.title");
+	return {
+		engine: "vega-lite",
+		spec: copy
+	};
+}
+
+//#endregion
+//#region packages/contract/src/business-dashboards.ts
+/**
+* 组件与看板声明（规格 §4.3/§4.4）：组件 = 只读 SQL + 展示配置，看板 = 12 列网格上的组件布局 + 刷新周期。
+* SQL 在契约层只限长度，语法树白名单与改写由服务端做（`BusinessSqlGuard`）；列名跨声明核对也留给服务端。
+* 看板 `filters`（整页时间范围）与组件 `drilldown`（点击下钻）已在二期放开（二期规格 §3.1、§4.1）。
+*/
+const businessWidgetKinds = [
+	"chart",
+	"metric",
+	"table",
+	"board",
+	"pipeline",
+	"list",
+	"view-ref"
+];
+/** 整页时间范围的预设键（二期规格 §3.1）：只给相对区间，区间文本由服务端常量映射，界面只选枚举。 */
+const businessTimeRanges = [
+	"24h",
+	"7d",
+	"30d",
+	"90d",
+	"all"
+];
+/** 资源与执行边界上限，全是字面量常量，不做设置项。 */
+const businessDashboardLimits = {
+	widgetsPerDashboard: 12,
+	dashboardsPerScope: 16,
+	widgetsPerScope: 64,
+	sqlBytes: 8192,
+	resultRows: 1e4,
+	rowBytes: 1048576,
+	resultBytes: 8388608,
+	concurrencyPerScope: 5,
+	queueWaitMs: 1e4,
+	statementTimeoutMs: 5e3,
+	workMem: "256MB",
+	tempFileLimit: "512MB",
+	retentionDays: 90,
+	scopeRowQuota: 5e5
+};
+const bad$8 = (message) => new WorkError("teloa/invalid-input", message);
+const maxNamedFields$1 = 8;
+/** 缺键/多键都指出具体字段名，照 `business-definitions.ts` 的 `exact`。 */
+const exact$4 = (value, keys, message) => {
+	if (!isRecord(value)) throw bad$8(message);
+	const missing = keys.filter((key) => !(key in value)), extra = Object.keys(value).filter((key) => !keys.includes(key));
+	if (!missing.length && !extra.length) return value;
+	const parts = [];
+	if (missing.length) parts.push("缺少字段 " + missing.slice(0, maxNamedFields$1).join("、"));
+	if (extra.length) parts.push("不认识的字段 " + extra.slice(0, maxNamedFields$1).join("、"));
+	throw bad$8(message.replace(/。$/, "") + "：" + parts.join("；") + "。");
+};
+/** 可选键：返回取值不是 `undefined` 的那些可选键，供拼进 exact 的键表；键在而取值为 `undefined` 时不列入，exact 会把它报为不认识的字段。 */
+const optional = (value, keys) => isRecord(value) ? keys.filter((key) => value[key] !== void 0) : [];
+/** 回显原值只取前 80 字：原值来自声明正文，整段回显会把任意长的文本带进错误文案与模型上下文。 */
+const invalidEnum$1 = (message, value, allowed) => {
+	const shown = String(value);
+	return bad$8(message.replace(/。$/, "") + "，当前为「" + (shown.length > 80 ? shown.slice(0, 80) + "…" : shown) + "」，允许：" + allowed.join(" / ") + "。");
+};
+function atPath$1(path, run) {
+	try {
+		return run();
+	} catch (error) {
+		if (error instanceof WorkError) throw new WorkError(error.code, path + "：" + error.message);
+		throw error;
+	}
+}
+/** 以下判据与 `business-definitions.ts` 逐字相同：本地标识、精确三段号、单行标签、业务范围。 */
+const localId$2 = /^[a-zA-Z0-9][a-zA-Z0-9-]{0,119}$/;
+const exactSemver$1 = /^\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?(?:\+[0-9A-Za-z.-]+)?$/;
+const label$2 = (value, max) => typeof value === "string" && !!value.trim() && value === value.trim() && value.length <= max && !/[\x00-\x08\x0a-\x1f\x7f]/.test(value);
+const domainText$1 = (value) => isBusinessScopeKey(value) && value !== "general";
+const semver$2 = (value) => typeof value === "string" && value.length <= 80 && exactSemver$1.test(value);
+/** SQL 结果列名：PostgreSQL 标识符上限 63 字节，只认 ASCII 标识符（大小写敏感，与 `AS` 别名逐字对应）。 */
+const columnName = /^[A-Za-z_][A-Za-z0-9_]{0,62}$/;
+const column = (value) => typeof value === "string" && columnName.test(value);
+const dedup = (value, min, max, item) => Array.isArray(value) && value.length >= min && value.length <= max && new Set(value).size === value.length && value.every(item);
+const gridInt = (value, min, max) => Number.isSafeInteger(value) && Number(value) >= min && Number(value) <= max;
+const timeRange = (value) => businessTimeRanges.includes(value);
+/** timeFilter.table：逻辑表名（对象类型 id 的 `-` 已写成 `_`）；column：对象字段标识（与 `business-definitions.ts` 的字段标识同一判据）或两个系统时间列。 */
+const logicalTable = /^[a-zA-Z0-9][a-zA-Z0-9_]{0,119}$/;
+const timeColumn = (value) => typeof value === "string" && (value === "_observed_at" || value === "_synced_at" || /^[a-z0-9][a-z0-9_-]{0,62}$/.test(value));
+/** drilldown.match.field：对象字段标识（与 `business-definitions.ts` 的字段标识同一判据）。 */
+const fieldName$3 = /^[a-z0-9][a-z0-9_-]{0,62}$/;
+function titleLocalized(value, title, message) {
+	if (!isRecord(value) || !Object.keys(value).length || Object.keys(value).some((key) => key !== "title")) throw bad$8(message);
+	const result = {};
+	if (value.title !== void 0) {
+		let metadata;
+		try {
+			metadata = localizedMetadata(value.title);
+		} catch {
+			throw bad$8(message);
+		}
+		if (metadata.original !== title || Object.values(metadata.locales).some((item) => typeof item === "string" && !label$2(item, 120))) throw bad$8(message);
+		result.title = metadata;
+	}
+	return result;
+}
+/** 周期与顶层确认位：确认位不得写进周期对象，读时合并后交给同一读取器（照映射声明）。 */
+function refreshOf(refresh, acknowledge) {
+	if (typeof acknowledge !== "boolean") throw bad$8("acknowledgeShortInterval 必须是布尔值。");
+	if (!isRecord(refresh)) throw bad$8("refresh：刷新周期格式不正确。");
+	if ("acknowledgeShortInterval" in refresh) throw bad$8("refresh：短周期确认位请写在声明顶层的 acknowledgeShortInterval，不写进 refresh 里。");
+	const { schedule, acknowledgeShortInterval } = atPath$1("refresh", () => readBusinessSyncSchedule({
+		...refresh,
+		acknowledgeShortInterval: acknowledge
+	}));
+	return {
+		refresh: schedule,
+		acknowledgeShortInterval
+	};
+}
+function head(row, format, noun) {
+	if (row.format !== format) throw invalidEnum$1(noun + "格式不正确。", row.format, [format]);
+	if (typeof row.id !== "string" || !localId$2.test(row.id)) throw bad$8(noun + "标识不合法。");
+	if (!semver$2(row.version)) throw bad$8(noun + "版本必须是精确三段号。");
+	if (!domainText$1(row.domain)) throw bad$8(noun + "所属业务范围不合法：" + businessScopeKeyRule + "，general 一律拒绝。");
+	if (!label$2(row.title, 120)) throw bad$8(noun + "标题不合法。");
+}
+const kindOnly = (kind, key, allowed, present) => {
+	if (allowed.includes(kind) && !present && key !== "table") throw bad$8(`组件种类 ${kind} 必须声明 ${key}。`);
+	if (!allowed.includes(kind) && present) throw bad$8(`组件种类 ${kind} 不得声明 ${key}。`);
+};
+function threshold(value) {
+	const row = exact$4(value, [
+		"field",
+		"op",
+		"value",
+		"tone"
+	], "阈值格式不正确。");
+	if (!column(row.field)) throw bad$8("阈值列名不合法。");
+	if (row.op !== "gte" && row.op !== "lte") throw invalidEnum$1("阈值算子不合法。", row.op, ["gte", "lte"]);
+	if (typeof row.value !== "number" || !Number.isFinite(row.value)) throw bad$8("阈值必须是有限数字。");
+	if (row.tone !== "good" && row.tone !== "warn" && row.tone !== "bad") throw invalidEnum$1("阈值色调不合法。", row.tone, [
+		"good",
+		"warn",
+		"bad"
+	]);
+	return {
+		field: row.field,
+		op: row.op,
+		value: row.value,
+		tone: row.tone
+	};
+}
+function readBusinessWidgetDefinition(value) {
+	if (!isRecord(value)) throw bad$8("组件声明格式不正确。");
+	const present = optional(value, [
+		"localized",
+		"query",
+		"viewRef",
+		"chart",
+		"metric",
+		"board",
+		"pipeline",
+		"table",
+		"thresholds",
+		"refresh",
+		"acknowledgeShortInterval",
+		"timeFilter",
+		"drilldown"
+	]);
+	const row = exact$4(value, [
+		"format",
+		"id",
+		"version",
+		"domain",
+		"title",
+		"kind",
+		...present
+	], "组件声明格式不正确。");
+	head(row, "teloa.business-widget/v1", "组件声明");
+	if (!businessWidgetKinds.includes(row.kind)) throw invalidEnum$1("组件种类不合法。", row.kind, businessWidgetKinds);
+	const kind = row.kind, has = (key) => present.includes(key);
+	kindOnly(kind, "query", businessWidgetKinds.filter((item) => item !== "view-ref"), has("query"));
+	kindOnly(kind, "viewRef", ["view-ref"], has("viewRef"));
+	kindOnly(kind, "chart", ["chart"], has("chart"));
+	kindOnly(kind, "metric", ["metric"], has("metric"));
+	kindOnly(kind, "board", ["board"], has("board"));
+	kindOnly(kind, "pipeline", ["pipeline"], has("pipeline"));
+	kindOnly(kind, "table", ["table", "list"], has("table"));
+	const result = {
+		format: "teloa.business-widget/v1",
+		id: row.id,
+		version: row.version,
+		domain: row.domain,
+		title: row.title,
+		kind
+	};
+	if (has("localized")) result.localized = titleLocalized(row.localized, result.title, "组件标题本地化元数据不合法。");
+	if (has("query")) {
+		if (typeof row.query !== "string" || !row.query.trim() || row.query.includes("\0")) throw bad$8("组件 SQL 必须是非空文本。");
+		if (new TextEncoder().encode(row.query).byteLength > businessDashboardLimits.sqlBytes) throw bad$8("组件 SQL 超过 " + businessDashboardLimits.sqlBytes + " 字节。");
+		result.query = row.query;
+	}
+	if (has("viewRef")) {
+		if (typeof row.viewRef !== "string" || !localId$2.test(row.viewRef)) throw bad$8("组件引用的视图标识不合法。");
+		result.viewRef = row.viewRef;
+	}
+	if (has("chart")) result.chart = atPath$1("chart", () => readBusinessChartSpec(row.chart));
+	if (has("metric")) {
+		const metric = atPath$1("metric", () => exact$4(row.metric, ["valueColumn", ...optional(row.metric, ["previousColumn", "unit"])], "指标配置格式不正确。"));
+		if (!column(metric.valueColumn) || metric.previousColumn !== void 0 && !column(metric.previousColumn)) throw bad$8("metric：指标列名不合法。");
+		if (metric.unit !== void 0 && !label$2(metric.unit, 16)) throw bad$8("metric：指标单位不合法。");
+		result.metric = {
+			valueColumn: metric.valueColumn,
+			...metric.previousColumn !== void 0 ? { previousColumn: metric.previousColumn } : {},
+			...metric.unit !== void 0 ? { unit: metric.unit } : {}
+		};
+	}
+	if (has("board")) {
+		const board = atPath$1("board", () => exact$4(row.board, [
+			"statusColumn",
+			"titleColumn",
+			"idColumn",
+			"statuses"
+		], "看板卡片配置格式不正确。"));
+		if (!column(board.statusColumn) || !column(board.titleColumn) || !column(board.idColumn)) throw bad$8("board：列名不合法。");
+		if (!dedup(board.statuses, 1, 12, (item) => label$2(item, 80))) throw bad$8("board：状态列必须是 1–12 个去重取值。");
+		result.board = {
+			statusColumn: board.statusColumn,
+			titleColumn: board.titleColumn,
+			idColumn: board.idColumn,
+			statuses: [...board.statuses]
+		};
+	}
+	if (has("pipeline")) {
+		const pipeline = atPath$1("pipeline", () => exact$4(row.pipeline, [
+			"stageColumn",
+			"countColumn",
+			...optional(row.pipeline, ["durationColumn"]),
+			"stages"
+		], "流水线配置格式不正确。"));
+		if (!column(pipeline.stageColumn) || !column(pipeline.countColumn) || pipeline.durationColumn !== void 0 && !column(pipeline.durationColumn)) throw bad$8("pipeline：列名不合法。");
+		if (!dedup(pipeline.stages, 1, 12, (item) => label$2(item, 80))) throw bad$8("pipeline：阶段必须是 1–12 个去重取值。");
+		result.pipeline = {
+			stageColumn: pipeline.stageColumn,
+			countColumn: pipeline.countColumn,
+			...pipeline.durationColumn !== void 0 ? { durationColumn: pipeline.durationColumn } : {},
+			stages: [...pipeline.stages]
+		};
+	}
+	if (has("table")) {
+		const table = atPath$1("table", () => exact$4(row.table, ["columns"], "表格配置格式不正确。"));
+		if (!dedup(table.columns, 1, 64, column)) throw bad$8("table：列必须是 1–64 个去重列名。");
+		result.table = { columns: [...table.columns] };
+	}
+	if (has("thresholds")) {
+		if (!Array.isArray(row.thresholds) || row.thresholds.length > 4) throw bad$8("阈值不得超过 4 条。");
+		result.thresholds = row.thresholds.map((item, index) => atPath$1(`thresholds[${index}]`, () => threshold(item)));
+	}
+	if (has("acknowledgeShortInterval") && !has("refresh")) throw bad$8("acknowledgeShortInterval 只能与 refresh 一起声明。");
+	if (has("refresh")) {
+		const refresh = refreshOf(row.refresh, has("acknowledgeShortInterval") ? row.acknowledgeShortInterval : false);
+		result.refresh = refresh.refresh;
+		if (has("acknowledgeShortInterval")) result.acknowledgeShortInterval = refresh.acknowledgeShortInterval;
+	}
+	if (has("timeFilter")) {
+		if (kind === "view-ref") throw bad$8("组件种类 view-ref 不得声明 timeFilter：它没有 SQL，整页时间范围无从生效。");
+		if (result.metric?.previousColumn !== void 0) throw bad$8("metric.previousColumn 与 timeFilter 不能同时声明：上期对比要读时间范围之外的数据。");
+		const filter = atPath$1("timeFilter", () => exact$4(row.timeFilter, ["table", "column"], "时间范围接入配置格式不正确。"));
+		if (typeof filter.table !== "string" || !logicalTable.test(filter.table)) throw bad$8("timeFilter：表名不合法，须是 SQL 里写的逻辑表名。");
+		if (!timeColumn(filter.column)) throw bad$8("timeFilter：列名不合法，须是对象字段标识或 _observed_at / _synced_at。");
+		result.timeFilter = {
+			table: filter.table,
+			column: filter.column
+		};
+	}
+	if (has("drilldown")) result.drilldown = drilldownOf(row.drilldown, result);
+	return result;
+}
+/** 下钻：点哪一行、取哪一列在各种类里必须说得清，说不清的写法在这里就拒（声明收下即生效）。 */
+function drilldownOf(value, widget) {
+	const kind = widget.kind;
+	if (kind === "view-ref") throw bad$8("组件种类 view-ref 不得声明 drilldown：视图引用本身就是台账视图。");
+	const row = atPath$1("drilldown", () => exact$4(value, ["objectType", ...optional(value, ["idColumn", "match"])], "下钻配置格式不正确。"));
+	if (typeof row.objectType !== "string" || !localId$2.test(row.objectType)) throw bad$8("drilldown：对象类型标识不合法。");
+	if (row.idColumn !== void 0 && row.match !== void 0) throw bad$8("drilldown：idColumn 与 match 只能写一个。");
+	if (kind === "metric" && (row.idColumn !== void 0 || row.match !== void 0)) throw bad$8("组件种类 metric 的 drilldown 只能写 objectType：指标卡只有一行，没有可点的维度。");
+	if (kind === "pipeline" && row.idColumn !== void 0) throw bad$8("组件种类 pipeline 的 drilldown 不得写 idColumn：阶段是聚合出来的，对不上单个对象。");
+	const result = { objectType: row.objectType };
+	if (row.idColumn !== void 0) {
+		if (!column(row.idColumn)) throw bad$8("drilldown：idColumn 列名不合法。");
+		result.idColumn = row.idColumn;
+	}
+	if (row.match !== void 0) {
+		const match = atPath$1("drilldown.match", () => exact$4(row.match, ["column", "field"], "下钻取值匹配配置格式不正确。"));
+		if (!column(match.column)) throw bad$8("drilldown.match：column 列名不合法。");
+		if (typeof match.field !== "string" || !fieldName$3.test(match.field)) throw bad$8("drilldown.match：field 须是对象字段标识。");
+		if (kind === "pipeline" && match.column !== widget.pipeline.stageColumn) throw bad$8("drilldown.match：流水线的 column 须是 stageColumn（" + widget.pipeline.stageColumn + "），点的是阶段。");
+		result.match = {
+			column: match.column,
+			field: match.field
+		};
+	}
+	const used = result.idColumn ?? result.match?.column;
+	if (kind === "chart" && used !== void 0 && !chartFields(widget.chart.spec).includes(used)) throw bad$8("drilldown：下钻用到的列 " + used + " 不在图表编码字段里，点击图形时数据里没有这一列。");
+	return result;
+}
+function filtersOf(value) {
+	const row = atPath$1("filters", () => exact$4(value, ["timeRange"], "看板筛选格式不正确。"));
+	const range = atPath$1("filters.timeRange", () => exact$4(row.timeRange, ["options", "default"], "时间范围配置格式不正确。"));
+	if (!dedup(range.options, 1, businessTimeRanges.length, timeRange)) throw bad$8("filters.timeRange：options 必须是 1–" + businessTimeRanges.length + " 个去重取值，允许：" + businessTimeRanges.join(" / ") + "。");
+	if (!timeRange(range.default) || !range.options.includes(range.default)) throw bad$8("filters.timeRange：default 必须是 options 中的一项。");
+	return { timeRange: {
+		options: [...range.options],
+		default: range.default
+	} };
+}
+function layoutItem(value) {
+	const row = exact$4(value, [
+		"widget",
+		"x",
+		"y",
+		"w",
+		"h"
+	], "布局项格式不正确。");
+	if (typeof row.widget !== "string" || !localId$2.test(row.widget)) throw bad$8("布局项的组件标识不合法。");
+	if (!gridInt(row.x, 0, 11) || !gridInt(row.w, 1, 12) || Number(row.x) + Number(row.w) > 12) throw bad$8("布局项越出 12 列网格：要求 0≤x<12、1≤w≤12、x+w≤12。");
+	if (!gridInt(row.h, 1, 12) || !gridInt(row.y, 0, Number.MAX_SAFE_INTEGER)) throw bad$8("布局项高度须为 1–12、纵向位置须为非负整数。");
+	return {
+		widget: row.widget,
+		x: row.x,
+		y: row.y,
+		w: row.w,
+		h: row.h
+	};
+}
+function readBusinessDashboardDefinition(value) {
+	if (!isRecord(value)) throw bad$8("看板声明格式不正确。");
+	const present = optional(value, ["localized", "filters"]);
+	const row = exact$4(value, [
+		"format",
+		"id",
+		"version",
+		"domain",
+		"title",
+		"widgets",
+		"layout",
+		"refresh",
+		"acknowledgeShortInterval",
+		...present
+	], "看板声明格式不正确。");
+	head(row, "teloa.business-dashboard/v1", "看板声明");
+	if (!dedup(row.widgets, 1, businessDashboardLimits.widgetsPerDashboard, (item) => typeof item === "string" && localId$2.test(item))) throw bad$8("看板组件必须是 1–" + businessDashboardLimits.widgetsPerDashboard + " 个去重的组件标识。");
+	const widgets = row.widgets;
+	if (!Array.isArray(row.layout)) throw bad$8("看板布局必须是数组。");
+	const layout = row.layout.map((item, index) => atPath$1(`layout[${index}]`, () => layoutItem(item)));
+	const placed = layout.map((item) => item.widget);
+	if (placed.length !== widgets.length || new Set(placed).size !== placed.length || widgets.some((widget) => !placed.includes(widget))) throw bad$8("看板布局必须为每个组件恰好放置一次，且不得放置未列出的组件。");
+	for (let left = 0; left < layout.length; left++) for (let right = left + 1; right < layout.length; right++) {
+		const a = layout[left], b = layout[right];
+		if (a.x < b.x + b.w && b.x < a.x + a.w && a.y < b.y + b.h && b.y < a.y + a.h) throw bad$8(`看板布局重叠：${a.widget} 与 ${b.widget}。`);
+	}
+	const refresh = refreshOf(row.refresh, row.acknowledgeShortInterval);
+	const result = {
+		format: "teloa.business-dashboard/v1",
+		id: row.id,
+		version: row.version,
+		domain: row.domain,
+		title: row.title,
+		widgets: [...widgets],
+		layout,
+		...refresh
+	};
+	if (present.includes("localized")) result.localized = titleLocalized(row.localized, result.title, "看板标题本地化元数据不合法。");
+	if (present.includes("filters")) result.filters = filtersOf(row.filters);
+	return result;
+}
+/** 图表编码里引用到的列名，去掉 transform 自己产出的那些（`as`；fold 不写 as 时产出 key/value）。 */
+function chartFields(spec) {
+	const produced = /* @__PURE__ */ new Set();
+	const walk = (value) => {
+		if (Array.isArray(value)) {
+			value.forEach(walk);
+			return;
+		}
+		if (!isRecord(value)) return;
+		for (const [key, item] of Object.entries(value)) {
+			if (key === "as") {
+				for (const name of Array.isArray(item) ? item : [item]) if (typeof name === "string") produced.add(name);
+			}
+			if (key === "fold" && value.as === void 0) {
+				produced.add("key");
+				produced.add("value");
+			}
+			walk(item);
+		}
+	};
+	walk(spec.transform);
+	const fields = [];
+	const encoding = isRecord(spec.encoding) ? spec.encoding : {};
+	for (const channel of Object.values(encoding)) for (const item of Array.isArray(channel) ? channel : [channel]) if (isRecord(item) && typeof item.field === "string" && !produced.has(item.field) && !fields.includes(item.field)) fields.push(item.field);
+	return fields;
+}
+
+//#endregion
+//#region packages/contract/src/business-definitions.ts
+const businessFieldTypes = [
+	"text",
+	"number",
+	"enum",
+	"datetime",
+	"reference",
+	"duration",
+	"boolean"
+];
+const businessViewKinds = [
+	"list",
+	"distribution",
+	"trend",
+	"board-card"
+];
+const businessAggregations = [
+	"count",
+	"sum",
+	"avg",
+	"min",
+	"max"
+];
+const businessTimeBuckets = [
+	"hour",
+	"day",
+	"week",
+	"month"
+];
+const businessChartTypes = [
+	"table",
+	"bar",
+	"pie",
+	"line",
+	"number"
+];
+const businessFilterOperators = [
+	"eq",
+	"ne",
+	"in",
+	"gte",
+	"lte"
+];
+/**
+* 相对时间窗：白名单枚举，没有算术、没有相对天数参数（由 AppSec 的「SLA 到期趋势」逼出来）。
+* `overdue` 含义固定为「该 `datetime` 字段早于计算时刻」，不可配置。
+*/
+const businessViewWindows = [
+	"last-24h",
+	"last-7d",
+	"last-30d",
+	"next-7d",
+	"next-30d",
+	"overdue"
+];
+/** `kind × chart` 允许组合，写死不留自由搭配。 */
+const businessViewCharts = {
+	list: ["table"],
+	distribution: [
+		"bar",
+		"pie",
+		"table"
+	],
+	trend: ["line", "bar"],
+	"board-card": ["number"]
+};
+/** 字段类型 × 维度 / 度量 / 聚合 / 算子交叉约束表（规格 §2.5），契约与服务端共用同一份，不得再抄一份。 */
+const businessFieldCapabilities = {
+	text: {
+		dimension: true,
+		measure: false,
+		aggregations: [],
+		operators: [
+			"eq",
+			"ne",
+			"in"
+		]
+	},
+	number: {
+		dimension: false,
+		measure: true,
+		aggregations: [
+			"sum",
+			"avg",
+			"min",
+			"max"
+		],
+		operators: [
+			"eq",
+			"ne",
+			"gte",
+			"lte"
+		]
+	},
+	enum: {
+		dimension: true,
+		measure: false,
+		aggregations: [],
+		operators: [
+			"eq",
+			"ne",
+			"in"
+		]
+	},
+	datetime: {
+		dimension: true,
+		measure: true,
+		aggregations: ["min", "max"],
+		operators: ["gte", "lte"]
+	},
+	reference: {
+		dimension: true,
+		measure: false,
+		aggregations: [],
+		operators: ["eq", "in"]
+	},
+	duration: {
+		dimension: false,
+		measure: true,
+		aggregations: [
+			"sum",
+			"avg",
+			"min",
+			"max"
+		],
+		operators: [
+			"eq",
+			"ne",
+			"gte",
+			"lte"
+		]
+	},
+	boolean: {
+		dimension: true,
+		measure: false,
+		aggregations: [],
+		operators: ["eq", "ne"]
+	}
+};
+/** 资源上限，全是字面量常量，不做设置项。 */
+const businessLedgerLimits = {
+	scanRows: 5e3,
+	objectTypes: 16,
+	viewsPerType: 8,
+	measures: 4,
+	filters: 8,
+	dimensionValues: 50,
+	listRows: 100
+};
+const bad$7 = (message) => new WorkError("teloa/invalid-input", message);
+/** 缺键/多键都指出具体字段名（不带路径的泛化文案让模型无从下手排查，见页内新建业务定义的可用性缺陷复盘）。 */
+const maxNamedFields = 8;
+const exact$3 = (value, keys, message) => {
+	if (!isRecord(value)) throw bad$7(message);
+	const missing = keys.filter((key) => !(key in value)), extra = Object.keys(value).filter((key) => !keys.includes(key));
+	if (!missing.length && !extra.length) return value;
+	const parts = [];
+	if (missing.length) parts.push("缺少字段 " + missing.slice(0, maxNamedFields).join("、"));
+	if (extra.length) parts.push("不认识的字段 " + extra.slice(0, maxNamedFields).join("、"));
+	throw bad$7(message.replace(/。$/, "") + "：" + parts.join("；") + "。");
+};
+/** 枚举/字面量取值不合法时把实际取值与允许列表一并报出，避免模型靠猜。 */
+const invalidEnum = (message, value, allowed) => bad$7(message.replace(/。$/, "") + "，当前为「" + String(value) + "」，允许：" + allowed.join(" / ") + "。");
+/** 嵌套读取器在抛错时补上位置前缀（`fields[2]`、`measures[0]`、`dimension` 等），错误码不变。 */
+function atPath(path, run) {
+	try {
+		return run();
+	} catch (error) {
+		if (error instanceof WorkError) throw new WorkError(error.code, path + "：" + error.message);
+		throw error;
+	}
+}
+/** 字段 / 度量 / 维度标识：视图与动作只引用它，界面改标签不影响引用。至多 63 字符：看板 SQL 里它就是列名，PG 标识符超过 63 字节会被静默截断。 */
+const fieldName$2 = /^[a-z0-9][a-z0-9_-]{0,62}$/;
+/** 对象类型 / 视图 / 动作 / 目标本地标识：与清单资源标识同规矩，不接受下划线。 */
+const localId$1 = /^[a-zA-Z0-9][a-zA-Z0-9-]{0,119}$/;
+const sourceIdPattern = /^[a-zA-Z0-9][a-zA-Z0-9._-]{0,119}$/;
+const toolName = /^[a-z][a-z0-9]*(?:\.[a-z][a-z0-9]*)+$/;
+const exactSemver = /^\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?(?:\+[0-9A-Za-z.-]+)?$/;
+/**
+* 声明文本会同时进两个地方：界面（文本节点）与模型上下文（台账摘要、动作说明）。
+* 基础判据抄 `business-data.ts` 的 `text()`（禁 C0 控制符与 DEL，但放行 `\t`/`\n`/`\r`），
+* 在此之上再显式禁 `\r` 与 `\n`——声明文本全部是单行标签，允许换行等于允许在模型上下文里
+* 另起一段，那是注入面（规格 §8 第 1 条）；`\t` 不构成注入面，顺带放行不禁。
+*/
+const label$1 = (value, max) => typeof value === "string" && !!value.trim() && value === value.trim() && value.length <= max && !/[\x00-\x08\x0a-\x1f\x7f]/.test(value);
+const domainText = (value) => isBusinessScopeKey(value) && value !== "general";
+const semver$1 = (value) => typeof value === "string" && value.length <= 80 && exactSemver.test(value);
+const dedupList = (values, min, max, item) => Array.isArray(values) && values.length >= min && values.length <= max && new Set(values).size === values.length && values.every(item);
+function localizedShape(value, keys, message) {
+	if (!isRecord(value) || !Object.keys(value).length || Object.keys(value).some((key) => !keys.includes(key))) throw bad$7(message);
+	return value;
+}
+function localizedText(value, original, max, message) {
+	let metadata;
+	try {
+		metadata = localizedMetadata(value);
+	} catch {
+		throw bad$7(message);
+	}
+	if (metadata.original !== original || Object.values(metadata.locales).some((item) => typeof item === "string" && !label$1(item, max))) throw bad$7(message);
+	return metadata;
+}
+function fieldDefinition(value) {
+	if (!isRecord(value)) throw bad$7("业务对象字段定义格式不正确。");
+	const hasValues = value.values !== void 0, hasReference = value.referenceType !== void 0, hasLocalized = value.localized !== void 0;
+	const keys = [
+		"name",
+		"label",
+		...hasLocalized ? ["localized"] : [],
+		"type",
+		"required",
+		"from",
+		...hasValues ? ["values"] : [],
+		...hasReference ? ["referenceType"] : []
+	];
+	const row = exact$3(value, keys, "业务对象字段定义格式不正确。");
+	if (typeof row.name !== "string" || !fieldName$2.test(row.name)) throw bad$7("业务对象字段标识不合法。");
+	if (!label$1(row.label, 80)) throw bad$7("业务对象字段标签不合法。");
+	if (!businessFieldTypes.includes(row.type)) throw invalidEnum("业务对象字段类型不合法。", row.type, businessFieldTypes);
+	const type = row.type;
+	if (typeof row.required !== "boolean") throw bad$7("业务对象字段是否必填不合法。");
+	if (!label$1(row.from, 120)) throw bad$7("业务对象字段来源不合法。");
+	if (type === "enum") {
+		if (!dedupList(row.values, 2, 32, (item) => label$1(item, 80))) throw bad$7("枚举取值必须是 2–32 个去重且不超 80 字的取值。");
+	} else if (hasValues) throw bad$7("该字段类型不得带取值列表。");
+	if (type === "reference") {
+		if (typeof row.referenceType !== "string" || !localId$1.test(row.referenceType)) throw bad$7("引用目标类型标识不合法。");
+	} else if (hasReference) throw bad$7("该字段类型不得带引用目标类型。");
+	let localized;
+	if (hasLocalized) {
+		const metadata = localizedShape(row.localized, ["label", "values"], "业务对象字段本地化元数据不合法。"), result = {};
+		if (metadata.label !== void 0) result.label = localizedText(metadata.label, row.label, 80, "业务对象字段标签本地化元数据不合法。");
+		if (metadata.values !== void 0) {
+			if (type !== "enum" || !Array.isArray(metadata.values) || metadata.values.length !== row.values.length) throw bad$7("业务对象枚举取值本地化元数据不合法。");
+			result.values = metadata.values.map((item, index) => localizedText(item, row.values[index], 80, "业务对象枚举取值本地化元数据不合法。"));
+		}
+		localized = result;
+	}
+	return {
+		name: row.name,
+		label: row.label,
+		...localized ? { localized } : {},
+		type,
+		required: row.required,
+		from: row.from,
+		...hasValues ? { values: [...row.values] } : {},
+		...hasReference ? { referenceType: row.referenceType } : {}
+	};
+}
+function progressDefinition(value, fields) {
+	if (!isRecord(value)) throw bad$7("业务对象进度摘要定义格式不正确。");
+	const hasChangedAtField = value.changedAtField !== void 0;
+	const row = exact$3(value, [
+		"stageField",
+		"unfinished",
+		"waitingForYou",
+		...hasChangedAtField ? ["changedAtField"] : []
+	], "业务对象进度摘要定义格式不正确。");
+	if (typeof row.stageField !== "string" || !fieldName$2.test(row.stageField)) throw bad$7("业务对象进度阶段字段不合法。");
+	const stage = fields.find((field) => field.name === row.stageField);
+	if (!stage || stage.type !== "enum" || !stage.values) throw bad$7("业务对象进度阶段必须引用枚举字段。");
+	const declared = (values, min) => dedupList(values, min, stage.values.length, (item) => typeof item === "string" && stage.values.includes(item));
+	if (!declared(row.unfinished, 1) || !declared(row.waitingForYou, 0)) throw bad$7("业务对象进度取值必须是阶段枚举的去重子集。");
+	if (row.waitingForYou.some((value) => !row.unfinished.includes(value))) throw bad$7("业务对象等待确认取值必须属于未完成取值。");
+	if (hasChangedAtField) {
+		if (typeof row.changedAtField !== "string" || !fieldName$2.test(row.changedAtField) || fields.find((field) => field.name === row.changedAtField)?.type !== "datetime") throw bad$7("业务对象最近变化字段必须引用日期时间字段。");
+	}
+	return {
+		stageField: row.stageField,
+		unfinished: [...row.unfinished],
+		waitingForYou: [...row.waitingForYou],
+		...hasChangedAtField ? { changedAtField: row.changedAtField } : {}
+	};
+}
+function readBusinessObjectTypeDefinition(value) {
+	if (!isRecord(value)) throw bad$7("业务对象类型定义格式不正确。");
+	const hasDefaultAction = value.defaultAction !== void 0, hasProgress = value.progress !== void 0, hasLocalized = value.localized !== void 0;
+	const keys = [
+		"format",
+		"id",
+		"version",
+		"domain",
+		"title",
+		...hasLocalized ? ["localized"] : [],
+		"unit",
+		"lead",
+		"sourceId",
+		"fields",
+		...hasProgress ? ["progress"] : [],
+		...hasDefaultAction ? ["defaultAction"] : []
+	];
+	const row = exact$3(value, keys, "业务对象类型定义格式不正确。");
+	if (row.format !== "teloa.business-object-type/v1") throw invalidEnum("业务对象类型定义格式不正确。", row.format, ["teloa.business-object-type/v1"]);
+	if (typeof row.id !== "string" || !localId$1.test(row.id)) throw bad$7("业务对象类型标识不合法。");
+	if (!semver$1(row.version)) throw bad$7("业务对象类型版本必须是精确三段号。");
+	if (!domainText(row.domain)) throw bad$7("业务对象类型所属业务范围不合法：" + businessScopeKeyRule + "，general 一律拒绝。");
+	if (!label$1(row.title, 120)) throw bad$7("业务对象类型标题不合法。");
+	if (!label$1(row.unit, 8)) throw bad$7("业务对象类型计数单位不合法。");
+	if (!label$1(row.lead, 500)) throw bad$7("业务对象类型处境说明不合法。");
+	if (typeof row.sourceId !== "string" || !sourceIdPattern.test(row.sourceId)) throw bad$7("业务对象类型绑定的数据源标识不合法。");
+	if (!Array.isArray(row.fields) || row.fields.length < 1 || row.fields.length > 50) throw bad$7("业务对象类型字段必须是 1–50 项。");
+	const fields = row.fields.map((item, index) => atPath(`fields[${index}]`, () => fieldDefinition(item)));
+	if (new Set(fields.map((field) => field.name)).size !== fields.length || new Set(fields.map((field) => field.from)).size !== fields.length) throw bad$7("业务对象类型字段标识或来源不得重复。");
+	const progress = hasProgress ? atPath("progress", () => progressDefinition(row.progress, fields)) : void 0;
+	if (hasDefaultAction && (typeof row.defaultAction !== "string" || !localId$1.test(row.defaultAction))) throw bad$7("业务对象类型默认动作标识不合法。");
+	let localized;
+	if (hasLocalized) {
+		const metadata = localizedShape(row.localized, [
+			"title",
+			"unit",
+			"lead"
+		], "业务对象类型本地化元数据不合法。"), result = {};
+		if (metadata.title !== void 0) result.title = localizedText(metadata.title, row.title, 120, "业务对象类型标题本地化元数据不合法。");
+		if (metadata.unit !== void 0) result.unit = localizedText(metadata.unit, row.unit, 8, "业务对象类型计数单位本地化元数据不合法。");
+		if (metadata.lead !== void 0) result.lead = localizedText(metadata.lead, row.lead, 500, "业务对象类型处境说明本地化元数据不合法。");
+		localized = result;
+	}
+	return {
+		format: "teloa.business-object-type/v1",
+		id: row.id,
+		version: row.version,
+		domain: row.domain,
+		title: row.title,
+		...localized ? { localized } : {},
+		unit: row.unit,
+		lead: row.lead,
+		sourceId: row.sourceId,
+		fields,
+		...progress ? { progress } : {},
+		...hasDefaultAction ? { defaultAction: row.defaultAction } : {}
+	};
+}
+/**
+* `filters` 与度量的 `where` 共用同一条读取路径，算子一律按 `businessFilterOperators`
+* 全量校验（规格 §2.5「`where` 受与 `filters` 完全相同的算子约束」）——契约层不知道
+* `field` 在对应对象类型里的真实类型，算子×字段类型的交叉约束（§2.5 表）留给读取层
+* 核对（§3.3，同「动作 inputs 数量对齐工作模板」一样是跨声明检查）。
+* `values` 上限 32 与 `fieldDefinition` 的枚举取值上限对齐：筛选值本质是枚举成员的子集。
+*/
+function filterClause(value, message) {
+	const row = exact$3(value, [
+		"field",
+		"op",
+		"values"
+	], message);
+	if (typeof row.field !== "string" || !fieldName$2.test(row.field)) throw bad$7(message);
+	if (!businessFilterOperators.includes(row.op)) throw invalidEnum(message, row.op, businessFilterOperators);
+	const op = row.op;
+	if (!dedupList(row.values, 1, 32, (item) => label$1(item, 80))) throw bad$7(message);
+	if (op !== "in" && row.values.length !== 1) throw bad$7(message);
+	return {
+		field: row.field,
+		op,
+		values: [...row.values]
+	};
+}
+function measureDefinition(value) {
+	if (!isRecord(value)) throw bad$7("业务视图度量定义格式不正确。");
+	const hasField = value.field !== void 0, hasWhere = value.where !== void 0, hasLocalized = value.localized !== void 0;
+	const keys = [
+		"id",
+		"label",
+		...hasLocalized ? ["localized"] : [],
+		"aggregation",
+		...hasField ? ["field"] : [],
+		...hasWhere ? ["where"] : []
+	];
+	const row = exact$3(value, keys, "业务视图度量定义格式不正确。");
+	if (typeof row.id !== "string" || !fieldName$2.test(row.id)) throw bad$7("业务视图度量标识不合法。");
+	if (!label$1(row.label, 80)) throw bad$7("业务视图度量标签不合法。");
+	if (!businessAggregations.includes(row.aggregation)) throw invalidEnum("业务视图度量聚合方式不合法。", row.aggregation, businessAggregations);
+	const aggregation = row.aggregation;
+	if (aggregation === "count") {
+		if (hasField) throw bad$7("count 聚合不得绑定字段。");
+	} else if (typeof row.field !== "string" || !fieldName$2.test(row.field)) throw bad$7("非 count 聚合必须绑定字段。");
+	const where = hasWhere ? atPath("where", () => filterClause(row.where, "业务视图度量筛选不合法。")) : void 0;
+	let localized;
+	if (hasLocalized) {
+		const metadata = localizedShape(row.localized, ["label"], "业务视图度量本地化元数据不合法。"), result = {};
+		if (metadata.label !== void 0) result.label = localizedText(metadata.label, row.label, 80, "业务视图度量标签本地化元数据不合法。");
+		localized = result;
+	}
+	return {
+		id: row.id,
+		label: row.label,
+		...localized ? { localized } : {},
+		aggregation,
+		...hasField ? { field: row.field } : {},
+		...where ? { where } : {}
+	};
+}
+function dimensionDefinition(value, kind) {
+	if (!isRecord(value)) throw bad$7("业务视图维度定义格式不正确。");
+	const hasBucket = value.bucket !== void 0;
+	const keys = [
+		"field",
+		"limit",
+		...hasBucket ? ["bucket"] : []
+	];
+	const row = exact$3(value, keys, "业务视图维度定义格式不正确。");
+	if (typeof row.field !== "string" || !fieldName$2.test(row.field)) throw bad$7("业务视图维度字段不合法。");
+	if (!Number.isSafeInteger(row.limit) || Number(row.limit) < 1 || Number(row.limit) > businessLedgerLimits.dimensionValues) throw bad$7("业务视图维度取值上限不合法。");
+	if (kind === "trend") {
+		if (!hasBucket) throw bad$7("趋势视图的维度必须带分桶。");
+		if (!businessTimeBuckets.includes(row.bucket)) throw invalidEnum("趋势视图的维度分桶不合法。", row.bucket, businessTimeBuckets);
+	} else if (hasBucket) throw bad$7("分布视图的维度不得带分桶。");
+	return {
+		field: row.field,
+		limit: row.limit,
+		...hasBucket ? { bucket: row.bucket } : {}
+	};
+}
+function sortDefinition(value, measureIds) {
+	if (!isRecord(value)) throw bad$7("业务视图排序定义格式不正确。");
+	const hasMeasureId = value.measureId !== void 0;
+	const keys = [
+		"by",
+		"direction",
+		...hasMeasureId ? ["measureId"] : []
+	];
+	const row = exact$3(value, keys, "业务视图排序定义格式不正确。");
+	if (row.by !== "dimension" && row.by !== "measure") throw invalidEnum("业务视图排序依据不合法。", row.by, ["dimension", "measure"]);
+	if (row.direction !== "asc" && row.direction !== "desc") throw invalidEnum("业务视图排序方向不合法。", row.direction, ["asc", "desc"]);
+	if (row.by === "measure") {
+		if (typeof row.measureId !== "string" || !measureIds.includes(row.measureId)) throw bad$7("业务视图排序依据的度量必须是本视图已声明的度量。");
+	} else if (hasMeasureId) throw bad$7("按维度排序不得带度量标识。");
+	return {
+		by: row.by,
+		direction: row.direction,
+		...hasMeasureId ? { measureId: row.measureId } : {}
+	};
+}
+function windowDefinition(value) {
+	const row = exact$3(value, ["field", "relative"], "业务视图时间窗定义格式不正确。");
+	if (typeof row.field !== "string" || !fieldName$2.test(row.field)) throw bad$7("业务视图时间窗字段不合法。");
+	if (!businessViewWindows.includes(row.relative)) throw invalidEnum("业务视图时间窗相对区间不在白名单内。", row.relative, businessViewWindows);
+	return {
+		field: row.field,
+		relative: row.relative
+	};
+}
+function readBusinessViewDefinition(value) {
+	if (!isRecord(value)) throw bad$7("业务视图定义格式不正确。");
+	if (!businessViewKinds.includes(value.kind)) throw invalidEnum("业务视图种类不合法。", value.kind, businessViewKinds);
+	const kind = value.kind;
+	const hasDimension = kind === "distribution" || kind === "trend", hasSort = kind !== "board-card", hasWindow = value.window !== void 0, hasLocalized = value.localized !== void 0;
+	const keys = [
+		"format",
+		"id",
+		"version",
+		"domain",
+		"title",
+		...hasLocalized ? ["localized"] : [],
+		"kind",
+		"chart",
+		"objectType",
+		...hasDimension ? ["dimension"] : [],
+		"measures",
+		"filters",
+		...hasSort ? ["sort"] : [],
+		...hasWindow ? ["window"] : [],
+		"limit"
+	];
+	const row = exact$3(value, keys, "业务视图定义格式不正确。");
+	if (row.format !== "teloa.business-view/v1") throw invalidEnum("业务视图定义格式不正确。", row.format, ["teloa.business-view/v1"]);
+	if (typeof row.id !== "string" || !localId$1.test(row.id)) throw bad$7("业务视图标识不合法。");
+	if (!semver$1(row.version)) throw bad$7("业务视图版本必须是精确三段号。");
+	if (!domainText(row.domain)) throw bad$7("业务视图所属业务范围不合法：" + businessScopeKeyRule + "，general 一律拒绝。");
+	if (!label$1(row.title, 120)) throw bad$7("业务视图标题不合法。");
+	if (!businessChartTypes.includes(row.chart)) throw invalidEnum("业务视图图表类型不合法。", row.chart, businessChartTypes);
+	if (!businessViewCharts[kind].includes(row.chart)) throw invalidEnum("该视图种类不支持所选图表类型。", row.chart, businessViewCharts[kind]);
+	const chart = row.chart;
+	if (typeof row.objectType !== "string" || !localId$1.test(row.objectType)) throw bad$7("业务视图统计的对象类型标识不合法。");
+	const dimension = hasDimension ? atPath("dimension", () => dimensionDefinition(row.dimension, kind)) : void 0;
+	if (!Array.isArray(row.measures) || !row.measures.length || row.measures.length > businessLedgerLimits.measures) throw bad$7("业务视图度量数量不合法。");
+	if ((kind === "list" || kind === "board-card" || chart === "pie") && row.measures.length !== 1) throw bad$7("清单、大盘卡与饼图视图必须恰好一项度量。");
+	const measures = row.measures.map((item, index) => atPath(`measures[${index}]`, () => measureDefinition(item)));
+	if (new Set(measures.map((measure) => measure.id)).size !== measures.length) throw bad$7("业务视图度量标识不得重复。");
+	if (!Array.isArray(row.filters) || row.filters.length > businessLedgerLimits.filters) throw bad$7("业务视图筛选数量不合法。");
+	const filters = row.filters.map((filter, index) => atPath(`filters[${index}]`, () => filterClause(filter, "业务视图筛选不合法。")));
+	const sort = hasSort ? atPath("sort", () => sortDefinition(row.sort, measures.map((measure) => measure.id))) : void 0;
+	const window = hasWindow ? atPath("window", () => windowDefinition(row.window)) : void 0;
+	if (kind === "board-card") {
+		if (row.limit !== 1) throw bad$7("大盘卡视图行数固定为 1。");
+	} else if (kind === "list") {
+		if (!Number.isSafeInteger(row.limit) || Number(row.limit) < 1 || Number(row.limit) > businessLedgerLimits.listRows) throw bad$7("清单视图行数必须在 1 到 100 之间。");
+	} else if (!Number.isSafeInteger(row.limit) || Number(row.limit) < 1 || Number(row.limit) > businessLedgerLimits.dimensionValues) throw bad$7("视图行数不合法。");
+	let localized;
+	if (hasLocalized) {
+		const metadata = localizedShape(row.localized, ["title"], "业务视图本地化元数据不合法。"), result = {};
+		if (metadata.title !== void 0) result.title = localizedText(metadata.title, row.title, 120, "业务视图标题本地化元数据不合法。");
+		localized = result;
+	}
+	return {
+		format: "teloa.business-view/v1",
+		id: row.id,
+		version: row.version,
+		domain: row.domain,
+		title: row.title,
+		...localized ? { localized } : {},
+		kind,
+		chart,
+		objectType: row.objectType,
+		...dimension ? { dimension } : {},
+		measures,
+		filters,
+		...sort ? { sort } : {},
+		...window ? { window } : {},
+		limit: row.limit
+	};
+}
+/** `from:'field'|'object'|'literal'` 逐字取值；`allowLiteral=false` 用于 `execution-tool` 的 `targetFrom`（目标必须来自对象）。 */
+function actionInput(value, allowLiteral) {
+	if (!isRecord(value)) throw bad$7("业务动作输入定义格式不正确。");
+	if (value.from === "field") {
+		const row = exact$3(value, ["from", "field"], "业务动作输入定义格式不正确。");
+		if (typeof row.field !== "string" || !fieldName$2.test(row.field)) throw bad$7("业务动作输入字段不合法。");
+		return {
+			from: "field",
+			field: row.field
+		};
+	}
+	if (value.from === "object") {
+		const row = exact$3(value, ["from", "part"], "业务动作输入定义格式不正确。");
+		if (row.part !== "title" && row.part !== "id" && row.part !== "summary") throw invalidEnum("业务动作输入的对象部位不合法。", row.part, [
+			"title",
+			"id",
+			"summary"
+		]);
+		return {
+			from: "object",
+			part: row.part
+		};
+	}
+	if (value.from === "literal" && allowLiteral) {
+		const row = exact$3(value, ["from", "value"], "业务动作输入定义格式不正确。");
+		if (!label$1(row.value, 4e3)) throw bad$7("业务动作字面量输入不合法。");
+		return {
+			from: "literal",
+			value: row.value
+		};
+	}
+	throw invalidEnum("业务动作输入来源不合法。", value.from, allowLiteral ? [
+		"field",
+		"object",
+		"literal"
+	] : ["field", "object"]);
+}
+function actionTarget(value) {
+	if (!isRecord(value)) throw bad$7("业务动作目标定义格式不正确。");
+	if (value.kind === "work-template") {
+		const row = exact$3(value, ["kind", "localId"], "业务动作目标定义格式不正确。");
+		if (typeof row.localId !== "string" || !localId$1.test(row.localId)) throw bad$7("业务动作工作模板标识不合法。");
+		return {
+			kind: "work-template",
+			localId: row.localId
+		};
+	}
+	if (value.kind === "execution-tool") {
+		const row = exact$3(value, [
+			"kind",
+			"localId",
+			"tool",
+			"workTemplate",
+			"targetFrom"
+		], "业务动作目标定义格式不正确。");
+		if (typeof row.localId !== "string" || !localId$1.test(row.localId)) throw bad$7("业务动作执行工具本地标识不合法。");
+		if (typeof row.tool !== "string" || row.tool.length > 128 || !toolName.test(row.tool)) throw bad$7("业务动作执行工具剧本标识不合法。");
+		if (typeof row.workTemplate !== "string" || !localId$1.test(row.workTemplate)) throw bad$7("业务动作执行工具关联的工作模板标识不合法。");
+		const targetFrom = atPath("targetFrom", () => actionInput(row.targetFrom, false));
+		return {
+			kind: "execution-tool",
+			localId: row.localId,
+			tool: row.tool,
+			workTemplate: row.workTemplate,
+			targetFrom
+		};
+	}
+	throw invalidEnum("业务动作目标种类不在白名单内。", value.kind, ["work-template", "execution-tool"]);
+}
+function readBusinessActionDefinition(value) {
+	const hasLocalized = isRecord(value) && value.localized !== void 0;
+	const row = exact$3(value, [
+		"format",
+		"id",
+		"version",
+		"domain",
+		"title",
+		...hasLocalized ? ["localized"] : [],
+		"objectType",
+		"target",
+		"inputs"
+	], "业务动作定义格式不正确。");
+	if (row.format !== "teloa.business-action/v1") throw invalidEnum("业务动作定义格式不正确。", row.format, ["teloa.business-action/v1"]);
+	if (typeof row.id !== "string" || !localId$1.test(row.id)) throw bad$7("业务动作标识不合法。");
+	if (!semver$1(row.version)) throw bad$7("业务动作版本必须是精确三段号。");
+	if (!domainText(row.domain)) throw bad$7("业务动作所属业务范围不合法：" + businessScopeKeyRule + "，general 一律拒绝。");
+	if (!label$1(row.title, 120)) throw bad$7("业务动作标题不合法。");
+	if (typeof row.objectType !== "string" || !localId$1.test(row.objectType)) throw bad$7("业务动作作用的对象类型标识不合法。");
+	const target = atPath("target", () => actionTarget(row.target));
+	if (!Array.isArray(row.inputs) || !row.inputs.length || row.inputs.length > 100) throw bad$7("业务动作输入必须是 1–100 项。");
+	const inputs = row.inputs.map((item, index) => atPath(`inputs[${index}]`, () => actionInput(item, true)));
+	let localized;
+	if (hasLocalized) {
+		const metadata = localizedShape(row.localized, ["title"], "业务动作本地化元数据不合法。"), result = {};
+		if (metadata.title !== void 0) result.title = localizedText(metadata.title, row.title, 120, "业务动作标题本地化元数据不合法。");
+		localized = result;
+	}
+	return {
+		format: "teloa.business-action/v1",
+		id: row.id,
+		version: row.version,
+		domain: row.domain,
+		title: row.title,
+		...localized ? { localized } : {},
+		objectType: row.objectType,
+		target,
+		inputs
+	};
+}
+/** 定制层资源上限，与 `businessLedgerLimits` 同规矩：全是字面量常量，不做设置项。 */
+const businessCustomizationLimits = {
+	bodyBytes: 131072,
+	draftsPerScope: 32,
+	versionsPerDefinition: 50,
+	diffRows: 400
+};
+/** 按 kind 分派到六个 read*：草案、本地声明、试算三条路径共用唯一一处分派，不各写一遍。 */
+function readBusinessDefinitionBody(kind, value) {
+	if (kind === "object-type") return readBusinessObjectTypeDefinition(value);
+	if (kind === "view") return readBusinessViewDefinition(value);
+	if (kind === "source-mapping") return readBusinessSourceMappingDefinition(value);
+	if (kind === "widget") return readBusinessWidgetDefinition(value);
+	if (kind === "dashboard") return readBusinessDashboardDefinition(value);
+	return readBusinessActionDefinition(value);
+}
+/**
+* 规范化正文：industryUpdateCanonical 的输出，同一份声明必得同一个字节串（差异基准与 bodyHash 都取它）。
+* 入参是对应 `read*` 的返回值——那六个函数的返回里没有取值为 `undefined` 的键，因此输出一定是合法 JSON。
+*/
+function businessDefinitionCanonicalBody(definition) {
+	const body = industryUpdateCanonical(definition);
+	if (new TextEncoder().encode(body).byteLength > businessCustomizationLimits.bodyBytes) throw bad$7("业务声明正文超过 128 KiB。");
+	return body;
+}
+
+//#endregion
+//#region packages/contract/src/business-configuration.ts
+const businessConfigurationLimits = {
+	canonicalBytes: 2097152,
+	definitions: 256,
+	pages: 24,
+	sources: 16,
+	pendingDraftsPerOwner: 16
+};
+const businessConfigurationFormat = "teloa.business-configuration/v1";
+const businessConfigurationDefinitionKinds = [
+	"object-type",
+	"view",
+	"source-mapping",
+	"widget",
+	"dashboard"
+];
+const bad$6 = (message) => new WorkError("teloa/invalid-input", message);
+const localId = /^[a-zA-Z0-9][a-zA-Z0-9-]{0,119}$/;
+const fieldName$1 = /^[a-z0-9][a-z0-9_-]{0,62}$/;
+const title = (value) => typeof value === "string" && !!value.trim() && value === value.trim() && value.length <= 80 && !/[\x00-\x08\x0a-\x1f\x7f]/.test(value);
+const identity = (kind, id) => kind + "\0" + id;
+function exact$2(value, required, optional, message) {
+	if (!isRecord(value) || required.some((key) => !(key in value)) || Object.keys(value).some((key) => !required.includes(key) && !optional.includes(key))) throw bad$6(message);
+	return value;
+}
+function identifier(value, message) {
+	if (typeof value !== "string" || !localId.test(value)) throw bad$6(message);
+	return value;
+}
+function kind(value) {
+	if (!businessConfigurationDefinitionKinds.includes(value)) throw bad$6("配置定义类型不在首片白名单内。");
+	return value;
+}
+function unique(items, key, message) {
+	if (new Set(items.map(key)).size !== items.length) throw bad$6(message);
+	return items;
+}
+function bounded(value, max, message) {
+	if (!Array.isArray(value) || value.length > max) throw bad$6(message);
+	return value;
+}
+function source(value) {
+	const row = exact$2(value, ["sourceId", "kind"], [], "配置来源格式不正确。");
+	if (row.kind !== "local-records") throw bad$6("配置来源类型只允许 local-records。");
+	return {
+		sourceId: identifier(row.sourceId, "配置来源标识不合法。"),
+		kind: "local-records"
+	};
+}
+function readBusinessConfigurationPage(value) {
+	if (!isRecord(value)) throw bad$6("配置页面格式不正确。");
+	if (value.kind === "records") {
+		const row = exact$2(value, [
+			"id",
+			"title",
+			"kind",
+			"objectType",
+			"fields",
+			"allowCreate",
+			"allowEdit",
+			"allowArchive"
+		], [], "记录页面格式不正确。");
+		if (!title(row.title)) throw bad$6("页面标题不合法。");
+		const fields = bounded(row.fields, 50, "记录页面字段超过上限。").map((value) => {
+			if (typeof value !== "string" || !fieldName$1.test(value)) throw bad$6("记录页面字段须使用字段 name。");
+			return value;
+		});
+		if (!fields.length) throw bad$6("记录页面至少声明一个字段。");
+		unique(fields, (value) => value, "记录页面字段重复。");
+		if (typeof row.allowCreate !== "boolean" || typeof row.allowEdit !== "boolean" || typeof row.allowArchive !== "boolean") throw bad$6("记录页面操作开关须为布尔值。");
+		return {
+			id: identifier(row.id, "页面标识不合法。"),
+			title: row.title,
+			kind: "records",
+			objectType: identifier(row.objectType, "记录页面对象类型标识不合法。"),
+			fields,
+			allowCreate: row.allowCreate,
+			allowEdit: row.allowEdit,
+			allowArchive: row.allowArchive
+		};
+	}
+	if (value.kind === "dashboard") {
+		const row = exact$2(value, [
+			"id",
+			"title",
+			"kind",
+			"dashboardId"
+		], [], "看板页面格式不正确。");
+		if (!title(row.title)) throw bad$6("页面标题不合法。");
+		return {
+			id: identifier(row.id, "页面标识不合法。"),
+			title: row.title,
+			kind: "dashboard",
+			dashboardId: identifier(row.dashboardId, "看板页面绑定标识不合法。")
+		};
+	}
+	throw bad$6("配置页面类型不在首片白名单内。");
+}
+function candidateDefinition(value) {
+	const row = exact$2(value, ["kind", "definition"], [], "配置定义格式不正确。");
+	const selected = kind(row.kind);
+	const definition = readBusinessDefinitionBody(selected, row.definition);
+	businessDefinitionCanonicalBody(definition);
+	return {
+		kind: selected,
+		definition
+	};
+}
+function common(value) {
+	const row = exact$2(value, [
+		"format",
+		"scope",
+		"title",
+		"sources",
+		"definitions",
+		"pages"
+	], ["homePageId"], "配置格式不正确。");
+	if (row.format !== "teloa.business-configuration/v1") throw bad$6("配置格式版本不支持。");
+	if (!isBusinessScopeKey(row.scope) || row.scope === "general") throw bad$6("配置业务范围不合法。");
+	if (!title(row.title)) throw bad$6("配置标题不合法。");
+	const sources = bounded(row.sources, businessConfigurationLimits.sources, "配置来源超过上限。").map(source);
+	if (sources.length !== 1) throw bad$6("首片配置须有一个平台分配的本地记录来源。");
+	unique(sources, (item) => item.sourceId, "配置来源标识重复。");
+	const pages = unique(bounded(row.pages, businessConfigurationLimits.pages, "配置页面超过上限。").map(readBusinessConfigurationPage), (item) => item.id, "配置页面标识重复。");
+	const homePageId = row.homePageId === void 0 ? void 0 : identifier(row.homePageId, "配置首页标识不合法。");
+	if (pages.length ? homePageId === void 0 || !pages.some((item) => item.id === homePageId) : homePageId !== void 0) throw bad$6("配置首页必须绑定现有页面；空草案不得指定首页。");
+	return {
+		format: businessConfigurationFormat,
+		scope: row.scope,
+		title: row.title,
+		sources,
+		pages,
+		...homePageId === void 0 ? {} : { homePageId },
+		definitions: row.definitions
+	};
+}
+function checkSize(value) {
+	if (new TextEncoder().encode(industryUpdateCanonical(value)).byteLength > businessConfigurationLimits.canonicalBytes) throw bad$6("配置规范 JSON 超过 2 MiB。");
+}
+function checkPageBindings(pages, keys) {
+	for (const page of pages) {
+		const target = page.kind === "records" ? identity("object-type", page.objectType) : identity("dashboard", page.dashboardId);
+		if (!keys.has(target)) throw bad$6("页面绑定的定义不存在：" + page.id + "。");
+	}
+}
+function readBusinessConfigurationCandidate(value) {
+	const row = common(value);
+	const definitions = unique(bounded(row.definitions, businessConfigurationLimits.definitions, "配置定义超过上限。").map(candidateDefinition), (item) => identity(item.kind, item.definition.id), "配置定义身份重复。");
+	for (const item of definitions) if (item.definition.domain !== row.scope) throw bad$6("配置定义所属业务范围与配置不一致。");
+	const result = {
+		...row,
+		definitions
+	};
+	checkPageBindings(result.pages, new Set(definitions.map((item) => identity(item.kind, item.definition.id))));
+	checkSize(result);
+	return result;
+}
+
+//#endregion
+//#region packages/contract/src/group-attachments.ts
+const groupAttachmentFileMaxBytes = 16 * 1024 * 1024;
+/**
+* 上传请求体上限，防的是「超限的请求在被拒之前先吃掉宿主内存」：取满额文件档的 base64 长度，外加 64 KiB 字段余量
+* （requestId、groupId、版本、MIME、≤120 字文件名经 JSON 转义，远小于这个量）。超过即在读请求体之前拒绝。
+*/
+const groupAttachmentUploadMaxBodyBytes = 4 * Math.ceil(groupAttachmentFileMaxBytes / 3) + 64 * 1024;
+
+//#endregion
+//#region packages/contract/src/business-views-v2.ts
+const businessViewFormatV2 = "teloa.business-view/v2";
+/** 基础字段沿 v1 能力表；富字段只补业务快照域当前具备的两类统计语义。 */
+const businessRichViewFieldCapabilities = {
+	money: {
+		dimension: false,
+		measure: true,
+		aggregations: [
+			"sum",
+			"avg",
+			"min",
+			"max"
+		],
+		operators: [
+			"eq",
+			"ne",
+			"gte",
+			"lte"
+		]
+	},
+	"multi-enum": {
+		dimension: true,
+		measure: false,
+		aggregations: [],
+		operators: ["contains", "overlaps"]
+	},
+	"multi-reference": {
+		dimension: false,
+		measure: false,
+		aggregations: [],
+		operators: ["contains", "overlaps"]
+	}
+};
+const bad$5 = (message = "业务类型化视图格式或字段引用不合法。") => new WorkError("teloa/invalid-input", message);
+const currency = (value) => typeof value === "string" && /^[A-Z]{3}$/.test(value);
+function filterShadow(value) {
+	if (!isRecord(value)) return value;
+	return {
+		...value,
+		op: value.op === "contains" ? "eq" : value.op === "overlaps" ? "in" : value.op
+	};
+}
+/** 仅用于 v1 共同结构校验；不能持久化替身，也不能据此执行富字段统计。 */
+function businessViewV2LegacyShape(view) {
+	return {
+		...view,
+		format: "teloa.business-view/v1",
+		measures: view.measures.map(({ currency: _, where, ...measure }) => ({
+			...measure,
+			...where ? { where: filterShadow(where) } : {}
+		})),
+		filters: view.filters.map((filter) => filterShadow(filter))
+	};
+}
+function readBusinessViewDefinitionV2(value) {
+	if (!isRecord(value) || value.format !== "teloa.business-view/v2" || !Array.isArray(value.measures) || !Array.isArray(value.filters)) throw bad$5();
+	const currencies = /* @__PURE__ */ new Map();
+	const measures = value.measures.map((value, index) => {
+		if (!isRecord(value)) return value;
+		const { currency: code, ...measure } = value;
+		if (Object.hasOwn(value, "currency")) {
+			if (!currency(code) || value.aggregation === "count") throw bad$5("金额度量的币种必须是大写三字母且不能用于 count。");
+			currencies.set(index, code);
+		}
+		return {
+			...measure,
+			...Object.hasOwn(measure, "where") ? { where: filterShadow(measure.where) } : {}
+		};
+	});
+	const legacy = readBusinessViewDefinition({
+		...value,
+		format: "teloa.business-view/v1",
+		measures,
+		filters: value.filters.map(filterShadow)
+	});
+	const filter = (parsed, original) => ({
+		...parsed,
+		op: original.op
+	});
+	return {
+		...legacy,
+		format: businessViewFormatV2,
+		measures: legacy.measures.map((measure, index) => ({
+			...measure,
+			...currencies.has(index) ? { currency: currencies.get(index) } : {},
+			...measure.where ? { where: filter(measure.where, value.measures[index].where) } : {}
+		})),
+		filters: legacy.filters.map((parsed, index) => filter(parsed, value.filters[index]))
+	};
+}
+function readBusinessViewDefinitionVersioned(value) {
+	if (!isRecord(value)) throw bad$5();
+	if (value.format === "teloa.business-view/v1") return readBusinessViewDefinition(value);
+	if (value.format === "teloa.business-view/v2") return readBusinessViewDefinitionV2(value);
+	throw bad$5("业务视图格式版本不支持。");
+}
+/** 跨声明校验统一读取真实类型，不把 rich 验证影子当 text 使用。 */
+function assertBusinessViewV2References(value, objectValue) {
+	const view = readBusinessViewDefinitionVersioned(value), object = readBusinessObjectTypeDefinitionVersioned(objectValue);
+	if (view.objectType !== object.id || view.domain !== object.domain) throw bad$5("视图引用的对象类型或业务范围不一致。");
+	const fields = new Map(object.fields.map((field) => [field.name, field]));
+	const field = (name) => {
+		const found = fields.get(name);
+		if (!found || view.format === "teloa.business-view/v1" && "format" in found) throw bad$5("视图引用的字段不存在或旧视图不支持富字段。");
+		return found;
+	};
+	const capabilities = (definition) => "format" in definition ? businessRichViewFieldCapabilities[definition.type] : businessFieldCapabilities[definition.type];
+	if (view.dimension) {
+		const target = field(view.dimension.field);
+		if (!capabilities(target).dimension || view.kind === "trend" && target.type !== "datetime" || view.kind === "distribution" && target.type === "datetime") throw bad$5("字段类型不支持该视图维度。");
+	}
+	if (view.window && field(view.window.field).type !== "datetime") throw bad$5("时间窗只能引用 datetime 字段。");
+	const filter = (clause) => {
+		const target = field(clause.field);
+		if (!capabilities(target).operators.includes(clause.op)) throw bad$5("字段类型不支持该筛选算子。");
+		if (target.type === "multi-enum" && clause.values.some((value) => !target.values.includes(value))) throw bad$5("多选筛选只能引用声明成员。");
+		if (target.type === "multi-reference" && clause.values.some((value) => !isBusinessRecordId(value))) throw bad$5("关联筛选必须引用合法记录身份。");
+		if (target.type === "money") for (const value of clause.values) readBusinessRichFieldValue(target, value);
+	};
+	for (const clause of view.filters) filter(clause);
+	for (const measure of view.measures) {
+		if (measure.aggregation !== "count") {
+			const target = field(measure.field);
+			if (!capabilities(target).measure || !capabilities(target).aggregations.includes(measure.aggregation)) throw bad$5("字段类型不支持该聚合。");
+			const code = "currency" in measure ? measure.currency : void 0;
+			if (target.type === "money" ? !currency(code) || !target.currencies.includes(code) : code !== void 0) throw bad$5("金额度量必须绑定声明币种，基础度量不得声明币种。");
+		}
+		if (measure.where) filter(measure.where);
+	}
+}
 
 //#endregion
 //#region packages/contract/src/pending-requests.ts
@@ -2472,6 +4619,7 @@ const timeUnits = [...localTimeUnits, ...localTimeUnits.map((unit) => "utc" + un
 * 只有这些浏览器写命令能进入跨浏览器恢复目录。这里故意不用“所有带 requestId 的命令”推断，
 * 新增命令需要经过载荷与凭据边界审查后再明确加入。
 * 携带凭据原值的命令（im/channels/save）不得列入：目录会原样冻结请求体。它按 channelId 覆盖保存，天然幂等，无需跨浏览器恢复。
+* market-content/import 的原文件可达 20 MiB，不重复冻结到此目录；客户端只保存固定请求身份并通过 market-content/receipt 恢复。
 */
 const pendingRequestEndpoints = [
 	"security-actions/propose",
@@ -2516,7 +4664,6 @@ const pendingRequestEndpoints = [
 	"market-plugins/install",
 	"skill-selections/change",
 	"skill-availability/change",
-	"market-content/import",
 	"market-content/import-github",
 	"market-content/import-github-skill",
 	"market-catalog/add",
@@ -2555,8 +4702,16 @@ const industryModelUsages = [
 	"extraction",
 	"chat"
 ];
-const industryPackageFormats = ["teloa.business-package/v2", "teloa.business-package/v3"];
+const industryPackageFormats = [
+	"teloa.business-package/v2",
+	"teloa.business-package/v3",
+	"teloa.business-package/v4"
+];
 const isIndustryPackageFormat = (value) => industryPackageFormats.some((format) => format === value);
+/** 新完整配置资源仅进入显式 v4；旧格式继续按原资源白名单读取，不能悄悄忽略页面。 */
+function assertIndustryConfigurationResourceFormat(format, kind) {
+	if (kind === "business-configuration" && format !== "teloa.business-package/v4") throw new WorkError("teloa/invalid-input", "完整业务配置资源仅支持 teloa.business-package/v4。");
+}
 /** 缺省与显式空列表不能混同：v2 不允许携带这个字段，v3 的声明一旦存在就必须有内容。 */
 function readIndustryModelDependencies(value) {
 	const bad = () => new WorkError("teloa/invalid-input", "模型依赖须包含 1～16 项固定目录版本、用途及必需标记，不能包含下载地址或运行配置。");
@@ -2593,6 +4748,293 @@ function industryResourceModelDependencies(kind, value) {
 const utf8 = new TextEncoder();
 
 //#endregion
+//#region packages/contract/src/business-records.ts
+const text = (v, max, empty = false) => typeof v === "string" && v === v.trim() && (empty || v.length > 0) && v.length <= max && !/[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]/.test(v);
+/** 单选、多选与回包共用记录身份边界，不从显示名称猜测或修正身份。 */
+function isBusinessRecordId(value) {
+	return text(value, 200) && /^[\p{L}\p{N}][\p{L}\p{N}._:@/+ -]*$/u.test(value);
+}
+
+//#endregion
+//#region packages/contract/src/business-rich-fields.ts
+const businessRichFieldFormat = "teloa.business-rich-field/v2";
+const fieldName = /^[a-z0-9][a-z0-9_-]{0,62}$/;
+const currencyCode = /^[A-Z]{3}$/;
+const decimalPattern = /^-?(?:0|[1-9]\d{0,17})(?:\.\d{1,4})?$/;
+const bad$4 = () => new WorkError("teloa/invalid-input", "富字段声明或取值不合法。");
+const label = (value, max) => typeof value === "string" && !!value.trim() && value === value.trim() && value.length <= max && !/[\x00-\x08\x0a-\x1f\x7f]/.test(value);
+const exact$1 = (value, keys) => isRecord(value) && keys.every((key) => Object.hasOwn(value, key)) && Object.keys(value).every((key) => keys.includes(key));
+/** v2 声明独立于既有七类字段；旧对象定义读取器继续严格拒收新类型。 */
+function readBusinessRichFieldDefinition(value) {
+	if (!isRecord(value)) throw bad$4();
+	const shared = [
+		"format",
+		"name",
+		"label",
+		"from",
+		"required",
+		"type"
+	];
+	const keys = value.type === "money" ? [...shared, "currencies"] : value.type === "multi-enum" ? [...shared, "values"] : value.type === "multi-reference" ? [...shared, "referenceType"] : [];
+	if (!keys.length || !exact$1(value, keys) || value.format !== "teloa.business-rich-field/v2" || typeof value.name !== "string" || !fieldName.test(value.name) || !label(value.label, 80) || !label(value.from, 120) || typeof value.required !== "boolean") throw bad$4();
+	const common = {
+		format: businessRichFieldFormat,
+		name: value.name,
+		label: value.label,
+		from: value.from,
+		required: value.required
+	};
+	if (value.type === "money") {
+		if (!Array.isArray(value.currencies) || value.currencies.length < 1 || value.currencies.length > 16 || value.currencies.some((item) => typeof item !== "string" || !currencyCode.test(item)) || new Set(value.currencies).size !== value.currencies.length) throw bad$4();
+		return {
+			...common,
+			type: "money",
+			currencies: [...value.currencies]
+		};
+	}
+	if (value.type === "multi-reference") {
+		if (typeof value.referenceType !== "string" || !/^[a-zA-Z0-9][a-zA-Z0-9-]{0,119}$/.test(value.referenceType)) throw bad$4();
+		return {
+			...common,
+			type: "multi-reference",
+			referenceType: value.referenceType
+		};
+	}
+	if (!Array.isArray(value.values) || value.values.length < 2 || value.values.length > 32 || value.values.some((item) => !label(item, 80)) || new Set(value.values).size !== value.values.length) throw bad$4();
+	return {
+		...common,
+		type: "multi-enum",
+		values: [...value.values]
+	};
+}
+function scaledDecimal(decimal) {
+	if (!decimalPattern.test(decimal) || decimal.includes(".") && decimal.endsWith("0")) throw bad$4();
+	const negative = decimal.startsWith("-"), [whole, fraction = ""] = (negative ? decimal.slice(1) : decimal).split(".");
+	const scaled = BigInt(whole) * 10000n + BigInt(fraction.padEnd(4, "0"));
+	if (negative && scaled === 0n) throw bad$4();
+	return negative ? -scaled : scaled;
+}
+/** 只接规范字符串；不静默改写请求正文或既有快照哈希。 */
+function readBusinessRichFieldValue(definition, raw) {
+	const field = readBusinessRichFieldDefinition(definition);
+	if (raw === void 0 || raw === "") {
+		if (field.required) throw bad$4();
+		return;
+	}
+	if (typeof raw !== "string" || raw.length > 2e3) throw bad$4();
+	let value;
+	try {
+		value = JSON.parse(raw);
+	} catch {
+		throw bad$4();
+	}
+	if (field.type === "money") {
+		if (!exact$1(value, ["currency", "decimal"]) || typeof value.currency !== "string" || !field.currencies.includes(value.currency) || typeof value.decimal !== "string" || JSON.stringify({
+			currency: value.currency,
+			decimal: value.decimal
+		}) !== raw) throw bad$4();
+		return {
+			type: "money",
+			currency: value.currency,
+			decimal: value.decimal,
+			scaled: scaledDecimal(value.decimal),
+			canonical: raw
+		};
+	}
+	if (field.type === "multi-reference") {
+		if (!Array.isArray(value) || value.length < 1 || value.length > 32 || value.some((item) => !isBusinessRecordId(item)) || new Set(value).size !== value.length || JSON.stringify(value) !== raw) throw bad$4();
+		const ids = [...value].sort();
+		if (ids.some((id, index) => id !== value[index])) throw bad$4();
+		return {
+			type: "multi-reference",
+			ids,
+			canonical: raw
+		};
+	}
+	if (!Array.isArray(value) || value.length < 1 || value.length > 32 || value.some((item) => typeof item !== "string") || new Set(value).size !== value.length || JSON.stringify(value) !== raw) throw bad$4();
+	const selected = new Set(value), ordered = field.values.filter((item) => selected.has(item));
+	if (ordered.length !== value.length || ordered.some((item, index) => item !== value[index])) throw bad$4();
+	return {
+		type: "multi-enum",
+		values: ordered,
+		canonical: raw
+	};
+}
+
+//#endregion
+//#region packages/contract/src/business-definitions-v2.ts
+const businessObjectTypeFormatV2 = "teloa.business-object-type/v2";
+const bad$3 = () => new WorkError("teloa/invalid-input", "业务对象类型格式版本不支持。");
+const isRich = (value) => isRecord(value) && value.format === "teloa.business-rich-field/v2";
+/** 仅供旧版的共同字段、进度与身份校验；不持久化该替身定义。 */
+function businessObjectTypeV2LegacyShape(definition) {
+	const { constraints: _, ...common } = definition;
+	return {
+		...common,
+		format: "teloa.business-object-type/v1",
+		fields: definition.fields.map((field) => {
+			if (!("format" in field)) return field;
+			return {
+				name: field.name,
+				label: field.label,
+				type: "text",
+				required: field.required,
+				from: field.from
+			};
+		})
+	};
+}
+/** v2 复用 v1 的共同结构和交叉约束，但旧入口仍只接受 v1。 */
+function readBusinessObjectTypeDefinitionV2(value) {
+	if (!isRecord(value) || value.format !== "teloa.business-object-type/v2" || !Array.isArray(value.fields)) throw bad$3();
+	const rich = /* @__PURE__ */ new Map();
+	const validationFields = value.fields.map((field, index) => {
+		if (!isRich(field)) return field;
+		const parsed = readBusinessRichFieldDefinition(field);
+		rich.set(index, parsed);
+		return {
+			name: parsed.name,
+			label: parsed.label,
+			type: "text",
+			required: parsed.required,
+			from: parsed.from
+		};
+	});
+	const { constraints: rawConstraints, ...common } = value;
+	const legacy = readBusinessObjectTypeDefinition({
+		...common,
+		format: "teloa.business-object-type/v1",
+		fields: validationFields
+	});
+	const fields = legacy.fields.map((field, index) => rich.get(index) ?? field);
+	let constraints;
+	if (Object.hasOwn(value, "constraints")) {
+		if (!isRecord(rawConstraints) || Object.keys(rawConstraints).length !== 1 || !Array.isArray(rawConstraints.uniqueFields) || rawConstraints.uniqueFields.length < 1 || rawConstraints.uniqueFields.length > 50 || new Set(rawConstraints.uniqueFields).size !== rawConstraints.uniqueFields.length || rawConstraints.uniqueFields.some((name) => typeof name !== "string" || !fields.some((field) => field.name === name && field.type !== "multi-enum"))) throw bad$3();
+		constraints = { uniqueFields: [...rawConstraints.uniqueFields] };
+	}
+	return {
+		...legacy,
+		format: businessObjectTypeFormatV2,
+		fields,
+		...constraints ? { constraints } : {}
+	};
+}
+function readBusinessObjectTypeDefinitionVersioned(value) {
+	if (!isRecord(value)) throw bad$3();
+	if (value.format === "teloa.business-object-type/v1") return readBusinessObjectTypeDefinition(value);
+	if (value.format === "teloa.business-object-type/v2") return readBusinessObjectTypeDefinitionV2(value);
+	throw bad$3();
+}
+
+//#endregion
+//#region packages/contract/src/business-configuration-v2.ts
+const businessConfigurationFormatV2 = "teloa.business-configuration/v2";
+const bad$2 = (message) => new WorkError("teloa/invalid-input", message);
+const unknownFormat = () => bad$2("业务配置格式版本不支持。");
+function checkReferences(candidate) {
+	const objects = new Map(candidate.definitions.filter((item) => item.kind === "object-type").map((item) => [item.definition.id, item.definition]));
+	const views = new Map(candidate.definitions.filter((item) => item.kind === "view").map((item) => [item.definition.id, item.definition]));
+	const widgets = new Map(candidate.definitions.filter((item) => item.kind === "widget").map((item) => [item.definition.id, item.definition]));
+	const sources = new Set(candidate.sources.map((item) => item.sourceId));
+	const hasRichFields = [...objects.values()].some((object) => object.fields.some((field) => "format" in field));
+	for (const object of objects.values()) if (!sources.has(object.sourceId)) throw bad$2("对象类型引用的本地记录来源不存在。");
+	for (const view of views.values()) {
+		const object = objects.get(view.objectType);
+		if (!object) throw bad$2("视图引用的对象类型不存在。");
+		assertBusinessViewV2References(view, object);
+	}
+	for (const widget of widgets.values()) {
+		if (hasRichFields && widget.query !== void 0) throw bad$2("富字段配置暂不支持 SQL 组件。");
+		if (widget.viewRef && !views.has(widget.viewRef)) throw bad$2("组件引用的视图不存在。");
+		if (widget.drilldown) {
+			const object = objects.get(widget.drilldown.objectType);
+			if (!object) throw bad$2("组件下钻的对象类型不存在。");
+			if (widget.drilldown.match) {
+				const field = object.fields.find((item) => item.name === widget.drilldown.match.field);
+				if (!field || "format" in field) throw bad$2("组件下钻字段不存在或尚不支持富字段。");
+			}
+		}
+	}
+	for (const item of candidate.definitions) if (item.kind === "dashboard") {
+		for (const widget of item.definition.widgets) if (!widgets.has(widget)) throw bad$2("看板引用的组件不存在。");
+	}
+	for (const page of candidate.pages) if (page.kind === "records") {
+		const object = objects.get(page.objectType);
+		if (!object || page.fields.some((name) => !object.fields.some((field) => field.name === name))) throw bad$2("记录页引用的对象类型或字段不存在。");
+	}
+}
+/** 与 v1 类型分开，旧生产调用继续严格拒收 v2。 */
+function readBusinessConfigurationCandidateV2(value) {
+	if (!isRecord(value) || value.format !== "teloa.business-configuration/v2" || !Array.isArray(value.definitions)) throw unknownFormat();
+	const objects = /* @__PURE__ */ new Map();
+	const views = /* @__PURE__ */ new Map();
+	const validationDefinitions = value.definitions.map((item, index) => {
+		if (isRecord(item) && item.kind === "view") {
+			const definition = readBusinessViewDefinitionVersioned(item.definition);
+			businessDefinitionCanonicalBody(definition);
+			views.set(index, definition);
+			return {
+				...item,
+				definition: definition.format === "teloa.business-view/v2" ? businessViewV2LegacyShape(definition) : definition
+			};
+		}
+		if (!isRecord(item) || item.kind !== "object-type") return item;
+		const definition = readBusinessObjectTypeDefinitionV2(item.definition);
+		businessDefinitionCanonicalBody(definition);
+		objects.set(index, definition);
+		return {
+			...item,
+			definition: businessObjectTypeV2LegacyShape(definition)
+		};
+	});
+	const legacy = readBusinessConfigurationCandidate({
+		...value,
+		format: businessConfigurationFormat,
+		definitions: validationDefinitions
+	});
+	const definitions = legacy.definitions.map((item, index) => objects.has(index) ? {
+		kind: "object-type",
+		definition: objects.get(index)
+	} : views.has(index) ? {
+		kind: "view",
+		definition: views.get(index)
+	} : item);
+	const candidate = {
+		...legacy,
+		format: businessConfigurationFormatV2,
+		definitions
+	};
+	if (new TextEncoder().encode(industryUpdateCanonical(candidate)).byteLength > businessConfigurationLimits.canonicalBytes) throw bad$2("配置规范 JSON 超过 2 MiB。");
+	checkReferences(candidate);
+	return candidate;
+}
+
+//#endregion
+//#region packages/contract/src/business-dashboard-resource.ts
+const businessDashboardResourceFormat = "teloa.business-dashboard-resource/v1";
+const bad$1 = (message) => new WorkError("teloa/invalid-input", message);
+function readBusinessDashboardResource(value) {
+	if (!isRecord(value) || Object.keys(value).length !== 4 || ![
+		"format",
+		"id",
+		"version",
+		"configuration"
+	].every((key) => Object.hasOwn(value, key)) || value.format !== "teloa.business-dashboard-resource/v1") throw bad$1("业务看板资源格式不正确或包含未知字段。");
+	if (typeof value.id !== "string" || !/^[a-zA-Z0-9][a-zA-Z0-9-]{0,119}$/.test(value.id)) throw bad$1("业务看板资源标识不合法。");
+	if (typeof value.version !== "string" || value.version.length > 80 || !/^\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?(?:\+[0-9A-Za-z.-]+)?$/.test(value.version)) throw bad$1("业务看板资源版本必须是固定的三段版本号。");
+	const configuration = readBusinessConfigurationCandidateV2(value.configuration);
+	if (!configuration.pages.some((page) => page.kind === "dashboard")) throw bad$1("业务看板资源必须包含可预览的看板页面。");
+	if (configuration.definitions.some((row) => row.kind === "source-mapping")) throw bad$1("业务看板资源不携带已有同步绑定；请在目标业务另行准备。");
+	if (configuration.definitions.some((row) => row.kind === "object-type" && row.definition.defaultAction !== void 0)) throw bad$1("业务看板资源不携带已有默认动作；请在目标业务另行配置。");
+	return {
+		format: businessDashboardResourceFormat,
+		id: value.id,
+		version: value.version,
+		configuration
+	};
+}
+
+//#endregion
 //#region packages/backend/src/market/content-store.ts
 const kinds = [
 	"role",
@@ -2606,7 +5048,8 @@ const kinds = [
 	"plan",
 	"object-type",
 	"business-view",
-	"business-action"
+	"business-action",
+	"business-configuration"
 ];
 const relationTargets = {
 	"role-knowledge": ["knowledge"],
@@ -2663,7 +5106,7 @@ function validateManifest(input) {
 		"relations",
 		"entrypoints"
 	]);
-	if (!isIndustryPackageFormat(row.format)) throw bad("只支持 teloa.business-package/v2 或 v3 行业模板。");
+	if (!isIndustryPackageFormat(row.format)) throw bad("只支持 teloa.business-package/v2、v3 或 v4 行业模板。");
 	if (!semver(row.version)) throw bad("行业模板版本必须是固定的三段版本号。");
 	if (!Array.isArray(row.resources) || !row.resources.length || row.resources.length > 500) throw bad("行业资源需包含 1～500 项。");
 	const resources = row.resources.map((input) => {
@@ -2675,9 +5118,10 @@ function validateManifest(input) {
 			"version",
 			"required",
 			"source",
-			...row.format === "teloa.business-package/v3" ? ["modelDependencies"] : []
+			...row.format !== "teloa.business-package/v2" ? ["modelDependencies"] : []
 		]), resourceId = id(value.id), title = requiredText(value.title, "资源名称", 120);
 		if (!kinds.includes(value.kind) || !semver(value.version) || typeof value.required !== "boolean") throw bad("行业资源类型、版本或 required 无效。");
+		assertIndustryConfigurationResourceFormat(row.format, value.kind);
 		const sourceValue = exact(value.source, [
 			"kind",
 			"path",
@@ -2789,6 +5233,7 @@ function readManagedPackageLock(value, recipe) {
 /** 条目类型 → 目录名：catalog/<目录>/<id>.json 与 artifacts/<目录>/<id>/<version>/，放错目录即失败。 */
 const MARKET_KIND_DIRECTORIES = Object.freeze({
 	solution: "solutions",
+	dashboard: "dashboards",
 	role: "roles",
 	skill: "skills",
 	connector: "connectors",
@@ -2884,6 +5329,10 @@ const MARKET_VALIDATION_RULES = Object.freeze([
 	"solution.connection-server",
 	"solution.connection-tool",
 	"solution.tool-confirmation",
+	"dashboard.configuration-invalid",
+	"dashboard.configuration-identity",
+	"dashboard.manifest-shape",
+	"solution.configuration-minimum-app",
 	"role.artifact-files",
 	"role.json-missing",
 	"role.solution-missing",
@@ -3135,7 +5584,7 @@ function licenseTextProblem(spdx, text) {
 	if (!spdx.startsWith("LicenseRef-") && body.length >= 1e3) return null;
 	return spdx.startsWith("LicenseRef-") ? message(`${spdx} requires a link to the terms (https://…) in the license file`, `${spdx} 须在许可文件里给出条款链接（https://…）`) : message(`${spdx} requires the full license text or a link to the terms (https://…) in the license file`, `${spdx} 须在许可文件里给出完整许可正文或条款链接（https://…）`);
 }
-/** 读 catalog/<类型目录>/*.json：目录名只能是五个类型目录，文件所在目录必须等于条目 kind，文件名等于条目标识。 */
+/** 读 catalog/<类型目录>/*.json：目录名使用受控类型目录，文件所在目录必须等于条目 kind，文件名等于条目标识。 */
 async function readCatalogEntries(root) {
 	const catalogDirectory = join(root, "catalog"), read = [], problems = [], skip = gitIgnoredFilter(root);
 	const directories = Object.values(MARKET_KIND_DIRECTORIES).join(",");
@@ -3445,7 +5894,8 @@ async function verifyArtifactTree(root, hosted, skip) {
 	for (const directory of await listDirectory(join(root, "artifacts"), skip)) {
 		const ids = byDirectory.get(directory);
 		if (!kindOfDirectory.has(directory) || directory === "models") {
-			problems.push(problem("artifact.type-directory", `artifacts/${directory} is not a hosted type directory; artifacts belong in artifacts/{solutions,roles,skills,connectors}/`, `artifacts/${directory} 不是托管类型目录；工件只能放在 artifacts/{solutions,roles,skills,connectors}/ 下`, { file: `artifacts/${directory}` }));
+			const directories = Object.entries(MARKET_KIND_DIRECTORIES).filter(([kind]) => kind !== "model").map(([, name]) => name).join(",");
+			problems.push(problem("artifact.type-directory", `artifacts/${directory} is not a hosted type directory; artifacts belong in artifacts/{${directories}}/`, `artifacts/${directory} 不是托管类型目录；工件只能放在 artifacts/{${directories}}/ 下`, { file: `artifacts/${directory}` }));
 			continue;
 		}
 		for (const id of await listDirectory(join(root, "artifacts", directory), skip)) await collect(problems, {
@@ -3474,6 +5924,9 @@ async function verifyArtifactTree(root, hosted, skip) {
 * generateLock(recipe,lockPath)：stdio 连接器缺随附 lock 时的生成钩子；不给则缺 lock 直接失败（--check 与市场仓校验器）。
 * allowNullDigest：本机通用模型（Ollama）变体允许 digest 为 null（发布前由 scripts/核实Ollama条目摘要.mjs --write 填写）；默认拒绝。
 */
+function assertConfigurationMinimumApp(entry, manifest) {
+	if ((manifest.format === "teloa.business-package/v4" || manifest.resources.some((resource) => resource.kind === "business-configuration")) && !teloaRangeHasLowerBound(entry.compatibility.teloa, "0.2.0-alpha.7")) fail("solution.configuration-minimum-app", `${entry.id}: v4 packages and business configuration resources require ${marketDashboardMinimumTeloa} or later`, `${entry.id} 的 v4 包及完整业务配置资源须要求 ${marketDashboardMinimumTeloa} 或更高版本`, { field: "compatibility.teloa" });
+}
 async function validateMarketplace(root, { generateLock, allowNullDigest = false } = {}) {
 	const read = await readCatalogEntries(root);
 	const groups = /* @__PURE__ */ new Map();
@@ -3580,7 +6033,8 @@ async function validateMarketplace(root, { generateLock, allowNullDigest = false
 				fail("connector.lock-invalid", `${entry.id}: package-lock.json is invalid: ${reason(error)}`, `${entry.id} 的 package-lock.json 无效：${reason(error)}`, lockFile);
 			}
 		}
-		if (entry.kind === "solution") {
+		if (entry.kind === "solution" || entry.kind === "dashboard") {
+			const packageInfo = entry.kind === "solution" ? entry.solution : entry.dashboard;
 			const manifestBytes = fileBytes.get("teloa.json"), manifestFile = { file: `${artifactDirectory}/teloa.json` };
 			if (!manifestBytes) fail("solution.manifest-missing", `${entry.id} has no root teloa.json`, `${entry.id} 缺少根目录 teloa.json`, manifestFile);
 			let manifest;
@@ -3589,8 +6043,23 @@ async function validateMarketplace(root, { generateLock, allowNullDigest = false
 			} catch (error) {
 				fail("solution.manifest-invalid", `${entry.id}: teloa.json is invalid: ${reason(error)}`, `${entry.id} 的 teloa.json 无效：${reason(error)}`, manifestFile);
 			}
-			if (manifest.id !== entry.solution.packageId) fail("solution.manifest-id", `${entry.id}: teloa.json id (${manifest.id}) does not match solution.packageId (${entry.solution.packageId})`, `${entry.id} 的 teloa.json id（${manifest.id}）与条目 solution.packageId（${entry.solution.packageId}）不一致`, { field: "solution.packageId" });
-			if (manifest.scope !== entry.solution.scope) fail("solution.manifest-scope", `${entry.id}: teloa.json scope (${manifest.scope}) does not match solution.scope (${entry.solution.scope})`, `${entry.id} 的 teloa.json scope（${manifest.scope}）与条目 solution.scope（${entry.solution.scope}）不一致`, { field: "solution.scope" });
+			if (manifest.id !== packageInfo.packageId) fail("solution.manifest-id", `${entry.id}: teloa.json id (${manifest.id}) does not match ${entry.kind}.packageId (${packageInfo.packageId})`, `${entry.id} 的 teloa.json id（${manifest.id}）与条目 ${entry.kind}.packageId（${packageInfo.packageId}）不一致`, { field: entry.kind + ".packageId" });
+			if (manifest.scope !== packageInfo.scope) fail("solution.manifest-scope", `${entry.id}: teloa.json scope (${manifest.scope}) does not match ${entry.kind}.scope (${packageInfo.scope})`, `${entry.id} 的 teloa.json scope（${manifest.scope}）与条目 ${entry.kind}.scope（${packageInfo.scope}）不一致`, { field: entry.kind + ".scope" });
+			const configurations = manifest.resources.filter((resource) => resource.kind === "business-configuration");
+			assertConfigurationMinimumApp(entry, manifest);
+			if (entry.kind === "dashboard" && (manifest.format !== "teloa.business-package/v4" || manifest.resources.length !== 1 || configurations.length !== 1 || configurations[0].source.kind !== "local" || !configurations[0].required || manifest.relations.length || manifest.entrypoints.length)) fail("dashboard.manifest-shape", `${entry.id}: a dashboard must provide exactly one required local business configuration in a v4 package`, `${entry.id} 的业务看板须以 v4 包提供唯一、必需的本地完整业务配置，不包含执行资源`, manifestFile);
+			for (const resource of configurations) {
+				if (resource.source.kind !== "local") continue;
+				const definitionFile = { file: `${artifactDirectory}/${resource.source.path}` }, bytes = fileBytes.get(resource.source.path);
+				if (!bytes) fail("dashboard.configuration-invalid", `${entry.id}: missing business configuration ${resource.source.path}`, `${entry.id} 缺少完整业务配置 ${resource.source.path}`, definitionFile);
+				let definition;
+				try {
+					definition = readBusinessDashboardResource(JSON.parse(decoder.decode(bytes)));
+				} catch (error) {
+					fail("dashboard.configuration-invalid", `${entry.id}: invalid business configuration: ${reason(error)}`, `${entry.id} 的完整业务配置无效：${reason(error)}`, definitionFile);
+				}
+				if (definition.id !== resource.id || definition.version !== resource.version || definition.configuration.scope !== manifest.scope) fail("dashboard.configuration-identity", `${entry.id}: business configuration identity, version or scope differs from its manifest`, `${entry.id} 的完整业务配置身份、版本或业务范围与清单不一致`, definitionFile);
+			}
 			if (!isMarketIndustryRoot(manifest.domain)) fail("solution.domain", `${entry.id}: teloa.json domain (${manifest.domain}) is not a valid top-level industry key`, `${entry.id} 的 teloa.json domain（${manifest.domain}）不是合法的一级行业键。`, manifestFile);
 			if (!entry.taxonomy.industries.some((ind) => {
 				return (ind.includes("/") ? ind.split("/")[0] : ind) === manifest.domain;
@@ -3717,25 +6186,39 @@ function v1Entry(entry) {
 }
 /** 读取目录源，同一批条目组装两份索引：v1 冻结只收三类，且按契约谓词 marketEntryNeedsV2 排除旧读取器整份拒收的条目
 *  （声明密钥、目录扩展字段或二次开发相关新字段的条目、OAuth 连接器——旧版读取器只认 {kind, reason}，supported 字段会使其整份拒收；旧版应用也无法发起授权）；
-*  GitHub 上游目录添加同样仅进入 v2。v2 收全部。两份都不收无上游来源的 Teloa 内置技能
+*  GitHub 上游目录添加、仅新版应用可读的 v4 方案同样仅进入 v2。v2 收全部。两份都不收无上游来源的 Teloa 内置技能
 *  （只随发行快照提供；契约读取器同样拒收）。字节固定（无时间戳），重复生成一致。
-*  条目结构沿用契约读取器；工件字节级校验由 validateMarketplace 负责，这里只核对托管工件目录存在。 */
+*  条目结构沿用契约读取器；工件字节级校验由 validateMarketplace 负责，这里核对托管工件目录和方案清单格式。 */
 async function buildMarketIndexes(root) {
 	const all = (await readCatalogEntries(root)).map((item) => item.entry);
-	for (const entry of all.filter(isHostedEntry)) try {
-		await access(join(root, artifactDirectoryPath(entry)));
-	} catch {
-		fail("artifact.directory-missing", `${entry.id} has no artifact directory ${artifactDirectoryPath(entry)}`, `${entry.id} 缺少工件目录 ${artifactDirectoryPath(entry)}`, {
-			entry: entry.id,
-			file: artifactDirectoryPath(entry)
-		});
+	const v4SolutionIds = /* @__PURE__ */ new Set();
+	for (const entry of all.filter(isHostedEntry)) {
+		try {
+			await access(join(root, artifactDirectoryPath(entry)));
+		} catch {
+			fail("artifact.directory-missing", `${entry.id} has no artifact directory ${artifactDirectoryPath(entry)}`, `${entry.id} 缺少工件目录 ${artifactDirectoryPath(entry)}`, {
+				entry: entry.id,
+				file: artifactDirectoryPath(entry)
+			});
+		}
+		if (entry.kind === "solution") {
+			const file = join(artifactDirectoryPath(entry), "teloa.json");
+			let manifest;
+			try {
+				manifest = validateManifest(JSON.parse(await readFile(join(root, file), "utf8")));
+			} catch (error) {
+				fail("solution.manifest-invalid", `${entry.id}: teloa.json is invalid: ${reason(error)}`, `${entry.id} 的 teloa.json 无效：${reason(error)}`, { file });
+			}
+			assertConfigurationMinimumApp(entry, manifest);
+			if (manifest.format === "teloa.business-package/v4") v4SolutionIds.add(entry.id);
+		}
 	}
 	const entries = projectAlternatives(all.filter((entry) => !(entry.kind === "skill" && entry.delivery !== "upstream" && entry.upstream === null)));
 	const catalogVersion = (await readFile(join(root, "catalog-version.txt"), "utf8")).trim();
 	const v1Index = readMarketIndex({
 		format: "teloa.market-index/v1",
 		catalogVersion,
-		entries: projectAlternatives(entries.filter((entry) => MARKET_INDEX_V1_KINDS.includes(entry.kind) && !marketEntryNeedsV2(entry) && !(entry.delivery === "upstream" && entry.upstream.kind === "github"))).map(v1Entry)
+		entries: projectAlternatives(entries.filter((entry) => MARKET_INDEX_V1_KINDS.includes(entry.kind) && !marketEntryNeedsV2(entry) && !v4SolutionIds.has(entry.id) && !(entry.delivery === "upstream" && entry.upstream.kind === "github"))).map(v1Entry)
 	});
 	const v2Index = assembleMarketIndexV2({
 		format: "teloa.market-index/v2",
@@ -3752,14 +6235,15 @@ async function buildMarketIndexes(root) {
 	};
 }
 function entryTitle(entry) {
-	return entry.kind === "skill" ? entry.skill.title : entry.kind === "solution" ? entry.solution.title : entry.kind === "connector" ? entry.connector.title : entry.kind === "role" ? entry.role.title : entry.model.title;
+	return entry.kind === "skill" ? entry.skill.title : entry.kind === "solution" ? entry.solution.title : entry.kind === "dashboard" ? entry.dashboard.title : entry.kind === "connector" ? entry.connector.title : entry.kind === "role" ? entry.role.title : entry.model.title;
 }
 const upstreamLabel = (upstream) => upstream.kind === "clawhub" ? `ClawHub ${upstream.owner}/${upstream.slug}@${upstream.version}` : `GitHub ${upstream.repository.owner}/${upstream.repository.repo}`;
 const upstreamLocation = (upstream) => upstream.kind === "clawhub" ? `ClawHub ${upstream.owner}/${upstream.slug} version ${upstream.version}` : `https://github.com/${upstream.repository.owner}/${upstream.repository.repo}/tree/${upstream.commit}/${upstream.path}`;
 const cell = (value) => String(value).replaceAll(/[|\[\]\\]/g, (match) => "\\" + match).replaceAll("\n", " ");
 const SECTIONS = [
 	["solution", "Solutions · 方案"],
-	["role", "AI teammates · AI 同事"],
+	["dashboard", "Business dashboards · 业务看板"],
+	["role", "AI employees · AI 员工"],
 	["skill", "Skills · 技能"],
 	["connector", "Connectors · 连接器"],
 	["model", "Models · 模型"]
