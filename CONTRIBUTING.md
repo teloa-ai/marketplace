@@ -23,7 +23,7 @@ Contributions are welcome through pull requests to this repository. One pull req
 
 ### A pull request contains
 
-1. `catalog/<type>/<id>.json` with every field of `teloa.market-catalog-entry/v1`. `<type>` is `solutions`, `roles`, `skills`, `connectors` or `models`, and must match the entry's `kind`. Use `ecosystem.resource` for `id`, for example `hermes.meeting-action-items`. The file name equals the ID.
+1. `catalog/<type>/<id>.json` with every field of `teloa.market-catalog-entry/v1`. `<type>` is `solutions`, `dashboards`, `roles`, `skills`, `connectors` or `models`, and must match the entry's `kind`. Use `ecosystem.resource` for `id`, for example `hermes.meeting-action-items`. The file name equals the ID.
 2. For hosted entries, `artifacts/<type>/<id>/<version>/` with the complete files to install. Skills have exactly one `SKILL.md` at the root; its frontmatter holds only `name` and `description`, and `name` equals the entry's `skill.name`.
 3. The license file described above.
 4. For content taken from elsewhere, the pinned upstream source: the full 40-character commit and the Git blob digest of each file taken. Mark every changed file at the top of its body and list each change in `modifications`. Skills that change the original files use the structured change list described in [Derivative resources](#derivative-resources).
@@ -51,6 +51,12 @@ Use this form when you publish a skill whose files differ from a pinned original
 - **Not included:** review material such as tests, machine-readable change files and drafts stays out of the artifact.
 
 Derivative resources reach the Teloa app with the next Teloa release after merge; market.teloa.ai shows them once the index is published.
+
+### Business dashboards
+
+A standalone `kind: dashboard` entry uses `catalog/dashboards/` and `artifacts/dashboards/<id>/<version>/`. Its root `teloa.json` is `teloa.business-package/v4`, with exactly one required local `business-configuration` resource and empty `relations` and `entrypoints`. The body is `teloa.business-dashboard-resource/v1`, with a fixed ID and version and a complete `teloa.business-configuration/v2` configuration. Include at least one dashboard page; all object, view, widget, dashboard and page references must resolve within it. Include no real records, keys, source-mapping definitions or default actions.
+
+Solutions can reference a unique standalone dashboard through a fixed public resource ID and version. The source must not contain further public references. Dashboard entries and v4 solutions require `compatibility.teloa` to have a lower bound of `0.2.0-alpha.7` or later and appear only in the v2 index. Adoption goes through target selection, explicit mapping, a draft, preview and personal confirmation; it does not automatically connect external systems, map existing data or grant employee permissions. State any missing real-model validation explicitly; structural checks are not real-model acceptance.
 
 ### Model references
 
@@ -97,7 +103,7 @@ Use public issues by default to report malicious or unsafe resources. For potent
 
 ### PR 需要包含
 
-1. `catalog/<类型>/<id>.json`：按 `teloa.market-catalog-entry/v1` 填写全部字段。`<类型>` 为 `solutions`、`roles`、`skills`、`connectors`、`models` 之一，且与条目 `kind` 一致。`id` 用「来源生态.资源名」，例如 `hermes.meeting-action-items`，文件名等于 ID。
+1. `catalog/<类型>/<id>.json`：按 `teloa.market-catalog-entry/v1` 填写全部字段。`<类型>` 为 `solutions`、`dashboards`、`roles`、`skills`、`connectors`、`models` 之一，且与条目 `kind` 一致。`id` 用「来源生态.资源名」，例如 `hermes.meeting-action-items`，文件名等于 ID。
 2. 托管条目的 `artifacts/<类型>/<id>/<version>/`：实际安装的完整文件。技能根目录有且只有一个 `SKILL.md`，frontmatter 只写 `name` 与 `description`，`name` 与条目 `skill.name` 一致。
 3. 上文要求的许可文件。
 4. 取自别处的内容要写上游固定来源：完整 40 位提交与每个取用文件的 Git blob 摘要。改动过的文件在正文开头注明来源，并在条目 `modifications` 里逐条说明。改动了原版文件的技能改用结构化修改清单，见[二次开发资源](#二次开发资源)。
@@ -125,6 +131,12 @@ Use public issues by default to report malicious or unsafe resources. For potent
 - **不放进资源文件：** 测试、机器可读的修改文件、草案等审查材料。
 
 二次开发资源合入后，随下一个 Teloa 发行版进入应用；市场站在索引发布后即可看到。
+
+### 业务看板
+
+独立 `kind: dashboard` 条目放在 `catalog/dashboards/`，工件放在 `artifacts/dashboards/<id>/<version>/`。根目录 `teloa.json` 为 `teloa.business-package/v4`，恰好声明一个必需的本地 `business-configuration` 资源，`relations` 和 `entrypoints` 为空。正文为 `teloa.business-dashboard-resource/v1`，固定 ID、版本和一份完整的 `teloa.business-configuration/v2` 配置。至少包含一个看板页，对象、视图、组件、看板和页面的引用须在配置内闭合。不携带真实记录、密钥、source-mapping 定义或默认动作。
+
+方案可通过固定公共资源 ID 和版本引用唯一的独立看板，来源不得再包含公共引用。看板条目与 v4 方案的 `compatibility.teloa` 下界须为 `0.2.0-alpha.7` 或以上，只进入 v2 索引。采用须经过目标选择、明确映射、草案、预览与本人确认，不会自动连接外部系统、映射已有数据或授予员工权限。缺少的真实模型验证必须明确写出，结构校验不等于真实模型验收。
 
 ### 模型引用
 
