@@ -77,7 +77,7 @@
     "dsh": "0.1.7-rc.1",
     "conditions": [
       {
-        "zh-CN": "只在本人普通会话中提供，同事执行任务时不可见。",
+        "zh-CN": "只在本人普通会话中提供，员工执行任务时不可见。",
         "en": "Available only in your own ordinary conversations; not visible to colleagues running tasks."
       }
     ]

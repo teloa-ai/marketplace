@@ -3,7 +3,8 @@
   "id": "teloa.soc",
   "kind": "solution",
   "delivery": "install",
-  "version": "1.0.2",
+  "version": "1.1.0",
+  "upstream": null,
   "taxonomy": {
     "functions": [
       "security"
@@ -12,7 +13,6 @@
       "cyber-security/soc"
     ]
   },
-  "upstream": null,
   "solution": {
     "packageId": "soc-operations",
     "title": {
@@ -41,6 +41,10 @@
         {
           "zh-CN": "生成交班记录",
           "en": "Produce shift handover notes"
+        },
+        {
+          "zh-CN": "提供固定引用的告警记录与业务看板配置，先生成草案并预览采用",
+          "en": "Provide a fixed alert records and business dashboard configuration to draft, preview and adopt"
         }
       ],
       "needs": [
@@ -55,6 +59,10 @@
         {
           "zh-CN": "狩猎需说明遥测覆盖与字段",
           "en": "Hunting needs your telemetry coverage and fields"
+        },
+        {
+          "zh-CN": "新增看板需选择目标业务与核对字段映射，不自动连接SIEM/EDR或授予员工权限",
+          "en": "The new dashboard requires target-business and field-mapping review; it does not automatically connect SIEM/EDR or grant employee permissions"
         }
       ],
       "permissions": [
@@ -78,7 +86,7 @@
   },
   "compatibility": {
     "status": "needs-configuration",
-    "teloa": ">=0.2.0-alpha.6",
+    "teloa": ">=0.2.0-alpha.7",
     "dsh": "0.1.7-rc.1",
     "conditions": [
       {
@@ -88,6 +96,10 @@
       {
         "zh-CN": "实时研判与调查需要你自己的 SIEM/EDR 只读连接，本方案不含任何厂商凭据。",
         "en": "Live triage and investigation need your own read-only SIEM/EDR connection; no vendor credentials are included."
+      },
+      {
+        "zh-CN": "1.1.0新增看板尚未完成真实模型端到端验收；历史T1验证只覆盖已有技能样例",
+        "en": "The dashboard added in 1.1.0 has not completed real-model end-to-end acceptance; historical T1 verification covers only the existing skill example"
       }
     ]
   },
@@ -98,7 +110,7 @@
   },
   "review": {
     "status": "approved",
-    "reviewedAt": "2026-09-25",
+    "reviewedAt": "2026-10-01",
     "reviewer": "Teloa"
   }
 }

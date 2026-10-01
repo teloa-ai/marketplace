@@ -19,8 +19,8 @@
       "en": "Feature development workflow"
     },
     "summary": {
-      "zh-CN": "按七个阶段开发功能：读懂现有代码、提出澄清问题、比较实现方案、经你同意才实现、最后做质量审查。二次开发自 Anthropic 官方 Claude Code 插件 feature-dev：三个专家子代理改为随附的只读角色说明，审查范围补上已暂存改动与新文件，写入经宿主确认，不自行安装依赖、提交或推送，并要求无人值守的 AI 同事任务只交方案。",
-      "en": "A seven-phase feature workflow: understand the code, ask clarifying questions, compare approaches, implement only after you approve, then review. Derived from Anthropic's Claude Code plugin feature-dev: the three subagents become read-only role files, the review covers staged changes and new files, writes go through host confirmation, it never installs, commits or pushes on its own, and unattended AI colleague tasks are told to deliver only the plan."
+      "zh-CN": "按七个阶段开发功能：读懂现有代码、提出澄清问题、比较实现方案、经你同意才实现、最后做质量审查。二次开发自 Anthropic 官方 Claude Code 插件 feature-dev：三个专家子代理改为随附的只读角色说明，审查范围补上已暂存改动与新文件，写入经宿主确认，不自行安装依赖、提交或推送，并要求无人值守的 AI 员工任务只交方案。",
+      "en": "A seven-phase feature workflow: understand the code, ask clarifying questions, compare approaches, implement only after you approve, then review. Derived from Anthropic's Claude Code plugin feature-dev: the three subagents become read-only role files, the review covers staged changes and new files, writes go through host confirmation, it never installs, commits or pushes on its own, and unattended AI employee tasks are told to deliver only the plan."
     }
   },
   "upstream": {
@@ -88,8 +88,8 @@
         "en": "File writes and commands that change the workspace go through the host's confirmation; it never installs dependencies, commits, pushes or opens a pull request on its own. When the role has the one-off delegation tool (subagent_task), exploration, design and review can run as parallel read-only subtasks; otherwise they run in turn."
       },
       {
-        "zh-CN": "正文要求无人值守的 AI 同事任务停在第四阶段、只交方案；但本机 qwen3:14b 定稿实跑 3 次中仍有 1 次动手写了文件。写文件与改动工作区的操作请保持由宿主逐次确认，不要为这类任务放开自动批准。",
-        "en": "The skill tells unattended AI colleague tasks to stop after phase 4 and hand over the plan, but in 3 runs of the final text with a local qwen3:14b one still wrote a file. Keep file writes and workspace changes under the host's per-call confirmation; do not auto-approve them for such tasks."
+        "zh-CN": "正文要求无人值守的 AI 员工任务停在第四阶段、只交方案；但本机 qwen3:14b 定稿实跑 3 次中仍有 1 次动手写了文件。写文件与改动工作区的操作请保持由宿主逐次确认，不要为这类任务放开自动批准。",
+        "en": "The skill tells unattended AI employee tasks to stop after phase 4 and hand over the plan, but in 3 runs of the final text with a local qwen3:14b one still wrote a file. Keep file writes and workspace changes under the host's per-call confirmation; do not auto-approve them for such tasks."
       },
       {
         "zh-CN": "需要能力较强的模型：本机 qwen3:14b 有人值守实跑 1 次在用户批准方案前就写了文件，并跳过了方案比较与质量审查；无人值守 3 次中 1 次写了文件。请用能力较强的模型，并让写入经宿主逐次确认。未在 Teloa 宿主中端到端验证。",
@@ -217,12 +217,12 @@
         "section": "Working rules (new); Phase 2 (L41-50), Phase 4 (L78), Phase 6 (L106)",
         "upstream": "anthropics/claude-plugins-official@fa59bc9037741ecfa131aa27938272605710d7b2:plugins/feature-dev/commands/feature-dev.md",
         "summary": {
-          "zh-CN": "「Launch 2-3 code-explorer / code-architect / 3 code-reviewer agents in parallel」改为按随附的 `agents/*.md` 角色说明做探索、设计、审查环节：宿主允许一次性委派（如授予 AI 同事的 subagent_task）时交给只读子任务并行，否则自己按顺序完成；不指定模型档位。",
-          "en": "\"Launch 2-3 code-explorer / code-architect / 3 code-reviewer agents in parallel\" becomes exploration, design and review passes that follow the shipped `agents/*.md` role files: delegated in parallel to read-only subtasks when the host allows one-off delegation (such as subagent_task granted to an AI colleague), otherwise run in turn; no model tier is chosen."
+          "zh-CN": "「Launch 2-3 code-explorer / code-architect / 3 code-reviewer agents in parallel」改为按随附的 `agents/*.md` 角色说明做探索、设计、审查环节：宿主允许一次性委派（如授予 AI 员工的 subagent_task）时交给只读子任务并行，否则自己按顺序完成；不指定模型档位。",
+          "en": "\"Launch 2-3 code-explorer / code-architect / 3 code-reviewer agents in parallel\" becomes exploration, design and review passes that follow the shipped `agents/*.md` role files: delegated in parallel to read-only subtasks when the host allows one-off delegation (such as subagent_task granted to an AI employee), otherwise run in turn; no model tier is chosen."
         },
         "reason": {
-          "zh-CN": "Teloa 没有 Claude Code 的 Task 工具与插件注册的命名子代理；AI 同事能否委派取决于岗位是否授予一次性委派工具（subagent_task），所以按「可委派就委派、否则自己依次完成」写，并去掉模型档位，按宿主已配置的模型运行。",
-          "en": "Teloa has no Claude Code Task tool and no plugin-registered named subagents; whether an AI colleague can delegate depends on whether its role was granted the one-off delegation tool (subagent_task), so the text says to delegate when possible and otherwise work in turn, and drops model tiers in favour of the host's configured model."
+          "zh-CN": "Teloa 没有 Claude Code 的 Task 工具与插件注册的命名子代理；AI 员工能否委派取决于岗位是否授予一次性委派工具（subagent_task），所以按「可委派就委派、否则自己依次完成」写，并去掉模型档位，按宿主已配置的模型运行。",
+          "en": "Teloa has no Claude Code Task tool and no plugin-registered named subagents; whether an AI employee can delegate depends on whether its role was granted the one-off delegation tool (subagent_task), so the text says to delegate when possible and otherwise work in turn, and drops model tiers in favour of the host's configured model."
         }
       },
       {
@@ -232,12 +232,12 @@
         "section": "Working rules (new); Phase 1 (new step 0); Phase 5 (L89-97)",
         "upstream": "anthropics/claude-plugins-official@fa59bc9037741ecfa131aa27938272605710d7b2:plugins/feature-dev/commands/feature-dev.md",
         "summary": {
-          "zh-CN": "新增写入边界：建文件、改文件与改变工作区的命令经宿主确认；不在本技能内安装或升级依赖、提交、推送、开 PR 或改 Git 配置，需要时写出命令交给用户；无人值守的 AI 同事任务（或提出的问题没有人回答时）停在第四阶段，只读分析，交付探索结论、待确认问题、方案与建议，不实现；没有回答的问题不算批准。第一阶段新增第 0 步先判断用户能否回答，第五阶段写明批准须是用户在对话中明确说实现、无人值守时这一阶段不开始，第 3 步同步说明写入边界。",
-          "en": "Adds the write boundary: creating or editing files and commands that change the workspace go through the host's confirmation; the skill never installs or upgrades dependencies, commits, pushes, opens pull requests or changes Git configuration, and names the command for the user instead; unattended AI colleague tasks (or questions that get no answer) stop after phase 4, read-only, with the findings, open questions, approaches and recommendation, without implementing; an unanswered question is not approval. Phase 1 gets a step 0 that first decides whether the user can answer, and phase 5 says approval means the user saying in the conversation to implement, so the phase never starts in an unattended task; step 3 repeats the write boundary."
+          "zh-CN": "新增写入边界：建文件、改文件与改变工作区的命令经宿主确认；不在本技能内安装或升级依赖、提交、推送、开 PR 或改 Git 配置，需要时写出命令交给用户；无人值守的 AI 员工任务（或提出的问题没有人回答时）停在第四阶段，只读分析，交付探索结论、待确认问题、方案与建议，不实现；没有回答的问题不算批准。第一阶段新增第 0 步先判断用户能否回答，第五阶段写明批准须是用户在对话中明确说实现、无人值守时这一阶段不开始，第 3 步同步说明写入边界。",
+          "en": "Adds the write boundary: creating or editing files and commands that change the workspace go through the host's confirmation; the skill never installs or upgrades dependencies, commits, pushes, opens pull requests or changes Git configuration, and names the command for the user instead; unattended AI employee tasks (or questions that get no answer) stop after phase 4, read-only, with the findings, open questions, approaches and recommendation, without implementing; an unanswered question is not approval. Phase 1 gets a step 0 that first decides whether the user can answer, and phase 5 says approval means the user saying in the conversation to implement, so the phase never starts in an unattended task; step 3 repeats the write boundary."
         },
         "reason": {
-          "zh-CN": "Teloa 的写操作须由本人确认，AI 同事不能自行安装或提交；原版只在第五阶段要求用户批准，没有说明无人可批准时怎么办。",
-          "en": "In Teloa, writes need the person's confirmation and AI colleagues cannot install or commit on their own; the original only asks for approval in phase 5 and does not say what to do when nobody can approve."
+          "zh-CN": "Teloa 的写操作须由本人确认，AI 员工不能自行安装或提交；原版只在第五阶段要求用户批准，没有说明无人可批准时怎么办。",
+          "en": "In Teloa, writes need the person's confirmation and AI employees cannot install or commit on their own; the original only asks for approval in phase 5 and does not say what to do when nobody can approve."
         }
       },
       {

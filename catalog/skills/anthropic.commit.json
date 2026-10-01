@@ -19,8 +19,8 @@
       "en": "Commit after confirmation"
     },
     "summary": {
-      "zh-CN": "准备一次本地 Git 提交：挑出属于这次改动的文件、检查凭据、按仓库风格起草提交信息，把清单与命令给你看，你确认后才执行 git add 与 git commit。二次开发自 Anthropic 官方 Claude Code 插件 commit-commands 的 /commit：只暂存明确路径，提交前检查凭据文件与凭据样式内容，不推送、不修订、不跳过钩子，无人值守的 AI 同事任务只交提交方案。",
-      "en": "Prepares one local Git commit: picks the files of the change, checks for credentials, drafts a message in the repository's style and shows you the list and commands; git add and git commit run only after you confirm. Derived from /commit in Anthropic's Claude Code plugin commit-commands: explicit paths only, a credential check first, no push, amend or hook bypass, and unattended AI colleague tasks hand over the proposal."
+      "zh-CN": "准备一次本地 Git 提交：挑出属于这次改动的文件、检查凭据、按仓库风格起草提交信息，把清单与命令给你看，你确认后才执行 git add 与 git commit。二次开发自 Anthropic 官方 Claude Code 插件 commit-commands 的 /commit：只暂存明确路径，提交前检查凭据文件与凭据样式内容，不推送、不修订、不跳过钩子，无人值守的 AI 员工任务只交提交方案。",
+      "en": "Prepares one local Git commit: picks the files of the change, checks for credentials, drafts a message in the repository's style and shows you the list and commands; git add and git commit run only after you confirm. Derived from /commit in Anthropic's Claude Code plugin commit-commands: explicit paths only, a credential check first, no push, amend or hook bypass, and unattended AI employee tasks hand over the proposal."
     }
   },
   "upstream": {
@@ -66,8 +66,8 @@
         "en": "Needs Git and the bash tool. Apart from read-only git status / diff / branch / log, git add and git commit run only after you confirm the file list and message in the conversation; the host's own confirmation for bash applies on top."
       },
       {
-        "zh-CN": "只做一次本地提交：不推送、不拉取、不修订、不改分支或 Git 配置、不加 --no-verify；无人值守的 AI 同事任务只交提交方案，不提交。",
-        "en": "One local commit only: no push, pull, amend, branch or Git configuration changes, no --no-verify. Unattended AI colleague tasks hand over the proposal and do not commit."
+        "zh-CN": "只做一次本地提交：不推送、不拉取、不修订、不改分支或 Git 配置、不加 --no-verify；无人值守的 AI 员工任务只交提交方案，不提交。",
+        "en": "One local commit only: no push, pull, amend, branch or Git configuration changes, no --no-verify. Unattended AI employee tasks hand over the proposal and do not commit."
       },
       {
         "zh-CN": "凭据检查按文件名与常见凭据样式由模型判断，不是扫描器，可能漏检；重要仓库请另用专门的密钥扫描工具。",
@@ -180,12 +180,12 @@
         "section": "Boundary (new); Your task (L13-17); Steps 4-5 (new)",
         "upstream": "anthropics/claude-plugins-official@fa59bc9037741ecfa131aa27938272605710d7b2:plugins/commit-commands/commands/commit.md",
         "summary": {
-          "zh-CN": "删除「Stage and create the commit using a single message. Do not use any other tools or do anything else. Do not send any other text…」；改为先展示分支、要提交与未纳入的文件、凭据检查结果、完整提交信息与将执行的命令，等用户在对话中确认后才执行；「提交我的改动」这类请求只算开始准备，不算确认；用户改动方案需重新确认；无人值守的 AI 同事任务停在展示方案；列出不做的操作（推送、拉取、合并、变基、重置、储藏、修订、强推、建或切分支、改 Git 配置、--no-verify）。",
-          "en": "Removes \"Stage and create the commit using a single message. Do not use any other tools or do anything else. Do not send any other text…\". Instead it first shows the branch, the files to commit and those left out, the credential check, the full message and the exact commands, and runs them only after the user confirms in the conversation; a request like \"commit my changes\" starts the preparation and is not that confirmation; a changed proposal needs a new confirmation; unattended AI colleague tasks stop at the proposal; and it lists what it never does (push, pull, merge, rebase, reset, stash, amend, force, create or switch branches, change Git configuration, --no-verify)."
+          "zh-CN": "删除「Stage and create the commit using a single message. Do not use any other tools or do anything else. Do not send any other text…」；改为先展示分支、要提交与未纳入的文件、凭据检查结果、完整提交信息与将执行的命令，等用户在对话中确认后才执行；「提交我的改动」这类请求只算开始准备，不算确认；用户改动方案需重新确认；无人值守的 AI 员工任务停在展示方案；列出不做的操作（推送、拉取、合并、变基、重置、储藏、修订、强推、建或切分支、改 Git 配置、--no-verify）。",
+          "en": "Removes \"Stage and create the commit using a single message. Do not use any other tools or do anything else. Do not send any other text…\". Instead it first shows the branch, the files to commit and those left out, the credential check, the full message and the exact commands, and runs them only after the user confirms in the conversation; a request like \"commit my changes\" starts the preparation and is not that confirmation; a changed proposal needs a new confirmation; unattended AI employee tasks stop at the proposal; and it lists what it never does (push, pull, merge, rebase, reset, stash, amend, force, create or switch branches, change Git configuration, --no-verify)."
         },
         "reason": {
-          "zh-CN": "原版在 Claude Code 里靠 allowed-tools 预先放行 git add 与 git commit，用户看不到将提交什么就已提交。Teloa 的写操作须本人确认，AI 同事不能自行提交。",
-          "en": "In Claude Code the original pre-approves git add and git commit through allowed-tools, so a commit is made before the user sees what goes into it. In Teloa writes need the person's confirmation and AI colleagues cannot commit on their own."
+          "zh-CN": "原版在 Claude Code 里靠 allowed-tools 预先放行 git add 与 git commit，用户看不到将提交什么就已提交。Teloa 的写操作须本人确认，AI 员工不能自行提交。",
+          "en": "In Claude Code the original pre-approves git add and git commit through allowed-tools, so a commit is made before the user sees what goes into it. In Teloa writes need the person's confirmation and AI employees cannot commit on their own."
         }
       },
       {

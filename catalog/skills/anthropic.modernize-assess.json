@@ -237,8 +237,8 @@
           "en": "\"three subagents, in parallel\" and \"Run every subagent in the foreground\" become three specialist passes that follow the shipped `agents/legacy-analyst.md` and `agents/security-auditor.md`: delegated to read-only subtasks when the host allows one-off delegation (such as subagent_task), otherwise run in turn, synthesizing after all of them; adds read-only rules (never build, run or modify the analyzed code; only write reports under analysis/, through the host's confirmation), no self-installing scc/cloc or other tools, and npm audit/pip-audit only with the user's agreement; step 4's \"APM MCP server\" becomes a monitoring connector the user has already set up."
         },
         "reason": {
-          "zh-CN": "Teloa 没有 Claude Code 的 Task 工具与插件注册的命名子代理；AI 同事能否委派取决于岗位是否授予一次性委派工具（subagent_task），所以按「可委派就委派、否则自己依次完成」写，并去掉模型档位，按宿主已配置的模型运行。npm audit 与 pip-audit 会把依赖清单发往公共服务，Teloa 的外发须经用户同意。",
-          "en": "Teloa has no Claude Code Task tool and no plugin-registered named subagents; whether an AI colleague can delegate depends on whether its role was granted the one-off delegation tool (subagent_task), so the text says to delegate when possible and otherwise work in turn, and drops model tiers in favour of the host's configured model. npm audit and pip-audit send the dependency list to public services, and outbound traffic in Teloa needs the user's agreement."
+          "zh-CN": "Teloa 没有 Claude Code 的 Task 工具与插件注册的命名子代理；AI 员工能否委派取决于岗位是否授予一次性委派工具（subagent_task），所以按「可委派就委派、否则自己依次完成」写，并去掉模型档位，按宿主已配置的模型运行。npm audit 与 pip-audit 会把依赖清单发往公共服务，Teloa 的外发须经用户同意。",
+          "en": "Teloa has no Claude Code Task tool and no plugin-registered named subagents; whether an AI employee can delegate depends on whether its role was granted the one-off delegation tool (subagent_task), so the text says to delegate when possible and otherwise work in turn, and drops model tiers in favour of the host's configured model. npm audit and pip-audit send the dependency list to public services, and outbound traffic in Teloa needs the user's agreement."
         }
       },
       {
@@ -267,8 +267,8 @@
           "en": "Removes `--show-secrets` (a raw-value column in SECRETS.local.md) and writing to `~/.modernize/$system/` without Git: this skill never writes a raw credential value; it writes a masked-only SECRETS.local.md only in a Git repository where `git check-ignore` confirms analysis/.gitignore takes effect, and otherwise gives the masked inventory to the user in the conversation with the reason; the `*.local.patch` ignore entry, used only by other commands of the original plugin, is dropped."
         },
         "reason": {
-          "zh-CN": "Teloa 的规则是凭据不进对话与由 AI 生成的文件，需要原值的人可以按 file:line 打开源文件；`~/.modernize` 在工作区之外，AI 同事不应写到那里。",
-          "en": "Teloa keeps credential values out of conversations and AI-written files, and anyone who needs a value can open the source at file:line; `~/.modernize` is outside the workspace, where an AI colleague should not write."
+          "zh-CN": "Teloa 的规则是凭据不进对话与由 AI 生成的文件，需要原值的人可以按 file:line 打开源文件；`~/.modernize` 在工作区之外，AI 员工不应写到那里。",
+          "en": "Teloa keeps credential values out of conversations and AI-written files, and anyone who needs a value can open the source at file:line; `~/.modernize` is outside the workspace, where an AI employee should not write."
         }
       },
       {

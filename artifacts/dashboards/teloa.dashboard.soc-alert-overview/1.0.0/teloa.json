@@ -1,0 +1,52 @@
+{
+  "format": "teloa.business-package/v4",
+  "id": "soc-alert-dashboard",
+  "title": "SOC alert overview",
+  "version": "1.0.0",
+  "domain": "cyber-security",
+  "scope": "SOC",
+  "description": "A complete alert record and dashboard configuration; adopt it after reviewing the target business and mappings.",
+  "localized": {
+    "title": {
+      "original": "SOC alert overview",
+      "defaultLocale": "en",
+      "locales": {
+        "en": "SOC alert overview",
+        "zh-CN": "SOC告警总览"
+      }
+    },
+    "description": {
+      "original": "A complete alert record and dashboard configuration; adopt it after reviewing the target business and mappings.",
+      "defaultLocale": "en",
+      "locales": {
+        "en": "A complete alert record and dashboard configuration; adopt it after reviewing the target business and mappings.",
+        "zh-CN": "完整告警记录与看板配置；先核对目标业务与映射，再由本人采用。"
+      }
+    }
+  },
+  "resources": [
+    {
+      "id": "soc-alert-overview",
+      "kind": "business-configuration",
+      "title": "SOC alert overview",
+      "localized": {
+        "title": {
+          "original": "SOC alert overview",
+          "defaultLocale": "en",
+          "locales": {
+            "en": "SOC alert overview",
+            "zh-CN": "SOC告警总览"
+          }
+        }
+      },
+      "version": "1.0.0",
+      "required": true,
+      "source": {
+        "kind": "local",
+        "path": "configuration.json"
+      }
+    }
+  ],
+  "relations": [],
+  "entrypoints": []
+}

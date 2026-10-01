@@ -69,7 +69,7 @@
     "dsh": "0.1.7-rc.1",
     "conditions": [
       {
-        "zh-CN": "正文要求先与客户确认设计方向；在无人值守的 AI 同事任务中无法询问时，写明所作假设后继续",
+        "zh-CN": "正文要求先与客户确认设计方向；在无人值守的 AI 员工任务中无法询问时，写明所作假设后继续",
         "en": "The skill asks you to confirm the design direction with the client first; in unattended AI teammate tasks where you cannot ask, state your assumptions and continue"
       },
       {

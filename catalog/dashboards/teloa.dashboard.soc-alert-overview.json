@@ -1,0 +1,92 @@
+{
+  "format": "teloa.market-catalog-entry/v1",
+  "id": "teloa.dashboard.soc-alert-overview",
+  "kind": "dashboard",
+  "delivery": "install",
+  "version": "1.0.0",
+  "upstream": null,
+  "taxonomy": {
+    "functions": [
+      "security"
+    ],
+    "industries": [
+      "cyber-security/soc"
+    ]
+  },
+  "modifications": [],
+  "license": {
+    "spdx": "Apache-2.0",
+    "files": [
+      "LICENSE"
+    ]
+  },
+  "compatibility": {
+    "status": "needs-configuration",
+    "teloa": ">=0.2.0-alpha.7",
+    "dsh": "0.1.7-rc.1",
+    "conditions": [
+      {
+        "zh-CN": "不包含真实告警、密钥、同步绑定或默认动作；已有数据不会自动猜测映射",
+        "en": "Includes no real alerts, keys, synchronization bindings or default actions; mappings to existing data are not guessed automatically"
+      },
+      {
+        "zh-CN": "本资源尚未完成真实模型端到端验收；需先核对目标业务和字段，再由本人采用",
+        "en": "This resource has not completed real-model end-to-end acceptance; review the target business and fields before personal adoption"
+      }
+    ]
+  },
+  "requires": {
+    "tools": [],
+    "network": false,
+    "runtimes": []
+  },
+  "review": {
+    "status": "approved",
+    "reviewedAt": "2026-10-01",
+    "reviewer": "Teloa"
+  },
+  "dashboard": {
+    "packageId": "soc-alert-dashboard",
+    "title": {
+      "zh-CN": "SOC告警总览",
+      "en": "SOC alert overview"
+    },
+    "summary": {
+      "zh-CN": "告警记录、未完成数量、状态与严重度分布、近30天趋势；选择目标业务核对映射后预览采用。",
+      "en": "Alert records, open counts, state and severity distributions, and a 30-day trend. Select a target business, review mappings, then preview and adopt."
+    },
+    "scope": "SOC",
+    "capabilities": {
+      "now": [
+        {
+          "zh-CN": "提供告警记录页和告警总览页的完整配置",
+          "en": "Provide a complete alert records page and overview configuration"
+        },
+        {
+          "zh-CN": "根据已保存的告警记录计算未完成数量、状态、严重度与时间趋势",
+          "en": "Compute open counts, state and severity distributions, and time trends from saved alert records"
+        }
+      ],
+      "needs": [
+        {
+          "zh-CN": "选择目标业务并逐项核对对象、字段与页面映射",
+          "en": "Select a target business and review object, field and page mappings"
+        },
+        {
+          "zh-CN": "自行导入告警记录；SIEM/EDR连接、同步和业务动作需另行配置",
+          "en": "Import your alert records; configure SIEM/EDR connections, synchronization and business actions separately"
+        }
+      ],
+      "permissions": [
+        {
+          "zh-CN": "配置草案须预览并由本人采用",
+          "en": "Preview the configuration draft and adopt it personally"
+        },
+        {
+          "zh-CN": "不自动授予员工、工具或外部系统权限",
+          "en": "Does not automatically grant employee, tool or external-system permissions"
+        }
+      ]
+    }
+  }
+}
