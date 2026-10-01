@@ -3759,7 +3759,7 @@ const upstreamLocation = (upstream) => upstream.kind === "clawhub" ? `ClawHub ${
 const cell = (value) => String(value).replaceAll(/[|\[\]\\]/g, (match) => "\\" + match).replaceAll("\n", " ");
 const SECTIONS = [
 	["solution", "Solutions · 方案"],
-	["role", "AI teammates · AI 同事"],
+	["role", "AI employees · AI 员工"],
 	["skill", "Skills · 技能"],
 	["connector", "Connectors · 连接器"],
 	["model", "Models · 模型"]
