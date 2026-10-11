@@ -2,6 +2,8 @@
 
 [English](README.md) · 简体中文
 
+[官网](https://www.teloa.ai/) · [文档](https://docs.teloa.ai/) · [资源市场](https://market.teloa.ai/) · [博客](https://www.teloa.ai/blog/) · [AI 安全研究](https://security.teloa.ai/?lang=zh-CN) · [GitHub](https://github.com/teloa-ai/marketplace)
+
 这里是 Teloa 官方市场的目录源，收录经过 Teloa 审核、许可清楚、版本固定的方案、AI 同事、技能、连接器与模型引用。本仓库是市场的唯一事实源，投稿、审核与合并都在这里进行。
 
 在线浏览与搜索：**https://market.teloa.ai** · 全部条目：[INDEX.md](INDEX.md)
@@ -68,6 +70,8 @@
 ## 安全
 
 发现恶意或不安全的资源，默认通过公开 [Issue](https://github.com/teloa-ai/marketplace/issues) 报告；如可能造成重大影响，建议先私下联系 [security@teloa.ai](mailto:security@teloa.ai)。公开内容请去除凭据、隐私和漏洞利用细节，详见 [SECURITY.md](SECURITY.md)。
+
+[Teloa AI Security](https://security.teloa.ai/?lang=zh-CN) 提供智能体身份、授权与执行边界的开放研究，包括[企业智能体身份与授权安全基线](https://github.com/teloa-ai/agent-baseline-assessor)及其[自评工具](https://security.teloa.ai/agent-baseline-assessor/?lang=zh-CN)。
 
 ## 变更
 
