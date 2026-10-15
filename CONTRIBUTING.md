@@ -4,6 +4,10 @@
 
 ## English
 
+### Official catalog curation
+
+This market is maintained as one Teloa official catalog. It does not expose other marketplaces as browsing channels. Initial application adaptations primarily follow Grok Bot's application approach. Every imported application requires Teloa curation, a fixed source, license review and compatibility evidence before listing. Keep the original author, license, repository and revision for attribution and reproducible installation; official maintenance does not imply original authorship. Existing entry identifiers remain stable.
+
 Contributions are welcome through pull requests to this repository. One pull request adds one entry or one new version of an entry.
 
 ### Before you start
@@ -23,7 +27,7 @@ Contributions are welcome through pull requests to this repository. One pull req
 
 ### A pull request contains
 
-1. `catalog/<type>/<id>.json` with every field of `teloa.market-catalog-entry/v1`. `<type>` is `solutions`, `roles`, `skills`, `connectors` or `models`, and must match the entry's `kind`. Use `ecosystem.resource` for `id`, for example `hermes.meeting-action-items`. The file name equals the ID.
+1. `catalog/<type>/<id>.json` with every field of `teloa.market-catalog-entry/v1`. `<type>` is `solutions`, `roles`, `skills`, `connectors` or `models`, and must match the entry's `kind`. Use `ecosystem.resource` for `id`, for example `openai.security-threat-model`. The file name equals the ID.
 2. For hosted entries, `artifacts/<type>/<id>/<version>/` with the complete files to install. Skills have exactly one `SKILL.md` at the root; its frontmatter holds only `name` and `description`, and `name` equals the entry's `skill.name`.
 3. The license file described above.
 4. For content taken from elsewhere, the pinned upstream source: the full 40-character commit and the Git blob digest of each file taken. Mark every changed file at the top of its body and list each change in `modifications`. Skills that change the original files use the structured change list described in [Derivative resources](#derivative-resources).
@@ -33,7 +37,7 @@ Contributions are welcome through pull requests to this repository. One pull req
 
 ### Derivative resources
 
-Use this form when you publish a skill whose files differ from a pinned original: fixes, adaptations, removals or additions. An upstream entry (`delivery: upstream`) means the listed original files are installed byte for byte; any skill whose bytes changed is a hosted entry (`delivery: install`) with `derivation`. Keep the original ID prefix and skill name (for example `hermes.simplify-code`), use a plain version without a pre-release suffix, and keep one entry per skill.
+Use this form when you publish a skill whose files differ from a pinned original: fixes, adaptations, removals or additions. An upstream entry (`delivery: upstream`) means the listed original files are installed byte for byte; any skill whose bytes changed is a hosted entry (`delivery: install`) with `derivation`. Keep the original ID prefix and skill name (for example `anthropic.review-pr`), use a plain version without a pre-release suffix, and keep one entry per skill.
 
 - **Entry.** `upstream.files` lists every original file with `gitBlob`, `size` and `sha256` of the original bytes at the pinned commit. A license at the original repository root is listed with `repositoryPath` and placed at the artifact root as `LICENSE` or `LICENSE.txt`. `modifications` is `[]`. `derivation.unchangedFiles` lists original files shipped unchanged (their digest must equal the original digest, licenses included). `derivation.changes` lists every change. Derivative entries carry no `origin`: the original's install count is not ours. `compatibility.teloa` must have a lower bound of at least `0.2.0-alpha.7`.
 - **Each change** has `id` (such as `CSB-M01`, unique in the entry), `type`, `path` (one file in the artifact, or the removed original file), optional `section` (language-neutral heading or line numbers; line numbers refer to the original file), `upstream` (`<owner>/<repo>@<commit>:<path>` of the original file, same repository and commit as the entry; `null` only for a file the original does not have), and `summary` and `reason` in Chinese and English, each at most 1000 characters. These texts are public: keep the technical content, leave out internal review bookkeeping.
@@ -54,9 +58,9 @@ Derivative resources reach the Teloa app with the next Teloa release after merge
 
 ### Model references
 
-Model references have no artifacts (`delivery: reference`). See `catalog/models/teloa.model.sensevoice.json` for the local speech example, with `model.form: local-specialist`, `usage: ["speech-to-text"]`, and `native: {kind: "dsh-speech", providerId: "sensevoice-local"}`. Put the weight license in `model.license`; the top-level `license` describes the catalog entry. DSH's native preparer owns pinned weight versions, hashes, cache and download state; the catalog cannot duplicate this state or specify installation commands or arbitrary providers. Only this reviewed native binding is currently accepted. A new OCR or classification provider first needs an extension adapter and runtime and hardware validation.
+Model references have no artifacts (`delivery: reference`). A local speech reference uses `model.form: local-specialist`, `usage: ["speech-to-text"]`, and `native: {kind: "dsh-speech", providerId: "sensevoice-local"}`. Put the weight license in `model.license`; the top-level `license` describes the catalog entry. DSH's native preparer owns pinned weight versions, hashes, cache and download state; the catalog cannot duplicate this state or specify installation commands or arbitrary providers. Only this reviewed native binding is currently accepted. A new OCR or classification provider first needs an extension adapter and runtime and hardware validation.
 
-A `skill` or `work-template` resource in a `teloa.business-package/v3` solution can declare `modelDependencies: [{catalogId, version, usage, required}]` with a fixed catalog version such as `teloa.model.sensevoice@1.0.0`, without weights, runtime addresses, download commands or credentials. See the [solution model-dependency design](https://github.com/teloa-ai/teloa/blob/main/docs/superpowers/specs/2026-09-27-%E8%A1%8C%E4%B8%9A%E6%96%B9%E6%A1%88%E6%A8%A1%E5%9E%8B%E4%BE%9D%E8%B5%96-design.md) for details. This describes development capabilities, not a claim that the current online version has been released.
+A `skill` or `work-template` resource in a `teloa.business-package/v3` solution can declare `modelDependencies: [{catalogId, version, usage, required}]` with a fixed catalog version such as `teloa.model.sensevoice@1.0.0`, without weights, runtime addresses, download commands or credentials. See the [solution model-dependency contract](https://github.com/teloa-ai/teloa/blob/main/packages/contract/src/industry-model-dependencies.ts) for details. This describes development capabilities, not a claim that the current online version has been released.
 
 ### Not accepted
 
@@ -78,6 +82,10 @@ Use public issues by default to report malicious or unsafe resources. For potent
 
 ## 中文
 
+### 官方目录收录
+
+市场统一为 Teloa 官方目录，不再把外部市场作为浏览渠道。首批应用移植以 Grok Bot 的应用思路为主；后续引入均须经 Teloa 适配、固定来源、许可审核与兼容验证后收录。保留原作者、许可、原仓和提交用于溯源与安装核对，官方维护不等于原创，既有条目标识保持稳定。
+
 欢迎通过 Pull Request 向本仓库投稿。一个 PR 只投一个条目或一个条目的新版本。
 
 ### 开始之前
@@ -97,7 +105,7 @@ Use public issues by default to report malicious or unsafe resources. For potent
 
 ### PR 需要包含
 
-1. `catalog/<类型>/<id>.json`：按 `teloa.market-catalog-entry/v1` 填写全部字段。`<类型>` 为 `solutions`、`roles`、`skills`、`connectors`、`models` 之一，且与条目 `kind` 一致。`id` 用「来源生态.资源名」，例如 `hermes.meeting-action-items`，文件名等于 ID。
+1. `catalog/<类型>/<id>.json`：按 `teloa.market-catalog-entry/v1` 填写全部字段。`<类型>` 为 `solutions`、`roles`、`skills`、`connectors`、`models` 之一，且与条目 `kind` 一致。`id` 用「来源生态.资源名」，例如 `openai.security-threat-model`，文件名等于 ID。
 2. 托管条目的 `artifacts/<类型>/<id>/<version>/`：实际安装的完整文件。技能根目录有且只有一个 `SKILL.md`，frontmatter 只写 `name` 与 `description`，`name` 与条目 `skill.name` 一致。
 3. 上文要求的许可文件。
 4. 取自别处的内容要写上游固定来源：完整 40 位提交与每个取用文件的 Git blob 摘要。改动过的文件在正文开头注明来源，并在条目 `modifications` 里逐条说明。改动了原版文件的技能改用结构化修改清单，见[二次开发资源](#二次开发资源)。
@@ -107,7 +115,7 @@ Use public issues by default to report malicious or unsafe resources. For potent
 
 ### 二次开发资源
 
-发布与锁定原版字节不同的技能（修复、适配、移除或新增内容）时用这种形式。上游条目（`delivery: upstream`）的含义是所列原版文件逐字节原样安装；字节改过的技能一律用托管条目（`delivery: install`）加 `derivation`。沿用原版的标识前缀与技能名（例如 `hermes.simplify-code`），版本号不用预发布后缀，同一技能只保留一个条目。
+发布与锁定原版字节不同的技能（修复、适配、移除或新增内容）时用这种形式。上游条目（`delivery: upstream`）的含义是所列原版文件逐字节原样安装；字节改过的技能一律用托管条目（`delivery: install`）加 `derivation`。沿用原版的标识前缀与技能名（例如 `anthropic.review-pr`），版本号不用预发布后缀，同一技能只保留一个条目。
 
 - **条目。** `upstream.files` 列出全部原版文件，每项带锁定提交下原版字节的 `gitBlob`、`size` 与 `sha256`；原版仓库根目录的许可用 `repositoryPath` 登记，并放在资源文件根目录的 `LICENSE` 或 `LICENSE.txt`。`modifications` 为 `[]`。`derivation.unchangedFiles` 列出原样随附的原版文件（摘要必须与原版一致，许可文件也不例外）；`derivation.changes` 逐条列出修改。二次开发条目不写 `origin`：原版的安装量不是我们的安装量。`compatibility.teloa` 的下界至少为 `0.2.0-alpha.7`。
 - **每条修改**包含：`id`（如 `CSB-M01`，条目内唯一）、`type`、`path`（资源文件里的一个文件，或被移除的原版文件）、可选的 `section`（语言中性的章节名或行号，行号指原版文件）、`upstream`（原版文件的 `<owner>/<repo>@<提交>:<路径>`，仓库与提交须与条目一致；只有原版没有的文件写 `null`），以及中英双语的 `summary` 与 `reason`（每语不超过 1000 字）。这些文字会公开展示：保留技术内容，不写内部审查记账。
@@ -128,9 +136,9 @@ Use public issues by default to report malicious or unsafe resources. For potent
 
 ### 模型引用
 
-模型引用没有工件（`delivery: reference`）。本地语音示例见 `catalog/models/teloa.model.sensevoice.json`，使用 `model.form: local-specialist`、`usage: ["speech-to-text"]`、`native: {kind: "dsh-speech", providerId: "sensevoice-local"}`；模型权重许可写在 `model.license`，顶层 `license` 描述目录条目本身。DSH 原生准备器维护固定权重版本、摘要、缓存和下载状态，目录不复制这些状态，也不能指定下载命令或任意 provider。目前只开放该已核对的原生绑定；新的 OCR、分类等 provider 需要先完成扩展适配、运行和硬件验收。
+模型引用没有工件（`delivery: reference`）。本地语音引用使用 `model.form: local-specialist`、`usage: ["speech-to-text"]`、`native: {kind: "dsh-speech", providerId: "sensevoice-local"}`；模型权重许可写在 `model.license`，顶层 `license` 描述目录条目本身。DSH 原生准备器维护固定权重版本、摘要、缓存和下载状态，目录不复制这些状态，也不能指定下载命令或任意 provider。目前只开放该已核对的原生绑定；新的 OCR、分类等 provider 需要先完成扩展适配、运行和硬件验收。
 
-`teloa.business-package/v3` 方案中的 `skill`、`work-template` 资源可声明 `modelDependencies: [{catalogId, version, usage, required}]`，使用固定目录版本，例如 `teloa.model.sensevoice@1.0.0`，不附带权重、运行地址、下载命令或凭据。详见[行业方案模型依赖设计](https://github.com/teloa-ai/teloa/blob/main/docs/superpowers/specs/2026-09-27-%E8%A1%8C%E4%B8%9A%E6%96%B9%E6%A1%88%E6%A8%A1%E5%9E%8B%E4%BE%9D%E8%B5%96-design.md)。这是开发期能力说明，不代表当前线上版本已经发行。
+`teloa.business-package/v3` 方案中的 `skill`、`work-template` 资源可声明 `modelDependencies: [{catalogId, version, usage, required}]`，使用固定目录版本，例如 `teloa.model.sensevoice@1.0.0`，不附带权重、运行地址、下载命令或凭据。详见[行业方案模型依赖契约](https://github.com/teloa-ai/teloa/blob/main/packages/contract/src/industry-model-dependencies.ts)。这是开发期能力说明，不代表当前线上版本已经发行。
 
 ### 不接受的内容
 
