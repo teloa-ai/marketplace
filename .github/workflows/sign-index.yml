@@ -1,0 +1,71 @@
+name: Sign index
+
+# Publishes the signed online catalog index (index.json and v2/index.json, each with an Ed25519 .sig) as a
+# downloadable workflow artifact. It runs only on main, which accepts changes only through reviewed pull requests,
+# after the generated-files pull request has bumped catalog-version.txt (the Generate workflow's merge), or when a
+# maintainer dispatches it on main. It never runs on pull requests or other branches.
+#
+# The index bytes come from the repository's own validator (`node tools/validate.mjs --index-out`), which writes
+# them only after strict validation passes. The TELOA_MARKET_SIGNING_KEY secret reaches only the signing step; that
+# step refuses any key whose public half is not the Teloa app's built-in public key
+# (.github/market-index-public-key.pem) and verifies both signatures with it before anything is uploaded.
+# The artifact holds only public files: the two indexes, their signatures, SHA256SUMS and provenance.json.
+#
+# Recommended repository settings: keep the secret in the `market-signing` environment with deployment branches
+# limited to main (and, if wanted, required reviewers), so no other branch or workflow can read it.
+on:
+  push:
+    branches: [main]
+    paths: [catalog-version.txt]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: sign-index
+  cancel-in-progress: false
+
+jobs:
+  sign:
+    name: Signed index artifact
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment: market-signing
+    steps:
+      - name: Checkout main at the triggering commit
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 24
+
+      - name: Check the signing script
+        run: node --test tools/tests/sign-index.test.mjs
+
+      # Strict: generated files must be current, so a push that has not been through the generated-files pull
+      # request fails here instead of publishing an index for an unreleased catalog version.
+      - name: Validate strictly and write the unsigned indexes
+        run: node tools/validate.mjs --format github --index-out "$RUNNER_TEMP/market-index"
+
+      - name: Sign with the production key and verify with the built-in public key
+        env:
+          TELOA_MARKET_SIGNING_KEY: ${{ secrets.TELOA_MARKET_SIGNING_KEY }}
+        run: node .github/scripts/sign-index.mjs --dir "$RUNNER_TEMP/market-index" --public-key .github/market-index-public-key.pem --source "$GITHUB_SHA"
+
+      - name: Name the artifact after the catalog version
+        id: name
+        run: echo "version=$(cat catalog-version.txt)" >> "$GITHUB_OUTPUT"
+
+      - name: Upload the signed index
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: market-index-${{ steps.name.outputs.version }}
+          path: ${{ runner.temp }}/market-index
+          if-no-files-found: error
+          retention-days: 90

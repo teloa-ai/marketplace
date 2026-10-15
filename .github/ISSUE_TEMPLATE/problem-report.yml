@@ -12,7 +12,7 @@ body:
     id: entry
     attributes:
       label: Entry ID and version · 条目 ID 与版本
-      placeholder: teloa.soc@1.0.1
+      placeholder: anthropic.review-pr@1.0.0
     validations:
       required: true
   - type: input
