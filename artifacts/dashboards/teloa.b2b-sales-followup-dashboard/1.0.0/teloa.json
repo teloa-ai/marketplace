@@ -1,0 +1,24 @@
+{
+  "format": "teloa.business-package/v4",
+  "id": "teloa-b2b-sales-followup-dashboard",
+  "title": "B2B 销售与客户跟进看板",
+  "version": "1.0.0",
+  "domain": "general",
+  "scope": "b2b-sales",
+  "description": "围绕客户账户、商机与双方承诺的跟进看板：逾期承诺、7 天内到期承诺、跟进已逾期与 30 天内预计成交的商机、风险客户与续约。金额按币种分列、不换算；阶段数量是当前分布，不当作转化漏斗或复购率。",
+  "resources": [
+    {
+      "id": "b2b-sales",
+      "kind": "business-configuration",
+      "title": "客户跟进总览",
+      "version": "1.0.0",
+      "required": true,
+      "source": {
+        "kind": "local",
+        "path": "configuration.json"
+      }
+    }
+  ],
+  "relations": [],
+  "entrypoints": []
+}

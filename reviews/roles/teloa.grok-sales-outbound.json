@@ -1,0 +1,35 @@
+{
+  "format": "teloa.official-template-review/v1",
+  "entryId": "teloa.grok-sales-outbound",
+  "version": "1.0.0",
+  "reviewedAt": "2026-10-14",
+  "reviewer": "Teloa",
+  "verdict": "approve",
+  "origin": {
+    "kind": "derived",
+    "repository": "cobusgreyling/grok-bot-templates",
+    "commit": "4f3f28b4e6578cd227ff7f4b78ec91d15fd091b5",
+    "path": "templates/sales/sales-outbound",
+    "license": "MIT",
+    "licenseUrl": "https://github.com/cobusgreyling/grok-bot-templates/blob/4f3f28b4e6578cd227ff7f4b78ec91d15fd091b5/LICENSE",
+    "fromSolution": "teloa.grok-sales-team@1.0.0 roles/sales-outbound.json",
+    "teamRole": "lead"
+  },
+  "originalFiles": {
+    "templates/sales/sales-outbound/PROFILE.md": "f9b7ba3a88c9481ddda0b994c7d56d662258ae82dbfa6bfaff71ff80a52df86a",
+    "templates/sales/sales-outbound/README.md": "00c01fe51c29b2a5e48c5d2e5a726e41cd58e93decc0ac793b64db71be30ed51",
+    "templates/sales/sales-outbound/SETUP.md": "1e5cb7c311e9d5cd31643f893d13954bb6ad112392be1c1e6d23a09d4d72e122",
+    "templates/sales/sales-outbound/examples/first-run.md": "886282c4375177311912b1a9852174a002063280909356219d683331bd43ff05",
+    "templates/sales/sales-outbound/template.yaml": "9976bf46a82bc123f92c0f5879bea88ee03d839b020abf80d733ddbd4e7ca9b8"
+  },
+  "checks": [
+    {
+      "method": "test",
+      "result": "pass",
+      "evidence": "node tools/validate.mjs --pr and node tools/sync-official-roles.mjs --check pass; see the batch result document."
+    }
+  ],
+  "notVerified": [
+    "Not run with a real model in a Teloa host"
+  ]
+}

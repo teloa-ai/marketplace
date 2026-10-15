@@ -1,0 +1,126 @@
+{
+  "format": "teloa.market-catalog-entry/v1",
+  "id": "cursor.slack-test-slack-app",
+  "kind": "skill",
+  "delivery": "upstream",
+  "version": "1.4.1",
+  "taxonomy": {
+    "functions": [
+      "communication"
+    ],
+    "industries": [
+      "general"
+    ]
+  },
+  "skill": {
+    "name": "test-slack-app",
+    "title": {
+      "zh-CN": "test-slack-app（Slack）",
+      "zh-TW": "test-slack-app（Slack）",
+      "en": "test-slack-app (Slack)"
+    },
+    "summary": {
+      "zh-CN": "开发者要测试、试用、冒烟测试或确认用 Slack CLI（或普通 Bolt）构建的 Slack 应用真的可用时使用：在开发者沙箱或 Free Team 中用 slack run 运行并实际触发其斜杠命令、快捷方式、事件与动作，绝不在有真实用户的工作区测试。",
+      "zh-TW": "開發者要測試、試用、冒煙測試或確認用 Slack CLI（或一般 Bolt）建構的 Slack 應用程式真的可用時使用：在開發者沙箱或 Free Team 中用 slack run 執行並實際觸發其斜線命令、快捷方式、事件與動作，絕不在有真實使用者的工作區測試。",
+      "en": "Use when a developer wants to test, try out, smoke-test, verify, or confirm that a Slack app built with the Slack CLI (or a plain Bolt app) actually works, by running it in a developer sandbox or a Free Team, never a workspace with real users, with `slack run` and exercising its real slash commands, shortcuts, events, actions, modals, App Home, and assistant surfaces. Also covers `slack doctor` and `slack manifest validate` health checks before hands-on testing."
+    }
+  },
+  "upstream": {
+    "kind": "github",
+    "repository": {
+      "host": "github.com",
+      "owner": "slackapi",
+      "repo": "slack-mcp-plugin"
+    },
+    "commit": "64c3f33fa13beb98c96d736390f80f3454a93a88",
+    "path": "skills/test-slack-app",
+    "files": [
+      {
+        "path": "SKILL.md",
+        "gitBlob": "8255c23fff9af7663f7862e604dbbbcb40df3ffa",
+        "sha256": "38d55b00f2ca19d5d3ffa2b014666017fc01fb3fe83bbff5ba93567beba7e14f",
+        "size": 9518
+      },
+      {
+        "path": "licenses/upstream/LICENSE",
+        "repositoryPath": "LICENSE",
+        "gitBlob": "f2e8442ad2415bb25ed3663958e558e21586e12a",
+        "sha256": "ccbd532eabd9c4a87884b19caa6738bd6541e047460a736aca3bf1ac4fd91300",
+        "size": 1091
+      }
+    ]
+  },
+  "origin": {
+    "marketplace": "cursor",
+    "installs": null,
+    "installsLabel": "未记录 / Not recorded",
+    "countedAt": "2026-10-14"
+  },
+  "alternatives": [],
+  "unsupportedComponents": [
+    {
+      "kind": "commands",
+      "count": 5
+    }
+  ],
+  "modifications": [],
+  "plugin": {
+    "marketplace": "cursor",
+    "id": "674",
+    "title": {
+      "zh-CN": "Slack",
+      "zh-TW": "Slack",
+      "en": "Slack"
+    },
+    "summary": {
+      "zh-CN": "面向使用者与开发者的 Slack 技能：配合 Slack 官方远程 MCP 搜索与发送消息，并指导用 Slack CLI、Bolt 与 Block Kit 开发、测试 Slack 应用。",
+      "zh-TW": "面向使用者與開發者的 Slack 技能：搭配 Slack 官方遠端 MCP 搜尋與傳送訊息，並指導用 Slack CLI、Bolt 與 Block Kit 開發、測試 Slack 應用程式。",
+      "en": "Slack AI tools for users and developers: interact with your workspace via the Slack MCP server and use skills to develop Slack apps."
+    },
+    "root": ".",
+    "manifest": {
+      "path": ".cursor-plugin/plugin.json",
+      "gitBlob": "7cc49837faaef94235fadd1873112e7dee334003",
+      "sha256": "d6f6cc9e74e03e122626d79a0d624804b211ab599171145a166f45725f1befc8"
+    },
+    "license": {
+      "spdx": "MIT"
+    },
+    "connectors": [
+      "teloa.mcp-slack"
+    ]
+  },
+  "license": {
+    "spdx": "MIT",
+    "files": [
+      "licenses/upstream/LICENSE"
+    ]
+  },
+  "compatibility": {
+    "status": "content-only",
+    "teloa": ">=0.2.0-alpha.8",
+    "dsh": "0.1.7-rc.1",
+    "conditions": [
+      {
+        "zh-CN": "来源为 Cursor Plugin Marketplace 公开插件 Slack（pluginId 674），按固定 commit 64c3f33fa13b 锁定；正文面向 Cursor 代理编写，提及的 Cursor 专有命令、变量或内置工具在 Teloa 中不可用时需自行替代",
+        "zh-TW": "來源為 Cursor Plugin Marketplace 公開外掛 Slack（pluginId 674），按固定 commit 64c3f33fa13b 鎖定；正文面向 Cursor 代理撰寫，提及的 Cursor 專有命令、變數或內建工具在 Teloa 中不可用時需自行替代",
+        "en": "Taken from the public Cursor Plugin Marketplace plugin Slack (pluginId 674), pinned at commit 64c3f33fa13b; the text targets the Cursor agent, so Cursor-specific commands, variables or built-in tools it mentions must be substituted when unavailable in Teloa"
+      },
+      {
+        "zh-CN": "许可为原始仓库 LICENSE（MIT），不在技能目录内；技能正文为英文原件，未翻译",
+        "zh-TW": "授權為原始儲存庫 LICENSE（MIT），不在技能目錄內；技能正文為英文原件，未翻譯",
+        "en": "The license is LICENSE (MIT) in the original repository, outside the skill directory; the skill text is the English original and is not translated"
+      }
+    ]
+  },
+  "requires": {
+    "tools": [],
+    "network": false,
+    "runtimes": []
+  },
+  "review": {
+    "status": "approved",
+    "reviewedAt": "2026-10-14",
+    "reviewer": "Teloa"
+  }
+}

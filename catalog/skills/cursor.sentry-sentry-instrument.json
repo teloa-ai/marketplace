@@ -1,0 +1,673 @@
+{
+  "format": "teloa.market-catalog-entry/v1",
+  "id": "cursor.sentry-sentry-instrument",
+  "kind": "skill",
+  "delivery": "upstream",
+  "version": "1.4.3",
+  "taxonomy": {
+    "functions": [
+      "cloud-ops"
+    ],
+    "industries": [
+      "general"
+    ]
+  },
+  "skill": {
+    "name": "sentry-instrument",
+    "title": {
+      "zh-CN": "sentry-instrument（Sentry）",
+      "zh-TW": "sentry-instrument（Sentry）",
+      "en": "sentry-instrument (Sentry)"
+    },
+    "summary": {
+      "zh-CN": "为应用接入 Sentry：识别平台，按需安装并初始化 SDK，接通任意信号——错误监控、追踪/性能、日志、指标、性能分析、会话回放、用户反馈、cron 签到、已部署应用的可用性监控，以及 AI/LLM 监控。",
+      "zh-TW": "為應用程式接入 Sentry：識別平台，按需安裝並初始化 SDK，接通任意訊號——錯誤監控、追蹤/效能、日誌、指標、效能分析、會話重播、使用者回饋、cron 簽到、已部署應用程式的可用性監控，以及 AI/LLM 監控。",
+      "en": "Instrument an application with Sentry — detect the platform, install and initialize the SDK if needed, and wire up any signal — error monitoring, tracing/performance, logging, metrics, profiling, session replay, user feedback, cron check-ins, uptime monitors for the deployed app, and AI/LLM monitoring (agent runs, token cost, and conversations for OpenAI, Anthropic, Vercel AI, LangChain, Google GenAI, Pydantic AI, Laravel AI, Eve, Flue, the Cloudflare Agents SDK, and Workers"
+    }
+  },
+  "upstream": {
+    "kind": "github",
+    "repository": {
+      "host": "github.com",
+      "owner": "getsentry",
+      "repo": "plugin-cursor"
+    },
+    "commit": "135513f89f293c587fbffb852afdf00a256df32a",
+    "path": "skills/sentry-instrument",
+    "files": [
+      {
+        "path": "SKILL.md",
+        "gitBlob": "b8d278a9077945e97a457415b55ad7472802642e",
+        "sha256": "299dd58a8bb07034d8739eb640514f72a811e3b6dc3b2f98f8feeb5f90287fdc",
+        "size": 12873
+      },
+      {
+        "path": "references/auth-token.md",
+        "gitBlob": "415ee2c04779fbf564c03a60a706b6bcc94f4e3b",
+        "sha256": "9c0e3f83ce3749942793274ef8f8b409b3a4942995d829eb48bcaf94a255f13d",
+        "size": 2984
+      },
+      {
+        "path": "references/concepts/ai-monitoring.md",
+        "gitBlob": "ee24b1f7be2cbf479047147dbfdba2477d447310",
+        "sha256": "b288557b80bbb040c5b07a757e72ecfcbb95b94746958b450e6c1f9e57e51212",
+        "size": 6736
+      },
+      {
+        "path": "references/concepts/choosing-a-signal.md",
+        "gitBlob": "1321ac6aed349ce976cc91dedfe55af08c32c8c3",
+        "sha256": "ae6f568afa88a1908ae00c3321df2b20aa3904c86284a1bffc1163a22682bb12",
+        "size": 5299
+      },
+      {
+        "path": "references/concepts/crons.md",
+        "gitBlob": "827bdfe149f6fe2332ed7d0e9e3c6c34255fbf47",
+        "sha256": "29d86dc843280f2f84601ccc6e8187f6d9c86daf9389e57744f838e8e3313db8",
+        "size": 3199
+      },
+      {
+        "path": "references/concepts/data-scrubbing.md",
+        "gitBlob": "e8a412eec1f5bed3e565f0ca793bfc4caf7a26ab",
+        "sha256": "04a6b929db78862843baa6dbf6f7fa19ab22841881b7345e02e5968db14ed349",
+        "size": 1981
+      },
+      {
+        "path": "references/concepts/errors.md",
+        "gitBlob": "0018b4e6d88f69a515fcaa9acbb4a468a297c2f7",
+        "sha256": "1a74885db07b19ce5f0bd173cfa431522eeb25234a49180c7d3fdfb450f2a7a1",
+        "size": 1994
+      },
+      {
+        "path": "references/concepts/logging.md",
+        "gitBlob": "0c136f751e378f64d567db244ddb8dbf5721a37e",
+        "sha256": "cbddb3adabdfedfddb39c0671e8e777e9c05e07457e6e7dc12ed82c6cafac67f",
+        "size": 4833
+      },
+      {
+        "path": "references/concepts/metrics.md",
+        "gitBlob": "55c87b3f334f1277ba24f70a3ee7ff46508028fd",
+        "sha256": "7888ad1a59edad7f63f0d39d8c4d13a9419daa86d1dc26eeb126d849872f8763",
+        "size": 2692
+      },
+      {
+        "path": "references/concepts/monitors.md",
+        "gitBlob": "d82a6b6214ca5de0a0bd064c95ed6d26e67a7819",
+        "sha256": "3c5d3a32d26307bb331dcfa539f801f82a0187d59f8cd45a26dc83d7d3800c04",
+        "size": 3909
+      },
+      {
+        "path": "references/concepts/profiling.md",
+        "gitBlob": "6ae53e18255fb929386778ec7e9112a73dadf2e0",
+        "sha256": "b6033b25779c4b536206e8dc4bd4d340d481b5f931fac6325e2fbdd4f353557e",
+        "size": 1901
+      },
+      {
+        "path": "references/concepts/reduce-volume.md",
+        "gitBlob": "05aef55e3e3756ad28429786e26687b7b59ecbe9",
+        "sha256": "239652b48cd9e2f69c4ecfd909f683684c3e372c4e76958b80749a3c7b84d079",
+        "size": 2408
+      },
+      {
+        "path": "references/concepts/releases.md",
+        "gitBlob": "6e5151c6d579b99e57b7a62fff2f0428cb9c07e5",
+        "sha256": "a0113c10d2ebff3ed012f269cc2a699315af5d58b03ebd316efa0953e1a3a55b",
+        "size": 2150
+      },
+      {
+        "path": "references/concepts/session-replay.md",
+        "gitBlob": "d29c57acc9832d0547c144168aff0ae3e34b755a",
+        "sha256": "2efede55f45e41b0e9a00efe276e2456653e7b13df2892da3a1e4a45f8ca7430",
+        "size": 1846
+      },
+      {
+        "path": "references/concepts/tracing.md",
+        "gitBlob": "becad0141fd3e9c207164c2234b4914482c41084",
+        "sha256": "310b7b5dc7f02044076ade0a0d2d28e6fe12a3b8c5b936d552eee2ce498be967",
+        "size": 3062
+      },
+      {
+        "path": "references/concepts/uptime.md",
+        "gitBlob": "2dfd4c843bff8101b317946a431801c673e9845c",
+        "sha256": "6c3a316477cce221819d524c890e97e24ac09c66102470e49e2704a68351396a",
+        "size": 5758
+      },
+      {
+        "path": "references/concepts/user-feedback.md",
+        "gitBlob": "1df4b259717d1106b0ff2666ee0233fbf1284cc3",
+        "sha256": "fb72ff8a609ac8d4ef9e20f9f1f1e502969e26d24802d072620e903390228a13",
+        "size": 1685
+      },
+      {
+        "path": "references/debug-artifacts/android.md",
+        "gitBlob": "611613437770b28053f26cb40fb714d0e5004c24",
+        "sha256": "765aec7213ca461f35c7632b2b1a46545ed2a83432d432b4557cfd0f6ad07370",
+        "size": 3115
+      },
+      {
+        "path": "references/debug-artifacts/apple.md",
+        "gitBlob": "80be4bc5272a96c6fb9ed4486cf53ae2a735715e",
+        "sha256": "a2353c51050e79773f612af98038acc23e82b2f0a577ef3a7aa27b592da01deb",
+        "size": 4316
+      },
+      {
+        "path": "references/debug-artifacts/dotnet.md",
+        "gitBlob": "2c4ad4dbe02ad60cf83ffbcaceb40c5616ab0de0",
+        "sha256": "493c475dbfaeb15c1a0d89e50debf4257533e7068ce268b95c1c1a0eb8b14e1d",
+        "size": 3350
+      },
+      {
+        "path": "references/debug-artifacts/flutter.md",
+        "gitBlob": "294ee3ee98d084c41117846dda1f65cb02640970",
+        "sha256": "070fb745ae92a71adf00720b0f2bb5422ece9883a1276280bc0866849096cf72",
+        "size": 2793
+      },
+      {
+        "path": "references/debug-artifacts/index.md",
+        "gitBlob": "4064aa54f16711cab319d31c843284d3b964c2d0",
+        "sha256": "368297c50ff18ceffa5237fcb04e0d388a3cc096f5485922d854300bf2776fad",
+        "size": 4509
+      },
+      {
+        "path": "references/debug-artifacts/javascript.md",
+        "gitBlob": "8f7d83cc3f068869dd9a014048f3bc485fb2f771",
+        "sha256": "02ddbd4aa845a929ccc34bd16d90ccd8b2a7dac72ce4d4482a90688d18ac5440",
+        "size": 4120
+      },
+      {
+        "path": "references/debug-artifacts/matching.md",
+        "gitBlob": "510f7bdd7ac3deedbe945eb2709b2579e9631de0",
+        "sha256": "674e80fbdbb620349cc3e58aacf4403d567aa424c4753da23aba706c5750abaa",
+        "size": 4006
+      },
+      {
+        "path": "references/debug-artifacts/react-native.md",
+        "gitBlob": "4d22fb52073b26467404bfb93226880bd00de732",
+        "sha256": "21fe64da4625ee595d4a2637bc56d1cc810a5909e9983e559cd4fbfcf25efee7",
+        "size": 3211
+      },
+      {
+        "path": "references/first-error-setup.md",
+        "gitBlob": "63cc55c16bc4df4708ba91e95c97fc3b3c789ab8",
+        "sha256": "00d531a4534444de0adcd346358ec10ce2ae14ca3d45d8305f9a1341c2d634b6",
+        "size": 8837
+      },
+      {
+        "path": "references/new-project.md",
+        "gitBlob": "0bf31427f2de8a7896c6b69bf7a3537e0630874e",
+        "sha256": "21d3fd411243edd7a66b45e83d118bfabb4ae43cb9a54de14c3741d43e400ca8",
+        "size": 2391
+      },
+      {
+        "path": "references/releases/ci-pipeline.md",
+        "gitBlob": "a14b119cf58f01488d8ea67aa0a4ba8feab80874",
+        "sha256": "28cc68660a14f7ed5bcabb242f5454f63f15470099b22cd5baee7eb90ce784b1",
+        "size": 9442
+      },
+      {
+        "path": "references/releases/index.md",
+        "gitBlob": "446ea08daf3ddf48bff359db405c2c1a1b1aa0ad",
+        "sha256": "7505b36e5bde992b9cadc4c02d1413357d1842c7e3a345e88e849c66eb027855",
+        "size": 5374
+      },
+      {
+        "path": "references/releases/suspect-commits.md",
+        "gitBlob": "359634f3eaa8e5d3c7c4828f8e24f28d95aec39d",
+        "sha256": "78655207ac327d1f800951ddd7d84003ec8dbbc9f0c831686348e282c780990f",
+        "size": 6510
+      },
+      {
+        "path": "references/releases/tagging.md",
+        "gitBlob": "8ec1b3e842e73f0a83412b1b56bc08eb87f00056",
+        "sha256": "d163ba830accbdb2c4198f147dbcdbd89fe36c631279dd41d1f2b7ba702da095",
+        "size": 7563
+      },
+      {
+        "path": "references/releases/troubleshooting.md",
+        "gitBlob": "59f5ccfea99e6fa6728d46cd71d12e414fe622c2",
+        "sha256": "4d6516f8c8dd690ab0cb36142697a780464354b15321b91de97fa6611d07f67f",
+        "size": 5843
+      },
+      {
+        "path": "references/sdk-docs.md",
+        "gitBlob": "1ac2fb491f9cedcd69900a170bae6bde8f1423db",
+        "sha256": "869c49b88b6e17d6c21c4b14c0b14d42fa320e5d7e0bcd411bd87f0e4076c3a8",
+        "size": 5147
+      },
+      {
+        "path": "references/search-query-language.md",
+        "gitBlob": "0a83311346358a45ae57a31f71af54f91ee6b484",
+        "sha256": "4b8fc77d1c636a2c3a1ac75c14643763f982e2def396a22b567fb9fb2cc3fd86",
+        "size": 10000
+      },
+      {
+        "path": "references/semantics/angular.md",
+        "gitBlob": "147c657a223688c592f87a14277ad3572f6fbc2a",
+        "sha256": "385a13cf06f7abb2190ba49ea6eb8fa9bc42b711651f6db6fb1705bf289b7117",
+        "size": 189
+      },
+      {
+        "path": "references/semantics/app.md",
+        "gitBlob": "48a03855519f1414287cc758591f69f8ff9bec36",
+        "sha256": "ddb4821fcefb1227e8f9273845c3ad192b5435dc791c7f957a751244700165dd",
+        "size": 3043
+      },
+      {
+        "path": "references/semantics/art.md",
+        "gitBlob": "1826b378baf1f5d96ac657e97c0b00eff819097c",
+        "sha256": "4db8b65bfe00003300504fe6f1cff7c7d77927e40f4921dc4fc943f6b54c0c79",
+        "size": 1580
+      },
+      {
+        "path": "references/semantics/aws.md",
+        "gitBlob": "c9b161a33134263768418ef65492895fb720b13e",
+        "sha256": "d6f26cf7524ab8350d5f6e7dc29831fd4861a90f09a7fbb5ddf3daa341adb118",
+        "size": 4159
+      },
+      {
+        "path": "references/semantics/browser.md",
+        "gitBlob": "e759a975eddbf3ed8642a7c0c736727683337bfe",
+        "sha256": "8c19010254c0fcf8df313c04134ba5a19819b0b4389469a4738d98d629d7deeb",
+        "size": 3808
+      },
+      {
+        "path": "references/semantics/cache.md",
+        "gitBlob": "d2fc3f30feaa3ad3651c207089e6287094972ee6",
+        "sha256": "ec8bbb78de9151f84784beec18171a9808ffa7ee948aadf95b0356b1c497204d",
+        "size": 574
+      },
+      {
+        "path": "references/semantics/client.md",
+        "gitBlob": "452f56e0dc8f3afb2a842594525cb168b59ed73b",
+        "sha256": "cdfca9602228f504fb544d6989add1df9d1f5ebbd11bc3b0ffa3879e7e82c95d",
+        "size": 337
+      },
+      {
+        "path": "references/semantics/cloud.md",
+        "gitBlob": "6a11f3167699413b92eb6c54366694793009347e",
+        "sha256": "f1cc1bd79b4518b3c56c6fbc1b5dab187e2eeb35119c6c28c3379bea6f17c62b",
+        "size": 668
+      },
+      {
+        "path": "references/semantics/cloudflare.md",
+        "gitBlob": "122035a7233aeaba3ee63a08d58efdf5a303f169",
+        "sha256": "a6264273e88649b0e39073d4c19e56d0ca7077b634c1506cd93c8f7cd9c27cc1",
+        "size": 1920
+      },
+      {
+        "path": "references/semantics/code.md",
+        "gitBlob": "6b66daa3348c0effd43743b9ae59b00b372adbd1",
+        "sha256": "f644ff8e16637c7a3293e7f2554397f62f0ff9dc883df754b9a72505a83a7f15",
+        "size": 908
+      },
+      {
+        "path": "references/semantics/culture.md",
+        "gitBlob": "e3a18d58956a08ac67e5aa85dd5eb5ae8396dd34",
+        "sha256": "6931e844fc96e64c294bd08a04908adc96f118888b831ab1e7cf9211277dca71",
+        "size": 532
+      },
+      {
+        "path": "references/semantics/db.md",
+        "gitBlob": "0515f968c2eae700f2c6fd69618956e54a18533a",
+        "sha256": "1e7db9835f2487058240667256e38f299e8b86391b1fcfcddb5654346e1803e7",
+        "size": 2328
+      },
+      {
+        "path": "references/semantics/device.md",
+        "gitBlob": "f795e50e437d7417f37c2441e129974b61c925d6",
+        "sha256": "fdda4d88878fa547fa72a798847c4a683404a892884cc40bcf783efa17d244e5",
+        "size": 3435
+      },
+      {
+        "path": "references/semantics/error.md",
+        "gitBlob": "7f578caf11fc2232811426abbe252c4a86cb38a2",
+        "sha256": "7c86133a7585ecde5399898d3ede6d391586bf67d0f28980f4cd300df710b020",
+        "size": 201
+      },
+      {
+        "path": "references/semantics/event.md",
+        "gitBlob": "63dce26391a433e02afec2feba3e5906b2dac3b9",
+        "sha256": "76245e98055a9330b2143d24409397404b740f7c0798b13334154ca84bb2ea99",
+        "size": 290
+      },
+      {
+        "path": "references/semantics/exception.md",
+        "gitBlob": "d24fcfd6d75038ffb8068302d34a5e86ad6cefc9",
+        "sha256": "fe690e957c7c3bf60653de5041e183e70a7d255b3a7c5ce518c05b57634ba542",
+        "size": 772
+      },
+      {
+        "path": "references/semantics/faas.md",
+        "gitBlob": "913feb0fce793e88870ab178e3966c91f49c2be6",
+        "sha256": "2a2cf05cbc55b2cdc70243d26d18b96a63420af097452400e705b88e4531d2e1",
+        "size": 1413
+      },
+      {
+        "path": "references/semantics/file.md",
+        "gitBlob": "cefaf0b88e3b549afbecd4e4d2f79f94216716d8",
+        "sha256": "34471103c3df83001b03cd4955084949c02b9b2c0ffae705802fdc97afed5d49",
+        "size": 200
+      },
+      {
+        "path": "references/semantics/flag.md",
+        "gitBlob": "aa5e8cd765b21a9a0449e60dc8c9e1d4d4b08192",
+        "sha256": "4741eb6a2839556ebf9945dbdf1029711e863a76f8afdb55567f489ff09fb992",
+        "size": 312
+      },
+      {
+        "path": "references/semantics/gcp.md",
+        "gitBlob": "d5903629f73dcd4cf30ebf4647095ba32712c096",
+        "sha256": "7c3cb9d32106ec9887f2104dc7e2c9432b8a4ac04f2b9e3ca18404e016689c43",
+        "size": 1153
+      },
+      {
+        "path": "references/semantics/gen_ai.md",
+        "gitBlob": "939a030325dda9a80b135ed5c7aa680a393cc295",
+        "sha256": "d58bacc8c35d4ebfc52c6412a9d2ff9b1a84ec82047fb235fe5759cbc9565b35",
+        "size": 7035
+      },
+      {
+        "path": "references/semantics/general.md",
+        "gitBlob": "a06186a7c8c412c6387df9e48d4f480a2268991a",
+        "sha256": "3b801c1db8dbb75b9796a08b2e7a89f0a35516bb7d51662a95d4c607e0b66da3",
+        "size": 526
+      },
+      {
+        "path": "references/semantics/graphql.md",
+        "gitBlob": "4c26275f434c223876cef2fd7e9043d02412234d",
+        "sha256": "b896aada38147dd515b99d164196b33a6699fb9daaf84d4c4f746f41b72ec3f1",
+        "size": 362
+      },
+      {
+        "path": "references/semantics/grpc.md",
+        "gitBlob": "adaaaa77a9abf40ed6ac1677e3ad5d59eec9f170",
+        "sha256": "1943ba7e10e36fb5f5acef89d7f43d2372605a92ed9fe699747ef0ffeb668049",
+        "size": 3509
+      },
+      {
+        "path": "references/semantics/http.md",
+        "gitBlob": "6968dedd7bda729faadf7a647f6fa75a50bea65d",
+        "sha256": "601d5e0fad8c6bd57e74f134d301c08e38ce02dffc707eab306cc5966846dd94",
+        "size": 5138
+      },
+      {
+        "path": "references/semantics/jsonrpc.md",
+        "gitBlob": "b1de9aae42d76c0d523667486bd513dbeb433c04",
+        "sha256": "acf87cf2cce15688dbdee4171413130b0416eb95cd7f5eb1be782898df0df88e",
+        "size": 301
+      },
+      {
+        "path": "references/semantics/jvm.md",
+        "gitBlob": "deb36397153e531568a0cd43bc11ef4dabae76d7",
+        "sha256": "75fa1284d29c4e48c34606450928418eb1b554425e25c8b4ba895c4e44f22d52",
+        "size": 487
+      },
+      {
+        "path": "references/semantics/koa.md",
+        "gitBlob": "25bb7ae4c6c32e72ce5dac5fe8f0f31245dfe632",
+        "sha256": "5eeae07fadb0b4bdef313524eb94157562412d11f6db7b5ba2998f667ca3f106",
+        "size": 191
+      },
+      {
+        "path": "references/semantics/logger.md",
+        "gitBlob": "c27eea3efb7ecbde59144e398f1e70024d829934",
+        "sha256": "a640af6138989caf79f833cb604bd2934dd6239f7c4f042453d66f519a9add8c",
+        "size": 190
+      },
+      {
+        "path": "references/semantics/mcp.md",
+        "gitBlob": "f2e2569a2e7133701c89c9a81f61f5baf351f0ea",
+        "sha256": "db35deeab993cd77cb4ed11be5e9da68e968bdfc088e40b965f6198779e3da2c",
+        "size": 3064
+      },
+      {
+        "path": "references/semantics/mdc.md",
+        "gitBlob": "6449bf1c68eb7187aa4dda1a4e20996d643f62e8",
+        "sha256": "26e3685241251e84ead7a86047b4870607bcf925101d57f228ea4135c77e783e",
+        "size": 449
+      },
+      {
+        "path": "references/semantics/messaging.md",
+        "gitBlob": "f8ab3ba3fd2a47a3063ff3130efd5ddb7ab2d39a",
+        "sha256": "ecac600bfb930bc3f5b6803057425931553ad8ee6b090dea72c41bd7b1eec71e",
+        "size": 2240
+      },
+      {
+        "path": "references/semantics/middleware.md",
+        "gitBlob": "40711139879b5a060c3043d71c43b765a91efab5",
+        "sha256": "d837e8ba42c93e4ff6332f2bb27dc15120fa555a625f2b0d6c70023a7dc7fad2",
+        "size": 179
+      },
+      {
+        "path": "references/semantics/navigation.md",
+        "gitBlob": "6fb4bc7c4c1e50770070b006f7d82414d087cf00",
+        "sha256": "b2da442267f1b75fbf840768f082d3ba6907b14bf95374eea4e89ffe738c14d0",
+        "size": 571
+      },
+      {
+        "path": "references/semantics/nel.md",
+        "gitBlob": "65f2a0e7be8b64074266156979932532727b7e1c",
+        "sha256": "6c44c0b58852886975469aa7e637829b23811192eef0e72ab5caa19c4d94e5ce",
+        "size": 742
+      },
+      {
+        "path": "references/semantics/network.md",
+        "gitBlob": "9a6dd06706cf793a6fb4a42609993dcda9ea351d",
+        "sha256": "5b5cfa7052dbd2f90c47f1a0c5f575b2b85ed503203f08a9d26e3740419c1210",
+        "size": 1309
+      },
+      {
+        "path": "references/semantics/os.md",
+        "gitBlob": "899a9c0a7e2741d8a6368076d8ca5ba0e90549ed",
+        "sha256": "a1563db7d0346625daf2d9933b4a2e31aa1a7d55adc658d1a22adbd2d0350eae",
+        "size": 1055
+      },
+      {
+        "path": "references/semantics/otel.md",
+        "gitBlob": "b86b72383bea7984a4d664ddb0e47b7ab239c79b",
+        "sha256": "4e34159586c04a4784444c269dcb59efeffc7c87ffc23be1375620edd408b8d4",
+        "size": 596
+      },
+      {
+        "path": "references/semantics/params.md",
+        "gitBlob": "926c6ca30ce80fa1c0d51071fe043561194a3bed",
+        "sha256": "2616a047700edd2da754dbd3ab7e261d5c543172eee63bd3115825cfcf111ef4",
+        "size": 247
+      },
+      {
+        "path": "references/semantics/process.md",
+        "gitBlob": "acef046a35c67a90d683c5ee2c377c6e83ad03bc",
+        "sha256": "635dd10c74e82e1b951588f4a078fdd512a60840f849a1e3135537c23d07462d",
+        "size": 1153
+      },
+      {
+        "path": "references/semantics/react.md",
+        "gitBlob": "dcc19d3dd51534a9ef9fb50ccb4efdb8968e2ec1",
+        "sha256": "972425476cf884f5ac2cb05e03326c55402c8e7edfdbdf553d05d784f1157013",
+        "size": 174
+      },
+      {
+        "path": "references/semantics/remix.md",
+        "gitBlob": "25d39cf2901068b06815b9244deebdaa5b438e5e",
+        "sha256": "635761576b2b7851c42dca3a11e6c56669881211571e24df2a1f78c0f4bc229b",
+        "size": 242
+      },
+      {
+        "path": "references/semantics/resource.md",
+        "gitBlob": "f87a176f34af12f32b398357fb872d530a164660",
+        "sha256": "e6cf4503a6c1abc75dfdfd5fdf87293089a3de0edd4108df4d48622414e56c1d",
+        "size": 223
+      },
+      {
+        "path": "references/semantics/rpc.md",
+        "gitBlob": "27e8530ccdb25ca0529139c5d2950ef5ca0b183d",
+        "sha256": "97fbed53257f8d5aa1bf06889848ee77c1ab5eca1131799c78242bb92a03e2db",
+        "size": 559
+      },
+      {
+        "path": "references/semantics/score.md",
+        "gitBlob": "b2d02186b269926ebc95b41356ca66305226c383",
+        "sha256": "dc712441b65a8413ca6d829678ab80aaa759ec8c5cc6886eea95f79f06e9a311",
+        "size": 623
+      },
+      {
+        "path": "references/semantics/sentry.md",
+        "gitBlob": "e80a16e6937c47b40c4f051b052f5d55d1277138",
+        "sha256": "1cc2abe0e3b6f7d5f2c502b0ea5dbbe077fa1e9ac05f9e5a9e550036a596c351",
+        "size": 8840
+      },
+      {
+        "path": "references/semantics/server.md",
+        "gitBlob": "619791d88e38da606a1bfc6c71973c2197ed42fc",
+        "sha256": "54feb71a2a906ed9c3885946cc29a9dc08a02431015986d44f671c28242a28c6",
+        "size": 325
+      },
+      {
+        "path": "references/semantics/service.md",
+        "gitBlob": "198967ffae1e09ca2c51fcb7977d68bbfd4f63b1",
+        "sha256": "f0b74b08b071489b75e8f3fcc0d3afbcb964f6d5842ef30f12506c3f9fe480a6",
+        "size": 330
+      },
+      {
+        "path": "references/semantics/session.md",
+        "gitBlob": "c9b079a2a57df4fa928fcc6183b455c4e1bf3f08",
+        "sha256": "43c5c49a5481251d0b7111b8d09ba44cd0b4abf795ac7268c1cb4b3c03d19982",
+        "size": 224
+      },
+      {
+        "path": "references/semantics/state.md",
+        "gitBlob": "5d7eb99d8b0c9c63ef43c9c38e68d7a86c477ce1",
+        "sha256": "7c96c5de693d21ef5a98d8cf8b07d241eb44ab3336bbfde391b3485f08bd96ad",
+        "size": 172
+      },
+      {
+        "path": "references/semantics/thread.md",
+        "gitBlob": "824fa9f463b7c1deeb67b81c799f1ba88296dac6",
+        "sha256": "11911f341c48cd42351ae175fdbfc8635b8a5c1f72ccc83ad36a1611e6f54523",
+        "size": 211
+      },
+      {
+        "path": "references/semantics/timber.md",
+        "gitBlob": "b6a59484609661db374fb703269a36d6ec88e1c2",
+        "sha256": "ec2982b98160b35891484e1af4e28c304e708d2628837081c05c8ef0251f71af",
+        "size": 186
+      },
+      {
+        "path": "references/semantics/trpc.md",
+        "gitBlob": "e74fceb447b4ecf242fd52748534f0164e53abc0",
+        "sha256": "5c881ffa45def2503b6f238b73808a5f276a449fdeb7b1ab06b20296914147a2",
+        "size": 252
+      },
+      {
+        "path": "references/semantics/ui.md",
+        "gitBlob": "36bef64ee8b7d15c08392f1478418826babc90e9",
+        "sha256": "3c78b0d1a55cf2e9af8620023d38aaa31a27f65961f3d43cab202934cc9e5a65",
+        "size": 1263
+      },
+      {
+        "path": "references/semantics/url.md",
+        "gitBlob": "06f5bab3d65b44a142e37575f96b4cf6818a044e",
+        "sha256": "3f717aa0e793f4c235ce653064cac2b307308b891196f9cd89681d626667b712",
+        "size": 1095
+      },
+      {
+        "path": "references/semantics/user.md",
+        "gitBlob": "59871861a614146a4d9e30b7f0913f81205a5e43",
+        "sha256": "d787fdc98ceba254ff23ee1926b2dac8d49a83e9f56eec28da8cb47dc91a6317",
+        "size": 886
+      },
+      {
+        "path": "references/semantics/user_agent.md",
+        "gitBlob": "39b72f1c297e7b55f446fa1f47b3a2fa9b34030c",
+        "sha256": "d21d4e147f069cb2e577bfb546bcbc88bcd225793323b6978fa07b5924dcb9a7",
+        "size": 212
+      },
+      {
+        "path": "references/semantics/vercel.md",
+        "gitBlob": "1bd96e8801f73f252c16de9da03525d5f31205d0",
+        "sha256": "77ea1d2d41b645524c22a8fc14ac687e899f8f073748157c33c970a4abca0a96",
+        "size": 2935
+      },
+      {
+        "path": "references/setup-verification.md",
+        "gitBlob": "be20a52a3ceedf14769c7932267ae87fd89bf291",
+        "sha256": "1eabba5b0c28afe5fb806bf736e4d7f7c851d55fdb0bd9126434e4b95c8373e4",
+        "size": 5740
+      },
+      {
+        "path": "licenses/upstream/LICENSE",
+        "repositoryPath": "LICENSE",
+        "gitBlob": "961fdcdacd42d8e703cbae5b93fbc0ed630ffd64",
+        "sha256": "d4a59a34056a3a4943d7b5fff9c4125432692069c811fcbabd5385d890ccfcbd",
+        "size": 1100
+      }
+    ]
+  },
+  "origin": {
+    "marketplace": "cursor",
+    "installs": null,
+    "installsLabel": "未记录 / Not recorded",
+    "countedAt": "2026-10-14"
+  },
+  "alternatives": [],
+  "unsupportedComponents": [],
+  "modifications": [],
+  "plugin": {
+    "marketplace": "cursor",
+    "id": "579",
+    "title": {
+      "zh-CN": "Sentry",
+      "zh-TW": "Sentry",
+      "en": "Sentry"
+    },
+    "summary": {
+      "zh-CN": "Sentry 排错与接入技能：调试并修复 Issue、让堆栈可读、接入 SDK 与各类信号、配置发布追踪、告警与 OpenTelemetry 导出；配合 Sentry 官方远程 MCP 使用。",
+      "zh-TW": "Sentry 除錯與接入技能：除錯並修復 Issue、讓堆疊可讀、接入 SDK 與各類訊號、設定發佈追蹤、告警與 OpenTelemetry 匯出；搭配 Sentry 官方遠端 MCP 使用。",
+      "en": "Sentry Plugin for Cursor to help with debugging including MCP and skill capabilities."
+    },
+    "root": ".",
+    "manifest": {
+      "path": ".cursor-plugin/plugin.json",
+      "gitBlob": "43e67882582375f8e4a466c4cc4b90a09d7aa0fa",
+      "sha256": "ced89075d517ab8dae686c297dafb58dde19ea67a776a4c7fc72f0ca7ebbb41d"
+    },
+    "license": {
+      "spdx": "MIT"
+    },
+    "connectors": [
+      "teloa.mcp-sentry"
+    ]
+  },
+  "license": {
+    "spdx": "MIT",
+    "files": [
+      "licenses/upstream/LICENSE"
+    ]
+  },
+  "compatibility": {
+    "status": "content-only",
+    "teloa": ">=0.2.0-alpha.8",
+    "dsh": "0.1.7-rc.1",
+    "conditions": [
+      {
+        "zh-CN": "来源为 Cursor Plugin Marketplace 公开插件 Sentry（pluginId 579），按固定 commit 135513f89f29 锁定；正文面向 Cursor 代理编写，提及的 Cursor 专有命令、变量或内置工具在 Teloa 中不可用时需自行替代",
+        "zh-TW": "來源為 Cursor Plugin Marketplace 公開外掛 Sentry（pluginId 579），按固定 commit 135513f89f29 鎖定；正文面向 Cursor 代理撰寫，提及的 Cursor 專有命令、變數或內建工具在 Teloa 中不可用時需自行替代",
+        "en": "Taken from the public Cursor Plugin Marketplace plugin Sentry (pluginId 579), pinned at commit 135513f89f29; the text targets the Cursor agent, so Cursor-specific commands, variables or built-in tools it mentions must be substituted when unavailable in Teloa"
+      },
+      {
+        "zh-CN": "许可为原始仓库 LICENSE（MIT），不在技能目录内；技能正文为英文原件，未翻译",
+        "zh-TW": "授權為原始儲存庫 LICENSE（MIT），不在技能目錄內；技能正文為英文原件，未翻譯",
+        "en": "The license is LICENSE (MIT) in the original repository, outside the skill directory; the skill text is the English original and is not translated"
+      }
+    ]
+  },
+  "requires": {
+    "tools": [],
+    "network": false,
+    "runtimes": []
+  },
+  "review": {
+    "status": "approved",
+    "reviewedAt": "2026-10-14",
+    "reviewer": "Teloa"
+  }
+}

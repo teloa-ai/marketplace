@@ -1,0 +1,2015 @@
+{
+  "format": "teloa.business-dashboard-resource/v1",
+  "id": "b2b-sales",
+  "version": "1.0.0",
+  "configuration": {
+    "format": "teloa.business-configuration/v2",
+    "scope": "b2b-sales",
+    "title": "B2B 销售与客户跟进",
+    "sources": [
+      {
+        "sourceId": "records",
+        "kind": "local-records"
+      }
+    ],
+    "definitions": [
+      {
+        "kind": "object-type",
+        "definition": {
+          "format": "teloa.business-object-type/v2",
+          "id": "account",
+          "version": "1.0.0",
+          "domain": "b2b-sales",
+          "title": "客户账户",
+          "localized": {
+            "title": {
+              "original": "客户账户",
+              "defaultLocale": "zh-CN",
+              "locales": {
+                "zh-CN": "客户账户",
+                "zh-TW": "客戶帳戶",
+                "zh-HK": {
+                  "fallback": "zh-TW"
+                },
+                "en": "Account"
+              }
+            },
+            "unit": {
+              "original": "家",
+              "defaultLocale": "zh-CN",
+              "locales": {
+                "zh-CN": "家",
+                "zh-TW": "家",
+                "zh-HK": {
+                  "fallback": "zh-TW"
+                },
+                "en": "accounts"
+              }
+            },
+            "lead": {
+              "original": "一家正在接触或已合作的企业客户。健康度由负责人按事实判断填写，看板不自动打分；续约日期与下一步决定跟进先后。",
+              "defaultLocale": "zh-CN",
+              "locales": {
+                "zh-CN": "一家正在接触或已合作的企业客户。健康度由负责人按事实判断填写，看板不自动打分；续约日期与下一步决定跟进先后。",
+                "zh-TW": "一家正在接觸或已合作的企業客戶。健康度由負責人依事實判斷填寫，看板不自動評分；續約日期與下一步決定跟進先後。",
+                "zh-HK": {
+                  "fallback": "zh-TW"
+                },
+                "en": "A business you are engaging or already serve. Health is set by the owner from evidence, never auto-scored; renewal date and next step decide follow-up order."
+              }
+            }
+          },
+          "unit": "家",
+          "lead": "一家正在接触或已合作的企业客户。健康度由负责人按事实判断填写，看板不自动打分；续约日期与下一步决定跟进先后。",
+          "sourceId": "records",
+          "fields": [
+            {
+              "name": "relationship",
+              "label": "客户关系",
+              "localized": {
+                "label": {
+                  "original": "客户关系",
+                  "defaultLocale": "zh-CN",
+                  "locales": {
+                    "zh-CN": "客户关系",
+                    "zh-TW": "客戶關係",
+                    "zh-HK": {
+                      "fallback": "zh-TW"
+                    },
+                    "en": "Relationship"
+                  }
+                },
+                "values": [
+                  {
+                    "original": "潜在",
+                    "defaultLocale": "zh-CN",
+                    "locales": {
+                      "zh-CN": "潜在",
+                      "zh-TW": "潛在",
+                      "zh-HK": {
+                        "fallback": "zh-TW"
+                      },
+                      "en": "Prospect"
+                    }
+                  },
+                  {
+                    "original": "商机中",
+                    "defaultLocale": "zh-CN",
+                    "locales": {
+                      "zh-CN": "商机中",
+                      "zh-TW": "商機中",
+                      "zh-HK": {
+                        "fallback": "zh-TW"
+                      },
+                      "en": "In opportunity"
+                    }
+                  },
+                  {
+                    "original": "已签约",
+                    "defaultLocale": "zh-CN",
+                    "locales": {
+                      "zh-CN": "已签约",
+                      "zh-TW": "已簽約",
+                      "zh-HK": {
+                        "fallback": "zh-TW"
+                      },
+                      "en": "Customer"
+                    }
+                  },
+                  {
+                    "original": "已流失",
+                    "defaultLocale": "zh-CN",
+                    "locales": {
+                      "zh-CN": "已流失",
+                      "zh-TW": "已流失",
+                      "zh-HK": {
+                        "fallback": "zh-TW"
+                      },
+                      "en": "Churned"
+                    }
+                  }
+                ]
+              },
+              "type": "enum",
+              "required": true,
+              "from": "客户关系",
+              "values": [
+                "潜在",
+                "商机中",
+                "已签约",
+                "已流失"
+              ]
+            },
+            {
+              "name": "owner",
+              "label": "负责人",
+              "localized": {
+                "label": {
+                  "original": "负责人",
+                  "defaultLocale": "zh-CN",
+                  "locales": {
+                    "zh-CN": "负责人",
+                    "zh-TW": "負責人",
+                    "zh-HK": {
+                      "fallback": "zh-TW"
+                    },
+                    "en": "Owner"
+                  }
+                }
+              },
+              "type": "text",
+              "required": true,
+              "from": "负责人"
+            },
+            {
+              "name": "health",
+              "label": "健康度",
+              "localized": {
+                "label": {
+                  "original": "健康度",
+                  "defaultLocale": "zh-CN",
+                  "locales": {
+                    "zh-CN": "健康度",
+                    "zh-TW": "健康度",
+                    "zh-HK": {
+                      "fallback": "zh-TW"
+                    },
+                    "en": "Health"
+                  }
+                },
+                "values": [
+                  {
+                    "original": "良好",
+                    "defaultLocale": "zh-CN",
+                    "locales": {
+                      "zh-CN": "良好",
+                      "zh-TW": "良好",
+                      "zh-HK": {
+                        "fallback": "zh-TW"
+                      },
+                      "en": "Healthy"
+                    }
+                  },
+                  {
+                    "original": "关注",
+                    "defaultLocale": "zh-CN",
+                    "locales": {
+                      "zh-CN": "关注",
+                      "zh-TW": "關注",
+                      "zh-HK": {
+                        "fallback": "zh-TW"
+                      },
+                      "en": "Watch"
+                    }
+                  },
+                  {
+                    "original": "风险",
+                    "defaultLocale": "zh-CN",
+                    "locales": {
+                      "zh-CN": "风险",
+                      "zh-TW": "風險",
+                      "zh-HK": {
+                        "fallback": "zh-TW"
+                      },
+                      "en": "At risk"
+                    }
+                  },
+                  {
+                    "original": "未评估",
+                    "defaultLocale": "zh-CN",
+                    "locales": {
+                      "zh-CN": "未评估",
+                      "zh-TW": "未評估",
+                      "zh-HK": {
+                        "fallback": "zh-TW"
+                      },
+                      "en": "Not assessed"
+                    }
+                  }
+                ]
+              },
+              "type": "enum",
+              "required": false,
+              "from": "健康度",
+              "values": [
+                "良好",
+                "关注",
+                "风险",
+                "未评估"
+              ]
+            },
+            {
+              "name": "renewal-at",
+              "label": "续约日期",
+              "localized": {
+                "label": {
+                  "original": "续约日期",
+                  "defaultLocale": "zh-CN",
+                  "locales": {
+                    "zh-CN": "续约日期",
+                    "zh-TW": "續約日期",
+                    "zh-HK": {
+                      "fallback": "zh-TW"
+                    },
+                    "en": "Renewal date"
+                  }
+                }
+              },
+              "type": "datetime",
+              "required": false,
+              "from": "续约日期"
+            },
+            {
+              "name": "next-step",
+              "label": "下一步",
+              "localized": {
+                "label": {
+                  "original": "下一步",
+                  "defaultLocale": "zh-CN",
+                  "locales": {
+                    "zh-CN": "下一步",
+                    "zh-TW": "下一步",
+                    "zh-HK": {
+                      "fallback": "zh-TW"
+                    },
+                    "en": "Next step"
+                  }
+                }
+              },
+              "type": "text",
+              "required": false,
+              "from": "下一步"
+            },
+            {
+              "name": "industry",
+              "label": "行业",
+              "localized": {
+                "label": {
+                  "original": "行业",
+                  "defaultLocale": "zh-CN",
+                  "locales": {
+                    "zh-CN": "行业",
+                    "zh-TW": "產業",
+                    "zh-HK": {
+                      "fallback": "zh-TW"
+                    },
+                    "en": "Industry"
+                  }
+                }
+              },
+              "type": "text",
+              "required": false,
+              "from": "行业"
+            }
+          ]
+        }
+      },
+      {
+        "kind": "object-type",
+        "definition": {
+          "format": "teloa.business-object-type/v2",
+          "id": "opportunity",
+          "version": "1.0.0",
+          "domain": "b2b-sales",
+          "title": "商机",
+          "localized": {
+            "title": {
+              "original": "商机",
+              "defaultLocale": "zh-CN",
+              "locales": {
+                "zh-CN": "商机",
+                "zh-TW": "商機",
+                "zh-HK": {
+                  "fallback": "zh-TW"
+                },
+                "en": "Opportunity"
+              }
+            },
+            "unit": {
+              "original": "个",
+              "defaultLocale": "zh-CN",
+              "locales": {
+                "zh-CN": "个",
+                "zh-TW": "個",
+                "zh-HK": {
+                  "fallback": "zh-TW"
+                },
+                "en": "deals"
+              }
+            },
+            "lead": {
+              "original": "一个具体的成交机会。金额必须带币种，不同币种分别合计、不做换算；各阶段数量只反映当前分布，不是转化漏斗。",
+              "defaultLocale": "zh-CN",
+              "locales": {
+                "zh-CN": "一个具体的成交机会。金额必须带币种，不同币种分别合计、不做换算；各阶段数量只反映当前分布，不是转化漏斗。",
+                "zh-TW": "一個具體的成交機會。金額必須帶幣別，不同幣別分別合計、不做換算；各階段數量只反映目前分布，不是轉換漏斗。",
+                "zh-HK": {
+                  "fallback": "zh-TW"
+                },
+                "en": "A specific deal. Amounts always carry a currency and are totalled per currency without conversion; stage counts show the current distribution, not a conversion funnel."
+              }
+            }
+          },
+          "unit": "个",
+          "lead": "一个具体的成交机会。金额必须带币种，不同币种分别合计、不做换算；各阶段数量只反映当前分布，不是转化漏斗。",
+          "sourceId": "records",
+          "fields": [
+            {
+              "name": "account",
+              "label": "客户",
+              "localized": {
+                "label": {
+                  "original": "客户",
+                  "defaultLocale": "zh-CN",
+                  "locales": {
+                    "zh-CN": "客户",
+                    "zh-TW": "客戶",
+                    "zh-HK": {
+                      "fallback": "zh-TW"
+                    },
+                    "en": "Account"
+                  }
+                }
+              },
+              "type": "reference",
+              "required": true,
+              "from": "客户",
+              "referenceType": "account"
+            },
+            {
+              "name": "stage",
+              "label": "阶段",
+              "localized": {
+                "label": {
+                  "original": "阶段",
+                  "defaultLocale": "zh-CN",
+                  "locales": {
+                    "zh-CN": "阶段",
+                    "zh-TW": "階段",
+                    "zh-HK": {
+                      "fallback": "zh-TW"
+                    },
+                    "en": "Stage"
+                  }
+                },
+                "values": [
+                  {
+                    "original": "线索确认",
+                    "defaultLocale": "zh-CN",
+                    "locales": {
+                      "zh-CN": "线索确认",
+                      "zh-TW": "線索確認",
+                      "zh-HK": {
+                        "fallback": "zh-TW"
+                      },
+                      "en": "Qualifying"
+                    }
+                  },
+                  {
+                    "original": "需求确认",
+                    "defaultLocale": "zh-CN",
+                    "locales": {
+                      "zh-CN": "需求确认",
+                      "zh-TW": "需求確認",
+                      "zh-HK": {
+                        "fallback": "zh-TW"
+                      },
+                      "en": "Discovery"
+                    }
+                  },
+                  {
+                    "original": "方案报价",
+                    "defaultLocale": "zh-CN",
+                    "locales": {
+                      "zh-CN": "方案报价",
+                      "zh-TW": "方案報價",
+                      "zh-HK": {
+                        "fallback": "zh-TW"
+                      },
+                      "en": "Proposal"
+                    }
+                  },
+                  {
+                    "original": "商务谈判",
+                    "defaultLocale": "zh-CN",
+                    "locales": {
+                      "zh-CN": "商务谈判",
+                      "zh-TW": "商務談判",
+                      "zh-HK": {
+                        "fallback": "zh-TW"
+                      },
+                      "en": "Negotiation"
+                    }
+                  },
+                  {
+                    "original": "赢单",
+                    "defaultLocale": "zh-CN",
+                    "locales": {
+                      "zh-CN": "赢单",
+                      "zh-TW": "贏單",
+                      "zh-HK": {
+                        "fallback": "zh-TW"
+                      },
+                      "en": "Won"
+                    }
+                  },
+                  {
+                    "original": "输单",
+                    "defaultLocale": "zh-CN",
+                    "locales": {
+                      "zh-CN": "输单",
+                      "zh-TW": "輸單",
+                      "zh-HK": {
+                        "fallback": "zh-TW"
+                      },
+                      "en": "Lost"
+                    }
+                  },
+                  {
+                    "original": "暂停",
+                    "defaultLocale": "zh-CN",
+                    "locales": {
+                      "zh-CN": "暂停",
+                      "zh-TW": "暫停",
+                      "zh-HK": {
+                        "fallback": "zh-TW"
+                      },
+                      "en": "On hold"
+                    }
+                  }
+                ]
+              },
+              "type": "enum",
+              "required": true,
+              "from": "阶段",
+              "values": [
+                "线索确认",
+                "需求确认",
+                "方案报价",
+                "商务谈判",
+                "赢单",
+                "输单",
+                "暂停"
+              ]
+            },
+            {
+              "name": "owner",
+              "label": "负责人",
+              "localized": {
+                "label": {
+                  "original": "负责人",
+                  "defaultLocale": "zh-CN",
+                  "locales": {
+                    "zh-CN": "负责人",
+                    "zh-TW": "負責人",
+                    "zh-HK": {
+                      "fallback": "zh-TW"
+                    },
+                    "en": "Owner"
+                  }
+                }
+              },
+              "type": "text",
+              "required": true,
+              "from": "负责人"
+            },
+            {
+              "format": "teloa.business-rich-field/v2",
+              "name": "amount",
+              "label": "预计金额",
+              "from": "预计金额",
+              "required": false,
+              "type": "money",
+              "currencies": [
+                "CNY",
+                "USD",
+                "EUR"
+              ]
+            },
+            {
+              "name": "close-at",
+              "label": "预计成交",
+              "localized": {
+                "label": {
+                  "original": "预计成交",
+                  "defaultLocale": "zh-CN",
+                  "locales": {
+                    "zh-CN": "预计成交",
+                    "zh-TW": "預計成交",
+                    "zh-HK": {
+                      "fallback": "zh-TW"
+                    },
+                    "en": "Expected close"
+                  }
+                }
+              },
+              "type": "datetime",
+              "required": false,
+              "from": "预计成交"
+            },
+            {
+              "name": "next-step",
+              "label": "下一步",
+              "localized": {
+                "label": {
+                  "original": "下一步",
+                  "defaultLocale": "zh-CN",
+                  "locales": {
+                    "zh-CN": "下一步",
+                    "zh-TW": "下一步",
+                    "zh-HK": {
+                      "fallback": "zh-TW"
+                    },
+                    "en": "Next step"
+                  }
+                }
+              },
+              "type": "text",
+              "required": false,
+              "from": "下一步"
+            },
+            {
+              "name": "next-at",
+              "label": "下次跟进",
+              "localized": {
+                "label": {
+                  "original": "下次跟进",
+                  "defaultLocale": "zh-CN",
+                  "locales": {
+                    "zh-CN": "下次跟进",
+                    "zh-TW": "下次跟進",
+                    "zh-HK": {
+                      "fallback": "zh-TW"
+                    },
+                    "en": "Next follow-up"
+                  }
+                }
+              },
+              "type": "datetime",
+              "required": false,
+              "from": "下次跟进"
+            }
+          ],
+          "progress": {
+            "stageField": "stage",
+            "unfinished": [
+              "线索确认",
+              "需求确认",
+              "方案报价",
+              "商务谈判",
+              "暂停"
+            ],
+            "waitingForYou": []
+          }
+        }
+      },
+      {
+        "kind": "object-type",
+        "definition": {
+          "format": "teloa.business-object-type/v2",
+          "id": "commitment",
+          "version": "1.0.0",
+          "domain": "b2b-sales",
+          "title": "承诺",
+          "localized": {
+            "title": {
+              "original": "承诺",
+              "defaultLocale": "zh-CN",
+              "locales": {
+                "zh-CN": "承诺",
+                "zh-TW": "承諾",
+                "zh-HK": {
+                  "fallback": "zh-TW"
+                },
+                "en": "Commitment"
+              }
+            },
+            "unit": {
+              "original": "项",
+              "defaultLocale": "zh-CN",
+              "locales": {
+                "zh-CN": "项",
+                "zh-TW": "項",
+                "zh-HK": {
+                  "fallback": "zh-TW"
+                },
+                "en": "items"
+              }
+            },
+            "lead": {
+              "original": "通话或往来中双方答应要做的事。写清出处、负责人与到期日；完成或取消后更新状态，保留记录。",
+              "defaultLocale": "zh-CN",
+              "locales": {
+                "zh-CN": "通话或往来中双方答应要做的事。写清出处、负责人与到期日；完成或取消后更新状态，保留记录。",
+                "zh-TW": "通話或往來中雙方答應要做的事。寫清出處、負責人與到期日；完成或取消後更新狀態，保留紀錄。",
+                "zh-HK": {
+                  "fallback": "zh-TW"
+                },
+                "en": "Something either side agreed to do in a call or thread. Record the source, owner and due date; update the status when done or cancelled and keep the record."
+              }
+            }
+          },
+          "unit": "项",
+          "lead": "通话或往来中双方答应要做的事。写清出处、负责人与到期日；完成或取消后更新状态，保留记录。",
+          "sourceId": "records",
+          "fields": [
+            {
+              "name": "account",
+              "label": "客户",
+              "localized": {
+                "label": {
+                  "original": "客户",
+                  "defaultLocale": "zh-CN",
+                  "locales": {
+                    "zh-CN": "客户",
+                    "zh-TW": "客戶",
+                    "zh-HK": {
+                      "fallback": "zh-TW"
+                    },
+                    "en": "Account"
+                  }
+                }
+              },
+              "type": "reference",
+              "required": true,
+              "from": "客户",
+              "referenceType": "account"
+            },
+            {
+              "name": "party",
+              "label": "承诺方",
+              "localized": {
+                "label": {
+                  "original": "承诺方",
+                  "defaultLocale": "zh-CN",
+                  "locales": {
+                    "zh-CN": "承诺方",
+                    "zh-TW": "承諾方",
+                    "zh-HK": {
+                      "fallback": "zh-TW"
+                    },
+                    "en": "Committed by"
+                  }
+                },
+                "values": [
+                  {
+                    "original": "我方",
+                    "defaultLocale": "zh-CN",
+                    "locales": {
+                      "zh-CN": "我方",
+                      "zh-TW": "我方",
+                      "zh-HK": {
+                        "fallback": "zh-TW"
+                      },
+                      "en": "Us"
+                    }
+                  },
+                  {
+                    "original": "客户方",
+                    "defaultLocale": "zh-CN",
+                    "locales": {
+                      "zh-CN": "客户方",
+                      "zh-TW": "客戶方",
+                      "zh-HK": {
+                        "fallback": "zh-TW"
+                      },
+                      "en": "Customer"
+                    }
+                  }
+                ]
+              },
+              "type": "enum",
+              "required": true,
+              "from": "承诺方",
+              "values": [
+                "我方",
+                "客户方"
+              ]
+            },
+            {
+              "name": "owner",
+              "label": "负责人",
+              "localized": {
+                "label": {
+                  "original": "负责人",
+                  "defaultLocale": "zh-CN",
+                  "locales": {
+                    "zh-CN": "负责人",
+                    "zh-TW": "負責人",
+                    "zh-HK": {
+                      "fallback": "zh-TW"
+                    },
+                    "en": "Owner"
+                  }
+                }
+              },
+              "type": "text",
+              "required": true,
+              "from": "负责人"
+            },
+            {
+              "name": "due",
+              "label": "到期",
+              "localized": {
+                "label": {
+                  "original": "到期",
+                  "defaultLocale": "zh-CN",
+                  "locales": {
+                    "zh-CN": "到期",
+                    "zh-TW": "到期",
+                    "zh-HK": {
+                      "fallback": "zh-TW"
+                    },
+                    "en": "Due"
+                  }
+                }
+              },
+              "type": "datetime",
+              "required": true,
+              "from": "到期"
+            },
+            {
+              "name": "status",
+              "label": "状态",
+              "localized": {
+                "label": {
+                  "original": "状态",
+                  "defaultLocale": "zh-CN",
+                  "locales": {
+                    "zh-CN": "状态",
+                    "zh-TW": "狀態",
+                    "zh-HK": {
+                      "fallback": "zh-TW"
+                    },
+                    "en": "Status"
+                  }
+                },
+                "values": [
+                  {
+                    "original": "未完成",
+                    "defaultLocale": "zh-CN",
+                    "locales": {
+                      "zh-CN": "未完成",
+                      "zh-TW": "未完成",
+                      "zh-HK": {
+                        "fallback": "zh-TW"
+                      },
+                      "en": "Open"
+                    }
+                  },
+                  {
+                    "original": "已完成",
+                    "defaultLocale": "zh-CN",
+                    "locales": {
+                      "zh-CN": "已完成",
+                      "zh-TW": "已完成",
+                      "zh-HK": {
+                        "fallback": "zh-TW"
+                      },
+                      "en": "Done"
+                    }
+                  },
+                  {
+                    "original": "已取消",
+                    "defaultLocale": "zh-CN",
+                    "locales": {
+                      "zh-CN": "已取消",
+                      "zh-TW": "已取消",
+                      "zh-HK": {
+                        "fallback": "zh-TW"
+                      },
+                      "en": "Cancelled"
+                    }
+                  }
+                ]
+              },
+              "type": "enum",
+              "required": true,
+              "from": "状态",
+              "values": [
+                "未完成",
+                "已完成",
+                "已取消"
+              ]
+            },
+            {
+              "name": "source",
+              "label": "出处",
+              "localized": {
+                "label": {
+                  "original": "出处",
+                  "defaultLocale": "zh-CN",
+                  "locales": {
+                    "zh-CN": "出处",
+                    "zh-TW": "出處",
+                    "zh-HK": {
+                      "fallback": "zh-TW"
+                    },
+                    "en": "Source"
+                  }
+                }
+              },
+              "type": "text",
+              "required": false,
+              "from": "出处"
+            }
+          ],
+          "progress": {
+            "stageField": "status",
+            "unfinished": [
+              "未完成"
+            ],
+            "waitingForYou": []
+          }
+        }
+      },
+      {
+        "kind": "view",
+        "definition": {
+          "format": "teloa.business-view/v2",
+          "id": "opp-open",
+          "version": "1.0.0",
+          "domain": "b2b-sales",
+          "title": "进行中商机",
+          "localized": {
+            "title": {
+              "original": "进行中商机",
+              "defaultLocale": "zh-CN",
+              "locales": {
+                "zh-CN": "进行中商机",
+                "zh-TW": "進行中商機",
+                "zh-HK": {
+                  "fallback": "zh-TW"
+                },
+                "en": "Open opportunities"
+              }
+            }
+          },
+          "kind": "board-card",
+          "chart": "number",
+          "objectType": "opportunity",
+          "filters": [
+            {
+              "field": "stage",
+              "op": "in",
+              "values": [
+                "线索确认",
+                "需求确认",
+                "方案报价",
+                "商务谈判"
+              ]
+            }
+          ],
+          "limit": 1,
+          "measures": [
+            {
+              "id": "count",
+              "label": "商机",
+              "localized": {
+                "label": {
+                  "original": "商机",
+                  "defaultLocale": "zh-CN",
+                  "locales": {
+                    "zh-CN": "商机",
+                    "zh-TW": "商機",
+                    "zh-HK": {
+                      "fallback": "zh-TW"
+                    },
+                    "en": "Deals"
+                  }
+                }
+              },
+              "aggregation": "count"
+            }
+          ]
+        }
+      },
+      {
+        "kind": "view",
+        "definition": {
+          "format": "teloa.business-view/v2",
+          "id": "commit-overdue",
+          "version": "1.0.0",
+          "domain": "b2b-sales",
+          "title": "已逾期承诺",
+          "localized": {
+            "title": {
+              "original": "已逾期承诺",
+              "defaultLocale": "zh-CN",
+              "locales": {
+                "zh-CN": "已逾期承诺",
+                "zh-TW": "已逾期承諾",
+                "zh-HK": {
+                  "fallback": "zh-TW"
+                },
+                "en": "Overdue commitments"
+              }
+            }
+          },
+          "kind": "board-card",
+          "chart": "number",
+          "objectType": "commitment",
+          "filters": [
+            {
+              "field": "status",
+              "op": "eq",
+              "values": [
+                "未完成"
+              ]
+            }
+          ],
+          "window": {
+            "field": "due",
+            "relative": "overdue"
+          },
+          "limit": 1,
+          "measures": [
+            {
+              "id": "count",
+              "label": "承诺",
+              "localized": {
+                "label": {
+                  "original": "承诺",
+                  "defaultLocale": "zh-CN",
+                  "locales": {
+                    "zh-CN": "承诺",
+                    "zh-TW": "承諾",
+                    "zh-HK": {
+                      "fallback": "zh-TW"
+                    },
+                    "en": "Commitments"
+                  }
+                }
+              },
+              "aggregation": "count"
+            }
+          ]
+        }
+      },
+      {
+        "kind": "view",
+        "definition": {
+          "format": "teloa.business-view/v2",
+          "id": "account-risk",
+          "version": "1.0.0",
+          "domain": "b2b-sales",
+          "title": "风险客户",
+          "localized": {
+            "title": {
+              "original": "风险客户",
+              "defaultLocale": "zh-CN",
+              "locales": {
+                "zh-CN": "风险客户",
+                "zh-TW": "風險客戶",
+                "zh-HK": {
+                  "fallback": "zh-TW"
+                },
+                "en": "Accounts at risk"
+              }
+            }
+          },
+          "kind": "board-card",
+          "chart": "number",
+          "objectType": "account",
+          "filters": [
+            {
+              "field": "health",
+              "op": "eq",
+              "values": [
+                "风险"
+              ]
+            }
+          ],
+          "limit": 1,
+          "measures": [
+            {
+              "id": "count",
+              "label": "客户",
+              "localized": {
+                "label": {
+                  "original": "客户",
+                  "defaultLocale": "zh-CN",
+                  "locales": {
+                    "zh-CN": "客户",
+                    "zh-TW": "客戶",
+                    "zh-HK": {
+                      "fallback": "zh-TW"
+                    },
+                    "en": "Accounts"
+                  }
+                }
+              },
+              "aggregation": "count"
+            }
+          ]
+        }
+      },
+      {
+        "kind": "view",
+        "definition": {
+          "format": "teloa.business-view/v2",
+          "id": "opp-stage",
+          "version": "1.0.0",
+          "domain": "b2b-sales",
+          "title": "商机阶段与金额（按币种分列，不换算）",
+          "localized": {
+            "title": {
+              "original": "商机阶段与金额（按币种分列，不换算）",
+              "defaultLocale": "zh-CN",
+              "locales": {
+                "zh-CN": "商机阶段与金额（按币种分列，不换算）",
+                "zh-TW": "商機階段與金額（依幣別分列，不換算）",
+                "zh-HK": {
+                  "fallback": "zh-TW"
+                },
+                "en": "Opportunities by stage, amounts per currency (no conversion)"
+              }
+            }
+          },
+          "kind": "distribution",
+          "chart": "table",
+          "objectType": "opportunity",
+          "dimension": {
+            "field": "stage",
+            "limit": 10
+          },
+          "filters": [],
+          "sort": {
+            "by": "dimension",
+            "direction": "asc"
+          },
+          "limit": 10,
+          "measures": [
+            {
+              "id": "count",
+              "label": "商机",
+              "localized": {
+                "label": {
+                  "original": "商机",
+                  "defaultLocale": "zh-CN",
+                  "locales": {
+                    "zh-CN": "商机",
+                    "zh-TW": "商機",
+                    "zh-HK": {
+                      "fallback": "zh-TW"
+                    },
+                    "en": "Deals"
+                  }
+                }
+              },
+              "aggregation": "count"
+            },
+            {
+              "id": "cny",
+              "label": "预计金额 CNY",
+              "localized": {
+                "label": {
+                  "original": "预计金额 CNY",
+                  "defaultLocale": "zh-CN",
+                  "locales": {
+                    "zh-CN": "预计金额 CNY",
+                    "zh-TW": "預估金額 CNY",
+                    "zh-HK": {
+                      "fallback": "zh-TW"
+                    },
+                    "en": "Expected CNY"
+                  }
+                }
+              },
+              "aggregation": "sum",
+              "field": "amount",
+              "currency": "CNY"
+            },
+            {
+              "id": "usd",
+              "label": "预计金额 USD",
+              "localized": {
+                "label": {
+                  "original": "预计金额 USD",
+                  "defaultLocale": "zh-CN",
+                  "locales": {
+                    "zh-CN": "预计金额 USD",
+                    "zh-TW": "預估金額 USD",
+                    "zh-HK": {
+                      "fallback": "zh-TW"
+                    },
+                    "en": "Expected USD"
+                  }
+                }
+              },
+              "aggregation": "sum",
+              "field": "amount",
+              "currency": "USD"
+            },
+            {
+              "id": "eur",
+              "label": "预计金额 EUR",
+              "localized": {
+                "label": {
+                  "original": "预计金额 EUR",
+                  "defaultLocale": "zh-CN",
+                  "locales": {
+                    "zh-CN": "预计金额 EUR",
+                    "zh-TW": "預估金額 EUR",
+                    "zh-HK": {
+                      "fallback": "zh-TW"
+                    },
+                    "en": "Expected EUR"
+                  }
+                }
+              },
+              "aggregation": "sum",
+              "field": "amount",
+              "currency": "EUR"
+            }
+          ]
+        }
+      },
+      {
+        "kind": "view",
+        "definition": {
+          "format": "teloa.business-view/v2",
+          "id": "commit-overdue-list",
+          "version": "1.0.0",
+          "domain": "b2b-sales",
+          "title": "已逾期承诺清单",
+          "localized": {
+            "title": {
+              "original": "已逾期承诺清单",
+              "defaultLocale": "zh-CN",
+              "locales": {
+                "zh-CN": "已逾期承诺清单",
+                "zh-TW": "已逾期承諾清單",
+                "zh-HK": {
+                  "fallback": "zh-TW"
+                },
+                "en": "Overdue commitments"
+              }
+            }
+          },
+          "kind": "list",
+          "chart": "table",
+          "objectType": "commitment",
+          "filters": [
+            {
+              "field": "status",
+              "op": "eq",
+              "values": [
+                "未完成"
+              ]
+            }
+          ],
+          "sort": {
+            "by": "measure",
+            "measureId": "at",
+            "direction": "asc"
+          },
+          "window": {
+            "field": "due",
+            "relative": "overdue"
+          },
+          "limit": 50,
+          "measures": [
+            {
+              "id": "at",
+              "label": "到期",
+              "localized": {
+                "label": {
+                  "original": "到期",
+                  "defaultLocale": "zh-CN",
+                  "locales": {
+                    "zh-CN": "到期",
+                    "zh-TW": "到期",
+                    "zh-HK": {
+                      "fallback": "zh-TW"
+                    },
+                    "en": "Due"
+                  }
+                }
+              },
+              "aggregation": "min",
+              "field": "due"
+            }
+          ]
+        }
+      },
+      {
+        "kind": "view",
+        "definition": {
+          "format": "teloa.business-view/v2",
+          "id": "commit-week",
+          "version": "1.0.0",
+          "domain": "b2b-sales",
+          "title": "未来 7 天到期承诺",
+          "localized": {
+            "title": {
+              "original": "未来 7 天到期承诺",
+              "defaultLocale": "zh-CN",
+              "locales": {
+                "zh-CN": "未来 7 天到期承诺",
+                "zh-TW": "未來 7 天到期承諾",
+                "zh-HK": {
+                  "fallback": "zh-TW"
+                },
+                "en": "Commitments due in 7 days"
+              }
+            }
+          },
+          "kind": "list",
+          "chart": "table",
+          "objectType": "commitment",
+          "filters": [
+            {
+              "field": "status",
+              "op": "eq",
+              "values": [
+                "未完成"
+              ]
+            }
+          ],
+          "sort": {
+            "by": "measure",
+            "measureId": "at",
+            "direction": "asc"
+          },
+          "window": {
+            "field": "due",
+            "relative": "next-7d"
+          },
+          "limit": 50,
+          "measures": [
+            {
+              "id": "at",
+              "label": "到期",
+              "localized": {
+                "label": {
+                  "original": "到期",
+                  "defaultLocale": "zh-CN",
+                  "locales": {
+                    "zh-CN": "到期",
+                    "zh-TW": "到期",
+                    "zh-HK": {
+                      "fallback": "zh-TW"
+                    },
+                    "en": "Due"
+                  }
+                }
+              },
+              "aggregation": "min",
+              "field": "due"
+            }
+          ]
+        }
+      },
+      {
+        "kind": "view",
+        "definition": {
+          "format": "teloa.business-view/v2",
+          "id": "opp-followup-overdue",
+          "version": "1.0.0",
+          "domain": "b2b-sales",
+          "title": "跟进已逾期的商机",
+          "localized": {
+            "title": {
+              "original": "跟进已逾期的商机",
+              "defaultLocale": "zh-CN",
+              "locales": {
+                "zh-CN": "跟进已逾期的商机",
+                "zh-TW": "跟進已逾期的商機",
+                "zh-HK": {
+                  "fallback": "zh-TW"
+                },
+                "en": "Opportunities with overdue follow-up"
+              }
+            }
+          },
+          "kind": "list",
+          "chart": "table",
+          "objectType": "opportunity",
+          "filters": [
+            {
+              "field": "stage",
+              "op": "in",
+              "values": [
+                "线索确认",
+                "需求确认",
+                "方案报价",
+                "商务谈判"
+              ]
+            }
+          ],
+          "sort": {
+            "by": "measure",
+            "measureId": "at",
+            "direction": "asc"
+          },
+          "window": {
+            "field": "next-at",
+            "relative": "overdue"
+          },
+          "limit": 50,
+          "measures": [
+            {
+              "id": "at",
+              "label": "下次跟进",
+              "localized": {
+                "label": {
+                  "original": "下次跟进",
+                  "defaultLocale": "zh-CN",
+                  "locales": {
+                    "zh-CN": "下次跟进",
+                    "zh-TW": "下次跟進",
+                    "zh-HK": {
+                      "fallback": "zh-TW"
+                    },
+                    "en": "Next follow-up"
+                  }
+                }
+              },
+              "aggregation": "min",
+              "field": "next-at"
+            }
+          ]
+        }
+      },
+      {
+        "kind": "view",
+        "definition": {
+          "format": "teloa.business-view/v2",
+          "id": "opp-closing",
+          "version": "1.0.0",
+          "domain": "b2b-sales",
+          "title": "30 天内预计成交",
+          "localized": {
+            "title": {
+              "original": "30 天内预计成交",
+              "defaultLocale": "zh-CN",
+              "locales": {
+                "zh-CN": "30 天内预计成交",
+                "zh-TW": "30 天內預計成交",
+                "zh-HK": {
+                  "fallback": "zh-TW"
+                },
+                "en": "Expected to close within 30 days"
+              }
+            }
+          },
+          "kind": "list",
+          "chart": "table",
+          "objectType": "opportunity",
+          "filters": [
+            {
+              "field": "stage",
+              "op": "in",
+              "values": [
+                "线索确认",
+                "需求确认",
+                "方案报价",
+                "商务谈判"
+              ]
+            }
+          ],
+          "sort": {
+            "by": "measure",
+            "measureId": "at",
+            "direction": "asc"
+          },
+          "window": {
+            "field": "close-at",
+            "relative": "next-30d"
+          },
+          "limit": 50,
+          "measures": [
+            {
+              "id": "at",
+              "label": "预计成交",
+              "localized": {
+                "label": {
+                  "original": "预计成交",
+                  "defaultLocale": "zh-CN",
+                  "locales": {
+                    "zh-CN": "预计成交",
+                    "zh-TW": "預計成交",
+                    "zh-HK": {
+                      "fallback": "zh-TW"
+                    },
+                    "en": "Expected close"
+                  }
+                }
+              },
+              "aggregation": "min",
+              "field": "close-at"
+            }
+          ]
+        }
+      },
+      {
+        "kind": "view",
+        "definition": {
+          "format": "teloa.business-view/v2",
+          "id": "account-watch",
+          "version": "1.0.0",
+          "domain": "b2b-sales",
+          "title": "需关注客户（按续约日期）",
+          "localized": {
+            "title": {
+              "original": "需关注客户（按续约日期）",
+              "defaultLocale": "zh-CN",
+              "locales": {
+                "zh-CN": "需关注客户（按续约日期）",
+                "zh-TW": "需關注客戶（依續約日期）",
+                "zh-HK": {
+                  "fallback": "zh-TW"
+                },
+                "en": "Accounts to watch by renewal date"
+              }
+            }
+          },
+          "kind": "list",
+          "chart": "table",
+          "objectType": "account",
+          "filters": [
+            {
+              "field": "health",
+              "op": "in",
+              "values": [
+                "风险",
+                "关注"
+              ]
+            }
+          ],
+          "sort": {
+            "by": "measure",
+            "measureId": "at",
+            "direction": "asc"
+          },
+          "limit": 50,
+          "measures": [
+            {
+              "id": "at",
+              "label": "续约日期",
+              "localized": {
+                "label": {
+                  "original": "续约日期",
+                  "defaultLocale": "zh-CN",
+                  "locales": {
+                    "zh-CN": "续约日期",
+                    "zh-TW": "續約日期",
+                    "zh-HK": {
+                      "fallback": "zh-TW"
+                    },
+                    "en": "Renewal date"
+                  }
+                }
+              },
+              "aggregation": "min",
+              "field": "renewal-at"
+            }
+          ]
+        }
+      },
+      {
+        "kind": "view",
+        "definition": {
+          "format": "teloa.business-view/v2",
+          "id": "renewal",
+          "version": "1.0.0",
+          "domain": "b2b-sales",
+          "title": "30 天内续约",
+          "localized": {
+            "title": {
+              "original": "30 天内续约",
+              "defaultLocale": "zh-CN",
+              "locales": {
+                "zh-CN": "30 天内续约",
+                "zh-TW": "30 天內續約",
+                "zh-HK": {
+                  "fallback": "zh-TW"
+                },
+                "en": "Renewals within 30 days"
+              }
+            }
+          },
+          "kind": "list",
+          "chart": "table",
+          "objectType": "account",
+          "filters": [
+            {
+              "field": "relationship",
+              "op": "eq",
+              "values": [
+                "已签约"
+              ]
+            }
+          ],
+          "sort": {
+            "by": "measure",
+            "measureId": "at",
+            "direction": "asc"
+          },
+          "window": {
+            "field": "renewal-at",
+            "relative": "next-30d"
+          },
+          "limit": 50,
+          "measures": [
+            {
+              "id": "at",
+              "label": "续约日期",
+              "localized": {
+                "label": {
+                  "original": "续约日期",
+                  "defaultLocale": "zh-CN",
+                  "locales": {
+                    "zh-CN": "续约日期",
+                    "zh-TW": "續約日期",
+                    "zh-HK": {
+                      "fallback": "zh-TW"
+                    },
+                    "en": "Renewal date"
+                  }
+                }
+              },
+              "aggregation": "min",
+              "field": "renewal-at"
+            }
+          ]
+        }
+      },
+      {
+        "kind": "widget",
+        "definition": {
+          "format": "teloa.business-widget/v1",
+          "id": "w-opp-open",
+          "version": "1.0.0",
+          "domain": "b2b-sales",
+          "title": "进行中商机",
+          "localized": {
+            "title": {
+              "original": "进行中商机",
+              "defaultLocale": "zh-CN",
+              "locales": {
+                "zh-CN": "进行中商机",
+                "zh-TW": "進行中商機",
+                "zh-HK": {
+                  "fallback": "zh-TW"
+                },
+                "en": "Open opportunities"
+              }
+            }
+          },
+          "kind": "view-ref",
+          "viewRef": "opp-open"
+        }
+      },
+      {
+        "kind": "widget",
+        "definition": {
+          "format": "teloa.business-widget/v1",
+          "id": "w-commit-overdue",
+          "version": "1.0.0",
+          "domain": "b2b-sales",
+          "title": "已逾期承诺",
+          "localized": {
+            "title": {
+              "original": "已逾期承诺",
+              "defaultLocale": "zh-CN",
+              "locales": {
+                "zh-CN": "已逾期承诺",
+                "zh-TW": "已逾期承諾",
+                "zh-HK": {
+                  "fallback": "zh-TW"
+                },
+                "en": "Overdue commitments"
+              }
+            }
+          },
+          "kind": "view-ref",
+          "viewRef": "commit-overdue"
+        }
+      },
+      {
+        "kind": "widget",
+        "definition": {
+          "format": "teloa.business-widget/v1",
+          "id": "w-account-risk",
+          "version": "1.0.0",
+          "domain": "b2b-sales",
+          "title": "风险客户",
+          "localized": {
+            "title": {
+              "original": "风险客户",
+              "defaultLocale": "zh-CN",
+              "locales": {
+                "zh-CN": "风险客户",
+                "zh-TW": "風險客戶",
+                "zh-HK": {
+                  "fallback": "zh-TW"
+                },
+                "en": "Accounts at risk"
+              }
+            }
+          },
+          "kind": "view-ref",
+          "viewRef": "account-risk"
+        }
+      },
+      {
+        "kind": "widget",
+        "definition": {
+          "format": "teloa.business-widget/v1",
+          "id": "w-opp-stage",
+          "version": "1.0.0",
+          "domain": "b2b-sales",
+          "title": "商机阶段与金额（按币种分列，不换算）",
+          "localized": {
+            "title": {
+              "original": "商机阶段与金额（按币种分列，不换算）",
+              "defaultLocale": "zh-CN",
+              "locales": {
+                "zh-CN": "商机阶段与金额（按币种分列，不换算）",
+                "zh-TW": "商機階段與金額（依幣別分列，不換算）",
+                "zh-HK": {
+                  "fallback": "zh-TW"
+                },
+                "en": "Opportunities by stage, amounts per currency (no conversion)"
+              }
+            }
+          },
+          "kind": "view-ref",
+          "viewRef": "opp-stage"
+        }
+      },
+      {
+        "kind": "widget",
+        "definition": {
+          "format": "teloa.business-widget/v1",
+          "id": "w-commit-overdue-list",
+          "version": "1.0.0",
+          "domain": "b2b-sales",
+          "title": "已逾期承诺清单",
+          "localized": {
+            "title": {
+              "original": "已逾期承诺清单",
+              "defaultLocale": "zh-CN",
+              "locales": {
+                "zh-CN": "已逾期承诺清单",
+                "zh-TW": "已逾期承諾清單",
+                "zh-HK": {
+                  "fallback": "zh-TW"
+                },
+                "en": "Overdue commitments"
+              }
+            }
+          },
+          "kind": "view-ref",
+          "viewRef": "commit-overdue-list"
+        }
+      },
+      {
+        "kind": "widget",
+        "definition": {
+          "format": "teloa.business-widget/v1",
+          "id": "w-commit-week",
+          "version": "1.0.0",
+          "domain": "b2b-sales",
+          "title": "未来 7 天到期承诺",
+          "localized": {
+            "title": {
+              "original": "未来 7 天到期承诺",
+              "defaultLocale": "zh-CN",
+              "locales": {
+                "zh-CN": "未来 7 天到期承诺",
+                "zh-TW": "未來 7 天到期承諾",
+                "zh-HK": {
+                  "fallback": "zh-TW"
+                },
+                "en": "Commitments due in 7 days"
+              }
+            }
+          },
+          "kind": "view-ref",
+          "viewRef": "commit-week"
+        }
+      },
+      {
+        "kind": "widget",
+        "definition": {
+          "format": "teloa.business-widget/v1",
+          "id": "w-opp-followup-overdue",
+          "version": "1.0.0",
+          "domain": "b2b-sales",
+          "title": "跟进已逾期的商机",
+          "localized": {
+            "title": {
+              "original": "跟进已逾期的商机",
+              "defaultLocale": "zh-CN",
+              "locales": {
+                "zh-CN": "跟进已逾期的商机",
+                "zh-TW": "跟進已逾期的商機",
+                "zh-HK": {
+                  "fallback": "zh-TW"
+                },
+                "en": "Opportunities with overdue follow-up"
+              }
+            }
+          },
+          "kind": "view-ref",
+          "viewRef": "opp-followup-overdue"
+        }
+      },
+      {
+        "kind": "widget",
+        "definition": {
+          "format": "teloa.business-widget/v1",
+          "id": "w-opp-closing",
+          "version": "1.0.0",
+          "domain": "b2b-sales",
+          "title": "30 天内预计成交",
+          "localized": {
+            "title": {
+              "original": "30 天内预计成交",
+              "defaultLocale": "zh-CN",
+              "locales": {
+                "zh-CN": "30 天内预计成交",
+                "zh-TW": "30 天內預計成交",
+                "zh-HK": {
+                  "fallback": "zh-TW"
+                },
+                "en": "Expected to close within 30 days"
+              }
+            }
+          },
+          "kind": "view-ref",
+          "viewRef": "opp-closing"
+        }
+      },
+      {
+        "kind": "widget",
+        "definition": {
+          "format": "teloa.business-widget/v1",
+          "id": "w-account-watch",
+          "version": "1.0.0",
+          "domain": "b2b-sales",
+          "title": "需关注客户（按续约日期）",
+          "localized": {
+            "title": {
+              "original": "需关注客户（按续约日期）",
+              "defaultLocale": "zh-CN",
+              "locales": {
+                "zh-CN": "需关注客户（按续约日期）",
+                "zh-TW": "需關注客戶（依續約日期）",
+                "zh-HK": {
+                  "fallback": "zh-TW"
+                },
+                "en": "Accounts to watch by renewal date"
+              }
+            }
+          },
+          "kind": "view-ref",
+          "viewRef": "account-watch"
+        }
+      },
+      {
+        "kind": "widget",
+        "definition": {
+          "format": "teloa.business-widget/v1",
+          "id": "w-renewal",
+          "version": "1.0.0",
+          "domain": "b2b-sales",
+          "title": "30 天内续约",
+          "localized": {
+            "title": {
+              "original": "30 天内续约",
+              "defaultLocale": "zh-CN",
+              "locales": {
+                "zh-CN": "30 天内续约",
+                "zh-TW": "30 天內續約",
+                "zh-HK": {
+                  "fallback": "zh-TW"
+                },
+                "en": "Renewals within 30 days"
+              }
+            }
+          },
+          "kind": "view-ref",
+          "viewRef": "renewal"
+        }
+      },
+      {
+        "kind": "dashboard",
+        "definition": {
+          "format": "teloa.business-dashboard/v1",
+          "id": "overview",
+          "version": "1.0.0",
+          "domain": "b2b-sales",
+          "title": "客户跟进总览",
+          "localized": {
+            "title": {
+              "original": "客户跟进总览",
+              "defaultLocale": "zh-CN",
+              "locales": {
+                "zh-CN": "客户跟进总览",
+                "zh-TW": "客戶跟進總覽",
+                "zh-HK": {
+                  "fallback": "zh-TW"
+                },
+                "en": "Account follow-up overview"
+              }
+            }
+          },
+          "widgets": [
+            "w-opp-open",
+            "w-commit-overdue",
+            "w-account-risk",
+            "w-opp-stage",
+            "w-commit-overdue-list",
+            "w-commit-week",
+            "w-opp-followup-overdue",
+            "w-opp-closing",
+            "w-account-watch",
+            "w-renewal"
+          ],
+          "layout": [
+            {
+              "widget": "w-opp-open",
+              "x": 0,
+              "y": 0,
+              "w": 4,
+              "h": 3
+            },
+            {
+              "widget": "w-commit-overdue",
+              "x": 4,
+              "y": 0,
+              "w": 4,
+              "h": 3
+            },
+            {
+              "widget": "w-account-risk",
+              "x": 8,
+              "y": 0,
+              "w": 4,
+              "h": 3
+            },
+            {
+              "widget": "w-opp-stage",
+              "x": 0,
+              "y": 3,
+              "w": 12,
+              "h": 6
+            },
+            {
+              "widget": "w-commit-overdue-list",
+              "x": 0,
+              "y": 9,
+              "w": 6,
+              "h": 6
+            },
+            {
+              "widget": "w-commit-week",
+              "x": 6,
+              "y": 9,
+              "w": 6,
+              "h": 6
+            },
+            {
+              "widget": "w-opp-followup-overdue",
+              "x": 0,
+              "y": 15,
+              "w": 6,
+              "h": 6
+            },
+            {
+              "widget": "w-opp-closing",
+              "x": 6,
+              "y": 15,
+              "w": 6,
+              "h": 6
+            },
+            {
+              "widget": "w-account-watch",
+              "x": 0,
+              "y": 21,
+              "w": 6,
+              "h": 6
+            },
+            {
+              "widget": "w-renewal",
+              "x": 6,
+              "y": 21,
+              "w": 6,
+              "h": 6
+            }
+          ],
+          "refresh": {
+            "kind": "every",
+            "seconds": 300
+          },
+          "acknowledgeShortInterval": false
+        }
+      }
+    ],
+    "pages": [
+      {
+        "id": "home",
+        "title": "客户跟进总览",
+        "kind": "dashboard",
+        "dashboardId": "overview"
+      },
+      {
+        "id": "accounts",
+        "title": "客户账户",
+        "kind": "records",
+        "objectType": "account",
+        "fields": [
+          "relationship",
+          "owner",
+          "health",
+          "renewal-at",
+          "next-step",
+          "industry"
+        ],
+        "allowCreate": true,
+        "allowEdit": true,
+        "allowArchive": true
+      },
+      {
+        "id": "opportunities",
+        "title": "商机",
+        "kind": "records",
+        "objectType": "opportunity",
+        "fields": [
+          "account",
+          "stage",
+          "owner",
+          "amount",
+          "close-at",
+          "next-step",
+          "next-at"
+        ],
+        "allowCreate": true,
+        "allowEdit": true,
+        "allowArchive": true
+      },
+      {
+        "id": "commitments",
+        "title": "承诺",
+        "kind": "records",
+        "objectType": "commitment",
+        "fields": [
+          "account",
+          "party",
+          "owner",
+          "due",
+          "status",
+          "source"
+        ],
+        "allowCreate": true,
+        "allowEdit": true,
+        "allowArchive": true
+      }
+    ],
+    "homePageId": "home"
+  }
+}

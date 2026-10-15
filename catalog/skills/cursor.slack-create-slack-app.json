@@ -1,0 +1,126 @@
+{
+  "format": "teloa.market-catalog-entry/v1",
+  "id": "cursor.slack-create-slack-app",
+  "kind": "skill",
+  "delivery": "upstream",
+  "version": "1.4.1",
+  "taxonomy": {
+    "functions": [
+      "communication"
+    ],
+    "industries": [
+      "general"
+    ]
+  },
+  "skill": {
+    "name": "create-slack-app",
+    "title": {
+      "zh-CN": "create-slack-app（Slack）",
+      "zh-TW": "create-slack-app（Slack）",
+      "en": "create-slack-app (Slack)"
+    },
+    "summary": {
+      "zh-CN": "开发者要用 Slack CLI 从零创建、搭建或引导一个新的 Slack 应用或代理时使用：涵盖前置条件、认证、选择安装的工作区，以及从 Bolt（JS 或 Python）模板在本地创建项目。",
+      "zh-TW": "開發者要用 Slack CLI 從零建立、搭建或引導一個新的 Slack 應用程式或代理時使用：涵蓋前置條件、認證、選擇安裝的工作區，以及從 Bolt（JS 或 Python）範本在本地建立專案。",
+      "en": "Use when a developer wants to create, scaffold, or bootstrap a new Slack app or agent from scratch with the Slack CLI. Covers prerequisites, authentication, choosing a workspace to install into, and creating a project from a Bolt (JS or Python) template locally. Trigger on \"create a Slack app\", \"new Bolt app\", \"start a Slack agent\"."
+    }
+  },
+  "upstream": {
+    "kind": "github",
+    "repository": {
+      "host": "github.com",
+      "owner": "slackapi",
+      "repo": "slack-mcp-plugin"
+    },
+    "commit": "64c3f33fa13beb98c96d736390f80f3454a93a88",
+    "path": "skills/create-slack-app",
+    "files": [
+      {
+        "path": "SKILL.md",
+        "gitBlob": "bce9381326b688f252a43bbd5d0d0cb4e504d664",
+        "sha256": "4b1b27837e5092b38084d75b37e756c515c93087d006a22fce8dc3ca123371f8",
+        "size": 12515
+      },
+      {
+        "path": "licenses/upstream/LICENSE",
+        "repositoryPath": "LICENSE",
+        "gitBlob": "f2e8442ad2415bb25ed3663958e558e21586e12a",
+        "sha256": "ccbd532eabd9c4a87884b19caa6738bd6541e047460a736aca3bf1ac4fd91300",
+        "size": 1091
+      }
+    ]
+  },
+  "origin": {
+    "marketplace": "cursor",
+    "installs": null,
+    "installsLabel": "未记录 / Not recorded",
+    "countedAt": "2026-10-14"
+  },
+  "alternatives": [],
+  "unsupportedComponents": [
+    {
+      "kind": "commands",
+      "count": 5
+    }
+  ],
+  "modifications": [],
+  "plugin": {
+    "marketplace": "cursor",
+    "id": "674",
+    "title": {
+      "zh-CN": "Slack",
+      "zh-TW": "Slack",
+      "en": "Slack"
+    },
+    "summary": {
+      "zh-CN": "面向使用者与开发者的 Slack 技能：配合 Slack 官方远程 MCP 搜索与发送消息，并指导用 Slack CLI、Bolt 与 Block Kit 开发、测试 Slack 应用。",
+      "zh-TW": "面向使用者與開發者的 Slack 技能：搭配 Slack 官方遠端 MCP 搜尋與傳送訊息，並指導用 Slack CLI、Bolt 與 Block Kit 開發、測試 Slack 應用程式。",
+      "en": "Slack AI tools for users and developers: interact with your workspace via the Slack MCP server and use skills to develop Slack apps."
+    },
+    "root": ".",
+    "manifest": {
+      "path": ".cursor-plugin/plugin.json",
+      "gitBlob": "7cc49837faaef94235fadd1873112e7dee334003",
+      "sha256": "d6f6cc9e74e03e122626d79a0d624804b211ab599171145a166f45725f1befc8"
+    },
+    "license": {
+      "spdx": "MIT"
+    },
+    "connectors": [
+      "teloa.mcp-slack"
+    ]
+  },
+  "license": {
+    "spdx": "MIT",
+    "files": [
+      "licenses/upstream/LICENSE"
+    ]
+  },
+  "compatibility": {
+    "status": "content-only",
+    "teloa": ">=0.2.0-alpha.8",
+    "dsh": "0.1.7-rc.1",
+    "conditions": [
+      {
+        "zh-CN": "来源为 Cursor Plugin Marketplace 公开插件 Slack（pluginId 674），按固定 commit 64c3f33fa13b 锁定；正文面向 Cursor 代理编写，提及的 Cursor 专有命令、变量或内置工具在 Teloa 中不可用时需自行替代",
+        "zh-TW": "來源為 Cursor Plugin Marketplace 公開外掛 Slack（pluginId 674），按固定 commit 64c3f33fa13b 鎖定；正文面向 Cursor 代理撰寫，提及的 Cursor 專有命令、變數或內建工具在 Teloa 中不可用時需自行替代",
+        "en": "Taken from the public Cursor Plugin Marketplace plugin Slack (pluginId 674), pinned at commit 64c3f33fa13b; the text targets the Cursor agent, so Cursor-specific commands, variables or built-in tools it mentions must be substituted when unavailable in Teloa"
+      },
+      {
+        "zh-CN": "许可为原始仓库 LICENSE（MIT），不在技能目录内；技能正文为英文原件，未翻译",
+        "zh-TW": "授權為原始儲存庫 LICENSE（MIT），不在技能目錄內；技能正文為英文原件，未翻譯",
+        "en": "The license is LICENSE (MIT) in the original repository, outside the skill directory; the skill text is the English original and is not translated"
+      }
+    ]
+  },
+  "requires": {
+    "tools": [],
+    "network": false,
+    "runtimes": []
+  },
+  "review": {
+    "status": "approved",
+    "reviewedAt": "2026-10-14",
+    "reviewer": "Teloa"
+  }
+}

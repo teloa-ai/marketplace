@@ -1,0 +1,35 @@
+{
+  "format": "teloa.official-template-review/v1",
+  "entryId": "teloa.grok-call-followup",
+  "version": "1.0.0",
+  "reviewedAt": "2026-10-14",
+  "reviewer": "Teloa",
+  "verdict": "approve",
+  "origin": {
+    "kind": "derived",
+    "repository": "cobusgreyling/grok-bot-templates",
+    "commit": "4f3f28b4e6578cd227ff7f4b78ec91d15fd091b5",
+    "path": "templates/sales/call-followup",
+    "license": "MIT",
+    "licenseUrl": "https://github.com/cobusgreyling/grok-bot-templates/blob/4f3f28b4e6578cd227ff7f4b78ec91d15fd091b5/LICENSE",
+    "fromSolution": "teloa.grok-sales-team@1.0.0 roles/call-followup.json",
+    "teamRole": "member"
+  },
+  "originalFiles": {
+    "templates/sales/call-followup/PROFILE.md": "34bdad482f7dc02543299a27bcd9a763d6a517c293ccbd8ebad9b0e0152897e5",
+    "templates/sales/call-followup/README.md": "82b1217d170730d10a5819498d5c6f9630906b07656b59962851c57e0adbc508",
+    "templates/sales/call-followup/SETUP.md": "6313521225f4c7123a4b87889b7730eecae2b9b4929e69241c66d450226fdc7f",
+    "templates/sales/call-followup/examples/first-run.md": "cdd9538c71a8df57f4547b8cce5867b0fde1855b0bca5720b22a6e0d1bbf1ab5",
+    "templates/sales/call-followup/template.yaml": "7772f288cf6874d631d5b3fe06129626fd48cb8f219e723d19015521ac9993e0"
+  },
+  "checks": [
+    {
+      "method": "test",
+      "result": "pass",
+      "evidence": "node tools/validate.mjs --pr and node tools/sync-official-roles.mjs --check pass; see the batch result document."
+    }
+  ],
+  "notVerified": [
+    "Not run with a real model in a Teloa host"
+  ]
+}

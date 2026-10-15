@@ -21,8 +21,8 @@
       "en": "Notion Remote (OAuth)"
     },
     "summary": {
-      "zh-CN": "Notion 官方推荐的远程 MCP 服务，可搜索与读取页面和数据库、创建与更新页面、查询数据源、读写评论。由 Teloa 以 OAuth（动态客户端注册 + PKCE）授权，令牌自动刷新。只想用 Notion 集成令牌时，请改用本地版资源（teloa.mcp-notion）。",
-      "en": "Notion's officially recommended remote MCP service for searching and reading pages and databases, creating and updating pages, querying data sources, and reading or writing comments. Authorized by Teloa via OAuth (dynamic client registration + PKCE) with automatic token refresh. To use a Notion integration token instead, use the local version (teloa.mcp-notion)."
+      "zh-CN": "Notion 官方推荐的远程 MCP 服务，可搜索与读取页面和数据库、创建与更新页面、查询数据源、读写评论。由 Teloa 以 OAuth（动态客户端注册 + PKCE）授权，令牌自动刷新。",
+      "en": "Notion's officially recommended remote MCP service for searching and reading pages and databases, creating and updating pages, querying data sources, and reading or writing comments. Authorized by Teloa via OAuth (dynamic client registration + PKCE) with automatic token refresh."
     },
     "auth": {
       "kind": "oauth",
@@ -170,10 +170,6 @@
       {
         "zh-CN": "刷新令牌最长 180 天或连续 30 天未刷新即失效，届时需重新授权",
         "en": "Refresh tokens expire after at most 180 days or 30 days without a refresh; re-authorization is then required"
-      },
-      {
-        "zh-CN": "替代方案：本地版资源 teloa.mcp-notion（使用 Notion 集成令牌）",
-        "en": "Alternative: the local version teloa.mcp-notion (uses a Notion integration token)"
       }
     ]
   },

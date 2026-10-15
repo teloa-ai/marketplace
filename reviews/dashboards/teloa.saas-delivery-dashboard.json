@@ -1,0 +1,47 @@
+{
+  "format": "teloa.official-template-review/v1",
+  "entryId": "teloa.saas-delivery-dashboard",
+  "version": "1.0.0",
+  "reviewedAt": "2026-10-14",
+  "reviewer": "Teloa",
+  "verdict": "approve",
+  "origin": {
+    "kind": "teloa-original-assembly",
+    "summary": "对象、字段、视图、看板布局与说明为 Teloa 原创；按 MIT 许可的 Grok Bot 模板库对应团队岗位职责梳理业务对象，未随附或改写任何模板正文、记忆或示例数据。",
+    "consulted": [
+      {
+        "source": "cobusgreyling/grok-bot-templates teams/product（Product：product-performance、feature-ask-collator、launch-coordinator）",
+        "page": "https://github.com/cobusgreyling/grok-bot-templates",
+        "license": "MIT（仓库 LICENSE；不推定 x.ai 官方模板或其他下载资料同为 MIT）",
+        "decision": "launch-coordinator「go/no-go packet, never the publish」→ 发布对象的准备状态、检查清单、回滚方案与「待放行决定」，看板不替人放行；feature-ask-collator「not a roadmap」→ 需求以验收条件判断交付，不用任务数冒充完成率"
+      }
+    ]
+  },
+  "checks": [
+    {
+      "method": "test",
+      "result": "pass",
+      "evidence": "2026-10-14 node tools/validate.mjs --pr 通过（103 条目），含 dashboard.manifest-shape 与 readBusinessDashboardResource 核心解析。"
+    },
+    {
+      "method": "test",
+      "result": "pass",
+      "evidence": "2026-10-14 tools/tests/industry-dashboards.pg.test.mjs 在隔离 postgres:17-alpine 容器中以社区源码 d72a2c1 的 MarketContentStore → BusinessDashboardResourceService.prepare/page/preview/apply 采用，并经 BusinessRecordService 写合成记录、BusinessConfigurationPageService.read 读已保存看板：新建业务采用后：空态预览中未解除阻塞=0、逾期需求与阶段分布为空；写入 4 需求/3 阻塞（1 条归档）/2 发布后：未解除阻塞=1（归档不计）、验收未确认的进行中需求=2、待验收=1、逾期需求清单仅含过期且未完成的那条（无计划日期的不算逾期）、待发布版本与检查清单各 1、阶段分布 4 个阶段各 1；清单对象 id 与所建记录一致，可读到负责人与下一步。"
+    },
+    {
+      "method": "source-check",
+      "result": "pass",
+      "evidence": "核心 v2 配置看板只渲染视图组件（business-configuration-page.ts 富字段分支、business-definition-source.ts forScope 拒收 v2）：同测试把一个 SQL 指标组件加入本资源后采用即被拒（teloa/dependency-unavailable「富字段配置的看板仅支持已接入的视图组件」），因此本资源全部组件为 view-ref，不携带 SQL。"
+    },
+    {
+      "method": "review",
+      "result": "pass",
+      "evidence": "包内只有 teloa.json、configuration.json、README.md 与 Apache-2.0 LICENSE；无 source-mapping、默认动作、已连接数据源、示例业绩或私人数据；sources 仅 records/local-records。"
+    }
+  ],
+  "notVerified": [
+    "未在 Teloa 桌面客户端界面中实际采用并查看渲染效果（交由主代理统一浏览器/客户端验证）",
+    "未在已运行实例（含 3100）上采用；未用真实模型",
+    "组件结果的界面点击下钻路径未在客户端验证；服务端清单结果已返回对应记录 id 与字段"
+  ]
+}

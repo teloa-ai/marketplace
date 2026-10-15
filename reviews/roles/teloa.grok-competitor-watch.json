@@ -1,0 +1,35 @@
+{
+  "format": "teloa.official-template-review/v1",
+  "entryId": "teloa.grok-competitor-watch",
+  "version": "1.0.0",
+  "reviewedAt": "2026-10-14",
+  "reviewer": "Teloa",
+  "verdict": "approve",
+  "origin": {
+    "kind": "derived",
+    "repository": "cobusgreyling/grok-bot-templates",
+    "commit": "4f3f28b4e6578cd227ff7f4b78ec91d15fd091b5",
+    "path": "templates/marketing/competitor-watch",
+    "license": "MIT",
+    "licenseUrl": "https://github.com/cobusgreyling/grok-bot-templates/blob/4f3f28b4e6578cd227ff7f4b78ec91d15fd091b5/LICENSE",
+    "fromSolution": "teloa.grok-marketing-team@1.0.0 roles/competitor-watch.json",
+    "teamRole": "lead"
+  },
+  "originalFiles": {
+    "templates/marketing/competitor-watch/PROFILE.md": "625801655dd1eb8cfd26d91006894456fac19c381aa28390a9f5b92d08819610",
+    "templates/marketing/competitor-watch/README.md": "c8f11ff94f0e769a22d9b83e8fb7ed8085a8de1552401dabcdb98a97dd8ff76b",
+    "templates/marketing/competitor-watch/SETUP.md": "8eec52aa87c6e4217f65a8b2929864e6f02fdce1f6614ffce32e07d4b1ec475a",
+    "templates/marketing/competitor-watch/examples/first-run.md": "3af4e740ff5e4ddab75e6d93e24c9fbee9462b44da3005a6749e5e60cac35fcf",
+    "templates/marketing/competitor-watch/template.yaml": "af9b5852fa38daf25cf22f89f720173f42495a9915bb6853f9ce36df38ce66e1"
+  },
+  "checks": [
+    {
+      "method": "test",
+      "result": "pass",
+      "evidence": "node tools/validate.mjs --pr and node tools/sync-official-roles.mjs --check pass; see the batch result document."
+    }
+  ],
+  "notVerified": [
+    "Not run with a real model in a Teloa host"
+  ]
+}

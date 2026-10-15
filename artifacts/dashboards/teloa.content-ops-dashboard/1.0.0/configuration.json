@@ -1,0 +1,1563 @@
+{
+  "format": "teloa.business-dashboard-resource/v1",
+  "id": "content-ops",
+  "version": "1.0.0",
+  "configuration": {
+    "format": "teloa.business-configuration/v2",
+    "scope": "content-ops",
+    "title": "数字营销与内容运营",
+    "sources": [
+      {
+        "sourceId": "records",
+        "kind": "local-records"
+      }
+    ],
+    "definitions": [
+      {
+        "kind": "object-type",
+        "definition": {
+          "format": "teloa.business-object-type/v2",
+          "id": "content",
+          "version": "1.0.0",
+          "domain": "content-ops",
+          "title": "内容",
+          "localized": {
+            "title": {
+              "original": "内容",
+              "defaultLocale": "zh-CN",
+              "locales": {
+                "zh-CN": "内容",
+                "zh-TW": "內容",
+                "zh-HK": {
+                  "fallback": "zh-TW"
+                },
+                "en": "Content item"
+              }
+            },
+            "unit": {
+              "original": "篇",
+              "defaultLocale": "zh-CN",
+              "locales": {
+                "zh-CN": "篇",
+                "zh-TW": "篇",
+                "zh-HK": {
+                  "fallback": "zh-TW"
+                },
+                "en": "items"
+              }
+            },
+            "lead": {
+              "original": "一条要发布的内容，从选题、制作、审批到发布逐步推进。曝光与转化只在有统计来源时录入；没有录入就显示为缺失，不当作 0。",
+              "defaultLocale": "zh-CN",
+              "locales": {
+                "zh-CN": "一条要发布的内容，从选题、制作、审批到发布逐步推进。曝光与转化只在有统计来源时录入；没有录入就显示为缺失，不当作 0。",
+                "zh-TW": "一則要發布的內容，從選題、製作、審核到發布逐步推進。曝光與轉換只在有統計來源時登錄；沒有登錄就顯示為缺漏，不當作 0。",
+                "zh-HK": {
+                  "fallback": "zh-TW"
+                },
+                "en": "A piece of content moving from idea through production and approval to publication. Impressions and conversions are entered only with a stated source; unrecorded values show as missing, never as 0."
+              }
+            }
+          },
+          "unit": "篇",
+          "lead": "一条要发布的内容，从选题、制作、审批到发布逐步推进。曝光与转化只在有统计来源时录入；没有录入就显示为缺失，不当作 0。",
+          "sourceId": "records",
+          "fields": [
+            {
+              "name": "stage",
+              "label": "阶段",
+              "localized": {
+                "label": {
+                  "original": "阶段",
+                  "defaultLocale": "zh-CN",
+                  "locales": {
+                    "zh-CN": "阶段",
+                    "zh-TW": "階段",
+                    "zh-HK": {
+                      "fallback": "zh-TW"
+                    },
+                    "en": "Stage"
+                  }
+                },
+                "values": [
+                  {
+                    "original": "选题",
+                    "defaultLocale": "zh-CN",
+                    "locales": {
+                      "zh-CN": "选题",
+                      "zh-TW": "選題",
+                      "zh-HK": {
+                        "fallback": "zh-TW"
+                      },
+                      "en": "Idea"
+                    }
+                  },
+                  {
+                    "original": "制作中",
+                    "defaultLocale": "zh-CN",
+                    "locales": {
+                      "zh-CN": "制作中",
+                      "zh-TW": "製作中",
+                      "zh-HK": {
+                        "fallback": "zh-TW"
+                      },
+                      "en": "In production"
+                    }
+                  },
+                  {
+                    "original": "待审批",
+                    "defaultLocale": "zh-CN",
+                    "locales": {
+                      "zh-CN": "待审批",
+                      "zh-TW": "待審核",
+                      "zh-HK": {
+                        "fallback": "zh-TW"
+                      },
+                      "en": "Awaiting approval"
+                    }
+                  },
+                  {
+                    "original": "需修改",
+                    "defaultLocale": "zh-CN",
+                    "locales": {
+                      "zh-CN": "需修改",
+                      "zh-TW": "需修改",
+                      "zh-HK": {
+                        "fallback": "zh-TW"
+                      },
+                      "en": "Needs revision"
+                    }
+                  },
+                  {
+                    "original": "已排期",
+                    "defaultLocale": "zh-CN",
+                    "locales": {
+                      "zh-CN": "已排期",
+                      "zh-TW": "已排程",
+                      "zh-HK": {
+                        "fallback": "zh-TW"
+                      },
+                      "en": "Scheduled"
+                    }
+                  },
+                  {
+                    "original": "已发布",
+                    "defaultLocale": "zh-CN",
+                    "locales": {
+                      "zh-CN": "已发布",
+                      "zh-TW": "已發布",
+                      "zh-HK": {
+                        "fallback": "zh-TW"
+                      },
+                      "en": "Published"
+                    }
+                  },
+                  {
+                    "original": "已放弃",
+                    "defaultLocale": "zh-CN",
+                    "locales": {
+                      "zh-CN": "已放弃",
+                      "zh-TW": "已放棄",
+                      "zh-HK": {
+                        "fallback": "zh-TW"
+                      },
+                      "en": "Dropped"
+                    }
+                  }
+                ]
+              },
+              "type": "enum",
+              "required": true,
+              "from": "阶段",
+              "values": [
+                "选题",
+                "制作中",
+                "待审批",
+                "需修改",
+                "已排期",
+                "已发布",
+                "已放弃"
+              ]
+            },
+            {
+              "name": "owner",
+              "label": "负责人",
+              "localized": {
+                "label": {
+                  "original": "负责人",
+                  "defaultLocale": "zh-CN",
+                  "locales": {
+                    "zh-CN": "负责人",
+                    "zh-TW": "負責人",
+                    "zh-HK": {
+                      "fallback": "zh-TW"
+                    },
+                    "en": "Owner"
+                  }
+                }
+              },
+              "type": "text",
+              "required": true,
+              "from": "负责人"
+            },
+            {
+              "name": "channel",
+              "label": "渠道",
+              "localized": {
+                "label": {
+                  "original": "渠道",
+                  "defaultLocale": "zh-CN",
+                  "locales": {
+                    "zh-CN": "渠道",
+                    "zh-TW": "管道",
+                    "zh-HK": {
+                      "fallback": "zh-TW"
+                    },
+                    "en": "Channel"
+                  }
+                },
+                "values": [
+                  {
+                    "original": "公众号",
+                    "defaultLocale": "zh-CN",
+                    "locales": {
+                      "zh-CN": "公众号",
+                      "zh-TW": "微信公眾號",
+                      "zh-HK": {
+                        "fallback": "zh-TW"
+                      },
+                      "en": "WeChat Official Account"
+                    }
+                  },
+                  {
+                    "original": "小红书",
+                    "defaultLocale": "zh-CN",
+                    "locales": {
+                      "zh-CN": "小红书",
+                      "zh-TW": "小紅書",
+                      "zh-HK": {
+                        "fallback": "zh-TW"
+                      },
+                      "en": "Xiaohongshu"
+                    }
+                  },
+                  {
+                    "original": "视频号",
+                    "defaultLocale": "zh-CN",
+                    "locales": {
+                      "zh-CN": "视频号",
+                      "zh-TW": "視頻號",
+                      "zh-HK": {
+                        "fallback": "zh-TW"
+                      },
+                      "en": "WeChat Channels"
+                    }
+                  },
+                  {
+                    "original": "抖音",
+                    "defaultLocale": "zh-CN",
+                    "locales": {
+                      "zh-CN": "抖音",
+                      "zh-TW": "抖音",
+                      "zh-HK": {
+                        "fallback": "zh-TW"
+                      },
+                      "en": "Douyin"
+                    }
+                  },
+                  {
+                    "original": "微博",
+                    "defaultLocale": "zh-CN",
+                    "locales": {
+                      "zh-CN": "微博",
+                      "zh-TW": "微博",
+                      "zh-HK": {
+                        "fallback": "zh-TW"
+                      },
+                      "en": "Weibo"
+                    }
+                  },
+                  {
+                    "original": "官网博客",
+                    "defaultLocale": "zh-CN",
+                    "locales": {
+                      "zh-CN": "官网博客",
+                      "zh-TW": "官網部落格",
+                      "zh-HK": {
+                        "fallback": "zh-TW"
+                      },
+                      "en": "Website blog"
+                    }
+                  },
+                  {
+                    "original": "邮件简报",
+                    "defaultLocale": "zh-CN",
+                    "locales": {
+                      "zh-CN": "邮件简报",
+                      "zh-TW": "電子報",
+                      "zh-HK": {
+                        "fallback": "zh-TW"
+                      },
+                      "en": "Email newsletter"
+                    }
+                  },
+                  {
+                    "original": "LinkedIn",
+                    "defaultLocale": "zh-CN",
+                    "locales": {
+                      "zh-CN": "LinkedIn",
+                      "zh-TW": "LinkedIn",
+                      "zh-HK": {
+                        "fallback": "zh-TW"
+                      },
+                      "en": "LinkedIn"
+                    }
+                  },
+                  {
+                    "original": "X",
+                    "defaultLocale": "zh-CN",
+                    "locales": {
+                      "zh-CN": "X",
+                      "zh-TW": "X",
+                      "zh-HK": {
+                        "fallback": "zh-TW"
+                      },
+                      "en": "X"
+                    }
+                  },
+                  {
+                    "original": "其他",
+                    "defaultLocale": "zh-CN",
+                    "locales": {
+                      "zh-CN": "其他",
+                      "zh-TW": "其他",
+                      "zh-HK": {
+                        "fallback": "zh-TW"
+                      },
+                      "en": "Other"
+                    }
+                  }
+                ]
+              },
+              "type": "enum",
+              "required": true,
+              "from": "渠道",
+              "values": [
+                "公众号",
+                "小红书",
+                "视频号",
+                "抖音",
+                "微博",
+                "官网博客",
+                "邮件简报",
+                "LinkedIn",
+                "X",
+                "其他"
+              ]
+            },
+            {
+              "name": "approver",
+              "label": "审批人",
+              "localized": {
+                "label": {
+                  "original": "审批人",
+                  "defaultLocale": "zh-CN",
+                  "locales": {
+                    "zh-CN": "审批人",
+                    "zh-TW": "審核人",
+                    "zh-HK": {
+                      "fallback": "zh-TW"
+                    },
+                    "en": "Approver"
+                  }
+                }
+              },
+              "type": "text",
+              "required": false,
+              "from": "审批人"
+            },
+            {
+              "name": "next-step",
+              "label": "下一步",
+              "localized": {
+                "label": {
+                  "original": "下一步",
+                  "defaultLocale": "zh-CN",
+                  "locales": {
+                    "zh-CN": "下一步",
+                    "zh-TW": "下一步",
+                    "zh-HK": {
+                      "fallback": "zh-TW"
+                    },
+                    "en": "Next step"
+                  }
+                }
+              },
+              "type": "text",
+              "required": false,
+              "from": "下一步"
+            },
+            {
+              "name": "due",
+              "label": "交稿截止",
+              "localized": {
+                "label": {
+                  "original": "交稿截止",
+                  "defaultLocale": "zh-CN",
+                  "locales": {
+                    "zh-CN": "交稿截止",
+                    "zh-TW": "交稿期限",
+                    "zh-HK": {
+                      "fallback": "zh-TW"
+                    },
+                    "en": "Draft due"
+                  }
+                }
+              },
+              "type": "datetime",
+              "required": false,
+              "from": "交稿截止"
+            },
+            {
+              "name": "publish-at",
+              "label": "发布时间",
+              "localized": {
+                "label": {
+                  "original": "发布时间",
+                  "defaultLocale": "zh-CN",
+                  "locales": {
+                    "zh-CN": "发布时间",
+                    "zh-TW": "發布時間",
+                    "zh-HK": {
+                      "fallback": "zh-TW"
+                    },
+                    "en": "Publish time"
+                  }
+                }
+              },
+              "type": "datetime",
+              "required": false,
+              "from": "发布时间"
+            },
+            {
+              "name": "url",
+              "label": "发布链接",
+              "localized": {
+                "label": {
+                  "original": "发布链接",
+                  "defaultLocale": "zh-CN",
+                  "locales": {
+                    "zh-CN": "发布链接",
+                    "zh-TW": "發布連結",
+                    "zh-HK": {
+                      "fallback": "zh-TW"
+                    },
+                    "en": "Published link"
+                  }
+                }
+              },
+              "type": "text",
+              "required": false,
+              "from": "发布链接"
+            },
+            {
+              "name": "metrics-source",
+              "label": "统计来源",
+              "localized": {
+                "label": {
+                  "original": "统计来源",
+                  "defaultLocale": "zh-CN",
+                  "locales": {
+                    "zh-CN": "统计来源",
+                    "zh-TW": "統計來源",
+                    "zh-HK": {
+                      "fallback": "zh-TW"
+                    },
+                    "en": "Metrics source"
+                  }
+                },
+                "values": [
+                  {
+                    "original": "未录入",
+                    "defaultLocale": "zh-CN",
+                    "locales": {
+                      "zh-CN": "未录入",
+                      "zh-TW": "未登錄",
+                      "zh-HK": {
+                        "fallback": "zh-TW"
+                      },
+                      "en": "Not recorded"
+                    }
+                  },
+                  {
+                    "original": "平台导出",
+                    "defaultLocale": "zh-CN",
+                    "locales": {
+                      "zh-CN": "平台导出",
+                      "zh-TW": "平台匯出",
+                      "zh-HK": {
+                        "fallback": "zh-TW"
+                      },
+                      "en": "Platform export"
+                    }
+                  },
+                  {
+                    "original": "手工录入",
+                    "defaultLocale": "zh-CN",
+                    "locales": {
+                      "zh-CN": "手工录入",
+                      "zh-TW": "手動登錄",
+                      "zh-HK": {
+                        "fallback": "zh-TW"
+                      },
+                      "en": "Entered manually"
+                    }
+                  },
+                  {
+                    "original": "第三方统计",
+                    "defaultLocale": "zh-CN",
+                    "locales": {
+                      "zh-CN": "第三方统计",
+                      "zh-TW": "第三方統計",
+                      "zh-HK": {
+                        "fallback": "zh-TW"
+                      },
+                      "en": "Third-party analytics"
+                    }
+                  }
+                ]
+              },
+              "type": "enum",
+              "required": false,
+              "from": "统计来源",
+              "values": [
+                "未录入",
+                "平台导出",
+                "手工录入",
+                "第三方统计"
+              ]
+            },
+            {
+              "name": "impressions",
+              "label": "曝光",
+              "localized": {
+                "label": {
+                  "original": "曝光",
+                  "defaultLocale": "zh-CN",
+                  "locales": {
+                    "zh-CN": "曝光",
+                    "zh-TW": "曝光",
+                    "zh-HK": {
+                      "fallback": "zh-TW"
+                    },
+                    "en": "Impressions"
+                  }
+                }
+              },
+              "type": "number",
+              "required": false,
+              "from": "曝光"
+            },
+            {
+              "name": "conversions",
+              "label": "转化",
+              "localized": {
+                "label": {
+                  "original": "转化",
+                  "defaultLocale": "zh-CN",
+                  "locales": {
+                    "zh-CN": "转化",
+                    "zh-TW": "轉換",
+                    "zh-HK": {
+                      "fallback": "zh-TW"
+                    },
+                    "en": "Conversions"
+                  }
+                }
+              },
+              "type": "number",
+              "required": false,
+              "from": "转化"
+            },
+            {
+              "name": "metrics-at",
+              "label": "统计截至",
+              "localized": {
+                "label": {
+                  "original": "统计截至",
+                  "defaultLocale": "zh-CN",
+                  "locales": {
+                    "zh-CN": "统计截至",
+                    "zh-TW": "統計截至",
+                    "zh-HK": {
+                      "fallback": "zh-TW"
+                    },
+                    "en": "Metrics as of"
+                  }
+                }
+              },
+              "type": "datetime",
+              "required": false,
+              "from": "统计截至"
+            }
+          ],
+          "progress": {
+            "stageField": "stage",
+            "unfinished": [
+              "选题",
+              "制作中",
+              "待审批",
+              "需修改",
+              "已排期"
+            ],
+            "waitingForYou": [
+              "待审批"
+            ]
+          }
+        }
+      },
+      {
+        "kind": "view",
+        "definition": {
+          "format": "teloa.business-view/v2",
+          "id": "approval",
+          "version": "1.0.0",
+          "domain": "content-ops",
+          "title": "待审批内容",
+          "localized": {
+            "title": {
+              "original": "待审批内容",
+              "defaultLocale": "zh-CN",
+              "locales": {
+                "zh-CN": "待审批内容",
+                "zh-TW": "待審核內容",
+                "zh-HK": {
+                  "fallback": "zh-TW"
+                },
+                "en": "Awaiting approval"
+              }
+            }
+          },
+          "kind": "board-card",
+          "chart": "number",
+          "objectType": "content",
+          "filters": [
+            {
+              "field": "stage",
+              "op": "eq",
+              "values": [
+                "待审批"
+              ]
+            }
+          ],
+          "limit": 1,
+          "measures": [
+            {
+              "id": "count",
+              "label": "内容",
+              "localized": {
+                "label": {
+                  "original": "内容",
+                  "defaultLocale": "zh-CN",
+                  "locales": {
+                    "zh-CN": "内容",
+                    "zh-TW": "內容",
+                    "zh-HK": {
+                      "fallback": "zh-TW"
+                    },
+                    "en": "Items"
+                  }
+                }
+              },
+              "aggregation": "count"
+            }
+          ]
+        }
+      },
+      {
+        "kind": "view",
+        "definition": {
+          "format": "teloa.business-view/v2",
+          "id": "overdue",
+          "version": "1.0.0",
+          "domain": "content-ops",
+          "title": "交稿已超期",
+          "localized": {
+            "title": {
+              "original": "交稿已超期",
+              "defaultLocale": "zh-CN",
+              "locales": {
+                "zh-CN": "交稿已超期",
+                "zh-TW": "交稿已逾期",
+                "zh-HK": {
+                  "fallback": "zh-TW"
+                },
+                "en": "Drafts past due"
+              }
+            }
+          },
+          "kind": "board-card",
+          "chart": "number",
+          "objectType": "content",
+          "filters": [
+            {
+              "field": "stage",
+              "op": "in",
+              "values": [
+                "选题",
+                "制作中",
+                "待审批",
+                "需修改"
+              ]
+            }
+          ],
+          "window": {
+            "field": "due",
+            "relative": "overdue"
+          },
+          "limit": 1,
+          "measures": [
+            {
+              "id": "count",
+              "label": "内容",
+              "localized": {
+                "label": {
+                  "original": "内容",
+                  "defaultLocale": "zh-CN",
+                  "locales": {
+                    "zh-CN": "内容",
+                    "zh-TW": "內容",
+                    "zh-HK": {
+                      "fallback": "zh-TW"
+                    },
+                    "en": "Items"
+                  }
+                }
+              },
+              "aggregation": "count"
+            }
+          ]
+        }
+      },
+      {
+        "kind": "view",
+        "definition": {
+          "format": "teloa.business-view/v2",
+          "id": "approval-list",
+          "version": "1.0.0",
+          "domain": "content-ops",
+          "title": "待审批与需修改",
+          "localized": {
+            "title": {
+              "original": "待审批与需修改",
+              "defaultLocale": "zh-CN",
+              "locales": {
+                "zh-CN": "待审批与需修改",
+                "zh-TW": "待審核與需修改",
+                "zh-HK": {
+                  "fallback": "zh-TW"
+                },
+                "en": "Awaiting approval or revision"
+              }
+            }
+          },
+          "kind": "list",
+          "chart": "table",
+          "objectType": "content",
+          "filters": [
+            {
+              "field": "stage",
+              "op": "in",
+              "values": [
+                "待审批",
+                "需修改"
+              ]
+            }
+          ],
+          "sort": {
+            "by": "measure",
+            "measureId": "at",
+            "direction": "asc"
+          },
+          "limit": 50,
+          "measures": [
+            {
+              "id": "at",
+              "label": "交稿截止",
+              "localized": {
+                "label": {
+                  "original": "交稿截止",
+                  "defaultLocale": "zh-CN",
+                  "locales": {
+                    "zh-CN": "交稿截止",
+                    "zh-TW": "交稿期限",
+                    "zh-HK": {
+                      "fallback": "zh-TW"
+                    },
+                    "en": "Draft due"
+                  }
+                }
+              },
+              "aggregation": "min",
+              "field": "due"
+            }
+          ]
+        }
+      },
+      {
+        "kind": "view",
+        "definition": {
+          "format": "teloa.business-view/v2",
+          "id": "overdue-list",
+          "version": "1.0.0",
+          "domain": "content-ops",
+          "title": "交稿已超期的内容",
+          "localized": {
+            "title": {
+              "original": "交稿已超期的内容",
+              "defaultLocale": "zh-CN",
+              "locales": {
+                "zh-CN": "交稿已超期的内容",
+                "zh-TW": "交稿已逾期的內容",
+                "zh-HK": {
+                  "fallback": "zh-TW"
+                },
+                "en": "Content with overdue drafts"
+              }
+            }
+          },
+          "kind": "list",
+          "chart": "table",
+          "objectType": "content",
+          "filters": [
+            {
+              "field": "stage",
+              "op": "in",
+              "values": [
+                "选题",
+                "制作中",
+                "待审批",
+                "需修改"
+              ]
+            }
+          ],
+          "sort": {
+            "by": "measure",
+            "measureId": "at",
+            "direction": "asc"
+          },
+          "window": {
+            "field": "due",
+            "relative": "overdue"
+          },
+          "limit": 50,
+          "measures": [
+            {
+              "id": "at",
+              "label": "交稿截止",
+              "localized": {
+                "label": {
+                  "original": "交稿截止",
+                  "defaultLocale": "zh-CN",
+                  "locales": {
+                    "zh-CN": "交稿截止",
+                    "zh-TW": "交稿期限",
+                    "zh-HK": {
+                      "fallback": "zh-TW"
+                    },
+                    "en": "Draft due"
+                  }
+                }
+              },
+              "aggregation": "min",
+              "field": "due"
+            }
+          ]
+        }
+      },
+      {
+        "kind": "view",
+        "definition": {
+          "format": "teloa.business-view/v2",
+          "id": "content-stage",
+          "version": "1.0.0",
+          "domain": "content-ops",
+          "title": "内容阶段分布",
+          "localized": {
+            "title": {
+              "original": "内容阶段分布",
+              "defaultLocale": "zh-CN",
+              "locales": {
+                "zh-CN": "内容阶段分布",
+                "zh-TW": "內容階段分布",
+                "zh-HK": {
+                  "fallback": "zh-TW"
+                },
+                "en": "Content by stage"
+              }
+            }
+          },
+          "kind": "distribution",
+          "chart": "bar",
+          "objectType": "content",
+          "dimension": {
+            "field": "stage",
+            "limit": 10
+          },
+          "filters": [],
+          "sort": {
+            "by": "dimension",
+            "direction": "asc"
+          },
+          "limit": 10,
+          "measures": [
+            {
+              "id": "count",
+              "label": "内容",
+              "localized": {
+                "label": {
+                  "original": "内容",
+                  "defaultLocale": "zh-CN",
+                  "locales": {
+                    "zh-CN": "内容",
+                    "zh-TW": "內容",
+                    "zh-HK": {
+                      "fallback": "zh-TW"
+                    },
+                    "en": "Items"
+                  }
+                }
+              },
+              "aggregation": "count"
+            }
+          ]
+        }
+      },
+      {
+        "kind": "view",
+        "definition": {
+          "format": "teloa.business-view/v2",
+          "id": "scheduled",
+          "version": "1.0.0",
+          "domain": "content-ops",
+          "title": "未来 7 天排期",
+          "localized": {
+            "title": {
+              "original": "未来 7 天排期",
+              "defaultLocale": "zh-CN",
+              "locales": {
+                "zh-CN": "未来 7 天排期",
+                "zh-TW": "未來 7 天排程",
+                "zh-HK": {
+                  "fallback": "zh-TW"
+                },
+                "en": "Scheduled in the next 7 days"
+              }
+            }
+          },
+          "kind": "list",
+          "chart": "table",
+          "objectType": "content",
+          "filters": [
+            {
+              "field": "stage",
+              "op": "eq",
+              "values": [
+                "已排期"
+              ]
+            }
+          ],
+          "sort": {
+            "by": "measure",
+            "measureId": "at",
+            "direction": "asc"
+          },
+          "window": {
+            "field": "publish-at",
+            "relative": "next-7d"
+          },
+          "limit": 50,
+          "measures": [
+            {
+              "id": "at",
+              "label": "发布时间",
+              "localized": {
+                "label": {
+                  "original": "发布时间",
+                  "defaultLocale": "zh-CN",
+                  "locales": {
+                    "zh-CN": "发布时间",
+                    "zh-TW": "發布時間",
+                    "zh-HK": {
+                      "fallback": "zh-TW"
+                    },
+                    "en": "Publish time"
+                  }
+                }
+              },
+              "aggregation": "min",
+              "field": "publish-at"
+            }
+          ]
+        }
+      },
+      {
+        "kind": "view",
+        "definition": {
+          "format": "teloa.business-view/v2",
+          "id": "channel-results",
+          "version": "1.0.0",
+          "domain": "content-ops",
+          "title": "已发布内容按渠道（仅含有统计来源的数据）",
+          "localized": {
+            "title": {
+              "original": "已发布内容按渠道（仅含有统计来源的数据）",
+              "defaultLocale": "zh-CN",
+              "locales": {
+                "zh-CN": "已发布内容按渠道（仅含有统计来源的数据）",
+                "zh-TW": "已發布內容依管道（僅含有統計來源的資料）",
+                "zh-HK": {
+                  "fallback": "zh-TW"
+                },
+                "en": "Published content by channel (sourced metrics only)"
+              }
+            }
+          },
+          "kind": "distribution",
+          "chart": "table",
+          "objectType": "content",
+          "dimension": {
+            "field": "channel",
+            "limit": 10
+          },
+          "filters": [
+            {
+              "field": "stage",
+              "op": "eq",
+              "values": [
+                "已发布"
+              ]
+            }
+          ],
+          "sort": {
+            "by": "dimension",
+            "direction": "asc"
+          },
+          "limit": 10,
+          "measures": [
+            {
+              "id": "published",
+              "label": "已发布",
+              "localized": {
+                "label": {
+                  "original": "已发布",
+                  "defaultLocale": "zh-CN",
+                  "locales": {
+                    "zh-CN": "已发布",
+                    "zh-TW": "已發布",
+                    "zh-HK": {
+                      "fallback": "zh-TW"
+                    },
+                    "en": "Published"
+                  }
+                }
+              },
+              "aggregation": "count"
+            },
+            {
+              "id": "sourced",
+              "label": "有统计来源",
+              "localized": {
+                "label": {
+                  "original": "有统计来源",
+                  "defaultLocale": "zh-CN",
+                  "locales": {
+                    "zh-CN": "有统计来源",
+                    "zh-TW": "有統計來源",
+                    "zh-HK": {
+                      "fallback": "zh-TW"
+                    },
+                    "en": "With metrics source"
+                  }
+                }
+              },
+              "aggregation": "count",
+              "where": {
+                "field": "metrics-source",
+                "op": "in",
+                "values": [
+                  "平台导出",
+                  "手工录入",
+                  "第三方统计"
+                ]
+              }
+            },
+            {
+              "id": "impressions",
+              "label": "曝光（有来源）",
+              "localized": {
+                "label": {
+                  "original": "曝光（有来源）",
+                  "defaultLocale": "zh-CN",
+                  "locales": {
+                    "zh-CN": "曝光（有来源）",
+                    "zh-TW": "曝光（有來源）",
+                    "zh-HK": {
+                      "fallback": "zh-TW"
+                    },
+                    "en": "Impressions (sourced)"
+                  }
+                }
+              },
+              "aggregation": "sum",
+              "field": "impressions",
+              "where": {
+                "field": "metrics-source",
+                "op": "in",
+                "values": [
+                  "平台导出",
+                  "手工录入",
+                  "第三方统计"
+                ]
+              }
+            },
+            {
+              "id": "conversions",
+              "label": "转化（有来源）",
+              "localized": {
+                "label": {
+                  "original": "转化（有来源）",
+                  "defaultLocale": "zh-CN",
+                  "locales": {
+                    "zh-CN": "转化（有来源）",
+                    "zh-TW": "轉換（有來源）",
+                    "zh-HK": {
+                      "fallback": "zh-TW"
+                    },
+                    "en": "Conversions (sourced)"
+                  }
+                }
+              },
+              "aggregation": "sum",
+              "field": "conversions",
+              "where": {
+                "field": "metrics-source",
+                "op": "in",
+                "values": [
+                  "平台导出",
+                  "手工录入",
+                  "第三方统计"
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "kind": "view",
+        "definition": {
+          "format": "teloa.business-view/v2",
+          "id": "recent-published",
+          "version": "1.0.0",
+          "domain": "content-ops",
+          "title": "近 30 天已发布",
+          "localized": {
+            "title": {
+              "original": "近 30 天已发布",
+              "defaultLocale": "zh-CN",
+              "locales": {
+                "zh-CN": "近 30 天已发布",
+                "zh-TW": "近 30 天已發布",
+                "zh-HK": {
+                  "fallback": "zh-TW"
+                },
+                "en": "Published in the last 30 days"
+              }
+            }
+          },
+          "kind": "list",
+          "chart": "table",
+          "objectType": "content",
+          "filters": [
+            {
+              "field": "stage",
+              "op": "eq",
+              "values": [
+                "已发布"
+              ]
+            }
+          ],
+          "sort": {
+            "by": "measure",
+            "measureId": "at",
+            "direction": "desc"
+          },
+          "window": {
+            "field": "publish-at",
+            "relative": "last-30d"
+          },
+          "limit": 50,
+          "measures": [
+            {
+              "id": "at",
+              "label": "发布时间",
+              "localized": {
+                "label": {
+                  "original": "发布时间",
+                  "defaultLocale": "zh-CN",
+                  "locales": {
+                    "zh-CN": "发布时间",
+                    "zh-TW": "發布時間",
+                    "zh-HK": {
+                      "fallback": "zh-TW"
+                    },
+                    "en": "Publish time"
+                  }
+                }
+              },
+              "aggregation": "max",
+              "field": "publish-at"
+            }
+          ]
+        }
+      },
+      {
+        "kind": "widget",
+        "definition": {
+          "format": "teloa.business-widget/v1",
+          "id": "w-approval",
+          "version": "1.0.0",
+          "domain": "content-ops",
+          "title": "待审批内容",
+          "localized": {
+            "title": {
+              "original": "待审批内容",
+              "defaultLocale": "zh-CN",
+              "locales": {
+                "zh-CN": "待审批内容",
+                "zh-TW": "待審核內容",
+                "zh-HK": {
+                  "fallback": "zh-TW"
+                },
+                "en": "Awaiting approval"
+              }
+            }
+          },
+          "kind": "view-ref",
+          "viewRef": "approval"
+        }
+      },
+      {
+        "kind": "widget",
+        "definition": {
+          "format": "teloa.business-widget/v1",
+          "id": "w-overdue",
+          "version": "1.0.0",
+          "domain": "content-ops",
+          "title": "交稿已超期",
+          "localized": {
+            "title": {
+              "original": "交稿已超期",
+              "defaultLocale": "zh-CN",
+              "locales": {
+                "zh-CN": "交稿已超期",
+                "zh-TW": "交稿已逾期",
+                "zh-HK": {
+                  "fallback": "zh-TW"
+                },
+                "en": "Drafts past due"
+              }
+            }
+          },
+          "kind": "view-ref",
+          "viewRef": "overdue"
+        }
+      },
+      {
+        "kind": "widget",
+        "definition": {
+          "format": "teloa.business-widget/v1",
+          "id": "w-approval-list",
+          "version": "1.0.0",
+          "domain": "content-ops",
+          "title": "待审批与需修改",
+          "localized": {
+            "title": {
+              "original": "待审批与需修改",
+              "defaultLocale": "zh-CN",
+              "locales": {
+                "zh-CN": "待审批与需修改",
+                "zh-TW": "待審核與需修改",
+                "zh-HK": {
+                  "fallback": "zh-TW"
+                },
+                "en": "Awaiting approval or revision"
+              }
+            }
+          },
+          "kind": "view-ref",
+          "viewRef": "approval-list"
+        }
+      },
+      {
+        "kind": "widget",
+        "definition": {
+          "format": "teloa.business-widget/v1",
+          "id": "w-overdue-list",
+          "version": "1.0.0",
+          "domain": "content-ops",
+          "title": "交稿已超期的内容",
+          "localized": {
+            "title": {
+              "original": "交稿已超期的内容",
+              "defaultLocale": "zh-CN",
+              "locales": {
+                "zh-CN": "交稿已超期的内容",
+                "zh-TW": "交稿已逾期的內容",
+                "zh-HK": {
+                  "fallback": "zh-TW"
+                },
+                "en": "Content with overdue drafts"
+              }
+            }
+          },
+          "kind": "view-ref",
+          "viewRef": "overdue-list"
+        }
+      },
+      {
+        "kind": "widget",
+        "definition": {
+          "format": "teloa.business-widget/v1",
+          "id": "w-content-stage",
+          "version": "1.0.0",
+          "domain": "content-ops",
+          "title": "内容阶段分布",
+          "localized": {
+            "title": {
+              "original": "内容阶段分布",
+              "defaultLocale": "zh-CN",
+              "locales": {
+                "zh-CN": "内容阶段分布",
+                "zh-TW": "內容階段分布",
+                "zh-HK": {
+                  "fallback": "zh-TW"
+                },
+                "en": "Content by stage"
+              }
+            }
+          },
+          "kind": "view-ref",
+          "viewRef": "content-stage"
+        }
+      },
+      {
+        "kind": "widget",
+        "definition": {
+          "format": "teloa.business-widget/v1",
+          "id": "w-scheduled",
+          "version": "1.0.0",
+          "domain": "content-ops",
+          "title": "未来 7 天排期",
+          "localized": {
+            "title": {
+              "original": "未来 7 天排期",
+              "defaultLocale": "zh-CN",
+              "locales": {
+                "zh-CN": "未来 7 天排期",
+                "zh-TW": "未來 7 天排程",
+                "zh-HK": {
+                  "fallback": "zh-TW"
+                },
+                "en": "Scheduled in the next 7 days"
+              }
+            }
+          },
+          "kind": "view-ref",
+          "viewRef": "scheduled"
+        }
+      },
+      {
+        "kind": "widget",
+        "definition": {
+          "format": "teloa.business-widget/v1",
+          "id": "w-channel-results",
+          "version": "1.0.0",
+          "domain": "content-ops",
+          "title": "已发布内容按渠道（仅含有统计来源的数据）",
+          "localized": {
+            "title": {
+              "original": "已发布内容按渠道（仅含有统计来源的数据）",
+              "defaultLocale": "zh-CN",
+              "locales": {
+                "zh-CN": "已发布内容按渠道（仅含有统计来源的数据）",
+                "zh-TW": "已發布內容依管道（僅含有統計來源的資料）",
+                "zh-HK": {
+                  "fallback": "zh-TW"
+                },
+                "en": "Published content by channel (sourced metrics only)"
+              }
+            }
+          },
+          "kind": "view-ref",
+          "viewRef": "channel-results"
+        }
+      },
+      {
+        "kind": "widget",
+        "definition": {
+          "format": "teloa.business-widget/v1",
+          "id": "w-recent-published",
+          "version": "1.0.0",
+          "domain": "content-ops",
+          "title": "近 30 天已发布",
+          "localized": {
+            "title": {
+              "original": "近 30 天已发布",
+              "defaultLocale": "zh-CN",
+              "locales": {
+                "zh-CN": "近 30 天已发布",
+                "zh-TW": "近 30 天已發布",
+                "zh-HK": {
+                  "fallback": "zh-TW"
+                },
+                "en": "Published in the last 30 days"
+              }
+            }
+          },
+          "kind": "view-ref",
+          "viewRef": "recent-published"
+        }
+      },
+      {
+        "kind": "dashboard",
+        "definition": {
+          "format": "teloa.business-dashboard/v1",
+          "id": "overview",
+          "version": "1.0.0",
+          "domain": "content-ops",
+          "title": "内容运营总览",
+          "localized": {
+            "title": {
+              "original": "内容运营总览",
+              "defaultLocale": "zh-CN",
+              "locales": {
+                "zh-CN": "内容运营总览",
+                "zh-TW": "內容營運總覽",
+                "zh-HK": {
+                  "fallback": "zh-TW"
+                },
+                "en": "Content operations overview"
+              }
+            }
+          },
+          "widgets": [
+            "w-approval",
+            "w-overdue",
+            "w-approval-list",
+            "w-overdue-list",
+            "w-content-stage",
+            "w-scheduled",
+            "w-channel-results",
+            "w-recent-published"
+          ],
+          "layout": [
+            {
+              "widget": "w-approval",
+              "x": 0,
+              "y": 0,
+              "w": 6,
+              "h": 3
+            },
+            {
+              "widget": "w-overdue",
+              "x": 6,
+              "y": 0,
+              "w": 6,
+              "h": 3
+            },
+            {
+              "widget": "w-approval-list",
+              "x": 0,
+              "y": 3,
+              "w": 6,
+              "h": 6
+            },
+            {
+              "widget": "w-overdue-list",
+              "x": 6,
+              "y": 3,
+              "w": 6,
+              "h": 6
+            },
+            {
+              "widget": "w-content-stage",
+              "x": 0,
+              "y": 9,
+              "w": 5,
+              "h": 6
+            },
+            {
+              "widget": "w-scheduled",
+              "x": 5,
+              "y": 9,
+              "w": 7,
+              "h": 6
+            },
+            {
+              "widget": "w-channel-results",
+              "x": 0,
+              "y": 15,
+              "w": 12,
+              "h": 6
+            },
+            {
+              "widget": "w-recent-published",
+              "x": 0,
+              "y": 21,
+              "w": 12,
+              "h": 6
+            }
+          ],
+          "refresh": {
+            "kind": "every",
+            "seconds": 300
+          },
+          "acknowledgeShortInterval": false
+        }
+      }
+    ],
+    "pages": [
+      {
+        "id": "home",
+        "title": "内容运营总览",
+        "kind": "dashboard",
+        "dashboardId": "overview"
+      },
+      {
+        "id": "contents",
+        "title": "内容",
+        "kind": "records",
+        "objectType": "content",
+        "fields": [
+          "stage",
+          "owner",
+          "channel",
+          "approver",
+          "next-step",
+          "due",
+          "publish-at",
+          "url",
+          "metrics-source",
+          "impressions",
+          "conversions",
+          "metrics-at"
+        ],
+        "allowCreate": true,
+        "allowEdit": true,
+        "allowArchive": true
+      }
+    ],
+    "homePageId": "home"
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "format": "teloa.official-template-review/v1",
+  "entryId": "teloa.grok-marketing-team",
+  "version": "1.0.0",
+  "reviewedAt": "2026-10-14",
+  "reviewer": "Teloa",
+  "verdict": "approve",
+  "origin": {
+    "kind": "derived",
+    "repository": "cobusgreyling/grok-bot-templates",
+    "commit": "4f3f28b4e6578cd227ff7f4b78ec91d15fd091b5",
+    "path": "teams/marketing",
+    "license": "MIT",
+    "licenseUrl": "https://github.com/cobusgreyling/grok-bot-templates/blob/4f3f28b4e6578cd227ff7f4b78ec91d15fd091b5/LICENSE",
+    "generatedBy": "tools/build-grok-bot-template-teams.py"
+  },
+  "originalFiles": {
+    "teams/marketing/team.yaml": "3cb6e0feb9c5dfe0e8689da9b297f750789cd3a41b8024c132695c0a94d980dd",
+    "templates/marketing/competitor-watch/PROFILE.md": "625801655dd1eb8cfd26d91006894456fac19c381aa28390a9f5b92d08819610",
+    "templates/marketing/competitor-watch/README.md": "c8f11ff94f0e769a22d9b83e8fb7ed8085a8de1552401dabcdb98a97dd8ff76b",
+    "templates/marketing/competitor-watch/SETUP.md": "8eec52aa87c6e4217f65a8b2929864e6f02fdce1f6614ffce32e07d4b1ec475a",
+    "templates/marketing/competitor-watch/examples/first-run.md": "3af4e740ff5e4ddab75e6d93e24c9fbee9462b44da3005a6749e5e60cac35fcf",
+    "templates/marketing/competitor-watch/template.yaml": "af9b5852fa38daf25cf22f89f720173f42495a9915bb6853f9ce36df38ce66e1",
+    "skills/diff-competitors/SKILL.md": "09f4140685c04a142a10b9199376d5a191ce6e05b96a73ba090502d47b3c98a6",
+    "skills/diff-competitors/skill.yaml": "4561145a39868726b7fc8ba4168a4df695954ddc4edb2756b604ec5a709302f4",
+    "templates/marketing/content-remix/PROFILE.md": "9b26a3604e808b2bc6ee76417ebe468bfbde735ba94869ea667f1d1b888057dd",
+    "templates/marketing/content-remix/README.md": "10bdd1285c17647c999541a075eb4740f9a068f18fc9a282d5c72254153b814a",
+    "templates/marketing/content-remix/SETUP.md": "d39dea32e018e1c4064cc4281de106266a19dd7bb7c8192c71b2bc833edc7dc8",
+    "templates/marketing/content-remix/examples/first-run.md": "a743cc790f06f3b1250b17653e32188ce4d6607b29e03bbf6ba02d7b180fea80",
+    "templates/marketing/content-remix/template.yaml": "e036a436a36111eb7897f6e3773e46eeb8e5f819c5a4d4ee82b8d9675950a1a9",
+    "skills/remix-content/SKILL.md": "530b9bdddce98c71d9b84af68b0ea356f5a133455d6191bf2fe79345321a370d",
+    "skills/remix-content/skill.yaml": "420338dc1738ab8ee980257c7f8db41239eb4e5a6fcaf1d72128add54b58b7ac",
+    "templates/marketing/newsletter-desk/PROFILE.md": "dead9c5d466751a8c608f291708b61c4cebb5f910f122fa7334b19d8e08677af",
+    "templates/marketing/newsletter-desk/README.md": "d495f288cedc0083cb4730980e9664a4623b54cca033298da2d42fa411e8669d",
+    "templates/marketing/newsletter-desk/SETUP.md": "fdf320ce2f89f57bcfc92401c945f737ae5e4db29f6e3d319297d2ee4aa1c59f",
+    "templates/marketing/newsletter-desk/examples/first-run.md": "4f5b3816d75798ec8e5983c2c1f154b5079b677eb7f46dcdcc899a795016e5bb",
+    "templates/marketing/newsletter-desk/template.yaml": "62fdec3640f6eccf7979eb12d0d6311c16b57f4d69ffb57d4346d5afab2235bb",
+    "skills/draft-newsletter/SKILL.md": "f77821243979674185495a6295fa20911dbb94a4c58ce81c0c77fb1f7d79f613",
+    "skills/draft-newsletter/skill.yaml": "0483bda7ca4aad51352ec440d230a45ffc34cf6a3b26516d0b5ee2018769e94b"
+  },
+  "pluginGaps": [
+    "Gmail",
+    "Google Docs",
+    "Slack"
+  ],
+  "checks": [
+    {
+      "method": "test",
+      "result": "pass",
+      "evidence": "node tools/validate.mjs --pr passes with this package; see the batch result document for the exact run."
+    },
+    {
+      "method": "source-check",
+      "result": "pass",
+      "evidence": "Original files copied byte for byte (sha256 listed in originalFiles); SKILL.md changes limited to frontmatter, notice and removed Grok-only lines (MODIFICATIONS.md)."
+    }
+  ],
+  "notVerified": [
+    "Not run with a real model in a Teloa host",
+    "Connectors not exercised with real accounts"
+  ]
+}

@@ -1,0 +1,112 @@
+{
+  "format": "teloa.market-catalog-entry/v1",
+  "id": "teloa.grok-marketing-team",
+  "kind": "solution",
+  "delivery": "install",
+  "version": "1.0.0",
+  "taxonomy": {
+    "functions": [
+      "content-design",
+      "data-research"
+    ],
+    "industries": [
+      "marketing",
+      "marketing/new-media"
+    ]
+  },
+  "solution": {
+    "packageId": "grok-bot-templates-team-marketing",
+    "title": {
+      "zh-CN": "内容营销团队",
+      "en": "Marketing team",
+      "zh-TW": "內容行銷團隊"
+    },
+    "summary": {
+      "zh-CN": "三位员工覆盖竞品差异、内容改编与周报组装：竞品监测员工（团队负责人）只报实质变化并引用数字，内容改编员工把已接受稿件变成各渠道 DRAFT，简报编辑员工把保存的链接组装成未发送的一期。不发布、不发 Slack/X、不发送简报。",
+      "en": "Three employees track competitor changes, adapt accepted content and assemble newsletters. The competitor analyst leads; channel variants and newsletters stay as drafts for review."
+    },
+    "scope": "general",
+    "capabilities": {
+      "now": [
+        {
+          "zh-CN": "添加后创建原团队的 3 位员工（负责人：竞品监测员工），每位员工绑定原技能方法与完整原 PROFILE 工作方法与资料；原技能的六段方法正文未改。",
+          "en": "Adds the original team's 3 employees (lead: Competitor Watch), each bound to its original skills and complete PROFILE working method and reference; the six-field skill bodies are unchanged."
+        },
+        {
+          "zh-CN": "团队定义、交接与启动指令以原文保留为资料参考；例行任务以未排程的工作模板提供，由你测试后再建计划。",
+          "en": "Team definition, handoffs and kickoff are kept verbatim as references; routines ship as unscheduled work templates for you to test and then schedule."
+        }
+      ],
+      "needs": [
+        {
+          "zh-CN": "你已配置可用模型；员工在 L1 草稿自治级别工作，只产出待审成果。",
+          "en": "A working model configured by you; employees work at autonomy L1 and only produce review-ready artifacts."
+        },
+        {
+          "zh-CN": "需要 GitHub 或 Notion 只读数据时，由你在连接页配置对应连接器；原模板还用到 Gmail, Google Docs, Slack，本包未提供对应工具；可先提供材料，或另外配置应用并授权。",
+          "en": "Configure the GitHub or Notion connector yourself when read-only data is needed; the originals also use Gmail, Google Docs, Slack, whose tools are not declared here; provide material or configure and authorize suitable apps separately."
+        }
+      ],
+      "permissions": [
+        {
+          "zh-CN": "不发送、不发布、不合并、不付款、不改生产、不建工单、不加入序列；连接只声明只读工具。",
+          "en": "Never sends, publishes, merges, pays, changes production, files issues or enrolls anyone; connections declare read-only tools only."
+        },
+        {
+          "zh-CN": "不携带作者账号、密钥、记忆或会话；例行任务不自动启用。",
+          "en": "Carries no author accounts, secrets, memory or conversations; routines are not enabled automatically."
+        }
+      ]
+    }
+  },
+  "upstream": null,
+  "modifications": [
+    {
+      "zh-CN": "来源：cobusgreyling/grok-bot-templates@4f3f28b4e657 teams/marketing（MIT，Cobus Greyling）。原 template.yaml / PROFILE.md 映射为 teloa.role/v1，原件逐字节保留在 references/。",
+      "en": "Source: cobusgreyling/grok-bot-templates@4f3f28b4e657 teams/marketing (MIT, Cobus Greyling). template.yaml / PROFILE.md mapped to teloa.role/v1; originals kept byte for byte under references/."
+    },
+    {
+      "zh-CN": "原 SKILL.md 加 Teloa frontmatter 与修改声明，删去 Grok 的粘贴/斜杠命令说明；六段方法正文不变，skill.yaml 原样保留。",
+      "en": "Original SKILL.md gets Teloa frontmatter and a change notice; Grok paste/slash-command lines removed; the six-field method is unchanged and skill.yaml is kept verbatim."
+    },
+    {
+      "zh-CN": "协调者以 role-coordination 关联显式映射到成员；启动指令与交接保留原文参考，不自动运行或授予权限；例行任务转为未排程工作模板；只声明 GitHub/Notion 只读连接。",
+      "en": "The coordinator is explicitly linked to each member by role-coordination. Kickoff and handoffs remain original references and do not automatically run work or grant authority. Routines become unscheduled work templates; only GitHub/Notion read-only connections are declared."
+    }
+  ],
+  "license": {
+    "spdx": "MIT",
+    "files": [
+      "LICENSE"
+    ]
+  },
+  "compatibility": {
+    "status": "needs-configuration",
+    "teloa": ">=0.2.0-alpha.8",
+    "dsh": "0.2.1-alpha.1",
+    "conditions": [
+      {
+        "zh-CN": "添加时一次确认安装包内全部原技能；员工、资料、工作模板与可选连接按 Teloa 方案接收流程逐项启用，不自动运行。",
+        "en": "Adding installs all bundled original skills in one confirmation; employees, references, work templates and optional connections are enabled through Teloa's solution flow and never run on their own."
+      },
+      {
+        "zh-CN": "原模板为 Grok Bot 共享云电脑写就（浏览器、/workspace 文件、连接器）；在 Teloa 中浏览与文件能力取决于你授予员工的工具，未授予时员工只按你提供的材料工作。",
+        "en": "The originals were written for Grok Bot's shared cloud computer (browser, /workspace files, connectors); in Teloa browsing and file access depend on the tools you grant, otherwise employees work from the material you provide."
+      },
+      {
+        "zh-CN": "未在 Teloa 宿主中用真实模型端到端验证本团队；原仓库的示例输出是虚构样例。",
+        "en": "Not verified end to end with a real model in a Teloa host; the repository's example outputs are fictional samples."
+      }
+    ]
+  },
+  "requires": {
+    "tools": [],
+    "network": true,
+    "runtimes": []
+  },
+  "review": {
+    "status": "approved",
+    "reviewedAt": "2026-10-14",
+    "reviewer": "Teloa"
+  }
+}

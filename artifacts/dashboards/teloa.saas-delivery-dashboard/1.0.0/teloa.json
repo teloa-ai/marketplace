@@ -1,0 +1,24 @@
+{
+  "format": "teloa.business-package/v4",
+  "id": "teloa-saas-delivery-dashboard",
+  "title": "软件与 SaaS 产品交付看板",
+  "version": "1.0.0",
+  "domain": "software",
+  "scope": "saas-delivery",
+  "description": "围绕需求、阻塞与发布准备的交付看板：哪些需求的验收条件还没确认、哪些已过计划完成、哪些阻塞未解除、待发布版本的检查清单与回滚方案是否就绪。交付是否成立按验收条件判断，不用任务数量冒充完成率。",
+  "resources": [
+    {
+      "id": "saas-delivery",
+      "kind": "business-configuration",
+      "title": "交付总览",
+      "version": "1.0.0",
+      "required": true,
+      "source": {
+        "kind": "local",
+        "path": "configuration.json"
+      }
+    }
+  ],
+  "relations": [],
+  "entrypoints": []
+}

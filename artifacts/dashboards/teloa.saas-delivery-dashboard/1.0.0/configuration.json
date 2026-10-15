@@ -1,0 +1,2083 @@
+{
+  "format": "teloa.business-dashboard-resource/v1",
+  "id": "saas-delivery",
+  "version": "1.0.0",
+  "configuration": {
+    "format": "teloa.business-configuration/v2",
+    "scope": "saas-delivery",
+    "title": "软件与 SaaS 产品交付",
+    "sources": [
+      {
+        "sourceId": "records",
+        "kind": "local-records"
+      }
+    ],
+    "definitions": [
+      {
+        "kind": "object-type",
+        "definition": {
+          "format": "teloa.business-object-type/v2",
+          "id": "requirement",
+          "version": "1.0.0",
+          "domain": "saas-delivery",
+          "title": "需求",
+          "localized": {
+            "title": {
+              "original": "需求",
+              "defaultLocale": "zh-CN",
+              "locales": {
+                "zh-CN": "需求",
+                "zh-TW": "需求",
+                "zh-HK": {
+                  "fallback": "zh-TW"
+                },
+                "en": "Requirement"
+              }
+            },
+            "unit": {
+              "original": "项",
+              "defaultLocale": "zh-CN",
+              "locales": {
+                "zh-CN": "项",
+                "zh-TW": "項",
+                "zh-HK": {
+                  "fallback": "zh-TW"
+                },
+                "en": "items"
+              }
+            },
+            "lead": {
+              "original": "一项要交付给用户的能力。写清阶段、负责人、验收条件与下一步；交付是否成立看验收条件，不看任务数量。",
+              "defaultLocale": "zh-CN",
+              "locales": {
+                "zh-CN": "一项要交付给用户的能力。写清阶段、负责人、验收条件与下一步；交付是否成立看验收条件，不看任务数量。",
+                "zh-TW": "一項要交付給使用者的能力。寫清階段、負責人、驗收條件與下一步；交付是否成立看驗收條件，不看任務數量。",
+                "zh-HK": {
+                  "fallback": "zh-TW"
+                },
+                "en": "A capability to deliver to users. Record its stage, owner, acceptance criteria and next step; delivery is judged by acceptance criteria, not by task counts."
+              }
+            }
+          },
+          "unit": "项",
+          "lead": "一项要交付给用户的能力。写清阶段、负责人、验收条件与下一步；交付是否成立看验收条件，不看任务数量。",
+          "sourceId": "records",
+          "fields": [
+            {
+              "name": "stage",
+              "label": "阶段",
+              "localized": {
+                "label": {
+                  "original": "阶段",
+                  "defaultLocale": "zh-CN",
+                  "locales": {
+                    "zh-CN": "阶段",
+                    "zh-TW": "階段",
+                    "zh-HK": {
+                      "fallback": "zh-TW"
+                    },
+                    "en": "Stage"
+                  }
+                },
+                "values": [
+                  {
+                    "original": "待澄清",
+                    "defaultLocale": "zh-CN",
+                    "locales": {
+                      "zh-CN": "待澄清",
+                      "zh-TW": "待釐清",
+                      "zh-HK": {
+                        "fallback": "zh-TW"
+                      },
+                      "en": "Clarifying"
+                    }
+                  },
+                  {
+                    "original": "已排期",
+                    "defaultLocale": "zh-CN",
+                    "locales": {
+                      "zh-CN": "已排期",
+                      "zh-TW": "已排程",
+                      "zh-HK": {
+                        "fallback": "zh-TW"
+                      },
+                      "en": "Scheduled"
+                    }
+                  },
+                  {
+                    "original": "开发中",
+                    "defaultLocale": "zh-CN",
+                    "locales": {
+                      "zh-CN": "开发中",
+                      "zh-TW": "開發中",
+                      "zh-HK": {
+                        "fallback": "zh-TW"
+                      },
+                      "en": "In development"
+                    }
+                  },
+                  {
+                    "original": "待验收",
+                    "defaultLocale": "zh-CN",
+                    "locales": {
+                      "zh-CN": "待验收",
+                      "zh-TW": "待驗收",
+                      "zh-HK": {
+                        "fallback": "zh-TW"
+                      },
+                      "en": "Awaiting acceptance"
+                    }
+                  },
+                  {
+                    "original": "已交付",
+                    "defaultLocale": "zh-CN",
+                    "locales": {
+                      "zh-CN": "已交付",
+                      "zh-TW": "已交付",
+                      "zh-HK": {
+                        "fallback": "zh-TW"
+                      },
+                      "en": "Delivered"
+                    }
+                  },
+                  {
+                    "original": "已搁置",
+                    "defaultLocale": "zh-CN",
+                    "locales": {
+                      "zh-CN": "已搁置",
+                      "zh-TW": "已擱置",
+                      "zh-HK": {
+                        "fallback": "zh-TW"
+                      },
+                      "en": "Shelved"
+                    }
+                  }
+                ]
+              },
+              "type": "enum",
+              "required": true,
+              "from": "阶段",
+              "values": [
+                "待澄清",
+                "已排期",
+                "开发中",
+                "待验收",
+                "已交付",
+                "已搁置"
+              ]
+            },
+            {
+              "name": "owner",
+              "label": "负责人",
+              "localized": {
+                "label": {
+                  "original": "负责人",
+                  "defaultLocale": "zh-CN",
+                  "locales": {
+                    "zh-CN": "负责人",
+                    "zh-TW": "負責人",
+                    "zh-HK": {
+                      "fallback": "zh-TW"
+                    },
+                    "en": "Owner"
+                  }
+                }
+              },
+              "type": "text",
+              "required": true,
+              "from": "负责人"
+            },
+            {
+              "name": "acceptance",
+              "label": "验收条件",
+              "localized": {
+                "label": {
+                  "original": "验收条件",
+                  "defaultLocale": "zh-CN",
+                  "locales": {
+                    "zh-CN": "验收条件",
+                    "zh-TW": "驗收條件",
+                    "zh-HK": {
+                      "fallback": "zh-TW"
+                    },
+                    "en": "Acceptance criteria"
+                  }
+                },
+                "values": [
+                  {
+                    "original": "未写",
+                    "defaultLocale": "zh-CN",
+                    "locales": {
+                      "zh-CN": "未写",
+                      "zh-TW": "未撰寫",
+                      "zh-HK": {
+                        "fallback": "zh-TW"
+                      },
+                      "en": "Not written"
+                    }
+                  },
+                  {
+                    "original": "待确认",
+                    "defaultLocale": "zh-CN",
+                    "locales": {
+                      "zh-CN": "待确认",
+                      "zh-TW": "待確認",
+                      "zh-HK": {
+                        "fallback": "zh-TW"
+                      },
+                      "en": "Pending confirmation"
+                    }
+                  },
+                  {
+                    "original": "已确认",
+                    "defaultLocale": "zh-CN",
+                    "locales": {
+                      "zh-CN": "已确认",
+                      "zh-TW": "已確認",
+                      "zh-HK": {
+                        "fallback": "zh-TW"
+                      },
+                      "en": "Confirmed"
+                    }
+                  }
+                ]
+              },
+              "type": "enum",
+              "required": true,
+              "from": "验收条件",
+              "values": [
+                "未写",
+                "待确认",
+                "已确认"
+              ]
+            },
+            {
+              "name": "priority",
+              "label": "优先级",
+              "localized": {
+                "label": {
+                  "original": "优先级",
+                  "defaultLocale": "zh-CN",
+                  "locales": {
+                    "zh-CN": "优先级",
+                    "zh-TW": "優先順序",
+                    "zh-HK": {
+                      "fallback": "zh-TW"
+                    },
+                    "en": "Priority"
+                  }
+                },
+                "values": [
+                  {
+                    "original": "P0",
+                    "defaultLocale": "zh-CN",
+                    "locales": {
+                      "zh-CN": "P0",
+                      "zh-TW": "P0",
+                      "zh-HK": {
+                        "fallback": "zh-TW"
+                      },
+                      "en": "P0"
+                    }
+                  },
+                  {
+                    "original": "P1",
+                    "defaultLocale": "zh-CN",
+                    "locales": {
+                      "zh-CN": "P1",
+                      "zh-TW": "P1",
+                      "zh-HK": {
+                        "fallback": "zh-TW"
+                      },
+                      "en": "P1"
+                    }
+                  },
+                  {
+                    "original": "P2",
+                    "defaultLocale": "zh-CN",
+                    "locales": {
+                      "zh-CN": "P2",
+                      "zh-TW": "P2",
+                      "zh-HK": {
+                        "fallback": "zh-TW"
+                      },
+                      "en": "P2"
+                    }
+                  },
+                  {
+                    "original": "P3",
+                    "defaultLocale": "zh-CN",
+                    "locales": {
+                      "zh-CN": "P3",
+                      "zh-TW": "P3",
+                      "zh-HK": {
+                        "fallback": "zh-TW"
+                      },
+                      "en": "P3"
+                    }
+                  }
+                ]
+              },
+              "type": "enum",
+              "required": true,
+              "from": "优先级",
+              "values": [
+                "P0",
+                "P1",
+                "P2",
+                "P3"
+              ]
+            },
+            {
+              "name": "next-step",
+              "label": "下一步",
+              "localized": {
+                "label": {
+                  "original": "下一步",
+                  "defaultLocale": "zh-CN",
+                  "locales": {
+                    "zh-CN": "下一步",
+                    "zh-TW": "下一步",
+                    "zh-HK": {
+                      "fallback": "zh-TW"
+                    },
+                    "en": "Next step"
+                  }
+                }
+              },
+              "type": "text",
+              "required": false,
+              "from": "下一步"
+            },
+            {
+              "name": "target-release",
+              "label": "目标版本",
+              "localized": {
+                "label": {
+                  "original": "目标版本",
+                  "defaultLocale": "zh-CN",
+                  "locales": {
+                    "zh-CN": "目标版本",
+                    "zh-TW": "目標版本",
+                    "zh-HK": {
+                      "fallback": "zh-TW"
+                    },
+                    "en": "Target release"
+                  }
+                }
+              },
+              "type": "text",
+              "required": false,
+              "from": "目标版本"
+            },
+            {
+              "name": "due",
+              "label": "计划完成",
+              "localized": {
+                "label": {
+                  "original": "计划完成",
+                  "defaultLocale": "zh-CN",
+                  "locales": {
+                    "zh-CN": "计划完成",
+                    "zh-TW": "預計完成",
+                    "zh-HK": {
+                      "fallback": "zh-TW"
+                    },
+                    "en": "Planned completion"
+                  }
+                }
+              },
+              "type": "datetime",
+              "required": false,
+              "from": "计划完成"
+            }
+          ],
+          "progress": {
+            "stageField": "stage",
+            "unfinished": [
+              "待澄清",
+              "已排期",
+              "开发中",
+              "待验收"
+            ],
+            "waitingForYou": [
+              "待验收"
+            ]
+          }
+        }
+      },
+      {
+        "kind": "object-type",
+        "definition": {
+          "format": "teloa.business-object-type/v2",
+          "id": "blocker",
+          "version": "1.0.0",
+          "domain": "saas-delivery",
+          "title": "阻塞",
+          "localized": {
+            "title": {
+              "original": "阻塞",
+              "defaultLocale": "zh-CN",
+              "locales": {
+                "zh-CN": "阻塞",
+                "zh-TW": "阻礙",
+                "zh-HK": {
+                  "fallback": "zh-TW"
+                },
+                "en": "Blocker"
+              }
+            },
+            "unit": {
+              "original": "个",
+              "defaultLocale": "zh-CN",
+              "locales": {
+                "zh-CN": "个",
+                "zh-TW": "個",
+                "zh-HK": {
+                  "fallback": "zh-TW"
+                },
+                "en": "items"
+              }
+            },
+            "lead": {
+              "original": "妨碍需求或发布推进的问题。写清影响、负责人与预计解除时间；解除后改为已解除，保留记录。",
+              "defaultLocale": "zh-CN",
+              "locales": {
+                "zh-CN": "妨碍需求或发布推进的问题。写清影响、负责人与预计解除时间；解除后改为已解除，保留记录。",
+                "zh-TW": "妨礙需求或發布推進的問題。寫清影響、負責人與預計排除時間；排除後改為已排除，保留紀錄。",
+                "zh-HK": {
+                  "fallback": "zh-TW"
+                },
+                "en": "An issue holding back a requirement or release. Record impact, owner and expected resolution; mark it resolved when cleared and keep the record."
+              }
+            }
+          },
+          "unit": "个",
+          "lead": "妨碍需求或发布推进的问题。写清影响、负责人与预计解除时间；解除后改为已解除，保留记录。",
+          "sourceId": "records",
+          "fields": [
+            {
+              "name": "status",
+              "label": "状态",
+              "localized": {
+                "label": {
+                  "original": "状态",
+                  "defaultLocale": "zh-CN",
+                  "locales": {
+                    "zh-CN": "状态",
+                    "zh-TW": "狀態",
+                    "zh-HK": {
+                      "fallback": "zh-TW"
+                    },
+                    "en": "Status"
+                  }
+                },
+                "values": [
+                  {
+                    "original": "未解除",
+                    "defaultLocale": "zh-CN",
+                    "locales": {
+                      "zh-CN": "未解除",
+                      "zh-TW": "未排除",
+                      "zh-HK": {
+                        "fallback": "zh-TW"
+                      },
+                      "en": "Open"
+                    }
+                  },
+                  {
+                    "original": "已解除",
+                    "defaultLocale": "zh-CN",
+                    "locales": {
+                      "zh-CN": "已解除",
+                      "zh-TW": "已排除",
+                      "zh-HK": {
+                        "fallback": "zh-TW"
+                      },
+                      "en": "Resolved"
+                    }
+                  }
+                ]
+              },
+              "type": "enum",
+              "required": true,
+              "from": "状态",
+              "values": [
+                "未解除",
+                "已解除"
+              ]
+            },
+            {
+              "name": "impact",
+              "label": "影响",
+              "localized": {
+                "label": {
+                  "original": "影响",
+                  "defaultLocale": "zh-CN",
+                  "locales": {
+                    "zh-CN": "影响",
+                    "zh-TW": "影響",
+                    "zh-HK": {
+                      "fallback": "zh-TW"
+                    },
+                    "en": "Impact"
+                  }
+                },
+                "values": [
+                  {
+                    "original": "阻断发布",
+                    "defaultLocale": "zh-CN",
+                    "locales": {
+                      "zh-CN": "阻断发布",
+                      "zh-TW": "阻斷發布",
+                      "zh-HK": {
+                        "fallback": "zh-TW"
+                      },
+                      "en": "Blocks release"
+                    }
+                  },
+                  {
+                    "original": "阻断需求",
+                    "defaultLocale": "zh-CN",
+                    "locales": {
+                      "zh-CN": "阻断需求",
+                      "zh-TW": "阻斷需求",
+                      "zh-HK": {
+                        "fallback": "zh-TW"
+                      },
+                      "en": "Blocks requirement"
+                    }
+                  },
+                  {
+                    "original": "有替代方案",
+                    "defaultLocale": "zh-CN",
+                    "locales": {
+                      "zh-CN": "有替代方案",
+                      "zh-TW": "有替代方案",
+                      "zh-HK": {
+                        "fallback": "zh-TW"
+                      },
+                      "en": "Workaround available"
+                    }
+                  }
+                ]
+              },
+              "type": "enum",
+              "required": true,
+              "from": "影响",
+              "values": [
+                "阻断发布",
+                "阻断需求",
+                "有替代方案"
+              ]
+            },
+            {
+              "name": "owner",
+              "label": "负责人",
+              "localized": {
+                "label": {
+                  "original": "负责人",
+                  "defaultLocale": "zh-CN",
+                  "locales": {
+                    "zh-CN": "负责人",
+                    "zh-TW": "負責人",
+                    "zh-HK": {
+                      "fallback": "zh-TW"
+                    },
+                    "en": "Owner"
+                  }
+                }
+              },
+              "type": "text",
+              "required": true,
+              "from": "负责人"
+            },
+            {
+              "name": "related",
+              "label": "关联需求或版本",
+              "localized": {
+                "label": {
+                  "original": "关联需求或版本",
+                  "defaultLocale": "zh-CN",
+                  "locales": {
+                    "zh-CN": "关联需求或版本",
+                    "zh-TW": "關聯需求或版本",
+                    "zh-HK": {
+                      "fallback": "zh-TW"
+                    },
+                    "en": "Related requirement or release"
+                  }
+                }
+              },
+              "type": "text",
+              "required": false,
+              "from": "关联需求或版本"
+            },
+            {
+              "name": "next-step",
+              "label": "下一步",
+              "localized": {
+                "label": {
+                  "original": "下一步",
+                  "defaultLocale": "zh-CN",
+                  "locales": {
+                    "zh-CN": "下一步",
+                    "zh-TW": "下一步",
+                    "zh-HK": {
+                      "fallback": "zh-TW"
+                    },
+                    "en": "Next step"
+                  }
+                }
+              },
+              "type": "text",
+              "required": false,
+              "from": "下一步"
+            },
+            {
+              "name": "raised-at",
+              "label": "提出时间",
+              "localized": {
+                "label": {
+                  "original": "提出时间",
+                  "defaultLocale": "zh-CN",
+                  "locales": {
+                    "zh-CN": "提出时间",
+                    "zh-TW": "提出時間",
+                    "zh-HK": {
+                      "fallback": "zh-TW"
+                    },
+                    "en": "Raised at"
+                  }
+                }
+              },
+              "type": "datetime",
+              "required": true,
+              "from": "提出时间"
+            },
+            {
+              "name": "resolve-by",
+              "label": "预计解除",
+              "localized": {
+                "label": {
+                  "original": "预计解除",
+                  "defaultLocale": "zh-CN",
+                  "locales": {
+                    "zh-CN": "预计解除",
+                    "zh-TW": "預計排除",
+                    "zh-HK": {
+                      "fallback": "zh-TW"
+                    },
+                    "en": "Expected resolution"
+                  }
+                }
+              },
+              "type": "datetime",
+              "required": false,
+              "from": "预计解除"
+            }
+          ],
+          "progress": {
+            "stageField": "status",
+            "unfinished": [
+              "未解除"
+            ],
+            "waitingForYou": []
+          }
+        }
+      },
+      {
+        "kind": "object-type",
+        "definition": {
+          "format": "teloa.business-object-type/v2",
+          "id": "release",
+          "version": "1.0.0",
+          "domain": "saas-delivery",
+          "title": "发布",
+          "localized": {
+            "title": {
+              "original": "发布",
+              "defaultLocale": "zh-CN",
+              "locales": {
+                "zh-CN": "发布",
+                "zh-TW": "發布",
+                "zh-HK": {
+                  "fallback": "zh-TW"
+                },
+                "en": "Release"
+              }
+            },
+            "unit": {
+              "original": "次",
+              "defaultLocale": "zh-CN",
+              "locales": {
+                "zh-CN": "次",
+                "zh-TW": "次",
+                "zh-HK": {
+                  "fallback": "zh-TW"
+                },
+                "en": "releases"
+              }
+            },
+            "lead": {
+              "original": "一次计划中的版本发布。检查清单、回滚方案与发布说明齐备后，由负责人作出放行决定；看板只呈现准备情况，不替你放行。",
+              "defaultLocale": "zh-CN",
+              "locales": {
+                "zh-CN": "一次计划中的版本发布。检查清单、回滚方案与发布说明齐备后，由负责人作出放行决定；看板只呈现准备情况，不替你放行。",
+                "zh-TW": "一次計畫中的版本發布。檢查清單、回復方案與發布說明齊備後，由負責人作出放行決定；看板只呈現準備情況，不替你放行。",
+                "zh-HK": {
+                  "fallback": "zh-TW"
+                },
+                "en": "A planned release. Once the checklist, rollback plan and release notes are ready, the owner makes the go/no-go decision; the dashboard shows readiness and never approves on your behalf."
+              }
+            }
+          },
+          "unit": "次",
+          "lead": "一次计划中的版本发布。检查清单、回滚方案与发布说明齐备后，由负责人作出放行决定；看板只呈现准备情况，不替你放行。",
+          "sourceId": "records",
+          "fields": [
+            {
+              "name": "readiness",
+              "label": "准备状态",
+              "localized": {
+                "label": {
+                  "original": "准备状态",
+                  "defaultLocale": "zh-CN",
+                  "locales": {
+                    "zh-CN": "准备状态",
+                    "zh-TW": "準備狀態",
+                    "zh-HK": {
+                      "fallback": "zh-TW"
+                    },
+                    "en": "Readiness"
+                  }
+                },
+                "values": [
+                  {
+                    "original": "准备中",
+                    "defaultLocale": "zh-CN",
+                    "locales": {
+                      "zh-CN": "准备中",
+                      "zh-TW": "準備中",
+                      "zh-HK": {
+                        "fallback": "zh-TW"
+                      },
+                      "en": "Preparing"
+                    }
+                  },
+                  {
+                    "original": "待放行决定",
+                    "defaultLocale": "zh-CN",
+                    "locales": {
+                      "zh-CN": "待放行决定",
+                      "zh-TW": "待放行決定",
+                      "zh-HK": {
+                        "fallback": "zh-TW"
+                      },
+                      "en": "Awaiting go/no-go"
+                    }
+                  },
+                  {
+                    "original": "已放行",
+                    "defaultLocale": "zh-CN",
+                    "locales": {
+                      "zh-CN": "已放行",
+                      "zh-TW": "已放行",
+                      "zh-HK": {
+                        "fallback": "zh-TW"
+                      },
+                      "en": "Approved to ship"
+                    }
+                  },
+                  {
+                    "original": "已发布",
+                    "defaultLocale": "zh-CN",
+                    "locales": {
+                      "zh-CN": "已发布",
+                      "zh-TW": "已發布",
+                      "zh-HK": {
+                        "fallback": "zh-TW"
+                      },
+                      "en": "Released"
+                    }
+                  },
+                  {
+                    "original": "已推迟",
+                    "defaultLocale": "zh-CN",
+                    "locales": {
+                      "zh-CN": "已推迟",
+                      "zh-TW": "已延後",
+                      "zh-HK": {
+                        "fallback": "zh-TW"
+                      },
+                      "en": "Postponed"
+                    }
+                  }
+                ]
+              },
+              "type": "enum",
+              "required": true,
+              "from": "准备状态",
+              "values": [
+                "准备中",
+                "待放行决定",
+                "已放行",
+                "已发布",
+                "已推迟"
+              ]
+            },
+            {
+              "name": "owner",
+              "label": "负责人",
+              "localized": {
+                "label": {
+                  "original": "负责人",
+                  "defaultLocale": "zh-CN",
+                  "locales": {
+                    "zh-CN": "负责人",
+                    "zh-TW": "負責人",
+                    "zh-HK": {
+                      "fallback": "zh-TW"
+                    },
+                    "en": "Owner"
+                  }
+                }
+              },
+              "type": "text",
+              "required": true,
+              "from": "负责人"
+            },
+            {
+              "name": "planned-at",
+              "label": "计划发布",
+              "localized": {
+                "label": {
+                  "original": "计划发布",
+                  "defaultLocale": "zh-CN",
+                  "locales": {
+                    "zh-CN": "计划发布",
+                    "zh-TW": "預計發布",
+                    "zh-HK": {
+                      "fallback": "zh-TW"
+                    },
+                    "en": "Planned release"
+                  }
+                }
+              },
+              "type": "datetime",
+              "required": true,
+              "from": "计划发布"
+            },
+            {
+              "name": "checklist",
+              "label": "检查清单",
+              "localized": {
+                "label": {
+                  "original": "检查清单",
+                  "defaultLocale": "zh-CN",
+                  "locales": {
+                    "zh-CN": "检查清单",
+                    "zh-TW": "檢查清單",
+                    "zh-HK": {
+                      "fallback": "zh-TW"
+                    },
+                    "en": "Checklist"
+                  }
+                },
+                "values": [
+                  {
+                    "original": "未开始",
+                    "defaultLocale": "zh-CN",
+                    "locales": {
+                      "zh-CN": "未开始",
+                      "zh-TW": "未開始",
+                      "zh-HK": {
+                        "fallback": "zh-TW"
+                      },
+                      "en": "Not started"
+                    }
+                  },
+                  {
+                    "original": "部分完成",
+                    "defaultLocale": "zh-CN",
+                    "locales": {
+                      "zh-CN": "部分完成",
+                      "zh-TW": "部分完成",
+                      "zh-HK": {
+                        "fallback": "zh-TW"
+                      },
+                      "en": "Partly done"
+                    }
+                  },
+                  {
+                    "original": "全部完成",
+                    "defaultLocale": "zh-CN",
+                    "locales": {
+                      "zh-CN": "全部完成",
+                      "zh-TW": "全部完成",
+                      "zh-HK": {
+                        "fallback": "zh-TW"
+                      },
+                      "en": "All done"
+                    }
+                  }
+                ]
+              },
+              "type": "enum",
+              "required": true,
+              "from": "检查清单",
+              "values": [
+                "未开始",
+                "部分完成",
+                "全部完成"
+              ]
+            },
+            {
+              "name": "rollback",
+              "label": "回滚方案",
+              "localized": {
+                "label": {
+                  "original": "回滚方案",
+                  "defaultLocale": "zh-CN",
+                  "locales": {
+                    "zh-CN": "回滚方案",
+                    "zh-TW": "回復方案",
+                    "zh-HK": {
+                      "fallback": "zh-TW"
+                    },
+                    "en": "Rollback plan"
+                  }
+                },
+                "values": [
+                  {
+                    "original": "未准备",
+                    "defaultLocale": "zh-CN",
+                    "locales": {
+                      "zh-CN": "未准备",
+                      "zh-TW": "未準備",
+                      "zh-HK": {
+                        "fallback": "zh-TW"
+                      },
+                      "en": "Not prepared"
+                    }
+                  },
+                  {
+                    "original": "已准备",
+                    "defaultLocale": "zh-CN",
+                    "locales": {
+                      "zh-CN": "已准备",
+                      "zh-TW": "已準備",
+                      "zh-HK": {
+                        "fallback": "zh-TW"
+                      },
+                      "en": "Prepared"
+                    }
+                  }
+                ]
+              },
+              "type": "enum",
+              "required": true,
+              "from": "回滚方案",
+              "values": [
+                "未准备",
+                "已准备"
+              ]
+            },
+            {
+              "name": "notes",
+              "label": "发布说明",
+              "localized": {
+                "label": {
+                  "original": "发布说明",
+                  "defaultLocale": "zh-CN",
+                  "locales": {
+                    "zh-CN": "发布说明",
+                    "zh-TW": "發布說明",
+                    "zh-HK": {
+                      "fallback": "zh-TW"
+                    },
+                    "en": "Release notes"
+                  }
+                },
+                "values": [
+                  {
+                    "original": "未写",
+                    "defaultLocale": "zh-CN",
+                    "locales": {
+                      "zh-CN": "未写",
+                      "zh-TW": "未撰寫",
+                      "zh-HK": {
+                        "fallback": "zh-TW"
+                      },
+                      "en": "Not written"
+                    }
+                  },
+                  {
+                    "original": "草稿",
+                    "defaultLocale": "zh-CN",
+                    "locales": {
+                      "zh-CN": "草稿",
+                      "zh-TW": "草稿",
+                      "zh-HK": {
+                        "fallback": "zh-TW"
+                      },
+                      "en": "Draft"
+                    }
+                  },
+                  {
+                    "original": "已审",
+                    "defaultLocale": "zh-CN",
+                    "locales": {
+                      "zh-CN": "已审",
+                      "zh-TW": "已審閱",
+                      "zh-HK": {
+                        "fallback": "zh-TW"
+                      },
+                      "en": "Reviewed"
+                    }
+                  }
+                ]
+              },
+              "type": "enum",
+              "required": true,
+              "from": "发布说明",
+              "values": [
+                "未写",
+                "草稿",
+                "已审"
+              ]
+            },
+            {
+              "name": "decision",
+              "label": "放行结论",
+              "localized": {
+                "label": {
+                  "original": "放行结论",
+                  "defaultLocale": "zh-CN",
+                  "locales": {
+                    "zh-CN": "放行结论",
+                    "zh-TW": "放行結論",
+                    "zh-HK": {
+                      "fallback": "zh-TW"
+                    },
+                    "en": "Go/no-go decision"
+                  }
+                }
+              },
+              "type": "text",
+              "required": false,
+              "from": "放行结论"
+            },
+            {
+              "name": "next-step",
+              "label": "下一步",
+              "localized": {
+                "label": {
+                  "original": "下一步",
+                  "defaultLocale": "zh-CN",
+                  "locales": {
+                    "zh-CN": "下一步",
+                    "zh-TW": "下一步",
+                    "zh-HK": {
+                      "fallback": "zh-TW"
+                    },
+                    "en": "Next step"
+                  }
+                }
+              },
+              "type": "text",
+              "required": false,
+              "from": "下一步"
+            }
+          ],
+          "progress": {
+            "stageField": "readiness",
+            "unfinished": [
+              "准备中",
+              "待放行决定"
+            ],
+            "waitingForYou": [
+              "待放行决定"
+            ]
+          }
+        }
+      },
+      {
+        "kind": "view",
+        "definition": {
+          "format": "teloa.business-view/v2",
+          "id": "blocker-open",
+          "version": "1.0.0",
+          "domain": "saas-delivery",
+          "title": "未解除阻塞",
+          "localized": {
+            "title": {
+              "original": "未解除阻塞",
+              "defaultLocale": "zh-CN",
+              "locales": {
+                "zh-CN": "未解除阻塞",
+                "zh-TW": "未排除阻礙",
+                "zh-HK": {
+                  "fallback": "zh-TW"
+                },
+                "en": "Open blockers"
+              }
+            }
+          },
+          "kind": "board-card",
+          "chart": "number",
+          "objectType": "blocker",
+          "filters": [
+            {
+              "field": "status",
+              "op": "eq",
+              "values": [
+                "未解除"
+              ]
+            }
+          ],
+          "limit": 1,
+          "measures": [
+            {
+              "id": "count",
+              "label": "未解除",
+              "localized": {
+                "label": {
+                  "original": "未解除",
+                  "defaultLocale": "zh-CN",
+                  "locales": {
+                    "zh-CN": "未解除",
+                    "zh-TW": "未排除",
+                    "zh-HK": {
+                      "fallback": "zh-TW"
+                    },
+                    "en": "Open"
+                  }
+                }
+              },
+              "aggregation": "count"
+            }
+          ]
+        }
+      },
+      {
+        "kind": "view",
+        "definition": {
+          "format": "teloa.business-view/v2",
+          "id": "req-unconfirmed",
+          "version": "1.0.0",
+          "domain": "saas-delivery",
+          "title": "验收条件未确认的进行中需求",
+          "localized": {
+            "title": {
+              "original": "验收条件未确认的进行中需求",
+              "defaultLocale": "zh-CN",
+              "locales": {
+                "zh-CN": "验收条件未确认的进行中需求",
+                "zh-TW": "驗收條件未確認的進行中需求",
+                "zh-HK": {
+                  "fallback": "zh-TW"
+                },
+                "en": "In-progress requirements without confirmed acceptance"
+              }
+            }
+          },
+          "kind": "board-card",
+          "chart": "number",
+          "objectType": "requirement",
+          "filters": [
+            {
+              "field": "stage",
+              "op": "in",
+              "values": [
+                "待澄清",
+                "已排期",
+                "开发中",
+                "待验收"
+              ]
+            },
+            {
+              "field": "acceptance",
+              "op": "ne",
+              "values": [
+                "已确认"
+              ]
+            }
+          ],
+          "limit": 1,
+          "measures": [
+            {
+              "id": "count",
+              "label": "需求",
+              "localized": {
+                "label": {
+                  "original": "需求",
+                  "defaultLocale": "zh-CN",
+                  "locales": {
+                    "zh-CN": "需求",
+                    "zh-TW": "需求",
+                    "zh-HK": {
+                      "fallback": "zh-TW"
+                    },
+                    "en": "Requirements"
+                  }
+                }
+              },
+              "aggregation": "count"
+            }
+          ]
+        }
+      },
+      {
+        "kind": "view",
+        "definition": {
+          "format": "teloa.business-view/v2",
+          "id": "req-awaiting",
+          "version": "1.0.0",
+          "domain": "saas-delivery",
+          "title": "待验收需求",
+          "localized": {
+            "title": {
+              "original": "待验收需求",
+              "defaultLocale": "zh-CN",
+              "locales": {
+                "zh-CN": "待验收需求",
+                "zh-TW": "待驗收需求",
+                "zh-HK": {
+                  "fallback": "zh-TW"
+                },
+                "en": "Requirements awaiting acceptance"
+              }
+            }
+          },
+          "kind": "board-card",
+          "chart": "number",
+          "objectType": "requirement",
+          "filters": [
+            {
+              "field": "stage",
+              "op": "eq",
+              "values": [
+                "待验收"
+              ]
+            }
+          ],
+          "limit": 1,
+          "measures": [
+            {
+              "id": "count",
+              "label": "需求",
+              "localized": {
+                "label": {
+                  "original": "需求",
+                  "defaultLocale": "zh-CN",
+                  "locales": {
+                    "zh-CN": "需求",
+                    "zh-TW": "需求",
+                    "zh-HK": {
+                      "fallback": "zh-TW"
+                    },
+                    "en": "Requirements"
+                  }
+                }
+              },
+              "aggregation": "count"
+            }
+          ]
+        }
+      },
+      {
+        "kind": "view",
+        "definition": {
+          "format": "teloa.business-view/v2",
+          "id": "release-pending",
+          "version": "1.0.0",
+          "domain": "saas-delivery",
+          "title": "待发布版本（按计划时间）",
+          "localized": {
+            "title": {
+              "original": "待发布版本（按计划时间）",
+              "defaultLocale": "zh-CN",
+              "locales": {
+                "zh-CN": "待发布版本（按计划时间）",
+                "zh-TW": "待發布版本（依預計時間）",
+                "zh-HK": {
+                  "fallback": "zh-TW"
+                },
+                "en": "Upcoming releases by plan date"
+              }
+            }
+          },
+          "kind": "list",
+          "chart": "table",
+          "objectType": "release",
+          "filters": [
+            {
+              "field": "readiness",
+              "op": "in",
+              "values": [
+                "准备中",
+                "待放行决定"
+              ]
+            }
+          ],
+          "sort": {
+            "by": "measure",
+            "measureId": "at",
+            "direction": "asc"
+          },
+          "limit": 50,
+          "measures": [
+            {
+              "id": "at",
+              "label": "计划发布",
+              "localized": {
+                "label": {
+                  "original": "计划发布",
+                  "defaultLocale": "zh-CN",
+                  "locales": {
+                    "zh-CN": "计划发布",
+                    "zh-TW": "預計發布",
+                    "zh-HK": {
+                      "fallback": "zh-TW"
+                    },
+                    "en": "Planned release"
+                  }
+                }
+              },
+              "aggregation": "min",
+              "field": "planned-at"
+            }
+          ]
+        }
+      },
+      {
+        "kind": "view",
+        "definition": {
+          "format": "teloa.business-view/v2",
+          "id": "release-checklist",
+          "version": "1.0.0",
+          "domain": "saas-delivery",
+          "title": "待发布版本的检查清单",
+          "localized": {
+            "title": {
+              "original": "待发布版本的检查清单",
+              "defaultLocale": "zh-CN",
+              "locales": {
+                "zh-CN": "待发布版本的检查清单",
+                "zh-TW": "待發布版本的檢查清單",
+                "zh-HK": {
+                  "fallback": "zh-TW"
+                },
+                "en": "Checklist of upcoming releases"
+              }
+            }
+          },
+          "kind": "distribution",
+          "chart": "table",
+          "objectType": "release",
+          "dimension": {
+            "field": "checklist",
+            "limit": 10
+          },
+          "filters": [
+            {
+              "field": "readiness",
+              "op": "in",
+              "values": [
+                "准备中",
+                "待放行决定"
+              ]
+            }
+          ],
+          "sort": {
+            "by": "dimension",
+            "direction": "asc"
+          },
+          "limit": 10,
+          "measures": [
+            {
+              "id": "count",
+              "label": "版本数",
+              "localized": {
+                "label": {
+                  "original": "版本数",
+                  "defaultLocale": "zh-CN",
+                  "locales": {
+                    "zh-CN": "版本数",
+                    "zh-TW": "版本數",
+                    "zh-HK": {
+                      "fallback": "zh-TW"
+                    },
+                    "en": "Releases"
+                  }
+                }
+              },
+              "aggregation": "count"
+            }
+          ]
+        }
+      },
+      {
+        "kind": "view",
+        "definition": {
+          "format": "teloa.business-view/v2",
+          "id": "blocker-open-list",
+          "version": "1.0.0",
+          "domain": "saas-delivery",
+          "title": "未解除阻塞（最早提出在前）",
+          "localized": {
+            "title": {
+              "original": "未解除阻塞（最早提出在前）",
+              "defaultLocale": "zh-CN",
+              "locales": {
+                "zh-CN": "未解除阻塞（最早提出在前）",
+                "zh-TW": "未排除阻礙（最早提出在前）",
+                "zh-HK": {
+                  "fallback": "zh-TW"
+                },
+                "en": "Open blockers, oldest first"
+              }
+            }
+          },
+          "kind": "list",
+          "chart": "table",
+          "objectType": "blocker",
+          "filters": [
+            {
+              "field": "status",
+              "op": "eq",
+              "values": [
+                "未解除"
+              ]
+            }
+          ],
+          "sort": {
+            "by": "measure",
+            "measureId": "at",
+            "direction": "asc"
+          },
+          "limit": 50,
+          "measures": [
+            {
+              "id": "at",
+              "label": "提出时间",
+              "localized": {
+                "label": {
+                  "original": "提出时间",
+                  "defaultLocale": "zh-CN",
+                  "locales": {
+                    "zh-CN": "提出时间",
+                    "zh-TW": "提出時間",
+                    "zh-HK": {
+                      "fallback": "zh-TW"
+                    },
+                    "en": "Raised at"
+                  }
+                }
+              },
+              "aggregation": "min",
+              "field": "raised-at"
+            }
+          ]
+        }
+      },
+      {
+        "kind": "view",
+        "definition": {
+          "format": "teloa.business-view/v2",
+          "id": "req-overdue",
+          "version": "1.0.0",
+          "domain": "saas-delivery",
+          "title": "已过计划完成的需求",
+          "localized": {
+            "title": {
+              "original": "已过计划完成的需求",
+              "defaultLocale": "zh-CN",
+              "locales": {
+                "zh-CN": "已过计划完成的需求",
+                "zh-TW": "已過預計完成的需求",
+                "zh-HK": {
+                  "fallback": "zh-TW"
+                },
+                "en": "Requirements past planned completion"
+              }
+            }
+          },
+          "kind": "list",
+          "chart": "table",
+          "objectType": "requirement",
+          "filters": [
+            {
+              "field": "stage",
+              "op": "in",
+              "values": [
+                "待澄清",
+                "已排期",
+                "开发中",
+                "待验收"
+              ]
+            }
+          ],
+          "sort": {
+            "by": "measure",
+            "measureId": "at",
+            "direction": "asc"
+          },
+          "window": {
+            "field": "due",
+            "relative": "overdue"
+          },
+          "limit": 50,
+          "measures": [
+            {
+              "id": "at",
+              "label": "计划完成",
+              "localized": {
+                "label": {
+                  "original": "计划完成",
+                  "defaultLocale": "zh-CN",
+                  "locales": {
+                    "zh-CN": "计划完成",
+                    "zh-TW": "預計完成",
+                    "zh-HK": {
+                      "fallback": "zh-TW"
+                    },
+                    "en": "Planned completion"
+                  }
+                }
+              },
+              "aggregation": "min",
+              "field": "due"
+            }
+          ]
+        }
+      },
+      {
+        "kind": "view",
+        "definition": {
+          "format": "teloa.business-view/v2",
+          "id": "req-stage",
+          "version": "1.0.0",
+          "domain": "saas-delivery",
+          "title": "需求阶段分布",
+          "localized": {
+            "title": {
+              "original": "需求阶段分布",
+              "defaultLocale": "zh-CN",
+              "locales": {
+                "zh-CN": "需求阶段分布",
+                "zh-TW": "需求階段分布",
+                "zh-HK": {
+                  "fallback": "zh-TW"
+                },
+                "en": "Requirements by stage"
+              }
+            }
+          },
+          "kind": "distribution",
+          "chart": "bar",
+          "objectType": "requirement",
+          "dimension": {
+            "field": "stage",
+            "limit": 10
+          },
+          "filters": [],
+          "sort": {
+            "by": "dimension",
+            "direction": "asc"
+          },
+          "limit": 10,
+          "measures": [
+            {
+              "id": "count",
+              "label": "需求",
+              "localized": {
+                "label": {
+                  "original": "需求",
+                  "defaultLocale": "zh-CN",
+                  "locales": {
+                    "zh-CN": "需求",
+                    "zh-TW": "需求",
+                    "zh-HK": {
+                      "fallback": "zh-TW"
+                    },
+                    "en": "Requirements"
+                  }
+                }
+              },
+              "aggregation": "count"
+            }
+          ]
+        }
+      },
+      {
+        "kind": "view",
+        "definition": {
+          "format": "teloa.business-view/v2",
+          "id": "req-awaiting-list",
+          "version": "1.0.0",
+          "domain": "saas-delivery",
+          "title": "待验收需求清单",
+          "localized": {
+            "title": {
+              "original": "待验收需求清单",
+              "defaultLocale": "zh-CN",
+              "locales": {
+                "zh-CN": "待验收需求清单",
+                "zh-TW": "待驗收需求清單",
+                "zh-HK": {
+                  "fallback": "zh-TW"
+                },
+                "en": "Requirements awaiting acceptance"
+              }
+            }
+          },
+          "kind": "list",
+          "chart": "table",
+          "objectType": "requirement",
+          "filters": [
+            {
+              "field": "stage",
+              "op": "eq",
+              "values": [
+                "待验收"
+              ]
+            }
+          ],
+          "sort": {
+            "by": "measure",
+            "measureId": "at",
+            "direction": "asc"
+          },
+          "limit": 50,
+          "measures": [
+            {
+              "id": "at",
+              "label": "计划完成",
+              "localized": {
+                "label": {
+                  "original": "计划完成",
+                  "defaultLocale": "zh-CN",
+                  "locales": {
+                    "zh-CN": "计划完成",
+                    "zh-TW": "預計完成",
+                    "zh-HK": {
+                      "fallback": "zh-TW"
+                    },
+                    "en": "Planned completion"
+                  }
+                }
+              },
+              "aggregation": "min",
+              "field": "due"
+            }
+          ]
+        }
+      },
+      {
+        "kind": "widget",
+        "definition": {
+          "format": "teloa.business-widget/v1",
+          "id": "w-blocker-open",
+          "version": "1.0.0",
+          "domain": "saas-delivery",
+          "title": "未解除阻塞",
+          "localized": {
+            "title": {
+              "original": "未解除阻塞",
+              "defaultLocale": "zh-CN",
+              "locales": {
+                "zh-CN": "未解除阻塞",
+                "zh-TW": "未排除阻礙",
+                "zh-HK": {
+                  "fallback": "zh-TW"
+                },
+                "en": "Open blockers"
+              }
+            }
+          },
+          "kind": "view-ref",
+          "viewRef": "blocker-open"
+        }
+      },
+      {
+        "kind": "widget",
+        "definition": {
+          "format": "teloa.business-widget/v1",
+          "id": "w-req-unconfirmed",
+          "version": "1.0.0",
+          "domain": "saas-delivery",
+          "title": "验收条件未确认的进行中需求",
+          "localized": {
+            "title": {
+              "original": "验收条件未确认的进行中需求",
+              "defaultLocale": "zh-CN",
+              "locales": {
+                "zh-CN": "验收条件未确认的进行中需求",
+                "zh-TW": "驗收條件未確認的進行中需求",
+                "zh-HK": {
+                  "fallback": "zh-TW"
+                },
+                "en": "In-progress requirements without confirmed acceptance"
+              }
+            }
+          },
+          "kind": "view-ref",
+          "viewRef": "req-unconfirmed"
+        }
+      },
+      {
+        "kind": "widget",
+        "definition": {
+          "format": "teloa.business-widget/v1",
+          "id": "w-req-awaiting",
+          "version": "1.0.0",
+          "domain": "saas-delivery",
+          "title": "待验收需求",
+          "localized": {
+            "title": {
+              "original": "待验收需求",
+              "defaultLocale": "zh-CN",
+              "locales": {
+                "zh-CN": "待验收需求",
+                "zh-TW": "待驗收需求",
+                "zh-HK": {
+                  "fallback": "zh-TW"
+                },
+                "en": "Requirements awaiting acceptance"
+              }
+            }
+          },
+          "kind": "view-ref",
+          "viewRef": "req-awaiting"
+        }
+      },
+      {
+        "kind": "widget",
+        "definition": {
+          "format": "teloa.business-widget/v1",
+          "id": "w-release-pending",
+          "version": "1.0.0",
+          "domain": "saas-delivery",
+          "title": "待发布版本（按计划时间）",
+          "localized": {
+            "title": {
+              "original": "待发布版本（按计划时间）",
+              "defaultLocale": "zh-CN",
+              "locales": {
+                "zh-CN": "待发布版本（按计划时间）",
+                "zh-TW": "待發布版本（依預計時間）",
+                "zh-HK": {
+                  "fallback": "zh-TW"
+                },
+                "en": "Upcoming releases by plan date"
+              }
+            }
+          },
+          "kind": "view-ref",
+          "viewRef": "release-pending"
+        }
+      },
+      {
+        "kind": "widget",
+        "definition": {
+          "format": "teloa.business-widget/v1",
+          "id": "w-release-checklist",
+          "version": "1.0.0",
+          "domain": "saas-delivery",
+          "title": "待发布版本的检查清单",
+          "localized": {
+            "title": {
+              "original": "待发布版本的检查清单",
+              "defaultLocale": "zh-CN",
+              "locales": {
+                "zh-CN": "待发布版本的检查清单",
+                "zh-TW": "待發布版本的檢查清單",
+                "zh-HK": {
+                  "fallback": "zh-TW"
+                },
+                "en": "Checklist of upcoming releases"
+              }
+            }
+          },
+          "kind": "view-ref",
+          "viewRef": "release-checklist"
+        }
+      },
+      {
+        "kind": "widget",
+        "definition": {
+          "format": "teloa.business-widget/v1",
+          "id": "w-blocker-open-list",
+          "version": "1.0.0",
+          "domain": "saas-delivery",
+          "title": "未解除阻塞（最早提出在前）",
+          "localized": {
+            "title": {
+              "original": "未解除阻塞（最早提出在前）",
+              "defaultLocale": "zh-CN",
+              "locales": {
+                "zh-CN": "未解除阻塞（最早提出在前）",
+                "zh-TW": "未排除阻礙（最早提出在前）",
+                "zh-HK": {
+                  "fallback": "zh-TW"
+                },
+                "en": "Open blockers, oldest first"
+              }
+            }
+          },
+          "kind": "view-ref",
+          "viewRef": "blocker-open-list"
+        }
+      },
+      {
+        "kind": "widget",
+        "definition": {
+          "format": "teloa.business-widget/v1",
+          "id": "w-req-overdue",
+          "version": "1.0.0",
+          "domain": "saas-delivery",
+          "title": "已过计划完成的需求",
+          "localized": {
+            "title": {
+              "original": "已过计划完成的需求",
+              "defaultLocale": "zh-CN",
+              "locales": {
+                "zh-CN": "已过计划完成的需求",
+                "zh-TW": "已過預計完成的需求",
+                "zh-HK": {
+                  "fallback": "zh-TW"
+                },
+                "en": "Requirements past planned completion"
+              }
+            }
+          },
+          "kind": "view-ref",
+          "viewRef": "req-overdue"
+        }
+      },
+      {
+        "kind": "widget",
+        "definition": {
+          "format": "teloa.business-widget/v1",
+          "id": "w-req-stage",
+          "version": "1.0.0",
+          "domain": "saas-delivery",
+          "title": "需求阶段分布",
+          "localized": {
+            "title": {
+              "original": "需求阶段分布",
+              "defaultLocale": "zh-CN",
+              "locales": {
+                "zh-CN": "需求阶段分布",
+                "zh-TW": "需求階段分布",
+                "zh-HK": {
+                  "fallback": "zh-TW"
+                },
+                "en": "Requirements by stage"
+              }
+            }
+          },
+          "kind": "view-ref",
+          "viewRef": "req-stage"
+        }
+      },
+      {
+        "kind": "widget",
+        "definition": {
+          "format": "teloa.business-widget/v1",
+          "id": "w-req-awaiting-list",
+          "version": "1.0.0",
+          "domain": "saas-delivery",
+          "title": "待验收需求清单",
+          "localized": {
+            "title": {
+              "original": "待验收需求清单",
+              "defaultLocale": "zh-CN",
+              "locales": {
+                "zh-CN": "待验收需求清单",
+                "zh-TW": "待驗收需求清單",
+                "zh-HK": {
+                  "fallback": "zh-TW"
+                },
+                "en": "Requirements awaiting acceptance"
+              }
+            }
+          },
+          "kind": "view-ref",
+          "viewRef": "req-awaiting-list"
+        }
+      },
+      {
+        "kind": "dashboard",
+        "definition": {
+          "format": "teloa.business-dashboard/v1",
+          "id": "overview",
+          "version": "1.0.0",
+          "domain": "saas-delivery",
+          "title": "交付总览",
+          "localized": {
+            "title": {
+              "original": "交付总览",
+              "defaultLocale": "zh-CN",
+              "locales": {
+                "zh-CN": "交付总览",
+                "zh-TW": "交付總覽",
+                "zh-HK": {
+                  "fallback": "zh-TW"
+                },
+                "en": "Delivery overview"
+              }
+            }
+          },
+          "widgets": [
+            "w-blocker-open",
+            "w-req-unconfirmed",
+            "w-req-awaiting",
+            "w-release-pending",
+            "w-release-checklist",
+            "w-blocker-open-list",
+            "w-req-overdue",
+            "w-req-stage",
+            "w-req-awaiting-list"
+          ],
+          "layout": [
+            {
+              "widget": "w-blocker-open",
+              "x": 0,
+              "y": 0,
+              "w": 4,
+              "h": 3
+            },
+            {
+              "widget": "w-req-unconfirmed",
+              "x": 4,
+              "y": 0,
+              "w": 4,
+              "h": 3
+            },
+            {
+              "widget": "w-req-awaiting",
+              "x": 8,
+              "y": 0,
+              "w": 4,
+              "h": 3
+            },
+            {
+              "widget": "w-release-pending",
+              "x": 0,
+              "y": 3,
+              "w": 8,
+              "h": 6
+            },
+            {
+              "widget": "w-release-checklist",
+              "x": 8,
+              "y": 3,
+              "w": 4,
+              "h": 6
+            },
+            {
+              "widget": "w-blocker-open-list",
+              "x": 0,
+              "y": 9,
+              "w": 6,
+              "h": 6
+            },
+            {
+              "widget": "w-req-overdue",
+              "x": 6,
+              "y": 9,
+              "w": 6,
+              "h": 6
+            },
+            {
+              "widget": "w-req-stage",
+              "x": 0,
+              "y": 15,
+              "w": 5,
+              "h": 6
+            },
+            {
+              "widget": "w-req-awaiting-list",
+              "x": 5,
+              "y": 15,
+              "w": 7,
+              "h": 6
+            }
+          ],
+          "refresh": {
+            "kind": "every",
+            "seconds": 300
+          },
+          "acknowledgeShortInterval": false
+        }
+      }
+    ],
+    "pages": [
+      {
+        "id": "home",
+        "title": "交付总览",
+        "kind": "dashboard",
+        "dashboardId": "overview"
+      },
+      {
+        "id": "requirements",
+        "title": "需求",
+        "kind": "records",
+        "objectType": "requirement",
+        "fields": [
+          "stage",
+          "owner",
+          "acceptance",
+          "priority",
+          "next-step",
+          "target-release",
+          "due"
+        ],
+        "allowCreate": true,
+        "allowEdit": true,
+        "allowArchive": true
+      },
+      {
+        "id": "blockers",
+        "title": "阻塞",
+        "kind": "records",
+        "objectType": "blocker",
+        "fields": [
+          "status",
+          "impact",
+          "owner",
+          "related",
+          "next-step",
+          "raised-at",
+          "resolve-by"
+        ],
+        "allowCreate": true,
+        "allowEdit": true,
+        "allowArchive": true
+      },
+      {
+        "id": "releases",
+        "title": "发布",
+        "kind": "records",
+        "objectType": "release",
+        "fields": [
+          "readiness",
+          "owner",
+          "planned-at",
+          "checklist",
+          "rollback",
+          "notes",
+          "decision",
+          "next-step"
+        ],
+        "allowCreate": true,
+        "allowEdit": true,
+        "allowArchive": true
+      }
+    ],
+    "homePageId": "home"
+  }
+}

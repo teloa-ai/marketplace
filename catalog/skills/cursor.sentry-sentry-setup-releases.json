@@ -1,0 +1,313 @@
+{
+  "format": "teloa.market-catalog-entry/v1",
+  "id": "cursor.sentry-sentry-setup-releases",
+  "kind": "skill",
+  "delivery": "upstream",
+  "version": "1.4.3",
+  "taxonomy": {
+    "functions": [
+      "cloud-ops"
+    ],
+    "industries": [
+      "general"
+    ]
+  },
+  "skill": {
+    "name": "sentry-setup-releases",
+    "title": {
+      "zh-CN": "sentry-setup-releases（Sentry）",
+      "zh-TW": "sentry-setup-releases（Sentry）",
+      "en": "sentry-setup-releases (Sentry)"
+    },
+    "summary": {
+      "zh-CN": "设置 Sentry 发布与部署追踪：给事件打上版本与环境标签、在 CI 中连同提交创建 release、接通可疑提交与代码映射，让 Sentry 能指出哪个版本引入了问题、哪个提交负责以及发布健康度。",
+      "zh-TW": "設定 Sentry 發佈與部署追蹤：給事件打上版本與環境標籤、在 CI 中連同提交建立 release、接通可疑提交與程式碼對應，讓 Sentry 能指出哪個版本引入了問題、哪個提交負責以及發佈健康度。",
+      "en": "Set up Sentry releases and deploy tracking — tag events with a version and environment, create the release in CI with its commits, and wire up suspect commits and code mappings, so Sentry can show which release introduced an issue, which commit is responsible, and release health. Use when asked to set up releases, track deploys, see what changed, or when issues show an unknown release or no suspect commit."
+    }
+  },
+  "upstream": {
+    "kind": "github",
+    "repository": {
+      "host": "github.com",
+      "owner": "getsentry",
+      "repo": "plugin-cursor"
+    },
+    "commit": "135513f89f293c587fbffb852afdf00a256df32a",
+    "path": "skills/sentry-setup-releases",
+    "files": [
+      {
+        "path": "SKILL.md",
+        "gitBlob": "b111cdedb52fcf27b3c22a53933fcbe0b60b21b6",
+        "sha256": "d7e482855e8cbfd4dd460c23f00ed9d183c4005791b90f87f4738cda91912975",
+        "size": 7133
+      },
+      {
+        "path": "references/auth-token.md",
+        "gitBlob": "415ee2c04779fbf564c03a60a706b6bcc94f4e3b",
+        "sha256": "9c0e3f83ce3749942793274ef8f8b409b3a4942995d829eb48bcaf94a255f13d",
+        "size": 2984
+      },
+      {
+        "path": "references/concepts/ai-monitoring.md",
+        "gitBlob": "ee24b1f7be2cbf479047147dbfdba2477d447310",
+        "sha256": "b288557b80bbb040c5b07a757e72ecfcbb95b94746958b450e6c1f9e57e51212",
+        "size": 6736
+      },
+      {
+        "path": "references/concepts/choosing-a-signal.md",
+        "gitBlob": "1321ac6aed349ce976cc91dedfe55af08c32c8c3",
+        "sha256": "ae6f568afa88a1908ae00c3321df2b20aa3904c86284a1bffc1163a22682bb12",
+        "size": 5299
+      },
+      {
+        "path": "references/concepts/crons.md",
+        "gitBlob": "827bdfe149f6fe2332ed7d0e9e3c6c34255fbf47",
+        "sha256": "29d86dc843280f2f84601ccc6e8187f6d9c86daf9389e57744f838e8e3313db8",
+        "size": 3199
+      },
+      {
+        "path": "references/concepts/data-scrubbing.md",
+        "gitBlob": "e8a412eec1f5bed3e565f0ca793bfc4caf7a26ab",
+        "sha256": "04a6b929db78862843baa6dbf6f7fa19ab22841881b7345e02e5968db14ed349",
+        "size": 1981
+      },
+      {
+        "path": "references/concepts/errors.md",
+        "gitBlob": "0018b4e6d88f69a515fcaa9acbb4a468a297c2f7",
+        "sha256": "1a74885db07b19ce5f0bd173cfa431522eeb25234a49180c7d3fdfb450f2a7a1",
+        "size": 1994
+      },
+      {
+        "path": "references/concepts/logging.md",
+        "gitBlob": "0c136f751e378f64d567db244ddb8dbf5721a37e",
+        "sha256": "cbddb3adabdfedfddb39c0671e8e777e9c05e07457e6e7dc12ed82c6cafac67f",
+        "size": 4833
+      },
+      {
+        "path": "references/concepts/metrics.md",
+        "gitBlob": "55c87b3f334f1277ba24f70a3ee7ff46508028fd",
+        "sha256": "7888ad1a59edad7f63f0d39d8c4d13a9419daa86d1dc26eeb126d849872f8763",
+        "size": 2692
+      },
+      {
+        "path": "references/concepts/monitors.md",
+        "gitBlob": "d82a6b6214ca5de0a0bd064c95ed6d26e67a7819",
+        "sha256": "3c5d3a32d26307bb331dcfa539f801f82a0187d59f8cd45a26dc83d7d3800c04",
+        "size": 3909
+      },
+      {
+        "path": "references/concepts/profiling.md",
+        "gitBlob": "6ae53e18255fb929386778ec7e9112a73dadf2e0",
+        "sha256": "b6033b25779c4b536206e8dc4bd4d340d481b5f931fac6325e2fbdd4f353557e",
+        "size": 1901
+      },
+      {
+        "path": "references/concepts/reduce-volume.md",
+        "gitBlob": "05aef55e3e3756ad28429786e26687b7b59ecbe9",
+        "sha256": "239652b48cd9e2f69c4ecfd909f683684c3e372c4e76958b80749a3c7b84d079",
+        "size": 2408
+      },
+      {
+        "path": "references/concepts/releases.md",
+        "gitBlob": "6e5151c6d579b99e57b7a62fff2f0428cb9c07e5",
+        "sha256": "a0113c10d2ebff3ed012f269cc2a699315af5d58b03ebd316efa0953e1a3a55b",
+        "size": 2150
+      },
+      {
+        "path": "references/concepts/session-replay.md",
+        "gitBlob": "d29c57acc9832d0547c144168aff0ae3e34b755a",
+        "sha256": "2efede55f45e41b0e9a00efe276e2456653e7b13df2892da3a1e4a45f8ca7430",
+        "size": 1846
+      },
+      {
+        "path": "references/concepts/tracing.md",
+        "gitBlob": "becad0141fd3e9c207164c2234b4914482c41084",
+        "sha256": "310b7b5dc7f02044076ade0a0d2d28e6fe12a3b8c5b936d552eee2ce498be967",
+        "size": 3062
+      },
+      {
+        "path": "references/concepts/uptime.md",
+        "gitBlob": "2dfd4c843bff8101b317946a431801c673e9845c",
+        "sha256": "6c3a316477cce221819d524c890e97e24ac09c66102470e49e2704a68351396a",
+        "size": 5758
+      },
+      {
+        "path": "references/concepts/user-feedback.md",
+        "gitBlob": "1df4b259717d1106b0ff2666ee0233fbf1284cc3",
+        "sha256": "fb72ff8a609ac8d4ef9e20f9f1f1e502969e26d24802d072620e903390228a13",
+        "size": 1685
+      },
+      {
+        "path": "references/debug-artifacts/android.md",
+        "gitBlob": "611613437770b28053f26cb40fb714d0e5004c24",
+        "sha256": "765aec7213ca461f35c7632b2b1a46545ed2a83432d432b4557cfd0f6ad07370",
+        "size": 3115
+      },
+      {
+        "path": "references/debug-artifacts/apple.md",
+        "gitBlob": "80be4bc5272a96c6fb9ed4486cf53ae2a735715e",
+        "sha256": "a2353c51050e79773f612af98038acc23e82b2f0a577ef3a7aa27b592da01deb",
+        "size": 4316
+      },
+      {
+        "path": "references/debug-artifacts/dotnet.md",
+        "gitBlob": "2c4ad4dbe02ad60cf83ffbcaceb40c5616ab0de0",
+        "sha256": "493c475dbfaeb15c1a0d89e50debf4257533e7068ce268b95c1c1a0eb8b14e1d",
+        "size": 3350
+      },
+      {
+        "path": "references/debug-artifacts/flutter.md",
+        "gitBlob": "294ee3ee98d084c41117846dda1f65cb02640970",
+        "sha256": "070fb745ae92a71adf00720b0f2bb5422ece9883a1276280bc0866849096cf72",
+        "size": 2793
+      },
+      {
+        "path": "references/debug-artifacts/index.md",
+        "gitBlob": "4064aa54f16711cab319d31c843284d3b964c2d0",
+        "sha256": "368297c50ff18ceffa5237fcb04e0d388a3cc096f5485922d854300bf2776fad",
+        "size": 4509
+      },
+      {
+        "path": "references/debug-artifacts/javascript.md",
+        "gitBlob": "8f7d83cc3f068869dd9a014048f3bc485fb2f771",
+        "sha256": "02ddbd4aa845a929ccc34bd16d90ccd8b2a7dac72ce4d4482a90688d18ac5440",
+        "size": 4120
+      },
+      {
+        "path": "references/debug-artifacts/matching.md",
+        "gitBlob": "510f7bdd7ac3deedbe945eb2709b2579e9631de0",
+        "sha256": "674e80fbdbb620349cc3e58aacf4403d567aa424c4753da23aba706c5750abaa",
+        "size": 4006
+      },
+      {
+        "path": "references/debug-artifacts/react-native.md",
+        "gitBlob": "4d22fb52073b26467404bfb93226880bd00de732",
+        "sha256": "21fe64da4625ee595d4a2637bc56d1cc810a5909e9983e559cd4fbfcf25efee7",
+        "size": 3211
+      },
+      {
+        "path": "references/releases/ci-pipeline.md",
+        "gitBlob": "a14b119cf58f01488d8ea67aa0a4ba8feab80874",
+        "sha256": "28cc68660a14f7ed5bcabb242f5454f63f15470099b22cd5baee7eb90ce784b1",
+        "size": 9442
+      },
+      {
+        "path": "references/releases/index.md",
+        "gitBlob": "446ea08daf3ddf48bff359db405c2c1a1b1aa0ad",
+        "sha256": "7505b36e5bde992b9cadc4c02d1413357d1842c7e3a345e88e849c66eb027855",
+        "size": 5374
+      },
+      {
+        "path": "references/releases/suspect-commits.md",
+        "gitBlob": "359634f3eaa8e5d3c7c4828f8e24f28d95aec39d",
+        "sha256": "78655207ac327d1f800951ddd7d84003ec8dbbc9f0c831686348e282c780990f",
+        "size": 6510
+      },
+      {
+        "path": "references/releases/tagging.md",
+        "gitBlob": "8ec1b3e842e73f0a83412b1b56bc08eb87f00056",
+        "sha256": "d163ba830accbdb2c4198f147dbcdbd89fe36c631279dd41d1f2b7ba702da095",
+        "size": 7563
+      },
+      {
+        "path": "references/releases/troubleshooting.md",
+        "gitBlob": "59f5ccfea99e6fa6728d46cd71d12e414fe622c2",
+        "sha256": "4d6516f8c8dd690ab0cb36142697a780464354b15321b91de97fa6611d07f67f",
+        "size": 5843
+      },
+      {
+        "path": "references/sdk-docs.md",
+        "gitBlob": "1ac2fb491f9cedcd69900a170bae6bde8f1423db",
+        "sha256": "869c49b88b6e17d6c21c4b14c0b14d42fa320e5d7e0bcd411bd87f0e4076c3a8",
+        "size": 5147
+      },
+      {
+        "path": "references/search-query-language.md",
+        "gitBlob": "0a83311346358a45ae57a31f71af54f91ee6b484",
+        "sha256": "4b8fc77d1c636a2c3a1ac75c14643763f982e2def396a22b567fb9fb2cc3fd86",
+        "size": 10000
+      },
+      {
+        "path": "references/setup-verification.md",
+        "gitBlob": "be20a52a3ceedf14769c7932267ae87fd89bf291",
+        "sha256": "1eabba5b0c28afe5fb806bf736e4d7f7c851d55fdb0bd9126434e4b95c8373e4",
+        "size": 5740
+      },
+      {
+        "path": "licenses/upstream/LICENSE",
+        "repositoryPath": "LICENSE",
+        "gitBlob": "961fdcdacd42d8e703cbae5b93fbc0ed630ffd64",
+        "sha256": "d4a59a34056a3a4943d7b5fff9c4125432692069c811fcbabd5385d890ccfcbd",
+        "size": 1100
+      }
+    ]
+  },
+  "origin": {
+    "marketplace": "cursor",
+    "installs": null,
+    "installsLabel": "未记录 / Not recorded",
+    "countedAt": "2026-10-14"
+  },
+  "alternatives": [],
+  "unsupportedComponents": [],
+  "modifications": [],
+  "plugin": {
+    "marketplace": "cursor",
+    "id": "579",
+    "title": {
+      "zh-CN": "Sentry",
+      "zh-TW": "Sentry",
+      "en": "Sentry"
+    },
+    "summary": {
+      "zh-CN": "Sentry 排错与接入技能：调试并修复 Issue、让堆栈可读、接入 SDK 与各类信号、配置发布追踪、告警与 OpenTelemetry 导出；配合 Sentry 官方远程 MCP 使用。",
+      "zh-TW": "Sentry 除錯與接入技能：除錯並修復 Issue、讓堆疊可讀、接入 SDK 與各類訊號、設定發佈追蹤、告警與 OpenTelemetry 匯出；搭配 Sentry 官方遠端 MCP 使用。",
+      "en": "Sentry Plugin for Cursor to help with debugging including MCP and skill capabilities."
+    },
+    "root": ".",
+    "manifest": {
+      "path": ".cursor-plugin/plugin.json",
+      "gitBlob": "43e67882582375f8e4a466c4cc4b90a09d7aa0fa",
+      "sha256": "ced89075d517ab8dae686c297dafb58dde19ea67a776a4c7fc72f0ca7ebbb41d"
+    },
+    "license": {
+      "spdx": "MIT"
+    },
+    "connectors": [
+      "teloa.mcp-sentry"
+    ]
+  },
+  "license": {
+    "spdx": "MIT",
+    "files": [
+      "licenses/upstream/LICENSE"
+    ]
+  },
+  "compatibility": {
+    "status": "content-only",
+    "teloa": ">=0.2.0-alpha.8",
+    "dsh": "0.1.7-rc.1",
+    "conditions": [
+      {
+        "zh-CN": "来源为 Cursor Plugin Marketplace 公开插件 Sentry（pluginId 579），按固定 commit 135513f89f29 锁定；正文面向 Cursor 代理编写，提及的 Cursor 专有命令、变量或内置工具在 Teloa 中不可用时需自行替代",
+        "zh-TW": "來源為 Cursor Plugin Marketplace 公開外掛 Sentry（pluginId 579），按固定 commit 135513f89f29 鎖定；正文面向 Cursor 代理撰寫，提及的 Cursor 專有命令、變數或內建工具在 Teloa 中不可用時需自行替代",
+        "en": "Taken from the public Cursor Plugin Marketplace plugin Sentry (pluginId 579), pinned at commit 135513f89f29; the text targets the Cursor agent, so Cursor-specific commands, variables or built-in tools it mentions must be substituted when unavailable in Teloa"
+      },
+      {
+        "zh-CN": "许可为原始仓库 LICENSE（MIT），不在技能目录内；技能正文为英文原件，未翻译",
+        "zh-TW": "授權為原始儲存庫 LICENSE（MIT），不在技能目錄內；技能正文為英文原件，未翻譯",
+        "en": "The license is LICENSE (MIT) in the original repository, outside the skill directory; the skill text is the English original and is not translated"
+      }
+    ]
+  },
+  "requires": {
+    "tools": [],
+    "network": false,
+    "runtimes": []
+  },
+  "review": {
+    "status": "approved",
+    "reviewedAt": "2026-10-14",
+    "reviewer": "Teloa"
+  }
+}

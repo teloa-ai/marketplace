@@ -1,0 +1,35 @@
+{
+  "format": "teloa.official-template-review/v1",
+  "entryId": "teloa.grok-launch-coordinator",
+  "version": "1.0.0",
+  "reviewedAt": "2026-10-14",
+  "reviewer": "Teloa",
+  "verdict": "approve",
+  "origin": {
+    "kind": "derived",
+    "repository": "cobusgreyling/grok-bot-templates",
+    "commit": "4f3f28b4e6578cd227ff7f4b78ec91d15fd091b5",
+    "path": "templates/product/launch-coordinator",
+    "license": "MIT",
+    "licenseUrl": "https://github.com/cobusgreyling/grok-bot-templates/blob/4f3f28b4e6578cd227ff7f4b78ec91d15fd091b5/LICENSE",
+    "fromSolution": "teloa.grok-product-team@1.0.0 roles/launch-coordinator.json",
+    "teamRole": "member"
+  },
+  "originalFiles": {
+    "templates/product/launch-coordinator/PROFILE.md": "3d3c51c4fbafb5ea4b6ac0fa2be72b6fd104fcc1eeaa9583215c7600cdcec9d4",
+    "templates/product/launch-coordinator/README.md": "2ea1c98e77502547a32c0e13f91349380fee57e328bffdae46195645604d6878",
+    "templates/product/launch-coordinator/SETUP.md": "dcb1dbd11cf655670aba4b2828f14460a70814db40eaa0d80fa571efd9e11e1d",
+    "templates/product/launch-coordinator/examples/first-run.md": "f779ff74af5573f71c392e218af3b76903a75aaaedf7fd34db1bc6470918b03e",
+    "templates/product/launch-coordinator/template.yaml": "3b28d43dd21b7a7e643200db1625d1ab3039560bc22063f306560e821815d1dd"
+  },
+  "checks": [
+    {
+      "method": "test",
+      "result": "pass",
+      "evidence": "node tools/validate.mjs --pr and node tools/sync-official-roles.mjs --check pass; see the batch result document."
+    }
+  ],
+  "notVerified": [
+    "Not run with a real model in a Teloa host"
+  ]
+}

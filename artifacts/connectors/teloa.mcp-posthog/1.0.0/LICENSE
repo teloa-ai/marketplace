@@ -1,7 +1,0 @@
-Copyright (c) PostHog Inc.
-
-LicenseRef-PostHog-Terms: this connector talks to a remote service operated by the provider.
-Use of the service is governed by the provider's own terms of service, not by
-an open-source license, and no part of the service is stored in this
-repository. Provider documentation, with links to its terms:
-https://posthog.com/docs/mcp

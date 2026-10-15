@@ -1,0 +1,35 @@
+{
+  "format": "teloa.official-template-review/v1",
+  "entryId": "teloa.grok-newsletter-desk",
+  "version": "1.0.0",
+  "reviewedAt": "2026-10-14",
+  "reviewer": "Teloa",
+  "verdict": "approve",
+  "origin": {
+    "kind": "derived",
+    "repository": "cobusgreyling/grok-bot-templates",
+    "commit": "4f3f28b4e6578cd227ff7f4b78ec91d15fd091b5",
+    "path": "templates/marketing/newsletter-desk",
+    "license": "MIT",
+    "licenseUrl": "https://github.com/cobusgreyling/grok-bot-templates/blob/4f3f28b4e6578cd227ff7f4b78ec91d15fd091b5/LICENSE",
+    "fromSolution": "teloa.grok-marketing-team@1.0.0 roles/newsletter-desk.json",
+    "teamRole": "member"
+  },
+  "originalFiles": {
+    "templates/marketing/newsletter-desk/PROFILE.md": "dead9c5d466751a8c608f291708b61c4cebb5f910f122fa7334b19d8e08677af",
+    "templates/marketing/newsletter-desk/README.md": "d495f288cedc0083cb4730980e9664a4623b54cca033298da2d42fa411e8669d",
+    "templates/marketing/newsletter-desk/SETUP.md": "fdf320ce2f89f57bcfc92401c945f737ae5e4db29f6e3d319297d2ee4aa1c59f",
+    "templates/marketing/newsletter-desk/examples/first-run.md": "4f5b3816d75798ec8e5983c2c1f154b5079b677eb7f46dcdcc899a795016e5bb",
+    "templates/marketing/newsletter-desk/template.yaml": "62fdec3640f6eccf7979eb12d0d6311c16b57f4d69ffb57d4346d5afab2235bb"
+  },
+  "checks": [
+    {
+      "method": "test",
+      "result": "pass",
+      "evidence": "node tools/validate.mjs --pr and node tools/sync-official-roles.mjs --check pass; see the batch result document."
+    }
+  ],
+  "notVerified": [
+    "Not run with a real model in a Teloa host"
+  ]
+}

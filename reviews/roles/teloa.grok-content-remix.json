@@ -1,0 +1,35 @@
+{
+  "format": "teloa.official-template-review/v1",
+  "entryId": "teloa.grok-content-remix",
+  "version": "1.0.0",
+  "reviewedAt": "2026-10-14",
+  "reviewer": "Teloa",
+  "verdict": "approve",
+  "origin": {
+    "kind": "derived",
+    "repository": "cobusgreyling/grok-bot-templates",
+    "commit": "4f3f28b4e6578cd227ff7f4b78ec91d15fd091b5",
+    "path": "templates/marketing/content-remix",
+    "license": "MIT",
+    "licenseUrl": "https://github.com/cobusgreyling/grok-bot-templates/blob/4f3f28b4e6578cd227ff7f4b78ec91d15fd091b5/LICENSE",
+    "fromSolution": "teloa.grok-marketing-team@1.0.0 roles/content-remix.json",
+    "teamRole": "member"
+  },
+  "originalFiles": {
+    "templates/marketing/content-remix/PROFILE.md": "9b26a3604e808b2bc6ee76417ebe468bfbde735ba94869ea667f1d1b888057dd",
+    "templates/marketing/content-remix/README.md": "10bdd1285c17647c999541a075eb4740f9a068f18fc9a282d5c72254153b814a",
+    "templates/marketing/content-remix/SETUP.md": "d39dea32e018e1c4064cc4281de106266a19dd7bb7c8192c71b2bc833edc7dc8",
+    "templates/marketing/content-remix/examples/first-run.md": "a743cc790f06f3b1250b17653e32188ce4d6607b29e03bbf6ba02d7b180fea80",
+    "templates/marketing/content-remix/template.yaml": "e036a436a36111eb7897f6e3773e46eeb8e5f819c5a4d4ee82b8d9675950a1a9"
+  },
+  "checks": [
+    {
+      "method": "test",
+      "result": "pass",
+      "evidence": "node tools/validate.mjs --pr and node tools/sync-official-roles.mjs --check pass; see the batch result document."
+    }
+  ],
+  "notVerified": [
+    "Not run with a real model in a Teloa host"
+  ]
+}
