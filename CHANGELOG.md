@@ -4,6 +4,245 @@ All notable changes to the catalog are recorded here. The format follows [Keep a
 
 目录的重要变更记录在此，格式遵循 Keep a Changelog，按目录版本（`catalog-version.txt`）分组。全部条目见 [INDEX.md](INDEX.md)。
 
+## [2026.10.15.1] - 2026-10-15
+
+<!-- Catalog-Source: 190ba9bd9133bd913ea810b40b2868acf6983dba -->
+_Generated after merge from the catalog changes since `84f4f51`; details are in the merged pull requests. / 合并后按 `84f4f51` 以来的目录变更自动生成，详情见对应 PR。_
+
+### Added
+
+- `cursor.pstack-architect` 0.15.23 — architect (pstack) · architect（pstack）
+- `cursor.pstack-arena` 0.15.23 — arena (pstack) · arena（pstack）
+- `cursor.pstack-automate-me` 0.15.23 — automate-me (pstack) · automate-me（pstack）
+- `cursor.pstack-benchmark-checklist` 0.15.23 — benchmark-checklist (pstack) · benchmark-checklist（pstack）
+- `cursor.pstack-blast-radius` 0.15.23 — blast-radius (pstack) · blast-radius（pstack）
+- `cursor.pstack-bro` 0.15.23 — bro (pstack) · bro（pstack）
+- `cursor.pstack-correct` 0.15.23 — correct (pstack) · correct（pstack）
+- `cursor.pstack-create-verification-skill` 0.15.23 — create-verification-skill (pstack) · create-verification-skill（pstack）
+- `cursor.pstack-figure-it-out` 0.15.23 — figure-it-out (pstack) · figure-it-out（pstack）
+- `cursor.pstack-how` 0.15.23 — how (pstack) · how（pstack）
+- `cursor.pstack-in-your-own-words` 0.15.23 — in-your-own-words (pstack) · in-your-own-words（pstack）
+- `cursor.pstack-interrogate` 0.15.23 — interrogate (pstack) · interrogate（pstack）
+- `cursor.pstack-ketchup` 0.15.23 — ketchup (pstack) · ketchup（pstack）
+- `cursor.pstack-maintain-verification-skill` 0.15.23 — maintain-verification-skill (pstack) · maintain-verification-skill（pstack）
+- `cursor.pstack-no-comments` 0.15.23 — no-comments (pstack) · no-comments（pstack）
+- `cursor.pstack-poteto-help` 0.15.23 — poteto-help (pstack) · poteto-help（pstack）
+- `cursor.pstack-principle-attack-the-premise` 0.15.23 — principle-attack-the-premise (pstack) · principle-attack-the-premise（pstack）
+- `cursor.pstack-principle-boundary-discipline` 0.15.23 — principle-boundary-discipline (pstack) · principle-boundary-discipline（pstack）
+- `cursor.pstack-principle-build-the-lever` 0.15.23 — principle-build-the-lever (pstack) · principle-build-the-lever（pstack）
+- `cursor.pstack-principle-encode-lessons-in-structure` 0.15.23 — principle-encode-lessons-in-structure (pstack) · principle-encode-lessons-in-structure（pstack）
+- `cursor.pstack-principle-exhaust-the-design-space` 0.15.23 — principle-exhaust-the-design-space (pstack) · principle-exhaust-the-design-space（pstack）
+- `cursor.pstack-principle-experience-first` 0.15.23 — principle-experience-first (pstack) · principle-experience-first（pstack）
+- `cursor.pstack-principle-explain-the-number` 0.15.23 — principle-explain-the-number (pstack) · principle-explain-the-number（pstack）
+- `cursor.pstack-principle-fix-root-causes` 0.15.23 — principle-fix-root-causes (pstack) · principle-fix-root-causes（pstack）
+- `cursor.pstack-principle-foundational-thinking` 0.15.23 — principle-foundational-thinking (pstack) · principle-foundational-thinking（pstack）
+- `cursor.pstack-principle-guard-the-context-window` 0.15.23 — principle-guard-the-context-window (pstack) · principle-guard-the-context-window（pstack）
+- `cursor.pstack-principle-laziness-protocol` 0.15.23 — principle-laziness-protocol (pstack) · principle-laziness-protocol（pstack）
+- `cursor.pstack-principle-make-operations-idempotent` 0.15.23 — principle-make-operations-idempotent (pstack) · principle-make-operations-idempotent（pstack）
+- `cursor.pstack-principle-migrate-callers-then-delete-legacy-apis` 0.15.23 — principle-migrate-callers-then-delete-legacy-apis (pstack) · principle-migrate-callers-then-delete-legacy-apis（pstack）
+- `cursor.pstack-principle-minimize-reader-load` 0.15.23 — principle-minimize-reader-load (pstack) · principle-minimize-reader-load（pstack）
+- `cursor.pstack-principle-model-the-domain` 0.15.23 — principle-model-the-domain (pstack) · principle-model-the-domain（pstack）
+- `cursor.pstack-principle-never-block-on-the-human` 0.15.23 — principle-never-block-on-the-human (pstack) · principle-never-block-on-the-human（pstack）
+- `cursor.pstack-principle-outcome-oriented-execution` 0.15.23 — principle-outcome-oriented-execution (pstack) · principle-outcome-oriented-execution（pstack）
+- `cursor.pstack-principle-prove-it-works` 0.15.23 — principle-prove-it-works (pstack) · principle-prove-it-works（pstack）
+- `cursor.pstack-principle-redesign-from-first-principles` 0.15.23 — principle-redesign-from-first-principles (pstack) · principle-redesign-from-first-principles（pstack）
+- `cursor.pstack-principle-separate-before-serializing-shared-state` 0.15.23 — principle-separate-before-serializing-shared-state (pstack) · principle-separate-before-serializing-shared-state（pstack）
+- `cursor.pstack-principle-sequence-verifiable-units` 0.15.23 — principle-sequence-verifiable-units (pstack) · principle-sequence-verifiable-units（pstack）
+- `cursor.pstack-principle-subtract-before-you-add` 0.15.23 — principle-subtract-before-you-add (pstack) · principle-subtract-before-you-add（pstack）
+- `cursor.pstack-principle-test-behavior-not-implementation` 0.15.23 — principle-test-behavior-not-implementation (pstack) · principle-test-behavior-not-implementation（pstack）
+- `cursor.pstack-principle-type-system-discipline` 0.15.23 — principle-type-system-discipline (pstack) · principle-type-system-discipline（pstack）
+- `cursor.pstack-recall` 0.15.23 — recall (pstack) · recall（pstack）
+- `cursor.pstack-reflect` 0.15.23 — reflect (pstack) · reflect（pstack）
+- `cursor.pstack-setup-pstack` 0.15.23 — setup-pstack (pstack) · setup-pstack（pstack）
+- `cursor.pstack-show-me-your-work` 0.15.23 — show-me-your-work (pstack) · show-me-your-work（pstack）
+- `cursor.pstack-swarm` 0.15.23 — swarm (pstack) · swarm（pstack）
+- `cursor.pstack-tdd` 0.15.23 — tdd (pstack) · tdd（pstack）
+- `cursor.pstack-teach` 0.15.23 — teach (pstack) · teach（pstack）
+- `cursor.pstack-technical-writing` 0.15.23 — technical-writing (pstack) · technical-writing（pstack）
+- `cursor.pstack-typescript-best-practices` 0.15.23 — typescript-best-practices (pstack) · typescript-best-practices（pstack）
+- `cursor.pstack-unslop` 0.15.23 — unslop (pstack) · unslop（pstack）
+- `cursor.pstack-why` 0.15.23 — why (pstack) · why（pstack）
+- `cursor.remotion-remotion-best-practices` 4.0.533 — remotion-best-practices (Remotion) · remotion-best-practices（Remotion 视频制作）
+- `cursor.remotion-remotion-captions` 4.0.533 — remotion-captions (Remotion) · remotion-captions（Remotion 视频制作）
+- `cursor.remotion-remotion-create` 4.0.533 — remotion-create (Remotion) · remotion-create（Remotion 视频制作）
+- `cursor.remotion-remotion-docs` 4.0.533 — remotion-docs (Remotion) · remotion-docs（Remotion 视频制作）
+- `cursor.remotion-remotion-interactivity` 4.0.533 — remotion-interactivity (Remotion) · remotion-interactivity（Remotion 视频制作）
+- `cursor.remotion-remotion-maps` 4.0.533 — remotion-maps (Remotion) · remotion-maps（Remotion 视频制作）
+- `cursor.remotion-remotion-markup` 4.0.533 — remotion-markup (Remotion) · remotion-markup（Remotion 视频制作）
+- `cursor.remotion-remotion-multimedia` 4.0.533 — remotion-multimedia (Remotion) · remotion-multimedia（Remotion 视频制作）
+- `cursor.remotion-remotion-render` 4.0.533 — remotion-render (Remotion) · remotion-render（Remotion 视频制作）
+- `cursor.remotion-remotion-saas` 4.0.533 — remotion-saas (Remotion) · remotion-saas（Remotion 视频制作）
+- `cursor.remotion-remotion-studio` 4.0.533 — remotion-studio (Remotion) · remotion-studio（Remotion 视频制作）
+- `cursor.remotion-remotion-upgrade` 4.0.533 — remotion-upgrade (Remotion) · remotion-upgrade（Remotion 视频制作）
+- `cursor.sentry-sentry-create-alert` 1.4.3 — sentry-create-alert (Sentry) · sentry-create-alert（Sentry）
+- `cursor.sentry-sentry-debug-issue` 1.4.3 — sentry-debug-issue (Sentry) · sentry-debug-issue（Sentry）
+- `cursor.sentry-sentry-fix-stack-traces` 1.4.3 — sentry-fix-stack-traces (Sentry) · sentry-fix-stack-traces（Sentry）
+- `cursor.sentry-sentry-get-started` 1.4.3 — sentry-get-started (Sentry) · sentry-get-started（Sentry）
+- `cursor.sentry-sentry-instrument` 1.4.3 — sentry-instrument (Sentry) · sentry-instrument（Sentry）
+- `cursor.sentry-sentry-otel-exporter-setup` 1.4.3 — sentry-otel-exporter-setup (Sentry) · sentry-otel-exporter-setup（Sentry）
+- `cursor.sentry-sentry-setup-releases` 1.4.3 — sentry-setup-releases (Sentry) · sentry-setup-releases（Sentry）
+- `cursor.sentry-sentry-snapshots-cocoa` 1.4.3 — sentry-snapshots-cocoa (Sentry) · sentry-snapshots-cocoa（Sentry）
+- `cursor.slack-block-kit` 1.4.1 — block-kit (Slack) · block-kit（Slack）
+- `cursor.slack-create-slack-app` 1.4.1 — create-slack-app (Slack) · create-slack-app（Slack）
+- `cursor.slack-slack-api` 1.4.1 — slack-api (Slack) · slack-api（Slack）
+- `cursor.slack-slack-cli` 1.4.1 — slack-cli (Slack) · slack-cli（Slack）
+- `cursor.slack-slack-docs` 1.4.1 — slack-docs (Slack) · slack-docs（Slack）
+- `cursor.slack-slack-messaging` 1.4.1 — slack-messaging (Slack) · slack-messaging（Slack）
+- `cursor.slack-slack-search` 1.4.1 — slack-search (Slack) · slack-search（Slack）
+- `cursor.slack-test-slack-app` 1.4.1 — test-slack-app (Slack) · test-slack-app（Slack）
+- `teloa.b2b-sales-followup-dashboard` 1.0.0 — B2B sales &amp; account follow-up dashboard · B2B 销售与客户跟进看板
+- `teloa.content-ops-dashboard` 1.0.0 — Digital marketing &amp; content operations dashboard · 数字营销与内容运营看板
+- `teloa.grok-call-followup` 1.0.0 — Call Follow-up · 通话跟进员工
+- `teloa.grok-competitor-watch` 1.0.0 — Competitor Watch · 竞品监测员工
+- `teloa.grok-content-remix` 1.0.0 — Content Remix · 内容改编员工
+- `teloa.grok-feature-ask-collator` 1.0.0 — Feature Ask Collator · 需求归集员工
+- `teloa.grok-launch-coordinator` 1.0.0 — Launch Coordinator · 发布协调员工
+- `teloa.grok-marketing-team` 1.0.0 — Marketing team · 内容营销团队
+- `teloa.grok-meeting-prep` 1.0.0 — Meeting Prep · 会前简报员工
+- `teloa.grok-newsletter-desk` 1.0.0 — Newsletter Desk · 简报编辑员工
+- `teloa.grok-product-performance` 1.0.0 — Product Performance · 产品性能调查员工
+- `teloa.grok-product-team` 1.0.0 — Product team · 软件产品团队
+- `teloa.grok-sales-outbound` 1.0.0 — Outbound · 外联研究员工
+- `teloa.grok-sales-team` 1.0.0 — Sales team · 销售协作团队
+- `teloa.saas-delivery-dashboard` 1.0.0 — Software &amp; SaaS delivery dashboard · 软件与 SaaS 产品交付看板
+
+### Changed
+
+- `teloa.mcp-notion-remote` 1.0.1 — Notion Remote (OAuth) · Notion 远程（OAuth）
+
+### Removed
+
+- `clawhub.byungkyu.api-gateway` 1.2.23 — API Gateway · API 网关（Maton）
+- `clawhub.byungkyu.calendly-api` 1.2.5 — Calendly · Calendly 日程管理
+- `clawhub.byungkyu.clickup-api` 1.2.3 — ClickUp · ClickUp 任务管理
+- `clawhub.byungkyu.fathom-api` 1.2.6 — Fathom · Fathom 会议记录
+- `clawhub.byungkyu.gmail` 1.2.3 — gmail · Gmail 邮件收发
+- `clawhub.byungkyu.google-drive` 1.2.9 — google-drive · Google Drive 文件管理
+- `clawhub.byungkyu.google-meet` 1.2.3 — google-meet · Google Meet 视频会议
+- `clawhub.byungkyu.google-play` 1.2.3 — google-play · Google Play 应用管理
+- `clawhub.byungkyu.google-sheets` 1.2.3 — google-sheets · Google Sheets 表格处理
+- `clawhub.byungkyu.google-slides` 1.2.3 — google-slides · Google Slides 演示文稿
+- `clawhub.byungkyu.google-workspace-admin` 1.2.8 — google-workspace-admin · Google Workspace 管理员
+- `clawhub.byungkyu.klaviyo` 1.2.6 — klaviyo · Klaviyo 邮件营销
+- `clawhub.byungkyu.mailchimp` 1.2.3 — mailchimp · Mailchimp 邮件营销
+- `clawhub.byungkyu.microsoft-excel` 1.2.3 — microsoft-excel · Microsoft Excel 表格处理
+- `clawhub.byungkyu.monday` 1.2.4 — Monday.com · Monday.com 工作管理
+- `clawhub.byungkyu.outlook-api` 1.2.3 — Outlook · Outlook 邮件管理
+- `clawhub.byungkyu.pipedrive-api` 1.2.3 — Pipedrive · Pipedrive 销售 CRM
+- `clawhub.byungkyu.salesforce-api` 1.2.5 — Salesforce · Salesforce CRM
+- `clawhub.byungkyu.typeform` 1.2.3 — typeform · Typeform 在线表单
+- `clawhub.byungkyu.whatsapp-business` 1.2.6 — WhatsApp Business · WhatsApp Business 消息
+- `clawhub.byungkyu.woocommerce` 1.2.3 — WooCommerce · WooCommerce 在线商城
+- `clawhub.byungkyu.xero` 1.2.3 — xero · Xero 云会计
+- `clawhub.byungkyu.youtube-api-skill` 1.2.3 — YouTube · YouTube 视频管理
+- `clawhub.byungkyu.zoho-crm` 1.2.3 — Zoho CRM · Zoho CRM 客户管理
+- `clawhub.byungkyu.zoho-mail` 1.2.3 — zoho-mail · Zoho Mail 企业邮箱
+- `clawhub.cellcog.cellcog` 2.0.21 — cellcog · CellCog AI 代理
+- `clawhub.cellcog.image-generation-cellcog` 1.0.17 — Image Generation · 图像生成（CellCog）
+- `clawhub.financial-ai-analyst.mx-finance-search` 1.0.9 — Financial Search Engine · 金融搜索引擎
+- `clawhub.financial-ai-analyst.mx-macro-data` 1.0.12 — Global Macro Database Assistant · 全球宏观数据助手
+- `clawhub.guohongbin-git.skill-finder-cn` 1.0.1 — Skill Finder Cn · 技能查找器
+- `clawhub.ide-rea.ai-ppt-generator` 1.1.5 — Baidu Wenku AIPPT · 百度文库 AI PPT
+- `clawhub.iswalle.getnote` 2.1.0 — 得到大脑（原 Get 笔记） · 得到大脑笔记
+- `clawhub.ivangdavila.data-analysis` 1.0.2 — Data Analysis · 数据分析
+- `clawhub.ivangdavila.excel-xlsx` 1.0.2 — Excel / XLSX · Excel 电子表格
+- `clawhub.ivangdavila.git` 1.0.12 — Git · Git 版本控制
+- `clawhub.ivangdavila.image` 1.0.4 — Image · 图像处理
+- `clawhub.ivangdavila.market-research` 1.0.1 — Market Research · 市场研究
+- `clawhub.ivangdavila.memory` 1.0.7 — Memory · 持久化记忆
+- `clawhub.ivangdavila.powerpoint-pptx` 1.0.1 — Powerpoint / PPTX · PowerPoint 演示
+- `clawhub.ivangdavila.proactivity` 1.0.1 — Proactivity (Proactive Agent) · 主动代理
+- `clawhub.ivangdavila.screenshot` 1.0.1 — Screenshot · 截图工具
+- `clawhub.ivangdavila.seo` 1.0.6 — SEO (Site Audit + Content Writer + Competitor Analysis) · SEO 优化工具
+- `clawhub.ivangdavila.word-docx` 1.0.2 — Word / DOCX · Word 文档
+- `clawhub.jaaneek.x-search` 1.0.0 — X Search · X（Twitter）搜索
+- `clawhub.kennyzir.capability-evolver-pro` 1.0.2 — Capability Evolver · 能力进化器
+- `clawhub.lidayan.tushare-data` 1.1.19 — tushare · Tushare 股票数据
+- `clawhub.othmanadi.planning-with-files` 3.20.7 — Planning with files · 文件式任务规划
+- `clawhub.paulshe.china-stock-analysis` 1.0.0 — China Stock Analysis · 中国股票分析
+- `clawhub.shaw555.ocr-local` 1.0.0 — OCR - Local (No API Key) · OCR 本地识别
+- `clawhub.wscats.eno` 1.0.0 — Eno Skills · Eno 技能库
+- `clawhub.wscats.interview-simulator` 1.0.0 — Interview Simulator · 面试模拟器
+- `clawhub.wscats.resume-assistant` 1.0.6 — Resume Assistant · 简历助手
+- `clawhub.wscats.smart-weekly-report` 1.1.3 — Report Generator · 周报生成器
+- `clawhub.wscats.t-trading` 1.0.0 — T Trading · T 短线交易
+- `clawhub.yueyanc.self-improving-proactive-agent` 1.0.0 — Self-Improving Proactive Agent · 自改进主动代理
+- `hermes.grounded-citations` 1.0.0 — Grounded citations · 有据引用
+- `hermes.meeting-action-items` 1.0.0 — Meeting action items · 会议行动项
+- `hermes.simplify-code` 1.1.0 — Code change cleanup · 代码变更清理
+- `openclaw.github` 1.0.0 — GitHub CLI workflow · GitHub CLI 工作流
+- `teloa.appsec` 1.0.1 — Application security · 应用安全
+- `teloa.cn-workspace` 1.0.0 — China workplace collaboration · 中国企业办公协同
+- `teloa.code-review` 1.0.0 — Code review &amp; release · 研发协作与代码评审
+- `teloa.detection` 1.0.2 — Detection engineering · 检测工程
+- `teloa.ecommerce` 1.0.0 — E-commerce operations · 电商运营
+- `teloa.finance` 1.0.0 — Finance reconciliation · 财务对账
+- `teloa.grc` 1.0.3 — Governance, risk and compliance (GRC) · 治理、风险与合规（GRC）
+- `teloa.growth` 1.0.0 — Product ops &amp; growth · 产品运营与增长分析
+- `teloa.incident` 1.0.0 — Engineering incident response · 研发事件响应
+- `teloa.marketing` 1.0.1 — Content marketing · 新媒体营销
+- `teloa.mcp-amap` 1.0.1 — Amap Maps (Official MCP) · 高德地图（官方 MCP）
+- `teloa.mcp-atlassian` 1.0.0 — Atlassian (Jira &amp; Confluence) · Atlassian（Jira &amp; Confluence）
+- `teloa.mcp-cloudflare` 1.0.0 — Cloudflare API (OAuth) · Cloudflare API（OAuth）
+- `teloa.mcp-cloudflare-docs` 1.0.0 — Cloudflare Developer Docs (Official Remote) · Cloudflare 开发者文档（官方远程）
+- `teloa.mcp-composio` 1.0.2 — Composio MCP (1500+ App Integrations) · Composio MCP（1500+ 应用集成）
+- `teloa.mcp-consensus` 1.0.0 — Consensus Academic Search (OAuth) · Consensus 学术检索（OAuth）
+- `teloa.mcp-context7` 1.0.0 — Context7 (Official Docs MCP) · Context7（官方文档 MCP）
+- `teloa.mcp-deepwiki` 1.0.0 — DeepWiki (Official Remote) · DeepWiki（官方远程）
+- `teloa.mcp-dingtalk` 1.0.2 — DingTalk (Enterprise Communication) · 钉钉（企业通讯与协作）
+- `teloa.mcp-exa` 1.0.1 — Exa Web Search · Exa 网络搜索
+- `teloa.mcp-gitlab` 1.0.0 — GitLab (OAuth, Beta) · GitLab（OAuth，Beta）
+- `teloa.mcp-greptile` 1.0.0 — Greptile (Codebase Semantic Search) · Greptile（代码库语义搜索）
+- `teloa.mcp-lark` 1.0.1 — Feishu/Lark (Official MCP) · 飞书/Lark（官方 MCP）
+- `teloa.mcp-microsoft-learn` 1.0.0 — Microsoft Learn Docs (Official Remote) · Microsoft Learn 文档（官方远程）
+- `teloa.mcp-notion` 1.0.1 — Notion (Local Bearer Token Mode) · Notion（本地 Bearer Token 模式）
+- `teloa.mcp-pagerduty` 1.0.0 — PagerDuty (Incident Response) · PagerDuty（事件响应）
+- `teloa.mcp-playwright` 1.0.1 — Playwright Browser Automation · Playwright 浏览器自动化
+- `teloa.mcp-posthog` 1.0.0 — PostHog (Product Analytics) · PostHog（产品分析）
+- `teloa.mcp-stripe` 1.0.0 — Stripe (Payments) · Stripe（支付）
+- `teloa.mcp-supabase-remote` 1.0.0 — Supabase Remote (OAuth) · Supabase 远程（OAuth）
+- `teloa.mcp-yuque` 1.0.2 — Yuque (Knowledge Base) · 语雀（知识库）
+- `teloa.mcp-zapier` 1.0.1 — Zapier MCP (9000+ App Automations) · Zapier MCP（9000+ 应用自动化）
+- `teloa.model.claude` 1.0.0 — Claude (Anthropic) · Claude（Anthropic）
+- `teloa.model.deepseek` 1.0.0 — DeepSeek · DeepSeek
+- `teloa.model.doubao` 1.0.0 — Doubao (Volcengine Ark) · 豆包（火山方舟）
+- `teloa.model.gemini` 1.0.0 — Gemini (Google) · Gemini（Google）
+- `teloa.model.glm` 1.0.0 — Zhipu GLM · 智谱 GLM
+- `teloa.model.grok` 1.0.0 — Grok (xAI) · Grok（xAI）
+- `teloa.model.kimi` 1.0.0 — Kimi (Moonshot) · Kimi（Moonshot）
+- `teloa.model.local.deepseek-r1` 1.0.0 — DeepSeek-R1 (local) · DeepSeek-R1（本机）
+- `teloa.model.local.gemma3` 1.0.0 — Gemma 3 (local) · Gemma 3（本机）
+- `teloa.model.local.llama3.1` 1.0.0 — Llama 3.1 (local) · Llama 3.1（本机）
+- `teloa.model.local.phi4` 1.0.0 — Phi-4 (local) · Phi-4（本机）
+- `teloa.model.local.qwen3` 1.0.0 — Qwen3 (local) · Qwen3（本机）
+- `teloa.model.minimax` 1.0.0 — MiniMax · MiniMax
+- `teloa.model.openai` 1.0.0 — OpenAI · OpenAI
+- `teloa.model.openrouter` 1.0.0 — OpenRouter (aggregator) · OpenRouter（聚合）
+- `teloa.model.qwen` 1.0.0 — Qwen (Model Studio) · 通义千问（百炼）
+- `teloa.model.siliconflow` 1.0.0 — SiliconFlow (aggregator) · 硅基流动（聚合）
+- `teloa.office` 1.0.1 — General office · 通用办公
+- `teloa.project` 1.0.0 — Project management · 项目管理
+- `teloa.recruiting` 1.0.0 — HR recruiting · HR 招聘
+- `teloa.research` 1.0.0 — Knowledge and research · 知识库与研究
+- `teloa.role.appsec-auditor` 1.0.1 — AppSec auditor · 应用安全审计员
+- `teloa.role.bd-collaborator` 1.0.0 — Business development collaborator · 商务协作员
+- `teloa.role.content-marketer` 1.0.1 — Content marketer · 内容运营员
+- `teloa.role.detection-engineer` 1.0.2 — Detection engineer · 检测工程师
+- `teloa.role.grc-collaborator` 1.0.3 — GRC collaborator · GRC 协作员
+- `teloa.role.office-collaborator` 1.0.1 — Office collaborator · 办公协作员
+- `teloa.role.project-coordinator` 1.0.0 — Project coordinator · 项目协调员
+- `teloa.role.reconciliation-collaborator` 1.0.0 — Reconciliation collaborator · 对账协作员
+- `teloa.role.recruiting-collaborator` 1.0.0 — Recruiting collaborator · 招聘协作员
+- `teloa.role.research-collaborator` 1.0.0 — Research collaborator · 研究协作员
+- `teloa.role.soc-t1-analyst` 1.0.2 — T1 triage analyst · T1 告警研判员
+- `teloa.role.soc-t2-investigator` 1.0.2 — T2 incident investigator · T2 事件调查员
+- `teloa.role.support-knowledge-collaborator` 1.0.1 — Support knowledge collaborator · 客服知识协作员
+- `teloa.role.video-editor` 1.0.0 — Video editing collaborator · 视频剪辑协作员
+- `teloa.sales` 1.0.0 — Sales and business development · 销售与商务
+- `teloa.soc` 1.0.2 — Security operations (SOC T1/T2/T3) · 安全运营（SOC T1/T2/T3）
+- `teloa.support` 1.0.1 — Customer support · 客户支持
+- `teloa.video` 1.0.0 — Video editing · 视频剪辑
+
 ## [2026.9.28.10] - 2026-09-28
 
 <!-- Catalog-Source: 84f4f514736feaf3d9e2031ea13ea317f31b99e9 -->
