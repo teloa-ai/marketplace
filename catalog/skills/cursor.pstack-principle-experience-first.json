@@ -1,0 +1,124 @@
+{
+  "format": "teloa.market-catalog-entry/v1",
+  "id": "cursor.pstack-principle-experience-first",
+  "kind": "skill",
+  "delivery": "upstream",
+  "version": "0.15.23",
+  "taxonomy": {
+    "functions": [
+      "dev-tools"
+    ],
+    "industries": [
+      "general"
+    ]
+  },
+  "skill": {
+    "name": "principle-experience-first",
+    "title": {
+      "zh-CN": "principle-experience-first（pstack）",
+      "zh-TW": "principle-experience-first（pstack）",
+      "en": "principle-experience-first (pstack)"
+    },
+    "summary": {
+      "zh-CN": "遇到产品、体验或功能范围取舍时，选用户的愉悦而非实现的方便；宁可少交付几个打磨好的功能，也不交付更多粗糙的。",
+      "zh-TW": "遇到產品、體驗或功能範圍取捨時，選使用者的愉悅而非實作的方便；寧可少交付幾個打磨好的功能，也不交付更多粗糙的。",
+      "en": "Apply when product, UX, or feature-scope tradeoffs come up. Choose user delight over implementation convenience; ship fewer polished features over more rough ones."
+    }
+  },
+  "upstream": {
+    "kind": "github",
+    "repository": {
+      "host": "github.com",
+      "owner": "cursor",
+      "repo": "plugins"
+    },
+    "commit": "837067b75aa20ab58d7b2a2f6c0531e37118c596",
+    "path": "pstack/skills/principle-experience-first",
+    "files": [
+      {
+        "path": "SKILL.md",
+        "gitBlob": "5ea51741302cf3af4cc0b90ec70815bd3208dbf2",
+        "sha256": "58903529d733b1c1a7c9ccf127d45ef3c7d0d9f0b81164a4dc6b80efe6f2912b",
+        "size": 1184
+      },
+      {
+        "path": "licenses/upstream/pstack/LICENSE",
+        "repositoryPath": "pstack/LICENSE",
+        "gitBlob": "6b5400237fdf6545be0b8fae370d6f2fcff8fb25",
+        "sha256": "bc957ca6bee02792566a1a028d105e02e247c6e77cf057061674273da77b200e",
+        "size": 1067
+      }
+    ]
+  },
+  "origin": {
+    "marketplace": "cursor",
+    "installs": null,
+    "installsLabel": "未记录 / Not recorded",
+    "countedAt": "2026-10-14"
+  },
+  "alternatives": [],
+  "unsupportedComponents": [
+    {
+      "kind": "agents",
+      "count": 2
+    }
+  ],
+  "modifications": [],
+  "plugin": {
+    "marketplace": "cursor",
+    "id": "9717366",
+    "title": {
+      "zh-CN": "pstack",
+      "zh-TW": "pstack",
+      "en": "pstack"
+    },
+    "summary": {
+      "zh-CN": "pstack：一套严谨的代理工作流与工程原则技能，先想深再动手，少写代码但写得更好；包含架构草图、并行候选竞争、根因修复、验证技能生成等可并行使用的工作方法。 当前提供原包 53 项中的 51 项技能；另外两项的原生名称不符合要求，暂未安装。",
+      "zh-TW": "pstack：一套嚴謹的代理工作流程與工程原則技能，先想深再動手，少寫程式碼但寫得更好；包含架構草圖、並行候選競爭、根因修復、驗證技能產生等可並行使用的工作方法。 目前提供原套件 53 項中的 51 項技能；另外兩項的原生名稱不符合要求，暫不安裝。",
+      "en": "if you want to go fast, go deep first. pstack helps you write less, but higher quality code. rigorous agent workflows you can parallelize with confidence. Includes 51 of the original 53 skills; two with invalid native names are not installed."
+    },
+    "root": "pstack",
+    "manifest": {
+      "path": "pstack/.cursor-plugin/plugin.json",
+      "gitBlob": "0da22406aee7b1dd25a4433ee5f31518642373e6",
+      "sha256": "161ec748cb37ddb5ca4ab466045e3f7d54c8d8bb971d1a290f42874dbdafb249"
+    },
+    "license": {
+      "spdx": "MIT"
+    },
+    "connectors": []
+  },
+  "license": {
+    "spdx": "MIT",
+    "files": [
+      "licenses/upstream/pstack/LICENSE"
+    ]
+  },
+  "compatibility": {
+    "status": "content-only",
+    "teloa": ">=0.2.0-alpha.8",
+    "dsh": "0.1.7-rc.1",
+    "conditions": [
+      {
+        "zh-CN": "来源为 Cursor Plugin Marketplace 公开插件 pstack（pluginId 9717366），按固定 commit 837067b75aa2 锁定；正文面向 Cursor 代理编写，提及的 Cursor 专有命令、变量或内置工具在 Teloa 中不可用时需自行替代",
+        "zh-TW": "來源為 Cursor Plugin Marketplace 公開外掛 pstack（pluginId 9717366），按固定 commit 837067b75aa2 鎖定；正文面向 Cursor 代理撰寫，提及的 Cursor 專有命令、變數或內建工具在 Teloa 中不可用時需自行替代",
+        "en": "Taken from the public Cursor Plugin Marketplace plugin pstack (pluginId 9717366), pinned at commit 837067b75aa2; the text targets the Cursor agent, so Cursor-specific commands, variables or built-in tools it mentions must be substituted when unavailable in Teloa"
+      },
+      {
+        "zh-CN": "许可为原始仓库 pstack/LICENSE（MIT），不在技能目录内；技能正文为英文原件，未翻译",
+        "zh-TW": "授權為原始儲存庫 pstack/LICENSE（MIT），不在技能目錄內；技能正文為英文原件，未翻譯",
+        "en": "The license is pstack/LICENSE (MIT) in the original repository, outside the skill directory; the skill text is the English original and is not translated"
+      }
+    ]
+  },
+  "requires": {
+    "tools": [],
+    "network": false,
+    "runtimes": []
+  },
+  "review": {
+    "status": "approved",
+    "reviewedAt": "2026-10-14",
+    "reviewer": "Teloa"
+  }
+}

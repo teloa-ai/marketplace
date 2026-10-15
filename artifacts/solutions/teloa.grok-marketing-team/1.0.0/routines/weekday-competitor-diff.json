@@ -1,0 +1,39 @@
+{
+  "format": "teloa.work-template/v1",
+  "id": "weekday-competitor-diff",
+  "title": "weekday-competitor-diff",
+  "localized": {
+    "title": {
+      "original": "weekday-competitor-diff",
+      "defaultLocale": "en",
+      "locales": {
+        "zh-CN": "工作日竞品变化",
+        "zh-TW": "工作日競品變化",
+        "en": "Weekday competitor changes"
+      }
+    },
+    "description": {
+      "original": "Original routine 'weekday-competitor-diff': cadence weekdays 09:00 in the Bot timezone. Not scheduled by this template: the owner creates the plan after a test run and confirms timezone, input source, expected result, approval boundary and missing-source policy.",
+      "defaultLocale": "en",
+      "locales": {
+        "zh-CN": "由竞品监测员工按原方法整理待审结果。使用前确认资料来源、时间与权限；添加模板不会启用定时计划。",
+        "zh-TW": "由競品監測員工按原方法整理待審結果。使用前確認資料來源、時間及權限；加入範本不會啟用定時安排。",
+        "en": "Original routine 'weekday-competitor-diff': cadence weekdays 09:00 in the Bot timezone. Not scheduled by this template: the owner creates the plan after a test run and confirms timezone, input source, expected result, approval boundary and missing-source policy."
+      }
+    }
+  },
+  "version": "1.0.0",
+  "domain": "general",
+  "description": "Original routine 'weekday-competitor-diff': cadence weekdays 09:00 in the Bot timezone. Not scheduled by this template: the owner creates the plan after a test run and confirms timezone, input source, expected result, approval boundary and missing-source policy.",
+  "requirements": [
+    "Use Settings → Agent timezone."
+  ],
+  "output": "Run diff-competitors report-only; writes stay behind approval.",
+  "skills": [
+    {
+      "id": "diff-competitors",
+      "title": "Diff Competitors",
+      "version": "1.0.0"
+    }
+  ]
+}

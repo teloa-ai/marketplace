@@ -1,0 +1,35 @@
+{
+  "format": "teloa.official-template-review/v1",
+  "entryId": "teloa.grok-meeting-prep",
+  "version": "1.0.0",
+  "reviewedAt": "2026-10-14",
+  "reviewer": "Teloa",
+  "verdict": "approve",
+  "origin": {
+    "kind": "derived",
+    "repository": "cobusgreyling/grok-bot-templates",
+    "commit": "4f3f28b4e6578cd227ff7f4b78ec91d15fd091b5",
+    "path": "templates/sales/meeting-prep",
+    "license": "MIT",
+    "licenseUrl": "https://github.com/cobusgreyling/grok-bot-templates/blob/4f3f28b4e6578cd227ff7f4b78ec91d15fd091b5/LICENSE",
+    "fromSolution": "teloa.grok-sales-team@1.0.0 roles/meeting-prep.json",
+    "teamRole": "member"
+  },
+  "originalFiles": {
+    "templates/sales/meeting-prep/PROFILE.md": "4a97f09b5c03fcc6037ac9a45763491ea4341014cd5e2c08f4b88cb63ca3cc4c",
+    "templates/sales/meeting-prep/README.md": "5517579c4839cafbc2f3642642c62fbce97f9de8d38f93a909d69de014730c90",
+    "templates/sales/meeting-prep/SETUP.md": "caab38b2f3736ffd1b009d10b9011381c8a4f3f168e8d4adc76ae9a8fd61a495",
+    "templates/sales/meeting-prep/examples/first-run.md": "5dd884d7df2296cb3927c815a66900c351d6f850197c7ad42b39cd744c727eb4",
+    "templates/sales/meeting-prep/template.yaml": "c3f65cace1aacb3d501978ebe04131a2646285fdbaf98e1ecf7a735a827d6068"
+  },
+  "checks": [
+    {
+      "method": "test",
+      "result": "pass",
+      "evidence": "node tools/validate.mjs --pr and node tools/sync-official-roles.mjs --check pass; see the batch result document."
+    }
+  ],
+  "notVerified": [
+    "Not run with a real model in a Teloa host"
+  ]
+}

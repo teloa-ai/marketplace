@@ -1,0 +1,60 @@
+{
+  "format": "teloa.official-template-review/v1",
+  "entryId": "teloa.grok-product-team",
+  "version": "1.0.0",
+  "reviewedAt": "2026-10-14",
+  "reviewer": "Teloa",
+  "verdict": "approve",
+  "origin": {
+    "kind": "derived",
+    "repository": "cobusgreyling/grok-bot-templates",
+    "commit": "4f3f28b4e6578cd227ff7f4b78ec91d15fd091b5",
+    "path": "teams/product",
+    "license": "MIT",
+    "licenseUrl": "https://github.com/cobusgreyling/grok-bot-templates/blob/4f3f28b4e6578cd227ff7f4b78ec91d15fd091b5/LICENSE",
+    "generatedBy": "tools/build-grok-bot-template-teams.py"
+  },
+  "originalFiles": {
+    "teams/product/team.yaml": "fbbb5c8ec78a0e49af3f4f62e26a5a3fabdacf78e948151f898fa19fcaa42f22",
+    "templates/product/product-performance/PROFILE.md": "e3a5f3c4467452c1c109655f9a02dca19b91fc28f02f5dd3744424c22baaecca",
+    "templates/product/product-performance/README.md": "04469263ff5ba1411a30483abfa3c04f73fe3da3c82faea0b2a1c92c74874b73",
+    "templates/product/product-performance/SETUP.md": "f2f758ecc675a50bbb3b0a6dbbd4f207d133fccf8d69e319ebac8c3d01ee926f",
+    "templates/product/product-performance/examples/first-run.md": "6543c77cf6096a7e7b6b185ca7fce43b0bf810b2ac20068c1a4878e8ad0756ab",
+    "templates/product/product-performance/template.yaml": "64878e642dc297d5537809f0cc9f292e8c691eb49eca6fa06523d7e07637ea9d",
+    "skills/investigate-perf/SKILL.md": "af70dac1e0e2cc4c46446264c3c1469e82f2c7ae0777a112bda0e2b73cad7920",
+    "skills/investigate-perf/skill.yaml": "ea401766acae4d8554699d347f27e0878b84caccfe22a52f09d723f86b850185",
+    "templates/product/feature-ask-collator/PROFILE.md": "b6e05193d14aec27b485b025b29cd5ea1512cc1b019dd1a1c0c60d045bc2e949",
+    "templates/product/feature-ask-collator/README.md": "ae64c55f84aa3dc4c6d9ac55a69693097a3bd7b9b272b3ed5f94eeda6f701da8",
+    "templates/product/feature-ask-collator/SETUP.md": "7ebda6b3f449568a0667dc15c9048a544c9182b7f25b7e8a1ce20e3d1890e9f0",
+    "templates/product/feature-ask-collator/examples/first-run.md": "a725029b69e1302888cd6e1dda4a78bf0dba78119169aaa3f055ec0d209b17aa",
+    "templates/product/feature-ask-collator/template.yaml": "cb0ed26cab2ddd655dc87c0848c0fb2ea53bfda6e7c82fab7dc92575b0de4cd4",
+    "skills/collate-feature-asks/SKILL.md": "6932129da110f0e84116affd735eda3afb2a08410eabd6f7a9f314650e95b5da",
+    "skills/collate-feature-asks/skill.yaml": "6471608c2fd1a3fbfa1c6e4688db45dff78d34e234b6ad083164a8f469b7d328",
+    "templates/product/launch-coordinator/PROFILE.md": "3d3c51c4fbafb5ea4b6ac0fa2be72b6fd104fcc1eeaa9583215c7600cdcec9d4",
+    "templates/product/launch-coordinator/README.md": "2ea1c98e77502547a32c0e13f91349380fee57e328bffdae46195645604d6878",
+    "templates/product/launch-coordinator/SETUP.md": "dcb1dbd11cf655670aba4b2828f14460a70814db40eaa0d80fa571efd9e11e1d",
+    "templates/product/launch-coordinator/examples/first-run.md": "f779ff74af5573f71c392e218af3b76903a75aaaedf7fd34db1bc6470918b03e",
+    "templates/product/launch-coordinator/template.yaml": "3b28d43dd21b7a7e643200db1625d1ab3039560bc22063f306560e821815d1dd",
+    "skills/coordinate-launch/SKILL.md": "a9304b59a9e43d82da510f78df23273b280501324a797988a1127266c114d652",
+    "skills/coordinate-launch/skill.yaml": "58e598e6b1ecd446559da1bb49b096b201f37a3aa8df0592ee99ab820311a527"
+  },
+  "pluginGaps": [
+    "Slack"
+  ],
+  "checks": [
+    {
+      "method": "test",
+      "result": "pass",
+      "evidence": "node tools/validate.mjs --pr passes with this package; see the batch result document for the exact run."
+    },
+    {
+      "method": "source-check",
+      "result": "pass",
+      "evidence": "Original files copied byte for byte (sha256 listed in originalFiles); SKILL.md changes limited to frontmatter, notice and removed Grok-only lines (MODIFICATIONS.md)."
+    }
+  ],
+  "notVerified": [
+    "Not run with a real model in a Teloa host",
+    "Connectors not exercised with real accounts"
+  ]
+}

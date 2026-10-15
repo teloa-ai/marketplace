@@ -1,0 +1,138 @@
+{
+  "format": "teloa.market-catalog-entry/v1",
+  "id": "cursor.slack-block-kit",
+  "kind": "skill",
+  "delivery": "upstream",
+  "version": "1.4.1",
+  "taxonomy": {
+    "functions": [
+      "communication"
+    ],
+    "industries": [
+      "general"
+    ]
+  },
+  "skill": {
+    "name": "block-kit",
+    "title": {
+      "zh-CN": "block-kit（Slack）",
+      "zh-TW": "block-kit（Slack）",
+      "en": "block-kit (Slack)"
+    },
+    "summary": {
+      "zh-CN": "开发者要为 Slack 消息、模态框或 Home 标签构建或校验 Block Kit 布局时使用：消息布局、模态/表单/对话框、Home 标签界面、交互按钮或菜单，或修改既有 Block Kit JSON；任何 Slack UI 组件（sections、actions、inputs、headers 等）也触发。",
+      "zh-TW": "開發者要為 Slack 訊息、模態框或 Home 分頁建構或驗證 Block Kit 版面時使用：訊息版面、模態/表單/對話框、Home 分頁介面、互動按鈕或選單，或修改既有 Block Kit JSON；任何 Slack UI 元件（sections、actions、inputs、headers 等）也觸發。",
+      "en": "Use when a developer wants to build or validate Block Kit layouts for Slack messages, modals, or Home tabs: message layouts, modals/forms/dialogs, Home tab interfaces, interactive buttons or menus, or modifying existing Block Kit JSON. Also trigger on any Slack UI component (sections, actions, inputs, headers, alerts, tables, carousels), the words \"blocks\" or \"Block Kit Builder\", a request to preview rendered blocks, or pasted JSON like \"type\": \"section\". Validates via the bl"
+    }
+  },
+  "upstream": {
+    "kind": "github",
+    "repository": {
+      "host": "github.com",
+      "owner": "slackapi",
+      "repo": "slack-mcp-plugin"
+    },
+    "commit": "64c3f33fa13beb98c96d736390f80f3454a93a88",
+    "path": "skills/block-kit",
+    "files": [
+      {
+        "path": "SKILL.md",
+        "gitBlob": "be8d81d8d00e72bd1d221004ce30c8ce69f95917",
+        "sha256": "50192f60dbf20842f99fc740c81a85487ad3ee5d5d615ac58ee998b17eba51ac",
+        "size": 18216
+      },
+      {
+        "path": "references/common-patterns.md",
+        "gitBlob": "e529844ee34dce9015c5431bbf6a07a92bbcc96e",
+        "sha256": "7c8f342c115c330de0bdfca022da9af9338a48ace178d68baf578e5a918dfcfb",
+        "size": 15329
+      },
+      {
+        "path": "references/design-principles.md",
+        "gitBlob": "6b978d5602e71d43af23854b54513b3aea8418a7",
+        "sha256": "f81b90efebc9173ef265df90a1952e4e5112748e9c2e894c04621c5524a0f19c",
+        "size": 8358
+      },
+      {
+        "path": "licenses/upstream/LICENSE",
+        "repositoryPath": "LICENSE",
+        "gitBlob": "f2e8442ad2415bb25ed3663958e558e21586e12a",
+        "sha256": "ccbd532eabd9c4a87884b19caa6738bd6541e047460a736aca3bf1ac4fd91300",
+        "size": 1091
+      }
+    ]
+  },
+  "origin": {
+    "marketplace": "cursor",
+    "installs": null,
+    "installsLabel": "未记录 / Not recorded",
+    "countedAt": "2026-10-14"
+  },
+  "alternatives": [],
+  "unsupportedComponents": [
+    {
+      "kind": "commands",
+      "count": 5
+    }
+  ],
+  "modifications": [],
+  "plugin": {
+    "marketplace": "cursor",
+    "id": "674",
+    "title": {
+      "zh-CN": "Slack",
+      "zh-TW": "Slack",
+      "en": "Slack"
+    },
+    "summary": {
+      "zh-CN": "面向使用者与开发者的 Slack 技能：配合 Slack 官方远程 MCP 搜索与发送消息，并指导用 Slack CLI、Bolt 与 Block Kit 开发、测试 Slack 应用。",
+      "zh-TW": "面向使用者與開發者的 Slack 技能：搭配 Slack 官方遠端 MCP 搜尋與傳送訊息，並指導用 Slack CLI、Bolt 與 Block Kit 開發、測試 Slack 應用程式。",
+      "en": "Slack AI tools for users and developers: interact with your workspace via the Slack MCP server and use skills to develop Slack apps."
+    },
+    "root": ".",
+    "manifest": {
+      "path": ".cursor-plugin/plugin.json",
+      "gitBlob": "7cc49837faaef94235fadd1873112e7dee334003",
+      "sha256": "d6f6cc9e74e03e122626d79a0d624804b211ab599171145a166f45725f1befc8"
+    },
+    "license": {
+      "spdx": "MIT"
+    },
+    "connectors": [
+      "teloa.mcp-slack"
+    ]
+  },
+  "license": {
+    "spdx": "MIT",
+    "files": [
+      "licenses/upstream/LICENSE"
+    ]
+  },
+  "compatibility": {
+    "status": "content-only",
+    "teloa": ">=0.2.0-alpha.8",
+    "dsh": "0.1.7-rc.1",
+    "conditions": [
+      {
+        "zh-CN": "来源为 Cursor Plugin Marketplace 公开插件 Slack（pluginId 674），按固定 commit 64c3f33fa13b 锁定；正文面向 Cursor 代理编写，提及的 Cursor 专有命令、变量或内置工具在 Teloa 中不可用时需自行替代",
+        "zh-TW": "來源為 Cursor Plugin Marketplace 公開外掛 Slack（pluginId 674），按固定 commit 64c3f33fa13b 鎖定；正文面向 Cursor 代理撰寫，提及的 Cursor 專有命令、變數或內建工具在 Teloa 中不可用時需自行替代",
+        "en": "Taken from the public Cursor Plugin Marketplace plugin Slack (pluginId 674), pinned at commit 64c3f33fa13b; the text targets the Cursor agent, so Cursor-specific commands, variables or built-in tools it mentions must be substituted when unavailable in Teloa"
+      },
+      {
+        "zh-CN": "许可为原始仓库 LICENSE（MIT），不在技能目录内；技能正文为英文原件，未翻译",
+        "zh-TW": "授權為原始儲存庫 LICENSE（MIT），不在技能目錄內；技能正文為英文原件，未翻譯",
+        "en": "The license is LICENSE (MIT) in the original repository, outside the skill directory; the skill text is the English original and is not translated"
+      }
+    ]
+  },
+  "requires": {
+    "tools": [],
+    "network": false,
+    "runtimes": []
+  },
+  "review": {
+    "status": "approved",
+    "reviewedAt": "2026-10-14",
+    "reviewer": "Teloa"
+  }
+}

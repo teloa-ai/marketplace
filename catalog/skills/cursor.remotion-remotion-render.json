@@ -1,0 +1,137 @@
+{
+  "format": "teloa.market-catalog-entry/v1",
+  "id": "cursor.remotion-remotion-render",
+  "kind": "skill",
+  "delivery": "upstream",
+  "version": "4.0.533",
+  "taxonomy": {
+    "functions": [
+      "content-design"
+    ],
+    "industries": [
+      "general"
+    ]
+  },
+  "skill": {
+    "name": "remotion-render",
+    "title": {
+      "zh-CN": "remotion-render（Remotion 视频制作）",
+      "zh-TW": "remotion-render（Remotion 影片製作）",
+      "en": "remotion-render (Remotion)"
+    },
+    "summary": {
+      "zh-CN": "导出（渲染）一个 Remotion 视频。",
+      "zh-TW": "輸出（渲染）一個 Remotion 影片。",
+      "en": "Export a Remotion video"
+    }
+  },
+  "upstream": {
+    "kind": "github",
+    "repository": {
+      "host": "github.com",
+      "owner": "remotion-dev",
+      "repo": "cursor-plugin"
+    },
+    "commit": "ef694238d2e62c05692944a5082cd08e1367eb1c",
+    "path": "skills/remotion-render",
+    "files": [
+      {
+        "path": "SKILL.md",
+        "gitBlob": "74148d466255e095f9d105522075742e51c1c74b",
+        "sha256": "13804aaf44a27628f559a65a8a06f89d3e39408c1824275fb106762384a6cae7",
+        "size": 711
+      },
+      {
+        "path": "agents/openai.yaml",
+        "gitBlob": "da473ab10489602492e5e043c62b1ac4e9dd0f14",
+        "sha256": "386699c32fdc63840ce7ff7412953831095dc4cdf60368648378c32895281290",
+        "size": 286
+      },
+      {
+        "path": "assets/remotion-icon.svg",
+        "gitBlob": "420dbc726662dbb88a144878a49a68dcc6b0cd5b",
+        "sha256": "5007669bd0555b0f4565b4e7176fa191310ab0039b2ed09d867a9270f5b0ce58",
+        "size": 1303
+      },
+      {
+        "path": "transparent-videos.md",
+        "gitBlob": "dce5de5082e9cd3dadd04126e254ad8b61238234",
+        "sha256": "394ccda476e084522d544471fee92d7c65672e2cbaf2201a785c3dd5c74f31a4",
+        "size": 2267
+      },
+      {
+        "path": "licenses/upstream/LICENSE",
+        "repositoryPath": "LICENSE",
+        "gitBlob": "b1e3991d19fa01d6a438c77bff176c67ed261196",
+        "sha256": "1df205bece1fe707f818658a104844aba9a783e43f716642f5bf1286c18263c0",
+        "size": 1065
+      }
+    ]
+  },
+  "origin": {
+    "marketplace": "cursor",
+    "installs": null,
+    "installsLabel": "未记录 / Not recorded",
+    "countedAt": "2026-10-14"
+  },
+  "alternatives": [],
+  "unsupportedComponents": [],
+  "modifications": [],
+  "plugin": {
+    "marketplace": "cursor",
+    "id": "49339676",
+    "title": {
+      "zh-CN": "Remotion 视频制作",
+      "zh-TW": "Remotion 影片製作",
+      "en": "Remotion"
+    },
+    "summary": {
+      "zh-CN": "用 React 以代码生成视频的 Remotion 技能集：最佳实践、动画、音频、字幕、3D、地图、渲染导出与 Studio 预览。",
+      "zh-TW": "用 React 以程式碼產生影片的 Remotion 技能集：最佳實務、動畫、音訊、字幕、3D、地圖、渲染輸出與 Studio 預覽。",
+      "en": "Remotion video creation skills — best practices, animations, audio, captions, 3D, and more for building programmatic videos with React."
+    },
+    "root": ".",
+    "manifest": {
+      "path": "plugin.json",
+      "gitBlob": "a92a569ed36f33f1c421f74d0483f7a7a7b690be",
+      "sha256": "066d862b816d8519af20ab9b81adeb697d106350f7e793d58fbd261a345d0add"
+    },
+    "license": {
+      "spdx": "MIT"
+    },
+    "connectors": []
+  },
+  "license": {
+    "spdx": "MIT",
+    "files": [
+      "licenses/upstream/LICENSE"
+    ]
+  },
+  "compatibility": {
+    "status": "content-only",
+    "teloa": ">=0.2.0-alpha.8",
+    "dsh": "0.1.7-rc.1",
+    "conditions": [
+      {
+        "zh-CN": "来源为 Cursor Plugin Marketplace 公开插件 Remotion 视频制作（pluginId 49339676），按固定 commit ef694238d2e6 锁定；正文面向 Cursor 代理编写，提及的 Cursor 专有命令、变量或内置工具在 Teloa 中不可用时需自行替代",
+        "zh-TW": "來源為 Cursor Plugin Marketplace 公開外掛 Remotion 影片製作（pluginId 49339676），按固定 commit ef694238d2e6 鎖定；正文面向 Cursor 代理撰寫，提及的 Cursor 專有命令、變數或內建工具在 Teloa 中不可用時需自行替代",
+        "en": "Taken from the public Cursor Plugin Marketplace plugin Remotion (pluginId 49339676), pinned at commit ef694238d2e6; the text targets the Cursor agent, so Cursor-specific commands, variables or built-in tools it mentions must be substituted when unavailable in Teloa"
+      },
+      {
+        "zh-CN": "许可为原始仓库 LICENSE（MIT），不在技能目录内；技能正文为英文原件，未翻译",
+        "zh-TW": "授權為原始儲存庫 LICENSE（MIT），不在技能目錄內；技能正文為英文原件，未翻譯",
+        "en": "The license is LICENSE (MIT) in the original repository, outside the skill directory; the skill text is the English original and is not translated"
+      }
+    ]
+  },
+  "requires": {
+    "tools": [],
+    "network": false,
+    "runtimes": []
+  },
+  "review": {
+    "status": "approved",
+    "reviewedAt": "2026-10-14",
+    "reviewer": "Teloa"
+  }
+}

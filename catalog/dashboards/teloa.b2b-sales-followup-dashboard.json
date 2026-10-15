@@ -1,0 +1,92 @@
+{
+  "format": "teloa.market-catalog-entry/v1",
+  "id": "teloa.b2b-sales-followup-dashboard",
+  "kind": "dashboard",
+  "delivery": "install",
+  "version": "1.0.0",
+  "taxonomy": {
+    "functions": [
+      "business-ops"
+    ],
+    "industries": [
+      "general"
+    ]
+  },
+  "dashboard": {
+    "packageId": "teloa-b2b-sales-followup-dashboard",
+    "title": {
+      "zh-CN": "B2B 销售与客户跟进看板",
+      "zh-TW": "B2B 銷售與客戶跟進看板",
+      "en": "B2B sales & account follow-up dashboard"
+    },
+    "summary": {
+      "zh-CN": "围绕客户账户、商机与双方承诺的跟进看板：逾期承诺、7 天内到期承诺、跟进已逾期与 30 天内预计成交的商机、风险客户与续约。金额按币种分列、不换算；阶段数量是当前分布，不当作转化漏斗或复购率。",
+      "zh-TW": "圍繞客戶帳戶、商機與雙方承諾的跟進看板：逾期承諾、7 天內到期承諾、跟進已逾期與 30 天內預計成交的商機、風險客戶與續約。金額依幣別分列、不換算；階段數量是目前分布，不當作轉換漏斗或回購率。",
+      "en": "A follow-up dashboard built on accounts, opportunities and commitments from both sides: overdue and soon-due commitments, opportunities with overdue follow-up or expected to close within 30 days, at-risk accounts and renewals. Amounts are shown per currency without conversion; stage counts are the current distribution, not a funnel or repeat-purchase rate."
+    },
+    "scope": "b2b-sales",
+    "capabilities": {
+      "now": [
+        {
+          "zh-CN": "采用后建立「客户账户」「商机」「承诺」三类记录及记录页；商机与承诺关联到客户账户，商机金额须选择 CNY、USD 或 EUR。",
+          "zh-TW": "採用後建立「客戶帳戶」「商機」「承諾」三類紀錄及紀錄頁；商機與承諾關聯到客戶帳戶，商機金額須選擇 CNY、USD 或 EUR。",
+          "en": "Adopting creates Account, Opportunity and Commitment records with record pages; opportunities and commitments link to an account, and opportunity amounts must be in CNY, USD or EUR."
+        },
+        {
+          "zh-CN": "「客户跟进总览」看板 10 个组件：进行中商机、逾期承诺、风险客户、商机阶段与分币种金额、承诺到期、跟进逾期、预计成交、需关注客户与续约清单。",
+          "zh-TW": "「客戶跟進總覽」看板 10 個元件：進行中商機、逾期承諾、風險客戶、商機階段與分幣別金額、承諾到期、跟進逾期、預計成交、需關注客戶與續約清單。",
+          "en": "The Account follow-up overview has 10 widgets: open opportunities, overdue commitments, at-risk accounts, stage distribution with per-currency amounts, commitments due, overdue follow-ups, expected closes, accounts to watch and renewals."
+        }
+      ],
+      "needs": [
+        {
+          "zh-CN": "采用时选择新建业务或追加到本人已有业务，并在预览中确认；采用后记录由你或获准同事录入，初始为空，看板显示真实空态。",
+          "zh-TW": "採用時選擇新建業務或追加到本人既有業務，並在預覽中確認；採用後紀錄由你或獲准同事登錄，初始為空，看板顯示真實空狀態。",
+          "en": "When adopting, choose a new business or one of your existing businesses and confirm the preview; records are then entered by you or permitted colleagues, start empty, and the dashboard shows a real empty state."
+        }
+      ],
+      "permissions": [
+        {
+          "zh-CN": "只包含记录结构、视图、看板布局与页面；不带已连接的数据源、同步绑定、默认动作、示例业绩或任何私人数据，采用后不自动执行任务。",
+          "zh-TW": "只包含紀錄結構、檢視、看板版面與頁面；不帶已連接的資料來源、同步綁定、預設動作、範例業績或任何私人資料，採用後不自動執行任務。",
+          "en": "Contains only record structures, views, dashboard layout and pages; no connected data sources, sync bindings, default actions, sample results or private data, and nothing runs automatically after adoption."
+        }
+      ]
+    }
+  },
+  "upstream": null,
+  "modifications": [],
+  "license": {
+    "spdx": "Apache-2.0",
+    "files": [
+      "LICENSE"
+    ]
+  },
+  "compatibility": {
+    "status": "needs-configuration",
+    "teloa": ">=0.2.0-alpha.8",
+    "dsh": "0.2.1-alpha.1",
+    "conditions": [
+      {
+        "zh-CN": "需要 Teloa 0.2.0-alpha.7 或更高版本的业务配置采用流程；看板组件全部为视图组件，按当前已采用记录现算。",
+        "zh-TW": "需要 Teloa 0.2.0-alpha.7 或更高版本的業務設定採用流程；看板元件全部為檢視元件，依目前已採用紀錄即時計算。",
+        "en": "Requires the business configuration adoption flow of Teloa 0.2.0-alpha.7 or later; all widgets are view widgets computed from the records currently in the business."
+      },
+      {
+        "zh-CN": "对象与流程按 Grok Bot 模板库（cobusgreyling/grok-bot-templates，MIT）中对应团队岗位的职责梳理；看板结构、字段与说明为 Teloa 原创，未随附模板正文。",
+        "zh-TW": "物件與流程依 Grok Bot 範本庫（cobusgreyling/grok-bot-templates，MIT）中對應團隊職位的職責整理；看板結構、欄位與說明為 Teloa 原創，未隨附範本正文。",
+        "en": "Objects and flow follow the duties of the matching team roles in the Grok Bot template library (cobusgreyling/grok-bot-templates, MIT); the dashboard structure, fields and text are Teloa originals and no template text is included."
+      }
+    ]
+  },
+  "requires": {
+    "tools": [],
+    "network": false,
+    "runtimes": []
+  },
+  "review": {
+    "status": "approved",
+    "reviewedAt": "2026-10-14",
+    "reviewer": "Teloa"
+  }
+}

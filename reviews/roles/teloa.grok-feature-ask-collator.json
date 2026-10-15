@@ -1,0 +1,35 @@
+{
+  "format": "teloa.official-template-review/v1",
+  "entryId": "teloa.grok-feature-ask-collator",
+  "version": "1.0.0",
+  "reviewedAt": "2026-10-14",
+  "reviewer": "Teloa",
+  "verdict": "approve",
+  "origin": {
+    "kind": "derived",
+    "repository": "cobusgreyling/grok-bot-templates",
+    "commit": "4f3f28b4e6578cd227ff7f4b78ec91d15fd091b5",
+    "path": "templates/product/feature-ask-collator",
+    "license": "MIT",
+    "licenseUrl": "https://github.com/cobusgreyling/grok-bot-templates/blob/4f3f28b4e6578cd227ff7f4b78ec91d15fd091b5/LICENSE",
+    "fromSolution": "teloa.grok-product-team@1.0.0 roles/feature-ask-collator.json",
+    "teamRole": "member"
+  },
+  "originalFiles": {
+    "templates/product/feature-ask-collator/PROFILE.md": "b6e05193d14aec27b485b025b29cd5ea1512cc1b019dd1a1c0c60d045bc2e949",
+    "templates/product/feature-ask-collator/README.md": "ae64c55f84aa3dc4c6d9ac55a69693097a3bd7b9b272b3ed5f94eeda6f701da8",
+    "templates/product/feature-ask-collator/SETUP.md": "7ebda6b3f449568a0667dc15c9048a544c9182b7f25b7e8a1ce20e3d1890e9f0",
+    "templates/product/feature-ask-collator/examples/first-run.md": "a725029b69e1302888cd6e1dda4a78bf0dba78119169aaa3f055ec0d209b17aa",
+    "templates/product/feature-ask-collator/template.yaml": "cb0ed26cab2ddd655dc87c0848c0fb2ea53bfda6e7c82fab7dc92575b0de4cd4"
+  },
+  "checks": [
+    {
+      "method": "test",
+      "result": "pass",
+      "evidence": "node tools/validate.mjs --pr and node tools/sync-official-roles.mjs --check pass; see the batch result document."
+    }
+  ],
+  "notVerified": [
+    "Not run with a real model in a Teloa host"
+  ]
+}

@@ -1,0 +1,431 @@
+{
+  "format": "teloa.business-package/v3",
+  "id": "grok-bot-templates-team-product",
+  "title": "Product team (grok-bot-templates)",
+  "version": "1.0.0",
+  "domain": "software",
+  "scope": "general",
+  "description": "Original team 'Product' from cobusgreyling/grok-bot-templates@4f3f28b4e657 (MIT): lead product-performance; bots product-performance, feature-ask-collator, launch-coordinator. Why: Latency, Slack asks, and launch day collide unless one Bot owns evidence, one clusters asks, and one refuses to publish. Group kickoff (original): @Product Performance investigate the named latency spike with dashboards and traces. @Feature Ask Collator cluster Slack asks without filing. @Launch Coordinator keep the launch checklist honest and stop at go/no-go. Do not change production. Do not file issues. Do not publish.",
+  "resources": [
+    {
+      "id": "team-definition",
+      "kind": "knowledge",
+      "title": "Original team.yaml (Product)",
+      "version": "1.0.0",
+      "required": true,
+      "source": {
+        "kind": "local",
+        "path": "references/team.yaml"
+      }
+    },
+    {
+      "id": "dashboard-guide",
+      "kind": "knowledge",
+      "title": "软件交付看板使用指引（独立资源，按需采用）",
+      "localized": {
+        "title": {
+          "original": "软件交付看板使用指引（独立资源，按需采用）",
+          "defaultLocale": "en",
+          "locales": {
+            "zh-CN": "软件交付看板使用指引（独立资源，按需采用）",
+            "zh-TW": "業務看板使用指引（獨立資源，按需採用）",
+            "en": "Business dashboard guide (separate resource, optional)"
+          }
+        }
+      },
+      "version": "1.0.0",
+      "required": false,
+      "source": {
+        "kind": "local",
+        "path": "references/teloa-dashboard-guide.md"
+      }
+    },
+    {
+      "id": "product-performance",
+      "kind": "role",
+      "title": "Product Performance (lead)",
+      "version": "1.0.0",
+      "required": true,
+      "source": {
+        "kind": "local",
+        "path": "roles/product-performance.json"
+      }
+    },
+    {
+      "id": "product-performance-profile",
+      "kind": "knowledge",
+      "title": "Original PROFILE.md of Product Performance",
+      "version": "1.0.0",
+      "required": true,
+      "source": {
+        "kind": "local",
+        "path": "references/product-performance/PROFILE.md"
+      }
+    },
+    {
+      "id": "product-performance-template",
+      "kind": "knowledge",
+      "title": "Original template.yaml of Product Performance",
+      "version": "1.0.0",
+      "required": true,
+      "source": {
+        "kind": "local",
+        "path": "references/product-performance/template.yaml"
+      }
+    },
+    {
+      "id": "product-performance-first-run",
+      "kind": "knowledge",
+      "title": "Original examples/first-run.md of Product Performance",
+      "version": "1.0.0",
+      "required": true,
+      "source": {
+        "kind": "local",
+        "path": "references/product-performance/first-run.md"
+      }
+    },
+    {
+      "id": "product-performance-working-method",
+      "kind": "skill",
+      "title": "产品性能调查员工工作准则",
+      "localized": {
+        "title": {
+          "original": "产品性能调查员工工作准则",
+          "defaultLocale": "en",
+          "locales": {
+            "zh-CN": "产品性能调查员工工作准则",
+            "zh-TW": "產品效能調查員工工作準則",
+            "en": "Product Performance working instructions"
+          }
+        }
+      },
+      "version": "1.0.0",
+      "required": true,
+      "source": {
+        "kind": "local",
+        "path": "skills/product-performance-working-method/SKILL.md"
+      }
+    },
+    {
+      "id": "investigate-perf",
+      "kind": "skill",
+      "title": "Investigate Perf",
+      "version": "1.0.0",
+      "required": true,
+      "source": {
+        "kind": "local",
+        "path": "skills/investigate-perf/SKILL.md"
+      }
+    },
+    {
+      "id": "weekday-perf-health",
+      "kind": "work-template",
+      "title": "Weekday performance check",
+      "localized": {
+        "title": {
+          "original": "Weekday performance check",
+          "defaultLocale": "en",
+          "locales": {
+            "zh-CN": "工作日性能检查（未排程）",
+            "zh-TW": "工作日效能檢查（未排程）",
+            "en": "Weekday performance check (unscheduled)"
+          }
+        }
+      },
+      "version": "1.0.0",
+      "required": false,
+      "source": {
+        "kind": "local",
+        "path": "routines/weekday-perf-health.json"
+      }
+    },
+    {
+      "id": "connection-github",
+      "kind": "mcp",
+      "title": "GitHub (read-only via Teloa connector teloa.mcp-github)",
+      "version": "1.0.0",
+      "required": false,
+      "source": {
+        "kind": "local",
+        "path": "connections/github.json"
+      }
+    },
+    {
+      "id": "feature-ask-collator",
+      "kind": "role",
+      "title": "Feature Ask Collator",
+      "version": "1.0.0",
+      "required": true,
+      "source": {
+        "kind": "local",
+        "path": "roles/feature-ask-collator.json"
+      }
+    },
+    {
+      "id": "feature-ask-collator-profile",
+      "kind": "knowledge",
+      "title": "Original PROFILE.md of Feature Ask Collator",
+      "version": "1.0.0",
+      "required": true,
+      "source": {
+        "kind": "local",
+        "path": "references/feature-ask-collator/PROFILE.md"
+      }
+    },
+    {
+      "id": "feature-ask-collator-template",
+      "kind": "knowledge",
+      "title": "Original template.yaml of Feature Ask Collator",
+      "version": "1.0.0",
+      "required": true,
+      "source": {
+        "kind": "local",
+        "path": "references/feature-ask-collator/template.yaml"
+      }
+    },
+    {
+      "id": "feature-ask-collator-first-run",
+      "kind": "knowledge",
+      "title": "Original examples/first-run.md of Feature Ask Collator",
+      "version": "1.0.0",
+      "required": true,
+      "source": {
+        "kind": "local",
+        "path": "references/feature-ask-collator/first-run.md"
+      }
+    },
+    {
+      "id": "feature-ask-collator-working-method",
+      "kind": "skill",
+      "title": "需求归集员工工作准则",
+      "localized": {
+        "title": {
+          "original": "需求归集员工工作准则",
+          "defaultLocale": "en",
+          "locales": {
+            "zh-CN": "需求归集员工工作准则",
+            "zh-TW": "需求彙整員工工作準則",
+            "en": "Feature Ask Collator working instructions"
+          }
+        }
+      },
+      "version": "1.0.0",
+      "required": true,
+      "source": {
+        "kind": "local",
+        "path": "skills/feature-ask-collator-working-method/SKILL.md"
+      }
+    },
+    {
+      "id": "collate-feature-asks",
+      "kind": "skill",
+      "title": "Collate Feature Asks",
+      "version": "1.0.0",
+      "required": true,
+      "source": {
+        "kind": "local",
+        "path": "skills/collate-feature-asks/SKILL.md"
+      }
+    },
+    {
+      "id": "launch-coordinator",
+      "kind": "role",
+      "title": "Launch Coordinator",
+      "version": "1.0.0",
+      "required": true,
+      "source": {
+        "kind": "local",
+        "path": "roles/launch-coordinator.json"
+      }
+    },
+    {
+      "id": "launch-coordinator-profile",
+      "kind": "knowledge",
+      "title": "Original PROFILE.md of Launch Coordinator",
+      "version": "1.0.0",
+      "required": true,
+      "source": {
+        "kind": "local",
+        "path": "references/launch-coordinator/PROFILE.md"
+      }
+    },
+    {
+      "id": "launch-coordinator-template",
+      "kind": "knowledge",
+      "title": "Original template.yaml of Launch Coordinator",
+      "version": "1.0.0",
+      "required": true,
+      "source": {
+        "kind": "local",
+        "path": "references/launch-coordinator/template.yaml"
+      }
+    },
+    {
+      "id": "launch-coordinator-first-run",
+      "kind": "knowledge",
+      "title": "Original examples/first-run.md of Launch Coordinator",
+      "version": "1.0.0",
+      "required": true,
+      "source": {
+        "kind": "local",
+        "path": "references/launch-coordinator/first-run.md"
+      }
+    },
+    {
+      "id": "launch-coordinator-working-method",
+      "kind": "skill",
+      "title": "发布协调员工工作准则",
+      "localized": {
+        "title": {
+          "original": "发布协调员工工作准则",
+          "defaultLocale": "en",
+          "locales": {
+            "zh-CN": "发布协调员工工作准则",
+            "zh-TW": "發布協調員工工作準則",
+            "en": "Launch Coordinator working instructions"
+          }
+        }
+      },
+      "version": "1.0.0",
+      "required": true,
+      "source": {
+        "kind": "local",
+        "path": "skills/launch-coordinator-working-method/SKILL.md"
+      }
+    },
+    {
+      "id": "coordinate-launch",
+      "kind": "skill",
+      "title": "Coordinate Launch",
+      "version": "1.0.0",
+      "required": true,
+      "source": {
+        "kind": "local",
+        "path": "skills/coordinate-launch/SKILL.md"
+      }
+    }
+  ],
+  "relations": [
+    {
+      "kind": "role-knowledge",
+      "from": "product-performance",
+      "to": "dashboard-guide"
+    },
+    {
+      "kind": "role-knowledge",
+      "from": "product-performance",
+      "to": "product-performance-profile"
+    },
+    {
+      "kind": "role-knowledge",
+      "from": "product-performance",
+      "to": "product-performance-template"
+    },
+    {
+      "kind": "role-knowledge",
+      "from": "product-performance",
+      "to": "product-performance-first-run"
+    },
+    {
+      "kind": "role-knowledge",
+      "from": "product-performance",
+      "to": "team-definition"
+    },
+    {
+      "kind": "role-skill",
+      "from": "product-performance",
+      "to": "product-performance-working-method"
+    },
+    {
+      "kind": "role-skill",
+      "from": "product-performance",
+      "to": "investigate-perf"
+    },
+    {
+      "kind": "role-work",
+      "from": "product-performance",
+      "to": "weekday-perf-health"
+    },
+    {
+      "kind": "role-connection",
+      "from": "product-performance",
+      "to": "connection-github"
+    },
+    {
+      "kind": "role-knowledge",
+      "from": "feature-ask-collator",
+      "to": "feature-ask-collator-profile"
+    },
+    {
+      "kind": "role-knowledge",
+      "from": "feature-ask-collator",
+      "to": "feature-ask-collator-template"
+    },
+    {
+      "kind": "role-knowledge",
+      "from": "feature-ask-collator",
+      "to": "feature-ask-collator-first-run"
+    },
+    {
+      "kind": "role-knowledge",
+      "from": "feature-ask-collator",
+      "to": "team-definition"
+    },
+    {
+      "kind": "role-skill",
+      "from": "feature-ask-collator",
+      "to": "feature-ask-collator-working-method"
+    },
+    {
+      "kind": "role-coordination",
+      "from": "product-performance",
+      "to": "feature-ask-collator"
+    },
+    {
+      "kind": "role-skill",
+      "from": "feature-ask-collator",
+      "to": "collate-feature-asks"
+    },
+    {
+      "kind": "role-knowledge",
+      "from": "launch-coordinator",
+      "to": "launch-coordinator-profile"
+    },
+    {
+      "kind": "role-knowledge",
+      "from": "launch-coordinator",
+      "to": "launch-coordinator-template"
+    },
+    {
+      "kind": "role-knowledge",
+      "from": "launch-coordinator",
+      "to": "launch-coordinator-first-run"
+    },
+    {
+      "kind": "role-knowledge",
+      "from": "launch-coordinator",
+      "to": "team-definition"
+    },
+    {
+      "kind": "role-skill",
+      "from": "launch-coordinator",
+      "to": "launch-coordinator-working-method"
+    },
+    {
+      "kind": "role-coordination",
+      "from": "product-performance",
+      "to": "launch-coordinator"
+    },
+    {
+      "kind": "role-skill",
+      "from": "launch-coordinator",
+      "to": "coordinate-launch"
+    },
+    {
+      "kind": "role-connection",
+      "from": "launch-coordinator",
+      "to": "connection-github"
+    }
+  ],
+  "entrypoints": []
+}

@@ -1,0 +1,94 @@
+{
+  "format": "teloa.market-catalog-entry/v1",
+  "id": "teloa.content-ops-dashboard",
+  "kind": "dashboard",
+  "delivery": "install",
+  "version": "1.0.0",
+  "taxonomy": {
+    "functions": [
+      "business-ops",
+      "content-design"
+    ],
+    "industries": [
+      "marketing/new-media",
+      "marketing"
+    ]
+  },
+  "dashboard": {
+    "packageId": "teloa-content-ops-dashboard",
+    "title": {
+      "zh-CN": "数字营销与内容运营看板",
+      "zh-TW": "數位行銷與內容營運看板",
+      "en": "Digital marketing & content operations dashboard"
+    },
+    "summary": {
+      "zh-CN": "围绕选题、制作、审批与发布的内容看板：待审批与需修改的内容、交稿超期、未来 7 天排期与近 30 天发布。曝光与转化只合计写明统计来源的记录，没录入就显示缺失，不当作 0。",
+      "zh-TW": "圍繞選題、製作、審核與發布的內容看板：待審核與需修改的內容、交稿逾期、未來 7 天排程與近 30 天發布。曝光與轉換只合計寫明統計來源的紀錄，沒登錄就顯示缺漏，不當作 0。",
+      "en": "A content dashboard following ideas through production, approval and publication: items awaiting approval or revision, overdue drafts, the next 7 days of schedule and the last 30 days of output. Impressions and conversions are totalled only from records with a stated source; unrecorded values show as missing, never as 0."
+    },
+    "scope": "content-ops",
+    "capabilities": {
+      "now": [
+        {
+          "zh-CN": "采用后建立「内容」记录与记录页：阶段、渠道、负责人、审批人、交稿截止、发布时间与下一步；曝光、转化与统计来源、统计截至时间按需录入。",
+          "zh-TW": "採用後建立「內容」紀錄與紀錄頁：階段、管道、負責人、審核人、交稿期限、發布時間與下一步；曝光、轉換與統計來源、統計截至時間依需要登錄。",
+          "en": "Adopting creates Content records and a record page: stage, channel, owner, approver, draft due, publish time and next step; impressions, conversions, metrics source and as-of time are entered when available."
+        },
+        {
+          "zh-CN": "「内容运营总览」看板 8 个组件：待审批、交稿超期、阶段分布、未来 7 天排期、按渠道的发布与有来源统计、近 30 天发布清单。",
+          "zh-TW": "「內容營運總覽」看板 8 個元件：待審核、交稿逾期、階段分布、未來 7 天排程、依管道的發布與有來源統計、近 30 天發布清單。",
+          "en": "The Content operations overview has 8 widgets: awaiting approval, overdue drafts, stage distribution, next-7-day schedule, published output and sourced metrics by channel, and the last 30 days of publications."
+        }
+      ],
+      "needs": [
+        {
+          "zh-CN": "采用时选择新建业务或追加到本人已有业务，并在预览中确认；采用后记录由你或获准同事录入，初始为空，看板显示真实空态。",
+          "zh-TW": "採用時選擇新建業務或追加到本人既有業務，並在預覽中確認；採用後紀錄由你或獲准同事登錄，初始為空，看板顯示真實空狀態。",
+          "en": "When adopting, choose a new business or one of your existing businesses and confirm the preview; records are then entered by you or permitted colleagues, start empty, and the dashboard shows a real empty state."
+        }
+      ],
+      "permissions": [
+        {
+          "zh-CN": "只包含记录结构、视图、看板布局与页面；不带已连接的数据源、同步绑定、默认动作、示例业绩或任何私人数据，采用后不自动执行任务。",
+          "zh-TW": "只包含紀錄結構、檢視、看板版面與頁面；不帶已連接的資料來源、同步綁定、預設動作、範例業績或任何私人資料，採用後不自動執行任務。",
+          "en": "Contains only record structures, views, dashboard layout and pages; no connected data sources, sync bindings, default actions, sample results or private data, and nothing runs automatically after adoption."
+        }
+      ]
+    }
+  },
+  "upstream": null,
+  "modifications": [],
+  "license": {
+    "spdx": "Apache-2.0",
+    "files": [
+      "LICENSE"
+    ]
+  },
+  "compatibility": {
+    "status": "needs-configuration",
+    "teloa": ">=0.2.0-alpha.8",
+    "dsh": "0.2.1-alpha.1",
+    "conditions": [
+      {
+        "zh-CN": "需要 Teloa 0.2.0-alpha.7 或更高版本的业务配置采用流程；看板组件全部为视图组件，按当前已采用记录现算。",
+        "zh-TW": "需要 Teloa 0.2.0-alpha.7 或更高版本的業務設定採用流程；看板元件全部為檢視元件，依目前已採用紀錄即時計算。",
+        "en": "Requires the business configuration adoption flow of Teloa 0.2.0-alpha.7 or later; all widgets are view widgets computed from the records currently in the business."
+      },
+      {
+        "zh-CN": "对象与流程按 Grok Bot 模板库（cobusgreyling/grok-bot-templates，MIT）中对应团队岗位的职责梳理；看板结构、字段与说明为 Teloa 原创，未随附模板正文。",
+        "zh-TW": "物件與流程依 Grok Bot 範本庫（cobusgreyling/grok-bot-templates，MIT）中對應團隊職位的職責整理；看板結構、欄位與說明為 Teloa 原創，未隨附範本正文。",
+        "en": "Objects and flow follow the duties of the matching team roles in the Grok Bot template library (cobusgreyling/grok-bot-templates, MIT); the dashboard structure, fields and text are Teloa originals and no template text is included."
+      }
+    ]
+  },
+  "requires": {
+    "tools": [],
+    "network": false,
+    "runtimes": []
+  },
+  "review": {
+    "status": "approved",
+    "reviewedAt": "2026-10-14",
+    "reviewer": "Teloa"
+  }
+}

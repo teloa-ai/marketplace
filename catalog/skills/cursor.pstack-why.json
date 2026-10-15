@@ -1,0 +1,196 @@
+{
+  "format": "teloa.market-catalog-entry/v1",
+  "id": "cursor.pstack-why",
+  "kind": "skill",
+  "delivery": "upstream",
+  "version": "0.15.23",
+  "taxonomy": {
+    "functions": [
+      "dev-tools"
+    ],
+    "industries": [
+      "general"
+    ]
+  },
+  "skill": {
+    "name": "why",
+    "title": {
+      "zh-CN": "why（pstack）",
+      "zh-TW": "why（pstack）",
+      "en": "why (pstack)"
+    },
+    "summary": {
+      "zh-CN": "回答「X 为什么这样设计」「为什么选 Y」、设计依据、回归、事后复盘或有数据支撑的阈值；发现可用的 MCP 并并行查询各类证据（源码管理、工单、长文档、即时聊天、基础设施可观测性、错误追踪、产品分析仓库）。",
+      "zh-TW": "回答「X 為什麼這樣設計」「為什麼選 Y」、設計依據、回歸、事後復盤或有資料支撐的閾值；發現可用的 MCP 並並行查詢各類證據（原始碼管理、工單、長文件、即時聊天、基礎設施可觀測性、錯誤追蹤、產品分析倉庫）。",
+      "en": "Use for 'why does X work this way', 'why we picked Y', design rationale, regressions, postmortems, or data-backed thresholds. Discovers available MCPs and queries each evidence category (source control, issue tracker, long-form docs, real-time chat, infrastructure observability, error tracking, product analytics warehouse) in parallel, then returns a cited read on decisions and tradeoffs. Use how for runtime behavior."
+    }
+  },
+  "upstream": {
+    "kind": "github",
+    "repository": {
+      "host": "github.com",
+      "owner": "cursor",
+      "repo": "plugins"
+    },
+    "commit": "837067b75aa20ab58d7b2a2f6c0531e37118c596",
+    "path": "pstack/skills/why",
+    "files": [
+      {
+        "path": "SKILL.md",
+        "gitBlob": "bc2a3eb4f5bacf29949974376bc492df3d59db95",
+        "sha256": "fa1d1e9dec14b15381c1ccccad74044d6b6ea3b4af56821f59ba2d8e59b07545",
+        "size": 8770
+      },
+      {
+        "path": "references/epistemics.md",
+        "gitBlob": "b18abf41dfa245ee55e94f1b3a80c0b750eb10cf",
+        "sha256": "d54a2361b2d5973bc3fe2edf62f446d87935974d4b40d47f23b9529f956ca758",
+        "size": 6736
+      },
+      {
+        "path": "references/investigator-prompt.md",
+        "gitBlob": "e1c2bbf52197ff600ba6e4552439e630687b7ae2",
+        "sha256": "c44afba186f899094f3694e6c9d6de5d14ff7c4ce28b787a9f50fc789c9a7fc3",
+        "size": 5554
+      },
+      {
+        "path": "references/source-playbook.md",
+        "gitBlob": "aa3d877cd539763ff05e266ae0a02dd811441e2b",
+        "sha256": "9ae9dcb9d09111c9facc68510331c5aba4aed9b1b057314ff1fc0e166ad3993a",
+        "size": 1363
+      },
+      {
+        "path": "references/sources/code-archaeology.md",
+        "gitBlob": "e3555f809da0a5654ceefe7d2c20080397c03506",
+        "sha256": "a4a3970e9db448054aed676f3f7feeee667b4b69f0bd57c8fd72b751be687cc7",
+        "size": 1440
+      },
+      {
+        "path": "references/sources/databricks.md",
+        "gitBlob": "2770763ff5d0d1ad004abcc9a0138c9537ad1978",
+        "sha256": "236ede7aab6454662a992db088a5393537a5233a4c26719c93188f9e174488f6",
+        "size": 6994
+      },
+      {
+        "path": "references/sources/datadog.md",
+        "gitBlob": "536466ddd8ae6543836abb84bdf1efd8e43089ba",
+        "sha256": "b139faac5dc11b8f26c8255dce6033c1a6ac143b038d3dd103f2034c5dbec9cd",
+        "size": 4971
+      },
+      {
+        "path": "references/sources/incident-postmortem.md",
+        "gitBlob": "e7397e7ef374bee3b7f0018ac8e5ddd4322bab12",
+        "sha256": "bf2661f1a81c37700884a45b77d6289be0c802b065febced31990e6564510839",
+        "size": 372
+      },
+      {
+        "path": "references/sources/linear.md",
+        "gitBlob": "899c643c078f322afe6ae0ef78a007f8ffd356c1",
+        "sha256": "01304e7f1badfcfb78babbb0edcadeb3cc8dd3f713793420cdff24ba190f907c",
+        "size": 2996
+      },
+      {
+        "path": "references/sources/notion.md",
+        "gitBlob": "d16230a4105fd1dacf870da0950a38faeb9381e6",
+        "sha256": "3bcfa695c49dfad4ac036d5d7181c12585f55ac04f1936198d16ab75a2788997",
+        "size": 2853
+      },
+      {
+        "path": "references/sources/sentry.md",
+        "gitBlob": "8200fd9f3abbb7fca76d0079663502b33524bd09",
+        "sha256": "2d4f83048eac1df530b399e2aed75dd7c9c18577b7665420aaeb96d0ceb0b702",
+        "size": 2089
+      },
+      {
+        "path": "references/sources/slack.md",
+        "gitBlob": "cadd5618a349adc5eb1dce6fddde38e7221e00fd",
+        "sha256": "3bc6309f5c7b26ace3b919dbd7f7b048861dd2020f910fe24f656cc74b3b661c",
+        "size": 1336
+      },
+      {
+        "path": "references/synthesizer-prompt.md",
+        "gitBlob": "287a350c925c28b44f0e0dc687bb09a843e11100",
+        "sha256": "11c62671aa7b7a6e3d36929ffe2b59bf95e6ca664eee4d93e6ee527dd3390ddb",
+        "size": 7146
+      },
+      {
+        "path": "licenses/upstream/pstack/LICENSE",
+        "repositoryPath": "pstack/LICENSE",
+        "gitBlob": "6b5400237fdf6545be0b8fae370d6f2fcff8fb25",
+        "sha256": "bc957ca6bee02792566a1a028d105e02e247c6e77cf057061674273da77b200e",
+        "size": 1067
+      }
+    ]
+  },
+  "origin": {
+    "marketplace": "cursor",
+    "installs": null,
+    "installsLabel": "未记录 / Not recorded",
+    "countedAt": "2026-10-14"
+  },
+  "alternatives": [],
+  "unsupportedComponents": [
+    {
+      "kind": "agents",
+      "count": 2
+    }
+  ],
+  "modifications": [],
+  "plugin": {
+    "marketplace": "cursor",
+    "id": "9717366",
+    "title": {
+      "zh-CN": "pstack",
+      "zh-TW": "pstack",
+      "en": "pstack"
+    },
+    "summary": {
+      "zh-CN": "pstack：一套严谨的代理工作流与工程原则技能，先想深再动手，少写代码但写得更好；包含架构草图、并行候选竞争、根因修复、验证技能生成等可并行使用的工作方法。 当前提供原包 53 项中的 51 项技能；另外两项的原生名称不符合要求，暂未安装。",
+      "zh-TW": "pstack：一套嚴謹的代理工作流程與工程原則技能，先想深再動手，少寫程式碼但寫得更好；包含架構草圖、並行候選競爭、根因修復、驗證技能產生等可並行使用的工作方法。 目前提供原套件 53 項中的 51 項技能；另外兩項的原生名稱不符合要求，暫不安裝。",
+      "en": "if you want to go fast, go deep first. pstack helps you write less, but higher quality code. rigorous agent workflows you can parallelize with confidence. Includes 51 of the original 53 skills; two with invalid native names are not installed."
+    },
+    "root": "pstack",
+    "manifest": {
+      "path": "pstack/.cursor-plugin/plugin.json",
+      "gitBlob": "0da22406aee7b1dd25a4433ee5f31518642373e6",
+      "sha256": "161ec748cb37ddb5ca4ab466045e3f7d54c8d8bb971d1a290f42874dbdafb249"
+    },
+    "license": {
+      "spdx": "MIT"
+    },
+    "connectors": []
+  },
+  "license": {
+    "spdx": "MIT",
+    "files": [
+      "licenses/upstream/pstack/LICENSE"
+    ]
+  },
+  "compatibility": {
+    "status": "content-only",
+    "teloa": ">=0.2.0-alpha.8",
+    "dsh": "0.1.7-rc.1",
+    "conditions": [
+      {
+        "zh-CN": "来源为 Cursor Plugin Marketplace 公开插件 pstack（pluginId 9717366），按固定 commit 837067b75aa2 锁定；正文面向 Cursor 代理编写，提及的 Cursor 专有命令、变量或内置工具在 Teloa 中不可用时需自行替代",
+        "zh-TW": "來源為 Cursor Plugin Marketplace 公開外掛 pstack（pluginId 9717366），按固定 commit 837067b75aa2 鎖定；正文面向 Cursor 代理撰寫，提及的 Cursor 專有命令、變數或內建工具在 Teloa 中不可用時需自行替代",
+        "en": "Taken from the public Cursor Plugin Marketplace plugin pstack (pluginId 9717366), pinned at commit 837067b75aa2; the text targets the Cursor agent, so Cursor-specific commands, variables or built-in tools it mentions must be substituted when unavailable in Teloa"
+      },
+      {
+        "zh-CN": "许可为原始仓库 pstack/LICENSE（MIT），不在技能目录内；技能正文为英文原件，未翻译",
+        "zh-TW": "授權為原始儲存庫 pstack/LICENSE（MIT），不在技能目錄內；技能正文為英文原件，未翻譯",
+        "en": "The license is pstack/LICENSE (MIT) in the original repository, outside the skill directory; the skill text is the English original and is not translated"
+      }
+    ]
+  },
+  "requires": {
+    "tools": [],
+    "network": false,
+    "runtimes": []
+  },
+  "review": {
+    "status": "approved",
+    "reviewedAt": "2026-10-14",
+    "reviewer": "Teloa"
+  }
+}

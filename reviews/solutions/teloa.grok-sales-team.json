@@ -1,0 +1,67 @@
+{
+  "format": "teloa.official-template-review/v1",
+  "entryId": "teloa.grok-sales-team",
+  "version": "1.0.0",
+  "reviewedAt": "2026-10-14",
+  "reviewer": "Teloa",
+  "verdict": "approve",
+  "origin": {
+    "kind": "derived",
+    "repository": "cobusgreyling/grok-bot-templates",
+    "commit": "4f3f28b4e6578cd227ff7f4b78ec91d15fd091b5",
+    "path": "teams/sales",
+    "license": "MIT",
+    "licenseUrl": "https://github.com/cobusgreyling/grok-bot-templates/blob/4f3f28b4e6578cd227ff7f4b78ec91d15fd091b5/LICENSE",
+    "generatedBy": "tools/build-grok-bot-template-teams.py"
+  },
+  "originalFiles": {
+    "teams/sales/team.yaml": "480a238c1206233d8da4532474890c7ebf4d86adeacb862b49432091173f9361",
+    "templates/sales/sales-outbound/PROFILE.md": "f9b7ba3a88c9481ddda0b994c7d56d662258ae82dbfa6bfaff71ff80a52df86a",
+    "templates/sales/sales-outbound/README.md": "00c01fe51c29b2a5e48c5d2e5a726e41cd58e93decc0ac793b64db71be30ed51",
+    "templates/sales/sales-outbound/SETUP.md": "1e5cb7c311e9d5cd31643f893d13954bb6ad112392be1c1e6d23a09d4d72e122",
+    "templates/sales/sales-outbound/examples/first-run.md": "886282c4375177311912b1a9852174a002063280909356219d683331bd43ff05",
+    "templates/sales/sales-outbound/template.yaml": "9976bf46a82bc123f92c0f5879bea88ee03d839b020abf80d733ddbd4e7ca9b8",
+    "skills/research-accounts/SKILL.md": "a574391a492949749df7bb6faf93a21f992d6260f9ac75d7d88894efa6cfdc72",
+    "skills/research-accounts/skill.yaml": "479eeba05e8f88877aae54310e5794e21f91f51fb0b02944656186dbb99c5113",
+    "routines/nightly-outbound-research/ROUTINE.md": "f25014a6583e742972ae88abc53b60b382a8725681c6198c830899c62179ec71",
+    "routines/nightly-outbound-research/routine.yaml": "a5411638397564606f0a968709b60e9cf1f8aa41a5a64dc992922f18b3532e02",
+    "templates/sales/meeting-prep/PROFILE.md": "4a97f09b5c03fcc6037ac9a45763491ea4341014cd5e2c08f4b88cb63ca3cc4c",
+    "templates/sales/meeting-prep/README.md": "5517579c4839cafbc2f3642642c62fbce97f9de8d38f93a909d69de014730c90",
+    "templates/sales/meeting-prep/SETUP.md": "caab38b2f3736ffd1b009d10b9011381c8a4f3f168e8d4adc76ae9a8fd61a495",
+    "templates/sales/meeting-prep/examples/first-run.md": "5dd884d7df2296cb3927c815a66900c351d6f850197c7ad42b39cd744c727eb4",
+    "templates/sales/meeting-prep/template.yaml": "c3f65cace1aacb3d501978ebe04131a2646285fdbaf98e1ecf7a735a827d6068",
+    "skills/prep-meeting/SKILL.md": "3dfe3a92167ee6e9a9c494007ed57a55d3ee7ec83147a27987add5058f6aaa93",
+    "skills/prep-meeting/skill.yaml": "2fa91deaa1ac91d7b298f00a0a3095fb218d14d3a2edc04d5e0a5622fb0c93ff",
+    "templates/sales/call-followup/PROFILE.md": "34bdad482f7dc02543299a27bcd9a763d6a517c293ccbd8ebad9b0e0152897e5",
+    "templates/sales/call-followup/README.md": "82b1217d170730d10a5819498d5c6f9630906b07656b59962851c57e0adbc508",
+    "templates/sales/call-followup/SETUP.md": "6313521225f4c7123a4b87889b7730eecae2b9b4929e69241c66d450226fdc7f",
+    "templates/sales/call-followup/examples/first-run.md": "cdd9538c71a8df57f4547b8cce5867b0fde1855b0bca5720b22a6e0d1bbf1ab5",
+    "templates/sales/call-followup/template.yaml": "7772f288cf6874d631d5b3fe06129626fd48cb8f219e723d19015521ac9993e0",
+    "skills/draft-call-followup/SKILL.md": "c9685d4e935950e002c119f34445760635729612fe29de91141e0fce15f6ebaf",
+    "skills/draft-call-followup/skill.yaml": "f44d9b018696008d002eebbec62d59785aa721a344a1de7ea78b16d680e5ddf8",
+    "skills/log-promises/SKILL.md": "90a83a776b9dee3748129160bd2537ef10373200bb6da831ffcf29792f550cef",
+    "skills/log-promises/skill.yaml": "23ecd3540eaddbe6c398da4e1637cca348b6cfd91aa1f97f1cbed6bd5b6da13f"
+  },
+  "pluginGaps": [
+    "Gmail",
+    "Google Calendar",
+    "LinkedIn",
+    "Slack"
+  ],
+  "checks": [
+    {
+      "method": "test",
+      "result": "pass",
+      "evidence": "node tools/validate.mjs --pr passes with this package; see the batch result document for the exact run."
+    },
+    {
+      "method": "source-check",
+      "result": "pass",
+      "evidence": "Original files copied byte for byte (sha256 listed in originalFiles); SKILL.md changes limited to frontmatter, notice and removed Grok-only lines (MODIFICATIONS.md)."
+    }
+  ],
+  "notVerified": [
+    "Not run with a real model in a Teloa host",
+    "Connectors not exercised with real accounts"
+  ]
+}

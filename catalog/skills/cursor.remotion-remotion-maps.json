@@ -1,0 +1,275 @@
+{
+  "format": "teloa.market-catalog-entry/v1",
+  "id": "cursor.remotion-remotion-maps",
+  "kind": "skill",
+  "delivery": "upstream",
+  "version": "4.0.533",
+  "taxonomy": {
+    "functions": [
+      "content-design"
+    ],
+    "industries": [
+      "general"
+    ]
+  },
+  "skill": {
+    "name": "remotion-maps",
+    "title": {
+      "zh-CN": "remotion-maps（Remotion 视频制作）",
+      "zh-TW": "remotion-maps（Remotion 影片製作）",
+      "en": "remotion-maps (Remotion)"
+    },
+    "summary": {
+      "zh-CN": "Remotion 地图动画知识。",
+      "zh-TW": "Remotion 地圖動畫知識。",
+      "en": "Remotion Map animation knowledge"
+    }
+  },
+  "upstream": {
+    "kind": "github",
+    "repository": {
+      "host": "github.com",
+      "owner": "remotion-dev",
+      "repo": "cursor-plugin"
+    },
+    "commit": "ef694238d2e62c05692944a5082cd08e1367eb1c",
+    "path": "skills/remotion-maps",
+    "files": [
+      {
+        "path": "SKILL.md",
+        "gitBlob": "4242b0b4da1cc3cdf64bddeb13ad693c5b9231c3",
+        "sha256": "f4c63fe117136a34ce887b8d4cb482e14dcd0cda44c5a51dbdca3ac78c8f8a32",
+        "size": 1030
+      },
+      {
+        "path": "agents/openai.yaml",
+        "gitBlob": "c60b3a186973a32c89176b88446c1856ef5f3ed6",
+        "sha256": "9c6c75daec6eabd78cf6fbc7169be3f7dde934df1316e41df6658052056b29ee",
+        "size": 293
+      },
+      {
+        "path": "assets/remotion-icon.svg",
+        "gitBlob": "420dbc726662dbb88a144878a49a68dcc6b0cd5b",
+        "sha256": "5007669bd0555b0f4565b4e7176fa191310ab0039b2ed09d867a9270f5b0ce58",
+        "size": 1303
+      },
+      {
+        "path": "techniques/cesium/TECHNIQUE.md",
+        "gitBlob": "b58e4a42d6ce8cd7ba158c7eef64145f629f9ea2",
+        "sha256": "09057e77b67dcda23eed8ddbf1b5bd44541a952f380913a00b3bfddaa39ab675",
+        "size": 3909
+      },
+      {
+        "path": "techniques/cesium/assets/cesium-path.json",
+        "gitBlob": "32b60baec5b2ec39252936743bb234616a70b996",
+        "sha256": "329621928df19d115f93c472a0b7ddbd2463cad502a10722d3c23579a7441d44",
+        "size": 12329
+      },
+      {
+        "path": "techniques/cesium/assets/city-path.json",
+        "gitBlob": "821973f2d7e085409016b933c644f8f0efabaed0",
+        "sha256": "3bb420736d196f726b856420b319e21a8d7fc24bca7e626d67e8b00b0544e630",
+        "size": 223
+      },
+      {
+        "path": "techniques/cesium/assets/flight-path.ts",
+        "gitBlob": "de7f7bdb6878cff8479b6b2f1c2fb4c556fce8b4",
+        "sha256": "fab65d2d9cc0c4ca56f8a1422494d178c0e57f92a048a4720358d236ced980f0",
+        "size": 1240
+      },
+      {
+        "path": "techniques/cesium/assets/sample-river.geojson",
+        "gitBlob": "5574b30b311150eed82dd332d756dfa5e3cf9256",
+        "sha256": "2c9f6dd35ac4aed56580078046941235ed7e1a5d432a6549dbf7fea4e8d1e9be",
+        "size": 6409
+      },
+      {
+        "path": "techniques/cesium/references/3d-data-sources.md",
+        "gitBlob": "c5cfcbd00e4e6fadf8ba98a515d412db0e46fb47",
+        "sha256": "23ac1acc576d49d599b33c812dc697b264ebe28849088c04e9827cb47b95275f",
+        "size": 1451
+      },
+      {
+        "path": "techniques/cesium/references/3d-flyover-architecture.md",
+        "gitBlob": "a2222d782a14fe7757b9ab2bd75efed4c580fe85",
+        "sha256": "09e1891cec991a246eec60dbcf76c4ea84c52e0bee14321471197703395d0a91",
+        "size": 7887
+      },
+      {
+        "path": "techniques/cesium/references/3d-troubleshooting.md",
+        "gitBlob": "488eb9d438358f604790cccde179e9d37fd52841",
+        "sha256": "c803fe443f5bab1a50408f1f6aa6aded7913577eaefcb586b320c5a96c391bf2",
+        "size": 6741
+      },
+      {
+        "path": "techniques/cesium/scripts/prep-cesium-path.mjs",
+        "gitBlob": "dbb3f0f9756ec5b2d4bcda6d3b37bd6396defda1",
+        "sha256": "6dbb4d1ae3f5fef9f3f6eb23e2a6d58622750714bb847b088ff58a3533839463",
+        "size": 5561
+      },
+      {
+        "path": "techniques/mapbox/TECHNIQUE.md",
+        "gitBlob": "6042621b1f7a33f9124291b7831956f7b7afd6cd",
+        "sha256": "8c434f680988a7212a9443ef9be0f62ef734f3d92af4dc47c11dad184677eec9",
+        "size": 13128
+      },
+      {
+        "path": "techniques/mapbox/references/render-stability.md",
+        "gitBlob": "fc40033139c9cf5baa8160a436d379fd8c606933",
+        "sha256": "96650329df3a870743b6255123e93dba866a37eb1ab1d07c8275efff0d4dead9",
+        "size": 3639
+      },
+      {
+        "path": "techniques/maplibre/TECHNIQUE.md",
+        "gitBlob": "38977cce4b9f171bea0ee47e9bffa63a6c681285",
+        "sha256": "8a13debcd2abfce415b5c8b7f323420ec77092d81ceb935853171ca9697b902c",
+        "size": 13843
+      },
+      {
+        "path": "techniques/maplibre/references/render-stability.md",
+        "gitBlob": "fc40033139c9cf5baa8160a436d379fd8c606933",
+        "sha256": "96650329df3a870743b6255123e93dba866a37eb1ab1d07c8275efff0d4dead9",
+        "size": 3639
+      },
+      {
+        "path": "techniques/maptiler/TECHNIQUE.md",
+        "gitBlob": "d35879100781b260c67df12b372c4c810dd4a9de",
+        "sha256": "72896873e63d675caaab765941dbb8d668f2790090a63b94e165f254b77ef887",
+        "size": 4518
+      },
+      {
+        "path": "techniques/maptiler/assets/MapTilerVectorElement.ts",
+        "gitBlob": "9d91691a266a49dd9f19dd133b7e4f054664597d",
+        "sha256": "c8137792824323b9db997a88c3b923e8072cf2886cd90c38d84fdbbaad8258ed",
+        "size": 2183
+      },
+      {
+        "path": "techniques/maptiler/assets/sample-data/country-meta.json",
+        "gitBlob": "59ed681b99d4058d0481846b3a97d91437094586",
+        "sha256": "470a76cc5a45e58e7e1702cd80f74fcacf9d6e8b1ef7b05011f69853a999ba7b",
+        "size": 333134
+      },
+      {
+        "path": "techniques/maptiler/assets/sample-data/yarlung-flow.json",
+        "gitBlob": "e5923b90282fe01b3fb50f84988cfa441fd003c1",
+        "sha256": "73a99e77a2ce31cb3ac39be8fe4775d53ecf127a56137b587fca090067dfbb96",
+        "size": 13082
+      },
+      {
+        "path": "techniques/maptiler/assets/tokens.ts",
+        "gitBlob": "31505e3f5d9cf66816d5d09874bac8b1f234bf15",
+        "sha256": "29ae05eedb4988b5b8f2eb44d241b9c472533fb6ed05d4b33df3e71e0eabc71c",
+        "size": 1256
+      },
+      {
+        "path": "techniques/maptiler/references/map-data-sources.md",
+        "gitBlob": "d93a8c2a69a2397da7910b5cb67e9b1f2d618037",
+        "sha256": "b99680cbda8e7d70dc2cb1a8823f66247a21fc59d10c6dae0dd9ba24d2f15b80",
+        "size": 4798
+      },
+      {
+        "path": "techniques/maptiler/references/map-explainer-architecture.md",
+        "gitBlob": "77e98aa10f98da323c53c76d4546ada7b2c43a22",
+        "sha256": "e09de8a4d00ea9a82b992918ec4d0302ee18979b73e6c777d584a9743092344f",
+        "size": 6871
+      },
+      {
+        "path": "techniques/maptiler/references/map-geo-prep.md",
+        "gitBlob": "0e79a2b51e293f4a9f834a87e24fff8ce350446f",
+        "sha256": "a97b1913f06195601889d4e090ad056db2fffb7b83918924c8cd92847b3829ef",
+        "size": 4098
+      },
+      {
+        "path": "techniques/maptiler/references/render-stability.md",
+        "gitBlob": "fc40033139c9cf5baa8160a436d379fd8c606933",
+        "sha256": "96650329df3a870743b6255123e93dba866a37eb1ab1d07c8275efff0d4dead9",
+        "size": 3639
+      },
+      {
+        "path": "techniques/maptiler/scripts/prep-geo.mjs",
+        "gitBlob": "af8e19eb22d7d3d3486b72c021d617d48ea4dd94",
+        "sha256": "8265f56bd7c27a7d1a5fa528a77bbe1b29c6acc0e6730233583ca53e2632d490",
+        "size": 7553
+      },
+      {
+        "path": "techniques/static-map/TECHNIQUE.md",
+        "gitBlob": "fa62aa8171097a137674d17a041395e35192a6ec",
+        "sha256": "5c1dd66fe41a476fb54474f29388b2caea6d8f73c81c585a761dace5aa8d8647",
+        "size": 1062
+      },
+      {
+        "path": "licenses/upstream/LICENSE",
+        "repositoryPath": "LICENSE",
+        "gitBlob": "b1e3991d19fa01d6a438c77bff176c67ed261196",
+        "sha256": "1df205bece1fe707f818658a104844aba9a783e43f716642f5bf1286c18263c0",
+        "size": 1065
+      }
+    ]
+  },
+  "origin": {
+    "marketplace": "cursor",
+    "installs": null,
+    "installsLabel": "未记录 / Not recorded",
+    "countedAt": "2026-10-14"
+  },
+  "alternatives": [],
+  "unsupportedComponents": [],
+  "modifications": [],
+  "plugin": {
+    "marketplace": "cursor",
+    "id": "49339676",
+    "title": {
+      "zh-CN": "Remotion 视频制作",
+      "zh-TW": "Remotion 影片製作",
+      "en": "Remotion"
+    },
+    "summary": {
+      "zh-CN": "用 React 以代码生成视频的 Remotion 技能集：最佳实践、动画、音频、字幕、3D、地图、渲染导出与 Studio 预览。",
+      "zh-TW": "用 React 以程式碼產生影片的 Remotion 技能集：最佳實務、動畫、音訊、字幕、3D、地圖、渲染輸出與 Studio 預覽。",
+      "en": "Remotion video creation skills — best practices, animations, audio, captions, 3D, and more for building programmatic videos with React."
+    },
+    "root": ".",
+    "manifest": {
+      "path": "plugin.json",
+      "gitBlob": "a92a569ed36f33f1c421f74d0483f7a7a7b690be",
+      "sha256": "066d862b816d8519af20ab9b81adeb697d106350f7e793d58fbd261a345d0add"
+    },
+    "license": {
+      "spdx": "MIT"
+    },
+    "connectors": []
+  },
+  "license": {
+    "spdx": "MIT",
+    "files": [
+      "licenses/upstream/LICENSE"
+    ]
+  },
+  "compatibility": {
+    "status": "content-only",
+    "teloa": ">=0.2.0-alpha.8",
+    "dsh": "0.1.7-rc.1",
+    "conditions": [
+      {
+        "zh-CN": "来源为 Cursor Plugin Marketplace 公开插件 Remotion 视频制作（pluginId 49339676），按固定 commit ef694238d2e6 锁定；正文面向 Cursor 代理编写，提及的 Cursor 专有命令、变量或内置工具在 Teloa 中不可用时需自行替代",
+        "zh-TW": "來源為 Cursor Plugin Marketplace 公開外掛 Remotion 影片製作（pluginId 49339676），按固定 commit ef694238d2e6 鎖定；正文面向 Cursor 代理撰寫，提及的 Cursor 專有命令、變數或內建工具在 Teloa 中不可用時需自行替代",
+        "en": "Taken from the public Cursor Plugin Marketplace plugin Remotion (pluginId 49339676), pinned at commit ef694238d2e6; the text targets the Cursor agent, so Cursor-specific commands, variables or built-in tools it mentions must be substituted when unavailable in Teloa"
+      },
+      {
+        "zh-CN": "许可为原始仓库 LICENSE（MIT），不在技能目录内；技能正文为英文原件，未翻译",
+        "zh-TW": "授權為原始儲存庫 LICENSE（MIT），不在技能目錄內；技能正文為英文原件，未翻譯",
+        "en": "The license is LICENSE (MIT) in the original repository, outside the skill directory; the skill text is the English original and is not translated"
+      }
+    ]
+  },
+  "requires": {
+    "tools": [],
+    "network": false,
+    "runtimes": []
+  },
+  "review": {
+    "status": "approved",
+    "reviewedAt": "2026-10-14",
+    "reviewer": "Teloa"
+  }
+}

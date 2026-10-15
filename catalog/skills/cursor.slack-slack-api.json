@@ -1,0 +1,126 @@
+{
+  "format": "teloa.market-catalog-entry/v1",
+  "id": "cursor.slack-slack-api",
+  "kind": "skill",
+  "delivery": "upstream",
+  "version": "1.4.1",
+  "taxonomy": {
+    "functions": [
+      "communication"
+    ],
+    "industries": [
+      "general"
+    ]
+  },
+  "skill": {
+    "name": "slack-api",
+    "title": {
+      "zh-CN": "slack-api（Slack）",
+      "zh-TW": "slack-api（Slack）",
+      "en": "slack-api (Slack)"
+    },
+    "summary": {
+      "zh-CN": "开发者询问哪个 Slack Web API 方法做某事、需要方法的 OAuth scope 或 token 类型、要调用或测试 family.method 端点（chat.postMessage、conversations.history 等）、处理游标分页或限流，或在调试 API 错误时使用。",
+      "zh-TW": "開發者詢問哪個 Slack Web API 方法做某事、需要方法的 OAuth scope 或 token 類型、要呼叫或測試 family.method 端點（chat.postMessage、conversations.history 等）、處理游標分頁或限流，或在除錯 API 錯誤時使用。",
+      "en": "Use when a developer asks which Slack Web API method does something, needs a method's OAuth scopes or token type, wants to call or test a family.method endpoint (chat.postMessage, conversations.history, users.info, views.open), is handling cursor pagination (next_cursor) or rate limits (tier/ratelimited/Retry-After), or is debugging errors like missing_scope, invalid_auth, or channel_not_found. Also trigger on a pasted slack.com/api/ URL or docs.slack.dev/reference/methods li"
+    }
+  },
+  "upstream": {
+    "kind": "github",
+    "repository": {
+      "host": "github.com",
+      "owner": "slackapi",
+      "repo": "slack-mcp-plugin"
+    },
+    "commit": "64c3f33fa13beb98c96d736390f80f3454a93a88",
+    "path": "skills/slack-api",
+    "files": [
+      {
+        "path": "SKILL.md",
+        "gitBlob": "c6f3b6264f9de80f63ac21a20fa5d074ac177d72",
+        "sha256": "341eb0389a7f9da256962b694bf9f340b533a7daf65cb8326c9f1d61e80aecdb",
+        "size": 13280
+      },
+      {
+        "path": "licenses/upstream/LICENSE",
+        "repositoryPath": "LICENSE",
+        "gitBlob": "f2e8442ad2415bb25ed3663958e558e21586e12a",
+        "sha256": "ccbd532eabd9c4a87884b19caa6738bd6541e047460a736aca3bf1ac4fd91300",
+        "size": 1091
+      }
+    ]
+  },
+  "origin": {
+    "marketplace": "cursor",
+    "installs": null,
+    "installsLabel": "未记录 / Not recorded",
+    "countedAt": "2026-10-14"
+  },
+  "alternatives": [],
+  "unsupportedComponents": [
+    {
+      "kind": "commands",
+      "count": 5
+    }
+  ],
+  "modifications": [],
+  "plugin": {
+    "marketplace": "cursor",
+    "id": "674",
+    "title": {
+      "zh-CN": "Slack",
+      "zh-TW": "Slack",
+      "en": "Slack"
+    },
+    "summary": {
+      "zh-CN": "面向使用者与开发者的 Slack 技能：配合 Slack 官方远程 MCP 搜索与发送消息，并指导用 Slack CLI、Bolt 与 Block Kit 开发、测试 Slack 应用。",
+      "zh-TW": "面向使用者與開發者的 Slack 技能：搭配 Slack 官方遠端 MCP 搜尋與傳送訊息，並指導用 Slack CLI、Bolt 與 Block Kit 開發、測試 Slack 應用程式。",
+      "en": "Slack AI tools for users and developers: interact with your workspace via the Slack MCP server and use skills to develop Slack apps."
+    },
+    "root": ".",
+    "manifest": {
+      "path": ".cursor-plugin/plugin.json",
+      "gitBlob": "7cc49837faaef94235fadd1873112e7dee334003",
+      "sha256": "d6f6cc9e74e03e122626d79a0d624804b211ab599171145a166f45725f1befc8"
+    },
+    "license": {
+      "spdx": "MIT"
+    },
+    "connectors": [
+      "teloa.mcp-slack"
+    ]
+  },
+  "license": {
+    "spdx": "MIT",
+    "files": [
+      "licenses/upstream/LICENSE"
+    ]
+  },
+  "compatibility": {
+    "status": "content-only",
+    "teloa": ">=0.2.0-alpha.8",
+    "dsh": "0.1.7-rc.1",
+    "conditions": [
+      {
+        "zh-CN": "来源为 Cursor Plugin Marketplace 公开插件 Slack（pluginId 674），按固定 commit 64c3f33fa13b 锁定；正文面向 Cursor 代理编写，提及的 Cursor 专有命令、变量或内置工具在 Teloa 中不可用时需自行替代",
+        "zh-TW": "來源為 Cursor Plugin Marketplace 公開外掛 Slack（pluginId 674），按固定 commit 64c3f33fa13b 鎖定；正文面向 Cursor 代理撰寫，提及的 Cursor 專有命令、變數或內建工具在 Teloa 中不可用時需自行替代",
+        "en": "Taken from the public Cursor Plugin Marketplace plugin Slack (pluginId 674), pinned at commit 64c3f33fa13b; the text targets the Cursor agent, so Cursor-specific commands, variables or built-in tools it mentions must be substituted when unavailable in Teloa"
+      },
+      {
+        "zh-CN": "许可为原始仓库 LICENSE（MIT），不在技能目录内；技能正文为英文原件，未翻译",
+        "zh-TW": "授權為原始儲存庫 LICENSE（MIT），不在技能目錄內；技能正文為英文原件，未翻譯",
+        "en": "The license is LICENSE (MIT) in the original repository, outside the skill directory; the skill text is the English original and is not translated"
+      }
+    ]
+  },
+  "requires": {
+    "tools": [],
+    "network": false,
+    "runtimes": []
+  },
+  "review": {
+    "status": "approved",
+    "reviewedAt": "2026-10-14",
+    "reviewer": "Teloa"
+  }
+}

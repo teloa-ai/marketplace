@@ -1,0 +1,157 @@
+{
+  "format": "teloa.market-catalog-entry/v1",
+  "id": "cursor.sentry-sentry-snapshots-cocoa",
+  "kind": "skill",
+  "delivery": "upstream",
+  "version": "1.4.3",
+  "taxonomy": {
+    "functions": [
+      "cloud-ops"
+    ],
+    "industries": [
+      "general"
+    ]
+  },
+  "skill": {
+    "name": "sentry-snapshots-cocoa",
+    "title": {
+      "zh-CN": "sentry-snapshots-cocoa（Sentry）",
+      "zh-TW": "sentry-snapshots-cocoa（Sentry）",
+      "en": "sentry-snapshots-cocoa (Sentry)"
+    },
+    "summary": {
+      "zh-CN": "为 Apple/Cocoa 项目完整设置 Sentry Snapshots：被要求设置 SnapshotPreviews、Apple 快照测试、上传 Apple 快照到 Sentry、设置快照 GitHub Actions 或选择性快照测试时使用。",
+      "zh-TW": "為 Apple/Cocoa 專案完整設定 Sentry Snapshots：被要求設定 SnapshotPreviews、Apple 快照測試、上傳 Apple 快照到 Sentry、設定快照 GitHub Actions 或選擇性快照測試時使用。",
+      "en": "Full Sentry Snapshots setup for Apple/Cocoa projects. Use when asked to \"setup SnapshotPreviews\", \"setup Apple snapshot testing\", \"upload Apple snapshots to Sentry\", \"setup Apple snapshot GitHub Actions\", or \"setup Apple selective snapshot testing\"."
+    }
+  },
+  "upstream": {
+    "kind": "github",
+    "repository": {
+      "host": "github.com",
+      "owner": "getsentry",
+      "repo": "plugin-cursor"
+    },
+    "commit": "135513f89f293c587fbffb852afdf00a256df32a",
+    "path": "skills/sentry-snapshots-cocoa",
+    "files": [
+      {
+        "path": "SKILL.md",
+        "gitBlob": "bfd5eb59f52927459822bed379c1ca9178150746",
+        "sha256": "1a3e9a08aac93912e6e26ed766298feabce47e77179b641061d57c59fff9e3d9",
+        "size": 5438
+      },
+      {
+        "path": "references/github-actions-fanout.md",
+        "gitBlob": "6ea9f7bf2d2231a97f95786d5252619e40cc1195",
+        "sha256": "237f629eaa83e022093438aeabee54968526597d2d9c2f1aa8f3b17e242684ef",
+        "size": 7676
+      },
+      {
+        "path": "references/github-actions-simple.md",
+        "gitBlob": "f7d24271317a861e31e4422b01c11a71b0a1c74a",
+        "sha256": "af0e9c7cd6af28ab05f37c6be082a378fb93320cc46bfaa5dcf354a7980d76a1",
+        "size": 3626
+      },
+      {
+        "path": "references/github-actions-swift-snapshot-testing.md",
+        "gitBlob": "d2166b6108f8b83f44b64944a0deb3b22d12a994",
+        "sha256": "9e4133c6cd374780d850ac3aff186227c5348657343cdd2ec0cbf65126d043ec",
+        "size": 4206
+      },
+      {
+        "path": "references/snapshot-previews.md",
+        "gitBlob": "9c998d74595474581c6fbd2dafb4ac503bde2ff2",
+        "sha256": "e433a7d29b335e36d9fba6dabf6aeaa63fd8317685396d7deb7c4f416a48da71",
+        "size": 4205
+      },
+      {
+        "path": "references/snapshots.md",
+        "gitBlob": "51ba888edaf1b4925d6d33ab3f87dfe5bdb6be24",
+        "sha256": "cb80ec078a73971245583a810897a3a8a3b18442ac3970a9903df7105a8a7934",
+        "size": 5501
+      },
+      {
+        "path": "references/wizard-setup.md",
+        "gitBlob": "1b2ad506c957c301e4739b1ed0095f536b3efd07",
+        "sha256": "7980ece1d4eeac1754b64fb865ef7285a917e534b5e6764370ac791b3336cb5b",
+        "size": 5956
+      },
+      {
+        "path": "licenses/upstream/LICENSE",
+        "repositoryPath": "LICENSE",
+        "gitBlob": "961fdcdacd42d8e703cbae5b93fbc0ed630ffd64",
+        "sha256": "d4a59a34056a3a4943d7b5fff9c4125432692069c811fcbabd5385d890ccfcbd",
+        "size": 1100
+      }
+    ]
+  },
+  "origin": {
+    "marketplace": "cursor",
+    "installs": null,
+    "installsLabel": "未记录 / Not recorded",
+    "countedAt": "2026-10-14"
+  },
+  "alternatives": [],
+  "unsupportedComponents": [],
+  "modifications": [],
+  "plugin": {
+    "marketplace": "cursor",
+    "id": "579",
+    "title": {
+      "zh-CN": "Sentry",
+      "zh-TW": "Sentry",
+      "en": "Sentry"
+    },
+    "summary": {
+      "zh-CN": "Sentry 排错与接入技能：调试并修复 Issue、让堆栈可读、接入 SDK 与各类信号、配置发布追踪、告警与 OpenTelemetry 导出；配合 Sentry 官方远程 MCP 使用。",
+      "zh-TW": "Sentry 除錯與接入技能：除錯並修復 Issue、讓堆疊可讀、接入 SDK 與各類訊號、設定發佈追蹤、告警與 OpenTelemetry 匯出；搭配 Sentry 官方遠端 MCP 使用。",
+      "en": "Sentry Plugin for Cursor to help with debugging including MCP and skill capabilities."
+    },
+    "root": ".",
+    "manifest": {
+      "path": ".cursor-plugin/plugin.json",
+      "gitBlob": "43e67882582375f8e4a466c4cc4b90a09d7aa0fa",
+      "sha256": "ced89075d517ab8dae686c297dafb58dde19ea67a776a4c7fc72f0ca7ebbb41d"
+    },
+    "license": {
+      "spdx": "MIT"
+    },
+    "connectors": [
+      "teloa.mcp-sentry"
+    ]
+  },
+  "license": {
+    "spdx": "MIT",
+    "files": [
+      "licenses/upstream/LICENSE"
+    ]
+  },
+  "compatibility": {
+    "status": "content-only",
+    "teloa": ">=0.2.0-alpha.8",
+    "dsh": "0.1.7-rc.1",
+    "conditions": [
+      {
+        "zh-CN": "来源为 Cursor Plugin Marketplace 公开插件 Sentry（pluginId 579），按固定 commit 135513f89f29 锁定；正文面向 Cursor 代理编写，提及的 Cursor 专有命令、变量或内置工具在 Teloa 中不可用时需自行替代",
+        "zh-TW": "來源為 Cursor Plugin Marketplace 公開外掛 Sentry（pluginId 579），按固定 commit 135513f89f29 鎖定；正文面向 Cursor 代理撰寫，提及的 Cursor 專有命令、變數或內建工具在 Teloa 中不可用時需自行替代",
+        "en": "Taken from the public Cursor Plugin Marketplace plugin Sentry (pluginId 579), pinned at commit 135513f89f29; the text targets the Cursor agent, so Cursor-specific commands, variables or built-in tools it mentions must be substituted when unavailable in Teloa"
+      },
+      {
+        "zh-CN": "许可为原始仓库 LICENSE（MIT），不在技能目录内；技能正文为英文原件，未翻译",
+        "zh-TW": "授權為原始儲存庫 LICENSE（MIT），不在技能目錄內；技能正文為英文原件，未翻譯",
+        "en": "The license is LICENSE (MIT) in the original repository, outside the skill directory; the skill text is the English original and is not translated"
+      }
+    ]
+  },
+  "requires": {
+    "tools": [],
+    "network": false,
+    "runtimes": []
+  },
+  "review": {
+    "status": "approved",
+    "reviewedAt": "2026-10-14",
+    "reviewer": "Teloa"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "format": "teloa.business-package/v4",
+  "id": "teloa-content-ops-dashboard",
+  "title": "数字营销与内容运营看板",
+  "version": "1.0.0",
+  "domain": "marketing",
+  "scope": "content-ops",
+  "description": "围绕选题、制作、审批与发布的内容看板：待审批与需修改的内容、交稿超期、未来 7 天排期与近 30 天发布。曝光与转化只合计写明统计来源的记录，没录入就显示缺失，不当作 0。",
+  "resources": [
+    {
+      "id": "content-ops",
+      "kind": "business-configuration",
+      "title": "内容运营总览",
+      "version": "1.0.0",
+      "required": true,
+      "source": {
+        "kind": "local",
+        "path": "configuration.json"
+      }
+    }
+  ],
+  "relations": [],
+  "entrypoints": []
+}
