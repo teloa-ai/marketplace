@@ -4,6 +4,26 @@ All notable changes to the catalog are recorded here. The format follows [Keep a
 
 目录的重要变更记录在此，格式遵循 Keep a Changelog，按目录版本（`catalog-version.txt`）分组。全部条目见 [INDEX.md](INDEX.md)。
 
+## [2026.10.18.1] - 2026-10-18
+
+<!-- Catalog-Source: c7944104ac96f4f4303cb1a650138319a7b4db15 -->
+_Generated after merge from the catalog changes since `190ba9b`; details are in the merged pull requests. / 合并后按 `190ba9b` 以来的目录变更自动生成，详情见对应 PR。_
+
+### Changed
+
+- `teloa.grok-call-followup` 1.0.0 → 1.0.1 — Call Follow-up · 通话跟进员工
+- `teloa.grok-competitor-watch` 1.0.0 → 1.0.2 — Competitor Watch · 竞品监测员工
+- `teloa.grok-content-remix` 1.0.0 → 1.0.2 — Content Remix · 内容改编员工
+- `teloa.grok-feature-ask-collator` 1.0.0 → 1.0.1 — Feature Ask Collator · 需求归集员工
+- `teloa.grok-launch-coordinator` 1.0.0 → 1.0.1 — Launch Coordinator · 发布协调员工
+- `teloa.grok-marketing-team` 1.0.0 → 1.0.2 — Marketing team · 内容营销团队
+- `teloa.grok-meeting-prep` 1.0.0 → 1.0.1 — Meeting Prep · 会前简报员工
+- `teloa.grok-newsletter-desk` 1.0.0 → 1.0.2 — Newsletter Desk · 简报编辑员工
+- `teloa.grok-product-performance` 1.0.0 → 1.0.1 — Product Performance · 产品性能调查员工
+- `teloa.grok-product-team` 1.0.0 → 1.0.1 — Product team · 软件产品团队
+- `teloa.grok-sales-outbound` 1.0.0 → 1.0.1 — Outbound · 外联研究员工
+- `teloa.grok-sales-team` 1.0.0 → 1.0.1 — Sales team · 销售协作团队
+
 ## [2026.10.15.1] - 2026-10-15
 
 <!-- Catalog-Source: 190ba9bd9133bd913ea810b40b2868acf6983dba -->
