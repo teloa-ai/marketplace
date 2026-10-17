@@ -3,7 +3,7 @@
   "id": "teloa.grok-sales-team",
   "kind": "solution",
   "delivery": "install",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "taxonomy": {
     "functions": [
       "business-ops",
@@ -71,6 +71,11 @@
     {
       "zh-CN": "协调者以 role-coordination 关联显式映射到成员；启动指令与交接保留原文参考，不自动运行或授予权限；例行任务转为未排程工作模板；只声明 GitHub/Notion 只读连接。",
       "en": "The coordinator is explicitly linked to each member by role-coordination. Kickoff and handoffs remain original references and do not automatically run work or grant authority. Routines become unscheduled work templates; only GitHub/Notion read-only connections are declared."
+    },
+    {
+      "zh-CN": "团队清单与目录共用 Teloa 人类可读标题，来源保留在说明中；方法使用本团队版本名称，仅名称和对应引用变化，执行正文、原始参考、许可与既有版本保留。",
+      "zh-TW": "團隊清單與目錄共用 Teloa 易讀標題，來源保留在說明中；方法使用本團隊版本名稱，僅名稱及對應引用變更，執行正文、原始參考、授權及既有版本保留。",
+      "en": "The team manifest and catalog share human-readable Teloa titles; attribution stays in the description. Family/version method names change only native identities and their references; execution bodies, raw references, licenses and existing versions are retained."
     }
   ],
   "license": {
@@ -105,7 +110,7 @@
   },
   "review": {
     "status": "approved",
-    "reviewedAt": "2026-10-14",
+    "reviewedAt": "2026-10-16",
     "reviewer": "Teloa"
   }
 }

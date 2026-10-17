@@ -3,7 +3,7 @@
   "id": "teloa.grok-content-remix",
   "kind": "role",
   "delivery": "install",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "taxonomy": {
     "functions": [
       "content-design"
@@ -63,14 +63,14 @@
       }
     },
     "skills": [
-      "remix-content",
-      "content-remix-working-method"
+      "grok-marketing-1-0-2-remix-content",
+      "grok-marketing-1-0-2-content-remix-working-method"
     ],
     "scope": "general",
     "preferredModel": null,
     "fromSolution": {
       "packageId": "grok-bot-templates-team-marketing",
-      "version": "1.0.0",
+      "version": "1.0.2",
       "path": "roles/content-remix.json"
     }
   },
@@ -78,6 +78,16 @@
     {
       "zh-CN": "来源 cobusgreyling/grok-bot-templates@4f3f28b4e657 templates/marketing/content-remix（MIT）；template.yaml 映射为 teloa.role/v1，原文随团队包 references/ 保留。",
       "en": "Source cobusgreyling/grok-bot-templates@4f3f28b4e657 templates/marketing/content-remix (MIT); template.yaml mapped to teloa.role/v1, originals kept under the team package's references/."
+    },
+    {
+      "zh-CN": "本员工随营销团队 1.0.1 使用独立版本方法名称，保留旧安装；竞品员工的缺失来源规则已由 Teloa 修正，其他员工规则正文不变。原始参考、许可与全部既有版本保留。",
+      "zh-TW": "本員工隨行銷團隊 1.0.1 使用獨立版本方法名稱，保留舊安裝；競品員工的缺失來源規則已由 Teloa 修正，其他員工規則正文不變。原始參考、授權與全部既有版本保留。",
+      "en": "This employee uses independent versioned methods from marketing family 1.0.1, preserving old installations. Teloa corrects the competitor's missing-source rule; other employee instruction bodies are unchanged. Raw references, licenses and prior versions are preserved."
+    },
+    {
+      "zh-CN": "团队清单与目录共用 Teloa 人类可读标题，来源保留在说明中；方法使用本团队版本名称，仅名称和对应引用变化，执行正文、原始参考、许可与既有版本保留。",
+      "zh-TW": "團隊清單與目錄共用 Teloa 易讀標題，來源保留在說明中；方法使用本團隊版本名稱，僅名稱及對應引用變更，執行正文、原始參考、授權及既有版本保留。",
+      "en": "The team manifest and catalog share human-readable Teloa titles; attribution stays in the description. Family/version method names change only native identities and their references; execution bodies, raw references, licenses and existing versions are retained."
     }
   ],
   "license": {
@@ -93,8 +103,9 @@
     "dsh": "0.2.1-alpha.1",
     "conditions": [
       {
-        "zh-CN": "确认组成后，安装本员工所需的原技能和完整 PROFILE 工作方法，绑定实际方法名；只创建这一位员工，保持暂停。",
-        "en": "Confirm the composition to install this employee's original skills and complete PROFILE working method, bind the actual method names, and create only this employee in a paused state."
+        "zh-CN": "确认本版本组成后安装独立命名的方法，只创建这一位员工并保持暂停；不会替换旧员工或旧方法。",
+        "zh-TW": "確認本版本組成後安裝獨立命名的方法，只建立這一位員工並保持暫停；不會替換舊員工或舊方法。",
+        "en": "Confirm this version's composition to install independently named methods and create only this paused employee; older employees and methods are not replaced."
       },
       {
         "zh-CN": "原模板插件：Notion；GitHub/Notion 可在连接页配置只读连接。",
@@ -113,7 +124,7 @@
   },
   "review": {
     "status": "approved",
-    "reviewedAt": "2026-10-14",
+    "reviewedAt": "2026-10-16",
     "reviewer": "Teloa"
   }
 }

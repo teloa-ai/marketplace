@@ -1,0 +1,39 @@
+{
+  "format": "teloa.work-template/v1",
+  "id": "weekly-newsletter-draft",
+  "title": "weekly-newsletter-draft",
+  "localized": {
+    "title": {
+      "original": "weekly-newsletter-draft",
+      "defaultLocale": "en",
+      "locales": {
+        "zh-CN": "每周简报草稿",
+        "zh-TW": "每週電子報草稿",
+        "en": "Weekly newsletter draft"
+      }
+    },
+    "description": {
+      "original": "Original routine 'weekly-newsletter-draft': cadence Thursdays 10:00 in the Bot timezone. Not scheduled by this template: the owner creates the plan after a test run and confirms timezone, input source, expected result, approval boundary and missing-source policy.",
+      "defaultLocale": "en",
+      "locales": {
+        "zh-CN": "由简报编辑员工按原方法整理待审结果。使用前确认资料来源、时间与权限；添加模板不会启用定时计划。",
+        "zh-TW": "由電子報編輯員工按原方法整理待審結果。使用前確認資料來源、時間及權限；加入範本不會啟用定時安排。",
+        "en": "Original routine 'weekly-newsletter-draft': cadence Thursdays 10:00 in the Bot timezone. Not scheduled by this template: the owner creates the plan after a test run and confirms timezone, input source, expected result, approval boundary and missing-source policy."
+      }
+    }
+  },
+  "version": "1.0.1",
+  "domain": "general",
+  "description": "Original routine 'weekly-newsletter-draft': cadence Thursdays 10:00 in the Bot timezone. Not scheduled by this template: the owner creates the plan after a test run and confirms timezone, input source, expected result, approval boundary and missing-source policy.",
+  "requirements": [
+    "Use Settings → Agent timezone."
+  ],
+  "output": "Run draft-newsletter report-only; writes stay behind approval.",
+  "skills": [
+    {
+      "id": "grok-marketing-1-0-1-draft-newsletter",
+      "title": "Draft Newsletter",
+      "version": "1.0.1"
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "format": "teloa.work-template/v1",
+  "id": "weekday-perf-health",
+  "title": "weekday-perf-health",
+  "localized": {
+    "title": {
+      "original": "weekday-perf-health",
+      "defaultLocale": "en",
+      "locales": {
+        "zh-CN": "工作日性能检查",
+        "zh-TW": "工作日效能檢查",
+        "en": "Weekday performance check"
+      }
+    },
+    "description": {
+      "original": "Original routine 'weekday-perf-health': cadence weekdays 09:00 in the Bot timezone. Not scheduled by this template: the owner creates the plan after a test run and confirms timezone, input source, expected result, approval boundary and missing-source policy.",
+      "defaultLocale": "en",
+      "locales": {
+        "zh-CN": "由产品性能调查员工按原方法整理待审结果。使用前确认资料来源、时间与权限；添加模板不会启用定时计划。",
+        "zh-TW": "由產品效能調查員工按原方法整理待審結果。使用前確認資料來源、時間及權限；加入範本不會啟用定時安排。",
+        "en": "Original routine 'weekday-perf-health': cadence weekdays 09:00 in the Bot timezone. Not scheduled by this template: the owner creates the plan after a test run and confirms timezone, input source, expected result, approval boundary and missing-source policy."
+      }
+    }
+  },
+  "version": "1.0.1",
+  "domain": "general",
+  "description": "Original routine 'weekday-perf-health': cadence weekdays 09:00 in the Bot timezone. Not scheduled by this template: the owner creates the plan after a test run and confirms timezone, input source, expected result, approval boundary and missing-source policy.",
+  "requirements": [
+    "Confirm timezone in Settings → Agent before enabling. Keep the routine report-only."
+  ],
+  "output": "Run investigate-perf report-only; writes stay behind approval.",
+  "skills": [
+    {
+      "id": "grok-product-1-0-1-investigate-perf",
+      "title": "Investigate Perf",
+      "version": "1.0.1"
+    }
+  ]
+}
