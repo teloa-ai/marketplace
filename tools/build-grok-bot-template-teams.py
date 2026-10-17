@@ -3,6 +3,8 @@
 
 Usage:
   python3 -I tools/build-grok-bot-template-teams.py --upstream-dir <checkout of the pinned commit> [--teams product,marketing,sales]
+  python3 -I tools/build-grok-bot-template-teams.py --upstream-dir <pinned source> --teams marketing --version 1.0.1 --missing-source-policy evidence-v1 --output-root <staging>
+  python3 -I tools/build-grok-bot-template-teams.py --upstream-dir <pinned source> --teams marketing --version 1.0.2 --missing-source-policy evidence-v1 --human-titles --output-root <staging>
 
 Reads teams/<team>/team.yaml, templates/<cat>/<bot>/template.yaml, skills/<id>/{SKILL.md,skill.yaml}
 and routines/<id>/routine.yaml from the pinned checkout and writes, inside this repository:
@@ -14,14 +16,17 @@ byte for byte as references. role.json, SKILL.md frontmatter and work-template J
 every adaptation is listed in MODIFICATIONS.md and in the catalog entry's `modifications`.
 Only PyYAML is required. The script never contacts the network and never installs anything.
 """
-import argparse, hashlib, json, pathlib, re, shutil, sys
+import argparse, datetime, hashlib, json, pathlib, re, sys
 import yaml
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
+REPOSITORY_ROOT = ROOT
 UPSTREAM = {"owner": "cobusgreyling", "repo": "grok-bot-templates", "commit": "4f3f28b4e6578cd227ff7f4b78ec91d15fd091b5"}
 UPSTREAM_URL = f"https://github.com/{UPSTREAM['owner']}/{UPSTREAM['repo']}/tree/{UPSTREAM['commit']}"
 LICENSE_URL = f"https://github.com/{UPSTREAM['owner']}/{UPSTREAM['repo']}/blob/{UPSTREAM['commit']}/LICENSE"
 VERSION = "1.0.0"
+MISSING_SOURCE_POLICY = None
+HUMAN_TITLES = False
 REVIEWED_AT = "2026-10-14"
 TELOA_RANGE = ">=0.2.0-alpha.8"
 DSH_RANGE = "0.2.1-alpha.1"
@@ -93,6 +98,23 @@ ROLE_FUNCTIONS = {
     "sales-outbound": ["data-research", "business-ops"], "meeting-prep": ["office-docs", "business-ops"], "call-followup": ["office-docs", "communication"],
 }
 NETWORK = {"competitor-watch", "sales-outbound"}
+ORIGINAL_MISSING_SOURCE_RULE = 'If a page is unavailable, write "page not found" rather than reusing last week\'s number silently.'
+ORIGINAL_COMPETITOR_NO_DATA = "If the competitor list is missing or longer than eight, ask the owner to name 3–8 and stop. " + ORIGINAL_MISSING_SOURCE_RULE
+EVIDENCE_MISSING_SOURCE_RULE = ("When a page or supplied capture is unavailable, report the known unavailability and mark the cause as unknown. "
+    "State a cause or HTTP status only when this run's supplied material or a real tool response explicitly supports it. "
+    "Do not infer nonexistence, deletion, access denial or a status code from unavailability. Never silently reuse a prior value as current.")
+
+def no_data_policy(bot: str, original: str) -> str:
+    """One fixed upstream correction shared by the role fields and adapted PROFILE."""
+    if not MISSING_SOURCE_POLICY or bot != "competitor-watch":
+        return original
+    if original != ORIGINAL_COMPETITOR_NO_DATA:
+        raise SystemExit("competitor-watch no_data source changed; review the pinned input before adapting")
+    return original.replace(ORIGINAL_MISSING_SOURCE_RULE, EVIDENCE_MISSING_SOURCE_RULE, 1)
+
+def native_skill_id(original: str, team_id: str = "marketing") -> str:
+    # New parent trust includes its version, so a new name must not replace an older installation.
+    return f"grok-{team_id}-{VERSION.replace('.', '-')}-{original}" if MISSING_SOURCE_POLICY or HUMAN_TITLES else original
 
 def sha256(data: bytes) -> str:
     return hashlib.sha256(data).hexdigest()
@@ -117,7 +139,7 @@ def write(path: pathlib.Path, data):
     else:
         path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
-def adapt_skill_markdown(original: str, skill_id: str, skill: dict) -> tuple[str, list[str]]:
+def adapt_skill_markdown(original: str, skill_id: str, skill: dict, team_id: str = "marketing") -> tuple[str, list[str]]:
     """Add Teloa frontmatter and a derivation notice; drop the two Grok-only paste/composer instructions. Body otherwise verbatim."""
     removed = []
     lines = original.splitlines()
@@ -133,7 +155,9 @@ def adapt_skill_markdown(original: str, skill_id: str, skill: dict) -> tuple[str
     desc = clip(desc, 1024, f"{skill_id} description").replace('"', "'")
     notice = (f"> Derived work: adapted by Teloa from {UPSTREAM['owner']}/{UPSTREAM['repo']}@{UPSTREAM['commit'][:12]} skills/{skill_id}/SKILL.md (MIT). "
               f"Teloa added this frontmatter and notice and removed the Grok Bot paste/composer instructions; the six-field method below is unchanged. See MODIFICATIONS.md.\n\n")
-    front = f"---\nname: {skill_id}\ndescription: {desc}\n---\n\n"
+    if MISSING_SOURCE_POLICY:
+        notice += f"> Teloa versioned method name: `{native_skill_id(skill_id, team_id)}` corresponds to upstream `{skill_id}`. Only its name/frontmatter and this notice change; the six-field method and original skill.yaml stay unchanged. See MODIFICATIONS.md.\n\n"
+    front = f"---\nname: {native_skill_id(skill_id, team_id)}\ndescription: {desc}\n---\n\n"
     # insert notice after the H1 title line
     title_end = body.find("\n")
     adapted = front + body[: title_end + 1] + "\n" + notice + body[title_end + 1 :].lstrip("\n")
@@ -148,7 +172,8 @@ def role_definition(bot: str, t: dict, team: dict, team_bots: list[str]) -> dict
     duty += f" Deliverable: {text(t['deliverable'])}"
     duty += f" Team role in the original '{team['name']}' team: {'lead' if lead else 'member'}."
     sources = "; ".join(text(s) for s in t.get("sources", []))
-    data_scope = f"Sources: {sources}. No-data / stale-data policy: {text(t['no_data'])} Durable files: the original keeps them under /workspace/{bot}/; in Teloa use this employee's working directory for the same purpose."
+    no_data = no_data_policy(bot, text(t['no_data']))
+    data_scope = f"Sources: {sources}. No-data / stale-data policy: {no_data} Durable files: the original keeps them under /workspace/{bot}/; in Teloa use this employee's working directory for the same purpose."
     never = "; ".join(text(s) for s in t.get("approval_never", []))
     ask = "; ".join(text(s) for s in t.get("approval_ask", []) or [])
     plugins = ", ".join(t.get("plugins", []) or []) or "none"
@@ -164,7 +189,7 @@ def role_definition(bot: str, t: dict, team: dict, team_bots: list[str]) -> dict
         "triggers": [clip(x, 1000, f"{bot} trigger") for x in triggers],
         "autonomousActions": [clip(text(x), 1000, f"{bot} action") for x in t.get("working_style", [])],
         "confirmationPoints": [clip(text(x), 1000, f"{bot} ask") for x in (t.get("approval_ask") or [])] or [f"Any action outside autonomy {t['autonomy']}"],
-        "escalationRules": [clip(f"No data: {text(t['no_data'])}", 1000, f"{bot} nodata")] + [clip(x, 1000, f"{bot} handoff") for x in handoffs],
+        "escalationRules": [clip(f"No data: {no_data}", 1000, f"{bot} nodata")] + [clip(x, 1000, f"{bot} handoff") for x in handoffs],
         "deliveryChecks": [clip(f"Deliverable: {text(t['deliverable'])}", 1000, f"{bot} deliverable")] + [clip(text(x), 1000, f"{bot} never") for x in t.get("never", [])],
     }
     return {
@@ -191,10 +216,13 @@ def build_team(src: pathlib.Path, team_id: str, license_bytes: bytes, report: di
         raise SystemExit(f"team {team_id}: lead {team['lead']} not in bots")
     entry_id = f"teloa.grok-{team_id}-team"
     package_id = f"grok-bot-templates-team-{team_id}"
+    titles = {**localized(ZH[team_id], f"{team['name']} team", 120, "title"), "zh-TW": ZH_TW[team_id]}
     scope = "general"
     out = ROOT / "artifacts" / "solutions" / entry_id / VERSION
-    if out.exists():
-        shutil.rmtree(out)
+    targets = [out] + [ROOT / "artifacts/roles" / f"teloa.grok-{bot}" / VERSION for bot in bots]
+    for target in targets:
+        if target.exists() or target.is_symlink():
+            raise SystemExit(f"target exists; version directories are immutable: {target}")
     resources, relations, modifications_md = [], [], []
     templates = {}
     for bot in bots:
@@ -225,9 +253,23 @@ def build_team(src: pathlib.Path, team_id: str, license_bytes: bytes, report: di
                 relations.append({"kind": "role-knowledge", "from": bot, "to": rid})
         relations.append({"kind": "role-knowledge", "from": bot, "to": "team-definition"})
         # 原 PROFILE 是工作规则，不只是一个不会自动进入执行上下文的知识引用。
-        method_id = f"{bot}-working-method"
+        original_method_id = f"{bot}-working-method"
+        method_id = native_skill_id(original_method_id, team_id)
         profile = (tdir / "PROFILE.md").read_text(encoding="utf-8")
-        method = f"---\nname: {method_id}\ndescription: Original working instructions for {bot}; use together with its declared methods.\n---\n\n# Original employee working instructions\n\nSource: {UPSTREAM_URL}/templates/{tdir.parent.name}/{bot}/PROFILE.md (MIT, Cobus Greyling). The original instructions below are kept verbatim. In Teloa, /workspace paths are original platform conventions, not verified local paths. Use only the current task's authorized working directory; if it is unknown, ask for it rather than creating /workspace. Named apps require actual connection and employee tool grants; adding this method does not connect accounts or grant permissions. Original first-run examples are samples, not evidence of completed work.\n\n"+profile
+        heading, source_notice = "Original employee working instructions", "The original instructions below are kept verbatim."
+        if MISSING_SOURCE_POLICY:
+            source_notice += f" Teloa uses versioned native name `{method_id}` for upstream `{original_method_id}` to preserve prior installations; see MODIFICATIONS.md."
+            if bot == "competitor-watch":
+                original_policy = text(t["no_data"])
+                if profile.count(original_policy) != 1:
+                    raise SystemExit("competitor-watch PROFILE no_data source changed; expected one fixed section")
+                profile = profile.replace(original_policy, no_data_policy(bot, original_policy), 1)
+                heading = "Teloa-adapted employee working instructions"
+                source_notice = ("Teloa corrects the missing-source rule below: unavailability alone does not establish a cause or HTTP status. "
+                    "The raw PROFILE/template and examples remain byte-identical references, not alternative missing-source instructions. "
+                    f"Native name `{method_id}` corresponds to upstream `{original_method_id}` and preserves older installations. See MODIFICATIONS.md.")
+        description = "Teloa-adapted working instructions" if MISSING_SOURCE_POLICY and bot == "competitor-watch" else "Original working instructions"
+        method = f"---\nname: {method_id}\ndescription: {description} for {bot}; use together with its declared methods.\n---\n\n# {heading}\n\nSource: {UPSTREAM_URL}/templates/{tdir.parent.name}/{bot}/PROFILE.md (MIT, Cobus Greyling). {source_notice} In Teloa, /workspace paths are original platform conventions, not verified local paths. Use only the current task's authorized working directory; if it is unknown, ask for it rather than creating /workspace. Named apps require actual connection and employee tool grants; adding this method does not connect accounts or grant permissions. Original first-run examples are samples, not evidence of completed work.\n\n"+profile
         write(out / f"skills/{method_id}/SKILL.md", method)
         method_title = f"{ZH[bot]}工作准则"
         resources.append({"id":method_id,"kind":"skill","title":method_title,"localized":{"title":metadata(method_title, method_title, f"{ZH_TW[bot]}工作準則", f"{text(t['name'])} working instructions")},"version":VERSION,"required":True,"source":{"kind":"local","path":f"skills/{method_id}/SKILL.md"}})
@@ -239,13 +281,14 @@ def build_team(src: pathlib.Path, team_id: str, license_bytes: bytes, report: di
             sdir = src / "skills" / skill_id
             skill = read_yaml(sdir / "skill.yaml")
             if skill_id not in skill_ids:
-                adapted, removed = adapt_skill_markdown((sdir / "SKILL.md").read_text(encoding="utf-8"), skill_id, skill)
-                write(out / f"skills/{skill_id}/SKILL.md", adapted)
-                write(out / f"skills/{skill_id}/skill.yaml", (sdir / "skill.yaml").read_bytes())
-                resources.append({"id": skill_id, "kind": "skill", "title": text(skill["name"]), "version": VERSION, "required": True, "source": {"kind": "local", "path": f"skills/{skill_id}/SKILL.md"}})
+                adapted, removed = adapt_skill_markdown((sdir / "SKILL.md").read_text(encoding="utf-8"), skill_id, skill, team_id)
+                native_id = native_skill_id(skill_id, team_id)
+                write(out / f"skills/{native_id}/SKILL.md", adapted)
+                write(out / f"skills/{native_id}/skill.yaml", (sdir / "skill.yaml").read_bytes())
+                resources.append({"id": native_id, "kind": "skill", "title": text(skill["name"]), "version": VERSION, "required": True, "source": {"kind": "local", "path": f"skills/{native_id}/SKILL.md"}})
                 skill_ids.append(skill_id)
-                modifications_md.append(f"- `skills/{skill_id}/SKILL.md`: added Teloa frontmatter (name/description from skill.yaml when_to_use) and a derivation notice; removed {len(removed)} Grok-only instruction line(s): " + "; ".join(f"`{r[:60]}…`" if len(r) > 60 else f"`{r}`" for r in removed) + ". Original `skill.yaml` kept verbatim next to it.")
-            relations.append({"kind": "role-skill", "from": bot, "to": skill_id})
+                modifications_md.append(f"- `skills/{native_id}/SKILL.md`: added Teloa frontmatter (name/description from skill.yaml when_to_use) and a derivation notice; removed {len(removed)} Grok-only instruction line(s): " + "; ".join(f"`{r[:60]}…`" if len(r) > 60 else f"`{r}`" for r in removed) + ". Original `skill.yaml` kept verbatim next to it.")
+            relations.append({"kind": "role-skill", "from": bot, "to": native_skill_id(skill_id, team_id)})
         routine = t.get("routine")
         if isinstance(routine, dict) and routine.get("id"):
             rid = routine["id"]
@@ -264,7 +307,7 @@ def build_team(src: pathlib.Path, team_id: str, license_bytes: bytes, report: di
             routine_title = text(routine.get("id"))
             desc = " ".join(description.split())
             localized_routine = {"title": metadata(routine_title, zh_title, tw_title, en_title), "description": metadata(desc, f"由{ZH[bot]}按原方法整理待审结果。使用前确认资料来源、时间与权限；添加模板不会启用定时计划。", f"由{ZH_TW[bot]}按原方法整理待審結果。使用前確認資料來源、時間及權限；加入範本不會啟用定時安排。", desc)}
-            write(out / f"routines/{rid}.json", {"format": "teloa.work-template/v1", "id": rid, "title": routine_title, "localized": localized_routine, "version": VERSION, "domain": scope, "description": desc, "requirements": [r for r in requirements if r], "output": " ".join(output.split()), "skills": [{"id": skill_for, "title": skill_title, "version": VERSION}]})
+            write(out / f"routines/{rid}.json", {"format": "teloa.work-template/v1", "id": rid, "title": routine_title, "localized": localized_routine, "version": VERSION, "domain": scope, "description": desc, "requirements": [r for r in requirements if r], "output": " ".join(output.split()), "skills": [{"id": native_skill_id(skill_for, team_id), "title": skill_title, "version": VERSION}]})
             resources.append({"id": rid, "kind": "work-template", "title": en_title, "localized": {"title": metadata(en_title, zh_title + "（未排程）", tw_title + "（未排程）", en_title + " (unscheduled)")}, "version": VERSION, "required": False, "source": {"kind": "local", "path": f"routines/{rid}.json"}})
             relations.append({"kind": "role-work", "from": bot, "to": rid})
         for plugin in t.get("plugins", []) or []:
@@ -278,14 +321,19 @@ def build_team(src: pathlib.Path, team_id: str, license_bytes: bytes, report: di
                 connection_ids[cid] = plugin
             relations.append({"kind": "role-connection", "from": bot, "to": cid})
     manifest = {
-        "format": "teloa.business-package/v3", "id": package_id, "title": f"{team['name']} team (grok-bot-templates)", "version": VERSION,
+        "format": "teloa.business-package/v3", "id": package_id, "title": titles["en"] if HUMAN_TITLES else f"{team['name']} team (grok-bot-templates)", "version": VERSION,
         "domain": TAXONOMY[team_id]["domain"], "scope": scope,
         "description": clip(" ".join(f"Original team '{team['name']}' from {UPSTREAM['owner']}/{UPSTREAM['repo']}@{UPSTREAM['commit'][:12]} (MIT): lead {team['lead']}; bots {', '.join(bots)}. Why: {text(team['why'])} Group kickoff (original): {text(team['group_kickoff'])}".split()), 2000, "manifest description"),
         "resources": resources, "relations": relations, "entrypoints": [],
     }
+    if HUMAN_TITLES:
+        manifest["localized"] = {"title": metadata(titles["en"], titles["zh-CN"], titles["zh-TW"], titles["en"])}
     write(out / "teloa.json", manifest)
     write(out / "LICENSE", license_bytes)
     plugin_gaps = sorted({p for p, who in report.get("pluginGaps", {}).items() if who & set(bots)})
+    profile_modification = "- Employee display names and resource labels are localized for Teloa; approved built-in employee avatar keys are added. Originals stay in PROFILE/template files. Each complete original PROFILE is also bound as a fixed working-method skill so it reaches execution rather than remaining only a reference."
+    if MISSING_SOURCE_POLICY:
+        profile_modification = "- Employee display names and resource labels are localized for Teloa; approved built-in employee avatar keys are added. Original PROFILE/template files remain references; adapted fixed working-method skills provide the execution rules described below."
     mods = [
         "- Format: each original `template.yaml` / `PROFILE.md` was mapped to a `teloa.role/v1` `roles/<bot>.json` (job, title, tagline, why, soul, deliverable → duty; sources + no_data → dataScope; autonomy, approval_never, approval_ask, plugins → executionScope; first_task → triggers; working_style → autonomousActions; approval_ask → confirmationPoints; no_data + handoffs → escalationRules; deliverable + never → deliveryChecks). The originals are kept verbatim under `references/<bot>/` and linked to the employee.",
         f"- Team: `teams/{team_id}/team.yaml` is kept verbatim as `references/team.yaml`. The coordinator is declared through role-coordination from the lead to each member, without authority or execution grants; group kickoff and handoffs remain references. Lead `{team['lead']}` is stated in that employee's duty and in README.md, kickoff and handoffs stay as text. The coordinator links are stored with the fixed package and mapped to real employee identities; kickoff and handoffs do not automatically run work.",
@@ -293,7 +341,13 @@ def build_team(src: pathlib.Path, team_id: str, license_bytes: bytes, report: di
         "- Plugins: only GitHub and Notion are declared as optional read-only connections through Teloa catalog connectors (teloa.mcp-github, teloa.mcp-notion-remote). " + (f"This package does not declare tools for: {', '.join(plugin_gaps)}; the owner provides material or connects and authorizes suitable apps separately." if plugin_gaps else "All original plugins have a Teloa connector."),
         "- Teloa added an optional dashboard guide for a separately adopted official industry dashboard. It is not an upstream file and adding the team does not create business records.\n- `/workspace/<bot>/` paths in the originals are left as written; in Teloa they mean the employee's working directory.",
         "- Example first-run outputs (`examples/first-run.md`) are fictional samples from the original repository, kept verbatim as references; they are not records of real runs.",
-    ] + ["- Employee display names and resource labels are localized for Teloa; approved built-in employee avatar keys are added. Originals stay in PROFILE/template files. Each complete original PROFILE is also bound as a fixed working-method skill so it reaches execution rather than remaining only a reference."] + modifications_md
+    ] + [profile_modification] + modifications_md
+    if MISSING_SOURCE_POLICY:
+        mods += ["- Fact-policy correction: the competitor-watch no-data rule is adapted consistently in role dataScope, escalationRules[0] and its working-method PROFILE section. An unavailable page/capture does not imply nonexistence, deletion, access denial or an HTTP status. Preserve the known unavailable state and unknown cause unless current material or a real response supplies the cause. Raw references remain unchanged.",
+            "- Versioned native names: all six bundled methods use grok-marketing-" + VERSION.replace('.', '-') + "-<original-id>. Resource IDs, role-skill links, catalog skill bindings and routine skill references use the same mapping. This avoids replacing installations with older parent trust; it grants no permissions and upgrades no prior installation. Other method instruction bodies remain unchanged.",
+            "- This version has not passed real-model content-quality verification. Generation and catalog validation do not establish factual correctness of an actual output."]
+    if HUMAN_TITLES:
+        mods.append("- Team display title: teloa.json and the catalog use the same Teloa human-readable titles. Repository identity stays in the source description and attribution, not the title. New family/version method names preserve older installations; only frontmatter and existing native-name references change, with execution bodies, raw references and licenses retained. Earlier version directories and installed objects are not modified.")
     write(out / "MODIFICATIONS.md", f"# Modifications\n\nDerived work: Teloa adapted this package from [{UPSTREAM['owner']}/{UPSTREAM['repo']}@{UPSTREAM['commit'][:12]}]({UPSTREAM_URL}) (MIT, Copyright (c) 2026 Cobus Greyling). Every change from the original files is listed here.\n\n" + "\n".join(mods) + "\n")
     bot_rows = "\n".join(f"| {text(templates[b][1]['name'])}{' (lead)' if team['lead'] == b else ''} | `{b}` | {text(templates[b][1]['title'])} | {', '.join(templates[b][1].get('skills') or [])} | {', '.join(templates[b][1].get('plugins') or []) or '—'} |" for b in bots)
     handoff_rows = "\n".join(f"- {text(templates[b][1]['name'])} → {h['to']}{'' if h['to'] in bots else ' (outside this team)'}: {text(h['when'])}" for b in bots for h in (templates[b][1].get('handoffs') or []))
@@ -337,6 +391,8 @@ MIT (see LICENSE). Attribution: Cobus Greyling, {UPSTREAM['owner']}/{UPSTREAM['r
         localized(f"添加后创建原团队的 {len(bots)} 位员工（负责人：{ZH[team['lead']]}），每位员工绑定原技能方法与完整原 PROFILE 工作方法与资料；原技能的六段方法正文未改。", f"Adds the original team's {len(bots)} employees (lead: {text(templates[team['lead']][1]['name'])}), each bound to its original skills and complete PROFILE working method and reference; the six-field skill bodies are unchanged.", 300, "now1"),
         localized("团队定义、交接与启动指令以原文保留为资料参考；例行任务以未排程的工作模板提供，由你测试后再建计划。", "Team definition, handoffs and kickoff are kept verbatim as references; routines ship as unscheduled work templates for you to test and then schedule.", 300, "now2"),
     ]
+    if MISSING_SOURCE_POLICY:
+        now[0] = {"zh-CN": "创建 3 位保持暂停的员工，绑定有版本名称的方法；竞品员工的缺失来源规则经 Teloa 修正，原始参考与许可原样保留。", "zh-TW": "建立 3 位保持暫停的員工，綁定有版本名稱的方法；競品員工的缺失來源規則經 Teloa 修正，原始參考與授權原樣保留。", "en": "Adds 3 paused employees with versioned method names. Teloa corrects the competitor's missing-source rule; raw references and licenses are preserved."}
     needs = [
         localized("你已配置可用模型；员工在 L1 草稿自治级别工作，只产出待审成果。", "A working model configured by you; employees work at autonomy L1 and only produce review-ready artifacts.", 300, "needs1"),
         localized("需要 GitHub 或 Notion 只读数据时，由你在连接页配置对应连接器；" + (f"原模板还用到 {', '.join(plugin_gaps)}，本包未提供对应工具；可先提供材料，或另外配置应用并授权。" if plugin_gaps else ""), "Configure the GitHub or Notion connector yourself when read-only data is needed; " + (f"the originals also use {', '.join(plugin_gaps)}, whose tools are not declared here; provide material or configure and authorize suitable apps separately." if plugin_gaps else ""), 300, "needs2"),
@@ -350,7 +406,7 @@ MIT (see LICENSE). Attribution: Cobus Greyling, {UPSTREAM['owner']}/{UPSTREAM['r
         "taxonomy": {"functions": TAXONOMY[team_id]["functions"], "industries": TAXONOMY[team_id]["industries"]},
         "solution": {
             "packageId": package_id,
-            "title": {**localized(ZH[team_id], f"{team['name']} team", 120, "title"), "zh-TW": ZH_TW[team_id]},
+            "title": titles,
             "summary": localized(ZH_TEAM_SUMMARY[team_id], EN_TEAM_SUMMARY[team_id], 500, "summary"),
             "scope": scope,
             "capabilities": {"now": now, "needs": needs, "permissions": permissions},
@@ -370,13 +426,18 @@ MIT (see LICENSE). Attribution: Cobus Greyling, {UPSTREAM['owner']}/{UPSTREAM['r
         "requires": {"tools": [], "network": any(b in NETWORK for b in bots), "runtimes": []},
         "review": {"status": "approved", "reviewedAt": REVIEWED_AT, "reviewer": "Teloa"},
     }
+    if MISSING_SOURCE_POLICY:
+        entry["modifications"].append({"zh-CN": "1.0.1 修正竞品员工三个执行位置的同一缺失来源规则：不可用不等于不存在或特定状态；原因只依据本轮材料或真实回执。六方法使用明确版本名称以保留旧安装；其他方法正文与原始参考不改。", "zh-TW": "1.0.1 修正競品員工三個執行位置的同一缺失來源規則：不可用不等於不存在或特定狀態；原因只依據本輪資料或真實回執。六方法使用明確版本名稱以保留舊安裝；其他方法正文與原始參考不改。", "en": "1.0.1 corrects the same missing-source rule in all three competitor execution fields: unavailability establishes no cause or status without current evidence. Six versioned method names preserve older installations; other method bodies and raw references are unchanged."})
+    title_change = {"zh-CN": "团队清单与目录共用 Teloa 人类可读标题，来源保留在说明中；方法使用本团队版本名称，仅名称和对应引用变化，执行正文、原始参考、许可与既有版本保留。", "zh-TW": "團隊清單與目錄共用 Teloa 易讀標題，來源保留在說明中；方法使用本團隊版本名稱，僅名稱及對應引用變更，執行正文、原始參考、授權及既有版本保留。", "en": "The team manifest and catalog share human-readable Teloa titles; attribution stays in the description. Family/version method names change only native identities and their references; execution bodies, raw references, licenses and existing versions are retained."}
+    if HUMAN_TITLES:
+        entry["modifications"].append(title_change)
     write(ROOT / "catalog/solutions" / f"{entry_id}.json", entry)
     write(ROOT / "reviews/solutions" / f"{entry_id}.json", {
         "format": "teloa.official-template-review/v1", "entryId": entry_id, "version": VERSION, "reviewedAt": REVIEWED_AT, "reviewer": "Teloa", "verdict": "approve",
         "origin": {"kind": "derived", "repository": f"{UPSTREAM['owner']}/{UPSTREAM['repo']}", "commit": UPSTREAM["commit"], "path": f"teams/{team_id}", "license": "MIT", "licenseUrl": LICENSE_URL, "generatedBy": "tools/build-grok-bot-template-teams.py"},
         "originalFiles": report["originalFiles"][team_id],
         "pluginGaps": plugin_gaps,
-        "checks": [{"method": "test", "result": "pass", "evidence": "node tools/validate.mjs --pr passes with this package; see the batch result document for the exact run."}, {"method": "source-check", "result": "pass", "evidence": "Original files copied byte for byte (sha256 listed in originalFiles); SKILL.md changes limited to frontmatter, notice and removed Grok-only lines (MODIFICATIONS.md)."}],
+        "checks": ([{"method": "source-check", "result": "pass", "evidence": "Original files copied byte for byte (sha256 listed in originalFiles); adapted working rules and native names are listed in MODIFICATIONS.md. Run catalog validation separately; the generator does not run it."}] if MISSING_SOURCE_POLICY or HUMAN_TITLES else [{"method": "test", "result": "pass", "evidence": "node tools/validate.mjs --pr passes with this package; see the batch result document for the exact run."}, {"method": "source-check", "result": "pass", "evidence": "Original files copied byte for byte (sha256 listed in originalFiles); SKILL.md changes limited to frontmatter, notice and removed Grok-only lines (MODIFICATIONS.md)."}]),
         "notVerified": ["Not run with a real model in a Teloa host", "Connectors not exercised with real accounts"],
     })
     # role entries + artifacts
@@ -386,8 +447,6 @@ MIT (see LICENSE). Attribution: Cobus Greyling, {UPSTREAM['owner']}/{UPSTREAM['r
         role_bytes = (out / f"roles/{bot}.json").read_bytes()
         definition = json.loads(role_bytes); definition.pop("format")
         role_dir = ROOT / "artifacts/roles" / rid / VERSION
-        if role_dir.exists():
-            shutil.rmtree(role_dir)
         write(role_dir / "role.json", role_bytes)
         write(role_dir / "LICENSE", license_bytes)
         write(role_dir / "README.md", f"""# {text(t['name'])} · {ZH[bot]}
@@ -401,7 +460,7 @@ Ported from `{tdir.relative_to(src)}` of the MIT repository above. Adding this e
 - Original plugins: {', '.join(t.get('plugins') or []) or '—'}
 """)
         plugin_gap_bot = sorted(p for p in (t.get("plugins") or []) if p not in CONNECTORS)
-        write(ROOT / "catalog/roles" / f"{rid}.json", {
+        role_entry = {
             "format": "teloa.market-catalog-entry/v1", "id": rid, "kind": "role", "delivery": "install", "version": VERSION,
             "taxonomy": {"functions": ROLE_FUNCTIONS[bot], "industries": TAXONOMY[team_id]["industries"]},
             "upstream": None,
@@ -410,7 +469,7 @@ Ported from `{tdir.relative_to(src)}` of the MIT repository above. Adding this e
                 "title": {**localized(ZH[bot], text(t["name"]), 120, f"{bot} title"), "zh-TW": ZH_TW[bot]},
                 "summary": localized(ZH_SUMMARY[bot], clip(f"{text(t['title'])}. {text(t['job'])} {text(t['tagline'])}", 500, f"{bot} summary en"), 500, f"{bot} summary"),
                 "definition": definition,
-                "skills": list(t.get("skills") or []) + [f"{bot}-working-method"],
+                "skills": [native_skill_id(s, team_id) for s in list(t.get("skills") or []) + [f"{bot}-working-method"]],
                 "scope": scope,
                 "preferredModel": None,
                 "fromSolution": {"packageId": package_id, "version": VERSION, "path": f"roles/{bot}.json"},
@@ -424,20 +483,45 @@ Ported from `{tdir.relative_to(src)}` of the MIT repository above. Adding this e
             ]},
             "requires": {"tools": [], "network": bot in NETWORK, "runtimes": []},
             "review": {"status": "approved", "reviewedAt": REVIEWED_AT, "reviewer": "Teloa"},
-        })
+        }
+        if MISSING_SOURCE_POLICY:
+            role_entry["modifications"].append({"zh-CN": "本员工随营销团队 1.0.1 使用独立版本方法名称，保留旧安装；竞品员工的缺失来源规则已由 Teloa 修正，其他员工规则正文不变。原始参考、许可与全部既有版本保留。", "zh-TW": "本員工隨行銷團隊 1.0.1 使用獨立版本方法名稱，保留舊安裝；競品員工的缺失來源規則已由 Teloa 修正，其他員工規則正文不變。原始參考、授權與全部既有版本保留。", "en": "This employee uses independent versioned methods from marketing family 1.0.1, preserving old installations. Teloa corrects the competitor's missing-source rule; other employee instruction bodies are unchanged. Raw references, licenses and prior versions are preserved."})
+            role_entry["compatibility"]["conditions"][0] = {"zh-CN": "确认本版本组成后安装独立命名的方法，只创建这一位员工并保持暂停；不会替换旧员工或旧方法。", "zh-TW": "確認本版本組成後安裝獨立命名的方法，只建立這一位員工並保持暫停；不會替換舊員工或舊方法。", "en": "Confirm this version's composition to install independently named methods and create only this paused employee; older employees and methods are not replaced."}
+        if HUMAN_TITLES:
+            role_entry["modifications"].append(title_change)
+        write(ROOT / "catalog/roles" / f"{rid}.json", role_entry)
         write(ROOT / "reviews/roles" / f"{rid}.json", {
             "format": "teloa.official-template-review/v1", "entryId": rid, "version": VERSION, "reviewedAt": REVIEWED_AT, "reviewer": "Teloa", "verdict": "approve",
             "origin": {"kind": "derived", "repository": f"{UPSTREAM['owner']}/{UPSTREAM['repo']}", "commit": UPSTREAM["commit"], "path": str(tdir.relative_to(src)), "license": "MIT", "licenseUrl": LICENSE_URL, "fromSolution": f"{entry_id}@{VERSION} roles/{bot}.json", "teamRole": "lead" if team["lead"] == bot else "member"},
             "originalFiles": {k: v for k, v in report["originalFiles"][team_id].items() if k.startswith(str(tdir.relative_to(src)))},
-            "checks": [{"method": "test", "result": "pass", "evidence": "node tools/validate.mjs --pr and node tools/sync-official-roles.mjs --check pass; see the batch result document."}],
+            "checks": ([{"method": "source-check", "result": "pass", "evidence": "Employee role.json copied from its fixed family package; catalog definition and version point to the same source. Run catalog validation and sync-official-roles --check separately; the generator does not run them."}] if MISSING_SOURCE_POLICY or HUMAN_TITLES else [{"method": "test", "result": "pass", "evidence": "node tools/validate.mjs --pr and node tools/sync-official-roles.mjs --check pass; see the batch result document."}]),
             "notVerified": ["Not run with a real model in a Teloa host"],
         })
 
 def main():
+    global ROOT, VERSION, MISSING_SOURCE_POLICY, HUMAN_TITLES, REVIEWED_AT
     ap = argparse.ArgumentParser()
     ap.add_argument("--upstream-dir", required=True)
     ap.add_argument("--teams", default="product,marketing,sales")
+    ap.add_argument("--version", default=VERSION)
+    ap.add_argument("--output-root", type=pathlib.Path, default=ROOT)
+    ap.add_argument("--missing-source-policy", choices=["evidence-v1"])
+    ap.add_argument("--human-titles", action="store_true")
+    ap.add_argument("--reviewed-at", default=None)
     args = ap.parse_args()
+    if not re.fullmatch(r"[0-9]+\.[0-9]+\.[0-9]+", args.version):
+        raise SystemExit("version must be an exact three-part number")
+    if args.human_titles:
+        if {"marketing": "1.0.2", "product": "1.0.1", "sales": "1.0.1"}.get(args.teams) != args.version:
+            raise SystemExit("human titles require the reviewed single-family successor version")
+        if (args.missing_source_policy == "evidence-v1") != (args.teams == "marketing"):
+            raise SystemExit("human-title marketing preserves evidence-v1; other families preserve their original rules")
+    elif args.missing_source_policy and (args.teams != "marketing" or args.version != "1.0.1"):
+        raise SystemExit("evidence-v1 is reviewed only for marketing family 1.0.1")
+    if args.version != "1.0.0" and not args.missing_source_policy and not args.human_titles:
+        raise SystemExit("a new family version requires an explicit reviewed adaptation")
+    ROOT, VERSION, MISSING_SOURCE_POLICY, HUMAN_TITLES = args.output_root.resolve(), args.version, args.missing_source_policy, args.human_titles
+    REVIEWED_AT = args.reviewed_at or (datetime.date.today().isoformat() if MISSING_SOURCE_POLICY or HUMAN_TITLES else REVIEWED_AT)
     src = pathlib.Path(args.upstream_dir).resolve()
     license_bytes = (src / "LICENSE").read_bytes()
     if not license_bytes.startswith(b"MIT License"):
@@ -461,6 +545,11 @@ def main():
                 for p in sorted((src / "routines" / r["id"]).iterdir()):
                     files[str(p.relative_to(src))] = sha256(p.read_bytes())
         report["originalFiles"][team_id] = files
+    if MISSING_SOURCE_POLICY or HUMAN_TITLES:
+        for team_id in teams:
+            pinned = json.loads((REPOSITORY_ROOT / f"reviews/solutions/teloa.grok-{team_id}-team.json").read_text(encoding="utf-8"))
+            if pinned["origin"]["commit"] != UPSTREAM["commit"] or report["originalFiles"][team_id] != pinned["originalFiles"]:
+                raise SystemExit(f"upstream source hashes differ from the fixed {team_id} review")
     for team_id in teams:
         build_team(src, team_id, license_bytes, report)
     gaps = {k: sorted(v) for k, v in report.get("pluginGaps", {}).items()}
