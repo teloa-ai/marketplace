@@ -1,0 +1,39 @@
+{
+  "format": "teloa.work-template/v1",
+  "id": "nightly-outbound-research",
+  "title": "nightly-outbound-research",
+  "localized": {
+    "title": {
+      "original": "nightly-outbound-research",
+      "defaultLocale": "en",
+      "locales": {
+        "zh-CN": "晚间客户研究",
+        "zh-TW": "晚間客戶研究",
+        "en": "Evening account research"
+      }
+    },
+    "description": {
+      "original": "Original routine 'nightly-outbound-research': cadence weeknights 18:00 in the Bot timezone. A review list with ICP score, intent evidence, up to three contacts, and DRAFT outreach. Nothing sent. Nobody enrolled. Not scheduled by this template: the owner creates the plan after a test run and confirms timezone, input source, expected result, approval boundary and missing-source policy.",
+      "defaultLocale": "en",
+      "locales": {
+        "zh-CN": "由外联研究员工按原方法整理待审结果。使用前确认资料来源、时间与权限；添加模板不会启用定时计划。",
+        "zh-TW": "由開發客戶研究員工按原方法整理待審結果。使用前確認資料來源、時間及權限；加入範本不會啟用定時安排。",
+        "en": "Original routine 'nightly-outbound-research': cadence weeknights 18:00 in the Bot timezone. A review list with ICP score, intent evidence, up to three contacts, and DRAFT outreach. Nothing sent. Nobody enrolled. Not scheduled by this template: the owner creates the plan after a test run and confirms timezone, input source, expected result, approval boundary and missing-source policy."
+      }
+    }
+  },
+  "version": "1.0.1",
+  "domain": "general",
+  "description": "Original routine 'nightly-outbound-research': cadence weeknights 18:00 in the Bot timezone. A review list with ICP score, intent evidence, up to three contacts, and DRAFT outreach. Nothing sent. Nobody enrolled. Not scheduled by this template: the owner creates the plan after a test run and confirms timezone, input source, expected result, approval boundary and missing-source policy.",
+  "requirements": [
+    "CRM view, spreadsheet, or the pasted account list named in the Bot description, plus attached style examples"
+  ],
+  "output": "A review list with ICP score, intent evidence, up to three contacts, and DRAFT outreach. Nothing sent. Nobody enrolled.",
+  "skills": [
+    {
+      "id": "grok-sales-1-0-1-research-accounts",
+      "title": "Research Accounts",
+      "version": "1.0.1"
+    }
+  ]
+}

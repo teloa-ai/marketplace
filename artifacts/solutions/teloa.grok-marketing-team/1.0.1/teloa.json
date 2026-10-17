@@ -1,0 +1,453 @@
+{
+  "format": "teloa.business-package/v3",
+  "id": "grok-bot-templates-team-marketing",
+  "title": "Marketing team (grok-bot-templates)",
+  "version": "1.0.1",
+  "domain": "marketing",
+  "scope": "general",
+  "description": "Original team 'Marketing' from cobusgreyling/grok-bot-templates@4f3f28b4e657 (MIT): lead competitor-watch; bots competitor-watch, content-remix, newsletter-desk. Why: Competitor noise, channel variants, and the weekly issue get mixed until someone diffs, remixes, and still does not publish. Group kickoff (original): @Competitor Watch diff the named set since last snapshot and stay quiet on unchanged pages. @Content Remix turn the accepted brief into DRAFT variants. @Newsletter Desk assemble the next issue unsent. Do not publish. Do not post to Slack or X. Do not send the issue.",
+  "resources": [
+    {
+      "id": "team-definition",
+      "kind": "knowledge",
+      "title": "Original team.yaml (Marketing)",
+      "version": "1.0.1",
+      "required": true,
+      "source": {
+        "kind": "local",
+        "path": "references/team.yaml"
+      }
+    },
+    {
+      "id": "dashboard-guide",
+      "kind": "knowledge",
+      "title": "内容运营看板使用指引（独立资源，按需采用）",
+      "localized": {
+        "title": {
+          "original": "内容运营看板使用指引（独立资源，按需采用）",
+          "defaultLocale": "en",
+          "locales": {
+            "zh-CN": "内容运营看板使用指引（独立资源，按需采用）",
+            "zh-TW": "業務看板使用指引（獨立資源，按需採用）",
+            "en": "Business dashboard guide (separate resource, optional)"
+          }
+        }
+      },
+      "version": "1.0.1",
+      "required": false,
+      "source": {
+        "kind": "local",
+        "path": "references/teloa-dashboard-guide.md"
+      }
+    },
+    {
+      "id": "competitor-watch",
+      "kind": "role",
+      "title": "Competitor Watch (lead)",
+      "version": "1.0.1",
+      "required": true,
+      "source": {
+        "kind": "local",
+        "path": "roles/competitor-watch.json"
+      }
+    },
+    {
+      "id": "competitor-watch-profile",
+      "kind": "knowledge",
+      "title": "Original PROFILE.md of Competitor Watch",
+      "version": "1.0.1",
+      "required": true,
+      "source": {
+        "kind": "local",
+        "path": "references/competitor-watch/PROFILE.md"
+      }
+    },
+    {
+      "id": "competitor-watch-template",
+      "kind": "knowledge",
+      "title": "Original template.yaml of Competitor Watch",
+      "version": "1.0.1",
+      "required": true,
+      "source": {
+        "kind": "local",
+        "path": "references/competitor-watch/template.yaml"
+      }
+    },
+    {
+      "id": "competitor-watch-first-run",
+      "kind": "knowledge",
+      "title": "Original examples/first-run.md of Competitor Watch",
+      "version": "1.0.1",
+      "required": true,
+      "source": {
+        "kind": "local",
+        "path": "references/competitor-watch/first-run.md"
+      }
+    },
+    {
+      "id": "grok-marketing-1-0-1-competitor-watch-working-method",
+      "kind": "skill",
+      "title": "竞品监测员工工作准则",
+      "localized": {
+        "title": {
+          "original": "竞品监测员工工作准则",
+          "defaultLocale": "en",
+          "locales": {
+            "zh-CN": "竞品监测员工工作准则",
+            "zh-TW": "競品監測員工工作準則",
+            "en": "Competitor Watch working instructions"
+          }
+        }
+      },
+      "version": "1.0.1",
+      "required": true,
+      "source": {
+        "kind": "local",
+        "path": "skills/grok-marketing-1-0-1-competitor-watch-working-method/SKILL.md"
+      }
+    },
+    {
+      "id": "grok-marketing-1-0-1-diff-competitors",
+      "kind": "skill",
+      "title": "Diff Competitors",
+      "version": "1.0.1",
+      "required": true,
+      "source": {
+        "kind": "local",
+        "path": "skills/grok-marketing-1-0-1-diff-competitors/SKILL.md"
+      }
+    },
+    {
+      "id": "weekday-competitor-diff",
+      "kind": "work-template",
+      "title": "Weekday competitor changes",
+      "localized": {
+        "title": {
+          "original": "Weekday competitor changes",
+          "defaultLocale": "en",
+          "locales": {
+            "zh-CN": "工作日竞品变化（未排程）",
+            "zh-TW": "工作日競品變化（未排程）",
+            "en": "Weekday competitor changes (unscheduled)"
+          }
+        }
+      },
+      "version": "1.0.1",
+      "required": false,
+      "source": {
+        "kind": "local",
+        "path": "routines/weekday-competitor-diff.json"
+      }
+    },
+    {
+      "id": "content-remix",
+      "kind": "role",
+      "title": "Content Remix",
+      "version": "1.0.1",
+      "required": true,
+      "source": {
+        "kind": "local",
+        "path": "roles/content-remix.json"
+      }
+    },
+    {
+      "id": "content-remix-profile",
+      "kind": "knowledge",
+      "title": "Original PROFILE.md of Content Remix",
+      "version": "1.0.1",
+      "required": true,
+      "source": {
+        "kind": "local",
+        "path": "references/content-remix/PROFILE.md"
+      }
+    },
+    {
+      "id": "content-remix-template",
+      "kind": "knowledge",
+      "title": "Original template.yaml of Content Remix",
+      "version": "1.0.1",
+      "required": true,
+      "source": {
+        "kind": "local",
+        "path": "references/content-remix/template.yaml"
+      }
+    },
+    {
+      "id": "content-remix-first-run",
+      "kind": "knowledge",
+      "title": "Original examples/first-run.md of Content Remix",
+      "version": "1.0.1",
+      "required": true,
+      "source": {
+        "kind": "local",
+        "path": "references/content-remix/first-run.md"
+      }
+    },
+    {
+      "id": "grok-marketing-1-0-1-content-remix-working-method",
+      "kind": "skill",
+      "title": "内容改编员工工作准则",
+      "localized": {
+        "title": {
+          "original": "内容改编员工工作准则",
+          "defaultLocale": "en",
+          "locales": {
+            "zh-CN": "内容改编员工工作准则",
+            "zh-TW": "內容改編員工工作準則",
+            "en": "Content Remix working instructions"
+          }
+        }
+      },
+      "version": "1.0.1",
+      "required": true,
+      "source": {
+        "kind": "local",
+        "path": "skills/grok-marketing-1-0-1-content-remix-working-method/SKILL.md"
+      }
+    },
+    {
+      "id": "grok-marketing-1-0-1-remix-content",
+      "kind": "skill",
+      "title": "Remix Content",
+      "version": "1.0.1",
+      "required": true,
+      "source": {
+        "kind": "local",
+        "path": "skills/grok-marketing-1-0-1-remix-content/SKILL.md"
+      }
+    },
+    {
+      "id": "connection-notion-remote",
+      "kind": "mcp",
+      "title": "Notion (read-only via Teloa connector teloa.mcp-notion-remote)",
+      "version": "1.0.1",
+      "required": false,
+      "source": {
+        "kind": "local",
+        "path": "connections/notion_remote.json"
+      }
+    },
+    {
+      "id": "newsletter-desk",
+      "kind": "role",
+      "title": "Newsletter Desk",
+      "version": "1.0.1",
+      "required": true,
+      "source": {
+        "kind": "local",
+        "path": "roles/newsletter-desk.json"
+      }
+    },
+    {
+      "id": "newsletter-desk-profile",
+      "kind": "knowledge",
+      "title": "Original PROFILE.md of Newsletter Desk",
+      "version": "1.0.1",
+      "required": true,
+      "source": {
+        "kind": "local",
+        "path": "references/newsletter-desk/PROFILE.md"
+      }
+    },
+    {
+      "id": "newsletter-desk-template",
+      "kind": "knowledge",
+      "title": "Original template.yaml of Newsletter Desk",
+      "version": "1.0.1",
+      "required": true,
+      "source": {
+        "kind": "local",
+        "path": "references/newsletter-desk/template.yaml"
+      }
+    },
+    {
+      "id": "newsletter-desk-first-run",
+      "kind": "knowledge",
+      "title": "Original examples/first-run.md of Newsletter Desk",
+      "version": "1.0.1",
+      "required": true,
+      "source": {
+        "kind": "local",
+        "path": "references/newsletter-desk/first-run.md"
+      }
+    },
+    {
+      "id": "grok-marketing-1-0-1-newsletter-desk-working-method",
+      "kind": "skill",
+      "title": "简报编辑员工工作准则",
+      "localized": {
+        "title": {
+          "original": "简报编辑员工工作准则",
+          "defaultLocale": "en",
+          "locales": {
+            "zh-CN": "简报编辑员工工作准则",
+            "zh-TW": "電子報編輯員工工作準則",
+            "en": "Newsletter Desk working instructions"
+          }
+        }
+      },
+      "version": "1.0.1",
+      "required": true,
+      "source": {
+        "kind": "local",
+        "path": "skills/grok-marketing-1-0-1-newsletter-desk-working-method/SKILL.md"
+      }
+    },
+    {
+      "id": "grok-marketing-1-0-1-draft-newsletter",
+      "kind": "skill",
+      "title": "Draft Newsletter",
+      "version": "1.0.1",
+      "required": true,
+      "source": {
+        "kind": "local",
+        "path": "skills/grok-marketing-1-0-1-draft-newsletter/SKILL.md"
+      }
+    },
+    {
+      "id": "weekly-newsletter-draft",
+      "kind": "work-template",
+      "title": "Weekly newsletter draft",
+      "localized": {
+        "title": {
+          "original": "Weekly newsletter draft",
+          "defaultLocale": "en",
+          "locales": {
+            "zh-CN": "每周简报草稿（未排程）",
+            "zh-TW": "每週電子報草稿（未排程）",
+            "en": "Weekly newsletter draft (unscheduled)"
+          }
+        }
+      },
+      "version": "1.0.1",
+      "required": false,
+      "source": {
+        "kind": "local",
+        "path": "routines/weekly-newsletter-draft.json"
+      }
+    }
+  ],
+  "relations": [
+    {
+      "kind": "role-knowledge",
+      "from": "competitor-watch",
+      "to": "dashboard-guide"
+    },
+    {
+      "kind": "role-knowledge",
+      "from": "competitor-watch",
+      "to": "competitor-watch-profile"
+    },
+    {
+      "kind": "role-knowledge",
+      "from": "competitor-watch",
+      "to": "competitor-watch-template"
+    },
+    {
+      "kind": "role-knowledge",
+      "from": "competitor-watch",
+      "to": "competitor-watch-first-run"
+    },
+    {
+      "kind": "role-knowledge",
+      "from": "competitor-watch",
+      "to": "team-definition"
+    },
+    {
+      "kind": "role-skill",
+      "from": "competitor-watch",
+      "to": "grok-marketing-1-0-1-competitor-watch-working-method"
+    },
+    {
+      "kind": "role-skill",
+      "from": "competitor-watch",
+      "to": "grok-marketing-1-0-1-diff-competitors"
+    },
+    {
+      "kind": "role-work",
+      "from": "competitor-watch",
+      "to": "weekday-competitor-diff"
+    },
+    {
+      "kind": "role-knowledge",
+      "from": "content-remix",
+      "to": "content-remix-profile"
+    },
+    {
+      "kind": "role-knowledge",
+      "from": "content-remix",
+      "to": "content-remix-template"
+    },
+    {
+      "kind": "role-knowledge",
+      "from": "content-remix",
+      "to": "content-remix-first-run"
+    },
+    {
+      "kind": "role-knowledge",
+      "from": "content-remix",
+      "to": "team-definition"
+    },
+    {
+      "kind": "role-skill",
+      "from": "content-remix",
+      "to": "grok-marketing-1-0-1-content-remix-working-method"
+    },
+    {
+      "kind": "role-coordination",
+      "from": "competitor-watch",
+      "to": "content-remix"
+    },
+    {
+      "kind": "role-skill",
+      "from": "content-remix",
+      "to": "grok-marketing-1-0-1-remix-content"
+    },
+    {
+      "kind": "role-connection",
+      "from": "content-remix",
+      "to": "connection-notion-remote"
+    },
+    {
+      "kind": "role-knowledge",
+      "from": "newsletter-desk",
+      "to": "newsletter-desk-profile"
+    },
+    {
+      "kind": "role-knowledge",
+      "from": "newsletter-desk",
+      "to": "newsletter-desk-template"
+    },
+    {
+      "kind": "role-knowledge",
+      "from": "newsletter-desk",
+      "to": "newsletter-desk-first-run"
+    },
+    {
+      "kind": "role-knowledge",
+      "from": "newsletter-desk",
+      "to": "team-definition"
+    },
+    {
+      "kind": "role-skill",
+      "from": "newsletter-desk",
+      "to": "grok-marketing-1-0-1-newsletter-desk-working-method"
+    },
+    {
+      "kind": "role-coordination",
+      "from": "competitor-watch",
+      "to": "newsletter-desk"
+    },
+    {
+      "kind": "role-skill",
+      "from": "newsletter-desk",
+      "to": "grok-marketing-1-0-1-draft-newsletter"
+    },
+    {
+      "kind": "role-work",
+      "from": "newsletter-desk",
+      "to": "weekly-newsletter-draft"
+    }
+  ],
+  "entrypoints": []
+}

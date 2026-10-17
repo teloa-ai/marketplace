@@ -3,7 +3,7 @@
   "id": "teloa.grok-launch-coordinator",
   "kind": "role",
   "delivery": "install",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "taxonomy": {
     "functions": [
       "business-ops",
@@ -65,14 +65,14 @@
       }
     },
     "skills": [
-      "coordinate-launch",
-      "launch-coordinator-working-method"
+      "grok-product-1-0-1-coordinate-launch",
+      "grok-product-1-0-1-launch-coordinator-working-method"
     ],
     "scope": "general",
     "preferredModel": null,
     "fromSolution": {
       "packageId": "grok-bot-templates-team-product",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "path": "roles/launch-coordinator.json"
     }
   },
@@ -80,6 +80,11 @@
     {
       "zh-CN": "来源 cobusgreyling/grok-bot-templates@4f3f28b4e657 templates/product/launch-coordinator（MIT）；template.yaml 映射为 teloa.role/v1，原文随团队包 references/ 保留。",
       "en": "Source cobusgreyling/grok-bot-templates@4f3f28b4e657 templates/product/launch-coordinator (MIT); template.yaml mapped to teloa.role/v1, originals kept under the team package's references/."
+    },
+    {
+      "zh-CN": "团队清单与目录共用 Teloa 人类可读标题，来源保留在说明中；方法使用本团队版本名称，仅名称和对应引用变化，执行正文、原始参考、许可与既有版本保留。",
+      "zh-TW": "團隊清單與目錄共用 Teloa 易讀標題，來源保留在說明中；方法使用本團隊版本名稱，僅名稱及對應引用變更，執行正文、原始參考、授權及既有版本保留。",
+      "en": "The team manifest and catalog share human-readable Teloa titles; attribution stays in the description. Family/version method names change only native identities and their references; execution bodies, raw references, licenses and existing versions are retained."
     }
   ],
   "license": {
@@ -115,7 +120,7 @@
   },
   "review": {
     "status": "approved",
-    "reviewedAt": "2026-10-14",
+    "reviewedAt": "2026-10-16",
     "reviewer": "Teloa"
   }
 }

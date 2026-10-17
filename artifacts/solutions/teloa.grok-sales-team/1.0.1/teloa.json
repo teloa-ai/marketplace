@@ -1,0 +1,480 @@
+{
+  "format": "teloa.business-package/v3",
+  "id": "grok-bot-templates-team-sales",
+  "title": "Sales team",
+  "version": "1.0.1",
+  "domain": "general",
+  "scope": "general",
+  "description": "Original team 'Sales' from cobusgreyling/grok-bot-templates@4f3f28b4e657 (MIT): lead sales-outbound; bots sales-outbound, meeting-prep, call-followup. Why: Outbound volume is useless if the next call is unbriefed and the recap never gets written down before it is sent. Group kickoff (original): @Outbound research the named account list and stop at a review list. @Meeting Prep brief the next booked call as INTERNAL. @Call Follow-up wait for notes, then draft an unsent recap. Do not send. Do not enroll anyone. Do not book the next meeting.",
+  "resources": [
+    {
+      "id": "team-definition",
+      "kind": "knowledge",
+      "title": "Original team.yaml (Sales)",
+      "version": "1.0.1",
+      "required": true,
+      "source": {
+        "kind": "local",
+        "path": "references/team.yaml"
+      }
+    },
+    {
+      "id": "dashboard-guide",
+      "kind": "knowledge",
+      "title": "销售跟进看板使用指引（独立资源，按需采用）",
+      "localized": {
+        "title": {
+          "original": "销售跟进看板使用指引（独立资源，按需采用）",
+          "defaultLocale": "en",
+          "locales": {
+            "zh-CN": "销售跟进看板使用指引（独立资源，按需采用）",
+            "zh-TW": "業務看板使用指引（獨立資源，按需採用）",
+            "en": "Business dashboard guide (separate resource, optional)"
+          }
+        }
+      },
+      "version": "1.0.1",
+      "required": false,
+      "source": {
+        "kind": "local",
+        "path": "references/teloa-dashboard-guide.md"
+      }
+    },
+    {
+      "id": "sales-outbound",
+      "kind": "role",
+      "title": "Outbound (lead)",
+      "version": "1.0.1",
+      "required": true,
+      "source": {
+        "kind": "local",
+        "path": "roles/sales-outbound.json"
+      }
+    },
+    {
+      "id": "sales-outbound-profile",
+      "kind": "knowledge",
+      "title": "Original PROFILE.md of Outbound",
+      "version": "1.0.1",
+      "required": true,
+      "source": {
+        "kind": "local",
+        "path": "references/sales-outbound/PROFILE.md"
+      }
+    },
+    {
+      "id": "sales-outbound-template",
+      "kind": "knowledge",
+      "title": "Original template.yaml of Outbound",
+      "version": "1.0.1",
+      "required": true,
+      "source": {
+        "kind": "local",
+        "path": "references/sales-outbound/template.yaml"
+      }
+    },
+    {
+      "id": "sales-outbound-first-run",
+      "kind": "knowledge",
+      "title": "Original examples/first-run.md of Outbound",
+      "version": "1.0.1",
+      "required": true,
+      "source": {
+        "kind": "local",
+        "path": "references/sales-outbound/first-run.md"
+      }
+    },
+    {
+      "id": "grok-sales-1-0-1-sales-outbound-working-method",
+      "kind": "skill",
+      "title": "外联研究员工工作准则",
+      "localized": {
+        "title": {
+          "original": "外联研究员工工作准则",
+          "defaultLocale": "en",
+          "locales": {
+            "zh-CN": "外联研究员工工作准则",
+            "zh-TW": "開發客戶研究員工工作準則",
+            "en": "Outbound working instructions"
+          }
+        }
+      },
+      "version": "1.0.1",
+      "required": true,
+      "source": {
+        "kind": "local",
+        "path": "skills/grok-sales-1-0-1-sales-outbound-working-method/SKILL.md"
+      }
+    },
+    {
+      "id": "grok-sales-1-0-1-research-accounts",
+      "kind": "skill",
+      "title": "Research Accounts",
+      "version": "1.0.1",
+      "required": true,
+      "source": {
+        "kind": "local",
+        "path": "skills/grok-sales-1-0-1-research-accounts/SKILL.md"
+      }
+    },
+    {
+      "id": "sales-outbound-routine-yaml",
+      "kind": "knowledge",
+      "title": "Original routine.yaml (nightly-outbound-research)",
+      "version": "1.0.1",
+      "required": true,
+      "source": {
+        "kind": "local",
+        "path": "references/sales-outbound/routine.yaml"
+      }
+    },
+    {
+      "id": "nightly-outbound-research",
+      "kind": "work-template",
+      "title": "Evening account research",
+      "localized": {
+        "title": {
+          "original": "Evening account research",
+          "defaultLocale": "en",
+          "locales": {
+            "zh-CN": "晚间客户研究（未排程）",
+            "zh-TW": "晚間客戶研究（未排程）",
+            "en": "Evening account research (unscheduled)"
+          }
+        }
+      },
+      "version": "1.0.1",
+      "required": false,
+      "source": {
+        "kind": "local",
+        "path": "routines/nightly-outbound-research.json"
+      }
+    },
+    {
+      "id": "meeting-prep",
+      "kind": "role",
+      "title": "Meeting Prep",
+      "version": "1.0.1",
+      "required": true,
+      "source": {
+        "kind": "local",
+        "path": "roles/meeting-prep.json"
+      }
+    },
+    {
+      "id": "meeting-prep-profile",
+      "kind": "knowledge",
+      "title": "Original PROFILE.md of Meeting Prep",
+      "version": "1.0.1",
+      "required": true,
+      "source": {
+        "kind": "local",
+        "path": "references/meeting-prep/PROFILE.md"
+      }
+    },
+    {
+      "id": "meeting-prep-template",
+      "kind": "knowledge",
+      "title": "Original template.yaml of Meeting Prep",
+      "version": "1.0.1",
+      "required": true,
+      "source": {
+        "kind": "local",
+        "path": "references/meeting-prep/template.yaml"
+      }
+    },
+    {
+      "id": "meeting-prep-first-run",
+      "kind": "knowledge",
+      "title": "Original examples/first-run.md of Meeting Prep",
+      "version": "1.0.1",
+      "required": true,
+      "source": {
+        "kind": "local",
+        "path": "references/meeting-prep/first-run.md"
+      }
+    },
+    {
+      "id": "grok-sales-1-0-1-meeting-prep-working-method",
+      "kind": "skill",
+      "title": "会前简报员工工作准则",
+      "localized": {
+        "title": {
+          "original": "会前简报员工工作准则",
+          "defaultLocale": "en",
+          "locales": {
+            "zh-CN": "会前简报员工工作准则",
+            "zh-TW": "會前簡報員工工作準則",
+            "en": "Meeting Prep working instructions"
+          }
+        }
+      },
+      "version": "1.0.1",
+      "required": true,
+      "source": {
+        "kind": "local",
+        "path": "skills/grok-sales-1-0-1-meeting-prep-working-method/SKILL.md"
+      }
+    },
+    {
+      "id": "grok-sales-1-0-1-prep-meeting",
+      "kind": "skill",
+      "title": "Prep Meeting",
+      "version": "1.0.1",
+      "required": true,
+      "source": {
+        "kind": "local",
+        "path": "skills/grok-sales-1-0-1-prep-meeting/SKILL.md"
+      }
+    },
+    {
+      "id": "morning-meeting-prep",
+      "kind": "work-template",
+      "title": "Morning meeting preparation",
+      "localized": {
+        "title": {
+          "original": "Morning meeting preparation",
+          "defaultLocale": "en",
+          "locales": {
+            "zh-CN": "晨间会前准备（未排程）",
+            "zh-TW": "早晨會前準備（未排程）",
+            "en": "Morning meeting preparation (unscheduled)"
+          }
+        }
+      },
+      "version": "1.0.1",
+      "required": false,
+      "source": {
+        "kind": "local",
+        "path": "routines/morning-meeting-prep.json"
+      }
+    },
+    {
+      "id": "call-followup",
+      "kind": "role",
+      "title": "Call Follow-up",
+      "version": "1.0.1",
+      "required": true,
+      "source": {
+        "kind": "local",
+        "path": "roles/call-followup.json"
+      }
+    },
+    {
+      "id": "call-followup-profile",
+      "kind": "knowledge",
+      "title": "Original PROFILE.md of Call Follow-up",
+      "version": "1.0.1",
+      "required": true,
+      "source": {
+        "kind": "local",
+        "path": "references/call-followup/PROFILE.md"
+      }
+    },
+    {
+      "id": "call-followup-template",
+      "kind": "knowledge",
+      "title": "Original template.yaml of Call Follow-up",
+      "version": "1.0.1",
+      "required": true,
+      "source": {
+        "kind": "local",
+        "path": "references/call-followup/template.yaml"
+      }
+    },
+    {
+      "id": "call-followup-first-run",
+      "kind": "knowledge",
+      "title": "Original examples/first-run.md of Call Follow-up",
+      "version": "1.0.1",
+      "required": true,
+      "source": {
+        "kind": "local",
+        "path": "references/call-followup/first-run.md"
+      }
+    },
+    {
+      "id": "grok-sales-1-0-1-call-followup-working-method",
+      "kind": "skill",
+      "title": "通话跟进员工工作准则",
+      "localized": {
+        "title": {
+          "original": "通话跟进员工工作准则",
+          "defaultLocale": "en",
+          "locales": {
+            "zh-CN": "通话跟进员工工作准则",
+            "zh-TW": "通話跟進員工工作準則",
+            "en": "Call Follow-up working instructions"
+          }
+        }
+      },
+      "version": "1.0.1",
+      "required": true,
+      "source": {
+        "kind": "local",
+        "path": "skills/grok-sales-1-0-1-call-followup-working-method/SKILL.md"
+      }
+    },
+    {
+      "id": "grok-sales-1-0-1-draft-call-followup",
+      "kind": "skill",
+      "title": "Draft Call Follow-up",
+      "version": "1.0.1",
+      "required": true,
+      "source": {
+        "kind": "local",
+        "path": "skills/grok-sales-1-0-1-draft-call-followup/SKILL.md"
+      }
+    },
+    {
+      "id": "grok-sales-1-0-1-log-promises",
+      "kind": "skill",
+      "title": "Log Promises",
+      "version": "1.0.1",
+      "required": true,
+      "source": {
+        "kind": "local",
+        "path": "skills/grok-sales-1-0-1-log-promises/SKILL.md"
+      }
+    }
+  ],
+  "relations": [
+    {
+      "kind": "role-knowledge",
+      "from": "sales-outbound",
+      "to": "dashboard-guide"
+    },
+    {
+      "kind": "role-knowledge",
+      "from": "sales-outbound",
+      "to": "sales-outbound-profile"
+    },
+    {
+      "kind": "role-knowledge",
+      "from": "sales-outbound",
+      "to": "sales-outbound-template"
+    },
+    {
+      "kind": "role-knowledge",
+      "from": "sales-outbound",
+      "to": "sales-outbound-first-run"
+    },
+    {
+      "kind": "role-knowledge",
+      "from": "sales-outbound",
+      "to": "team-definition"
+    },
+    {
+      "kind": "role-skill",
+      "from": "sales-outbound",
+      "to": "grok-sales-1-0-1-sales-outbound-working-method"
+    },
+    {
+      "kind": "role-skill",
+      "from": "sales-outbound",
+      "to": "grok-sales-1-0-1-research-accounts"
+    },
+    {
+      "kind": "role-knowledge",
+      "from": "sales-outbound",
+      "to": "sales-outbound-routine-yaml"
+    },
+    {
+      "kind": "role-work",
+      "from": "sales-outbound",
+      "to": "nightly-outbound-research"
+    },
+    {
+      "kind": "role-knowledge",
+      "from": "meeting-prep",
+      "to": "meeting-prep-profile"
+    },
+    {
+      "kind": "role-knowledge",
+      "from": "meeting-prep",
+      "to": "meeting-prep-template"
+    },
+    {
+      "kind": "role-knowledge",
+      "from": "meeting-prep",
+      "to": "meeting-prep-first-run"
+    },
+    {
+      "kind": "role-knowledge",
+      "from": "meeting-prep",
+      "to": "team-definition"
+    },
+    {
+      "kind": "role-skill",
+      "from": "meeting-prep",
+      "to": "grok-sales-1-0-1-meeting-prep-working-method"
+    },
+    {
+      "kind": "role-coordination",
+      "from": "sales-outbound",
+      "to": "meeting-prep"
+    },
+    {
+      "kind": "role-skill",
+      "from": "meeting-prep",
+      "to": "grok-sales-1-0-1-prep-meeting"
+    },
+    {
+      "kind": "role-work",
+      "from": "meeting-prep",
+      "to": "morning-meeting-prep"
+    },
+    {
+      "kind": "role-knowledge",
+      "from": "call-followup",
+      "to": "call-followup-profile"
+    },
+    {
+      "kind": "role-knowledge",
+      "from": "call-followup",
+      "to": "call-followup-template"
+    },
+    {
+      "kind": "role-knowledge",
+      "from": "call-followup",
+      "to": "call-followup-first-run"
+    },
+    {
+      "kind": "role-knowledge",
+      "from": "call-followup",
+      "to": "team-definition"
+    },
+    {
+      "kind": "role-skill",
+      "from": "call-followup",
+      "to": "grok-sales-1-0-1-call-followup-working-method"
+    },
+    {
+      "kind": "role-coordination",
+      "from": "sales-outbound",
+      "to": "call-followup"
+    },
+    {
+      "kind": "role-skill",
+      "from": "call-followup",
+      "to": "grok-sales-1-0-1-draft-call-followup"
+    },
+    {
+      "kind": "role-skill",
+      "from": "call-followup",
+      "to": "grok-sales-1-0-1-log-promises"
+    }
+  ],
+  "entrypoints": [],
+  "localized": {
+    "title": {
+      "original": "Sales team",
+      "defaultLocale": "en",
+      "locales": {
+        "zh-CN": "销售协作团队",
+        "zh-TW": "銷售協作團隊",
+        "en": "Sales team"
+      }
+    }
+  }
+}

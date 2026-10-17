@@ -1,8 +1,8 @@
 {
   "format": "teloa.official-template-review/v1",
   "entryId": "teloa.grok-sales-team",
-  "version": "1.0.0",
-  "reviewedAt": "2026-10-14",
+  "version": "1.0.1",
+  "reviewedAt": "2026-10-16",
   "reviewer": "Teloa",
   "verdict": "approve",
   "origin": {
@@ -50,14 +50,9 @@
   ],
   "checks": [
     {
-      "method": "test",
-      "result": "pass",
-      "evidence": "node tools/validate.mjs --pr passes with this package; see the batch result document for the exact run."
-    },
-    {
       "method": "source-check",
       "result": "pass",
-      "evidence": "Original files copied byte for byte (sha256 listed in originalFiles); SKILL.md changes limited to frontmatter, notice and removed Grok-only lines (MODIFICATIONS.md)."
+      "evidence": "Original files copied byte for byte (sha256 listed in originalFiles); adapted working rules and native names are listed in MODIFICATIONS.md. Run catalog validation separately; the generator does not run it."
     }
   ],
   "notVerified": [

@@ -1,8 +1,8 @@
 {
   "format": "teloa.official-template-review/v1",
   "entryId": "teloa.grok-newsletter-desk",
-  "version": "1.0.0",
-  "reviewedAt": "2026-10-14",
+  "version": "1.0.2",
+  "reviewedAt": "2026-10-16",
   "reviewer": "Teloa",
   "verdict": "approve",
   "origin": {
@@ -12,7 +12,7 @@
     "path": "templates/marketing/newsletter-desk",
     "license": "MIT",
     "licenseUrl": "https://github.com/cobusgreyling/grok-bot-templates/blob/4f3f28b4e6578cd227ff7f4b78ec91d15fd091b5/LICENSE",
-    "fromSolution": "teloa.grok-marketing-team@1.0.0 roles/newsletter-desk.json",
+    "fromSolution": "teloa.grok-marketing-team@1.0.2 roles/newsletter-desk.json",
     "teamRole": "member"
   },
   "originalFiles": {
@@ -24,9 +24,9 @@
   },
   "checks": [
     {
-      "method": "test",
+      "method": "source-check",
       "result": "pass",
-      "evidence": "node tools/validate.mjs --pr and node tools/sync-official-roles.mjs --check pass; see the batch result document."
+      "evidence": "Employee role.json copied from its fixed family package; catalog definition and version point to the same source. Run catalog validation and sync-official-roles --check separately; the generator does not run them."
     }
   ],
   "notVerified": [

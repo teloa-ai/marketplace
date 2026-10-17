@@ -3,7 +3,7 @@
   "id": "teloa.grok-marketing-team",
   "kind": "solution",
   "delivery": "install",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "taxonomy": {
     "functions": [
       "content-design",
@@ -29,8 +29,9 @@
     "capabilities": {
       "now": [
         {
-          "zh-CN": "添加后创建原团队的 3 位员工（负责人：竞品监测员工），每位员工绑定原技能方法与完整原 PROFILE 工作方法与资料；原技能的六段方法正文未改。",
-          "en": "Adds the original team's 3 employees (lead: Competitor Watch), each bound to its original skills and complete PROFILE working method and reference; the six-field skill bodies are unchanged."
+          "zh-CN": "创建 3 位保持暂停的员工，绑定有版本名称的方法；竞品员工的缺失来源规则经 Teloa 修正，原始参考与许可原样保留。",
+          "zh-TW": "建立 3 位保持暫停的員工，綁定有版本名稱的方法；競品員工的缺失來源規則經 Teloa 修正，原始參考與授權原樣保留。",
+          "en": "Adds 3 paused employees with versioned method names. Teloa corrects the competitor's missing-source rule; raw references and licenses are preserved."
         },
         {
           "zh-CN": "团队定义、交接与启动指令以原文保留为资料参考；例行任务以未排程的工作模板提供，由你测试后再建计划。",
@@ -72,6 +73,16 @@
     {
       "zh-CN": "协调者以 role-coordination 关联显式映射到成员；启动指令与交接保留原文参考，不自动运行或授予权限；例行任务转为未排程工作模板；只声明 GitHub/Notion 只读连接。",
       "en": "The coordinator is explicitly linked to each member by role-coordination. Kickoff and handoffs remain original references and do not automatically run work or grant authority. Routines become unscheduled work templates; only GitHub/Notion read-only connections are declared."
+    },
+    {
+      "zh-CN": "1.0.1 修正竞品员工三个执行位置的同一缺失来源规则：不可用不等于不存在或特定状态；原因只依据本轮材料或真实回执。六方法使用明确版本名称以保留旧安装；其他方法正文与原始参考不改。",
+      "zh-TW": "1.0.1 修正競品員工三個執行位置的同一缺失來源規則：不可用不等於不存在或特定狀態；原因只依據本輪資料或真實回執。六方法使用明確版本名稱以保留舊安裝；其他方法正文與原始參考不改。",
+      "en": "1.0.1 corrects the same missing-source rule in all three competitor execution fields: unavailability establishes no cause or status without current evidence. Six versioned method names preserve older installations; other method bodies and raw references are unchanged."
+    },
+    {
+      "zh-CN": "团队清单与目录共用 Teloa 人类可读标题，来源保留在说明中；方法使用本团队版本名称，仅名称和对应引用变化，执行正文、原始参考、许可与既有版本保留。",
+      "zh-TW": "團隊清單與目錄共用 Teloa 易讀標題，來源保留在說明中；方法使用本團隊版本名稱，僅名稱及對應引用變更，執行正文、原始參考、授權及既有版本保留。",
+      "en": "The team manifest and catalog share human-readable Teloa titles; attribution stays in the description. Family/version method names change only native identities and their references; execution bodies, raw references, licenses and existing versions are retained."
     }
   ],
   "license": {
@@ -106,7 +117,7 @@
   },
   "review": {
     "status": "approved",
-    "reviewedAt": "2026-10-14",
+    "reviewedAt": "2026-10-16",
     "reviewer": "Teloa"
   }
 }
