@@ -2,6 +2,8 @@
 
 English · [简体中文](README.zh-CN.md)
 
+[Website](https://www.teloa.ai/en/) · [Docs](https://docs.teloa.ai/en/) · [Market](https://market.teloa.ai/en/) · [Blog](https://www.teloa.ai/en/blog/) · [AI Security](https://security.teloa.ai/) · [GitHub](https://github.com/teloa-ai/marketplace)
+
 This repository is the catalog behind the Teloa official marketplace: solutions, AI teammates, skills, connectors and model references that Teloa has reviewed, whose licenses are clear and whose versions are pinned. It is the single source of truth for the marketplace. Submissions, reviews and merges happen here.
 
 Browse and search online: **https://market.teloa.ai** · Full entry list: [INDEX.md](INDEX.md)
@@ -68,6 +70,8 @@ See [CONTRIBUTING.md](CONTRIBUTING.md). Since the repository was published on 20
 ## Security
 
 Report malicious or unsafe resources through a public [Issue](https://github.com/teloa-ai/marketplace/issues) by default. For potentially high-impact issues, we recommend contacting [security@teloa.ai](mailto:security@teloa.ai) privately first. Keep credentials, private data, and exploit details out of public reports; see [SECURITY.md](SECURITY.md).
+
+Explore [Teloa AI Security](https://security.teloa.ai/) for open research on agent identity, authorization and execution boundaries, including the [Enterprise Agent Identity and Authorization Security Baseline](https://github.com/teloa-ai/agent-baseline-assessor) and its [self-assessment tool](https://security.teloa.ai/agent-baseline-assessor/?lang=en).
 
 ## Changes
 
