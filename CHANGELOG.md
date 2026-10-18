@@ -4,6 +4,17 @@ All notable changes to the catalog are recorded here. The format follows [Keep a
 
 目录的重要变更记录在此，格式遵循 Keep a Changelog，按目录版本（`catalog-version.txt`）分组。全部条目见 [INDEX.md](INDEX.md)。
 
+## [2026.10.18.2] - 2026-10-18
+
+<!-- Catalog-Source: 621b6bf963e2f54eed61e2bab8213c3285972c19 -->
+_Generated after merge from the catalog changes since `c794410`; details are in the merged pull requests. / 合并后按 `c794410` 以来的目录变更自动生成，详情见对应 PR。_
+
+### Changed
+
+- `teloa.grok-marketing-team` 1.0.2 — Marketing team · 内容营销团队
+- `teloa.grok-product-team` 1.0.1 — Product team · 软件产品团队
+- `teloa.grok-sales-team` 1.0.1 — Sales team · 销售协作团队
+
 ## [2026.10.18.1] - 2026-10-18
 
 <!-- Catalog-Source: c7944104ac96f4f4303cb1a650138319a7b4db15 -->
