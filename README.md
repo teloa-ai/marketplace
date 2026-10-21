@@ -28,7 +28,7 @@ Browse and search online: **https://market.teloa.ai** · Full entry list: [INDEX
 
 Entry IDs follow `ecosystem.resource`, for example `openai.skill-creator`. IDs and file names never change once published.
 
-The marketplace's main views are **AI employees**, **AI teams** and **Apps**. They organize these fixed resources for browsing; they do not rename catalog types. Current AI teams use `solution` packages, the team view also includes business dashboards, and Apps groups skills and app connections from their declared fixed composition. See the [product-view and catalog-type mapping](CONTRIBUTING.md#product-navigation-and-catalog-types).
+The marketplace has four independent main views: **AI employees**, **AI teams**, **Apps** and **SKILL**. They organize fixed resources for browsing without renaming catalog types. Current AI teams use `solution` packages, and the team view also includes business dashboards. Apps organizes skills and app connections from their declared fixed composition; SKILL provides an independent view for browsing and adding skills. See the [product-view and catalog-type mapping](CONTRIBUTING.md#product-navigation-and-catalog-types).
 
 ## What an entry records
 

@@ -12,18 +12,18 @@ Contributions are welcome through pull requests to this repository. One pull req
 
 ### Product navigation and catalog types
 
-The marketplace has three main browsing views: **AI employees**, **AI teams** and **Apps**. Product labels and the fixed catalog format serve different purposes:
+The marketplace has four independent main browsing views: **AI employees**, **AI teams**, **Apps** and **SKILL**. Product labels and the fixed catalog format serve different purposes:
 
 | Catalog `kind` | Directory | Product presentation |
 | --- | --- | --- |
 | `role` | `roles` | AI employee |
 | `solution` | `solutions` | AI team for the current reviewed team packages; the underlying package format can describe broader business resources |
 | `dashboard` | `dashboards` | Business dashboard, also browsable from AI teams |
-| `skill` | `skills` | Skill; available in Apps on its own or within a declared fixed app package |
+| `skill` | `skills` | Skill, independently browsable and addable in SKILL; also presented in Apps on its own or within a declared fixed app package |
 | `connector` | `connectors` | App connection; grouped with its declared fixed app package when applicable |
 | `model` | `models` | Model reference, available through resource-type browsing |
 
-Apps combine skills and declared connections by fixed plugin identity and source, not by similar names. There is no separate `app` catalog kind or `catalog/apps/` directory. A team's bundled work templates remain resources inside that package. Browsing or adding a team, app or dashboard does not itself grant permissions, connect accounts or start work.
+SKILL is an independent view for browsing and adding individual skills. Apps presents skills and app connections, including single-resource apps. Upstream skills with a fixed `plugin` declaration are grouped by `plugin.marketplace` and `plugin.id` with that plugin's declared connections, using the same pinned source and package composition. The same `skill` entry can therefore appear in both product views without changing its catalog identity; SKILL is not subordinate to Apps. There is no separate `app` catalog kind or `catalog/apps/` directory. A team's bundled work templates remain resources inside that package. Browsing or adding a team, app or dashboard does not itself grant permissions, connect accounts or start work.
 
 ### Before you start
 
@@ -125,18 +125,18 @@ Use public issues by default to report malicious or unsafe resources. For potent
 
 ### 产品入口与目录类型
 
-市场有 **AI 员工**、**AI 团队**和**应用**三个主要浏览入口。产品名称与固定目录格式分别承担不同作用：
+市场有 **AI 员工**、**AI 团队**、**应用**和 **SKILL** 四个独立的主要浏览入口。产品名称与固定目录格式分别承担不同作用：
 
 | 目录 `kind` | 目录名 | 产品展示 |
 | --- | --- | --- |
 | `role` | `roles` | AI 员工 |
 | `solution` | `solutions` | 当前已审团队包展示为 AI 团队；底层包格式也能描述更广的业务资源 |
 | `dashboard` | `dashboards` | 业务看板，也可从 AI 团队入口浏览 |
-| `skill` | `skills` | 技能，可作为独立应用或声明的固定应用包组成 |
+| `skill` | `skills` | 技能，可从 SKILL 独立浏览与添加，也可在应用中单独展示或作为声明的固定应用包组成 |
 | `connector` | `connectors` | 应用连接，按声明归入对应固定应用包 |
 | `model` | `models` | 模型引用，可通过资源类型入口浏览 |
 
-应用按固定插件身份和来源组合技能与声明的连接，不因名称相似而合并。目录中没有单独的 `app` 类型或 `catalog/apps/` 目录。团队随附的工作模板仍是包内资源。浏览或添加团队、应用或看板本身不授予权限、不连接账号，也不开始工作。
+SKILL 是独立浏览与添加技能的入口。应用展示技能与应用连接，也包括单资源应用。上游技能声明了固定 `plugin` 时，按 `plugin.marketplace` 和 `plugin.id` 与插件声明的连接分组，并使用相同的固定来源与包组成。因此，同一 `skill` 条目可在两个产品入口展示，目录身份保持不变；SKILL 不从属于应用。目录中没有单独的 `app` 类型或 `catalog/apps/` 目录。团队随附的工作模板仍是包内资源。浏览或添加团队、应用或看板本身不授予权限、不连接账号，也不开始工作。
 
 ### 开始之前
 
