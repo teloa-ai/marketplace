@@ -4,7 +4,21 @@ _Generated from `catalog/` by `node tools/validate.mjs --write` (source reposito
 
 _由 `catalog/` 自动生成，请勿手改。在线浏览与搜索：https://market.teloa.ai_
 
-## Solutions · 方案 (3)
+## AI employees · AI 员工 (9)
+
+| Name · 名称 | ID | Source · 来源 | License · 许可 | Compatibility · 兼容 | Version · 版本 | Entry · 条目 |
+| --- | --- | --- | --- | --- | --- | --- |
+| Call Follow-up · 通话跟进员工 | `teloa.grok-call-followup` | Teloa | MIT | needs-configuration | 1.0.1 | [catalog/roles/teloa.grok-call-followup.json](catalog/roles/teloa.grok-call-followup.json) · [files](artifacts/roles/teloa.grok-call-followup/1.0.1/) |
+| Competitor Watch · 竞品监测员工 | `teloa.grok-competitor-watch` | Teloa | MIT | needs-configuration | 1.0.2 | [catalog/roles/teloa.grok-competitor-watch.json](catalog/roles/teloa.grok-competitor-watch.json) · [files](artifacts/roles/teloa.grok-competitor-watch/1.0.2/) |
+| Content Remix · 内容改编员工 | `teloa.grok-content-remix` | Teloa | MIT | needs-configuration | 1.0.2 | [catalog/roles/teloa.grok-content-remix.json](catalog/roles/teloa.grok-content-remix.json) · [files](artifacts/roles/teloa.grok-content-remix/1.0.2/) |
+| Feature Ask Collator · 需求归集员工 | `teloa.grok-feature-ask-collator` | Teloa | MIT | needs-configuration | 1.0.1 | [catalog/roles/teloa.grok-feature-ask-collator.json](catalog/roles/teloa.grok-feature-ask-collator.json) · [files](artifacts/roles/teloa.grok-feature-ask-collator/1.0.1/) |
+| Launch Coordinator · 发布协调员工 | `teloa.grok-launch-coordinator` | Teloa | MIT | needs-configuration | 1.0.1 | [catalog/roles/teloa.grok-launch-coordinator.json](catalog/roles/teloa.grok-launch-coordinator.json) · [files](artifacts/roles/teloa.grok-launch-coordinator/1.0.1/) |
+| Meeting Prep · 会前简报员工 | `teloa.grok-meeting-prep` | Teloa | MIT | needs-configuration | 1.0.1 | [catalog/roles/teloa.grok-meeting-prep.json](catalog/roles/teloa.grok-meeting-prep.json) · [files](artifacts/roles/teloa.grok-meeting-prep/1.0.1/) |
+| Newsletter Desk · 简报编辑员工 | `teloa.grok-newsletter-desk` | Teloa | MIT | needs-configuration | 1.0.2 | [catalog/roles/teloa.grok-newsletter-desk.json](catalog/roles/teloa.grok-newsletter-desk.json) · [files](artifacts/roles/teloa.grok-newsletter-desk/1.0.2/) |
+| Product Performance · 产品性能调查员工 | `teloa.grok-product-performance` | Teloa | MIT | needs-configuration | 1.0.1 | [catalog/roles/teloa.grok-product-performance.json](catalog/roles/teloa.grok-product-performance.json) · [files](artifacts/roles/teloa.grok-product-performance/1.0.1/) |
+| Outbound · 外联研究员工 | `teloa.grok-sales-outbound` | Teloa | MIT | needs-configuration | 1.0.1 | [catalog/roles/teloa.grok-sales-outbound.json](catalog/roles/teloa.grok-sales-outbound.json) · [files](artifacts/roles/teloa.grok-sales-outbound/1.0.1/) |
+
+## AI teams · AI 团队 (3)
 
 | Name · 名称 | ID | Source · 来源 | License · 许可 | Compatibility · 兼容 | Version · 版本 | Entry · 条目 |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -19,20 +33,6 @@ _由 `catalog/` 自动生成，请勿手改。在线浏览与搜索：https://ma
 | B2B sales & account follow-up dashboard · B2B 销售与客户跟进看板 | `teloa.b2b-sales-followup-dashboard` | Teloa | Apache-2.0 | needs-configuration | 1.0.0 | [catalog/dashboards/teloa.b2b-sales-followup-dashboard.json](catalog/dashboards/teloa.b2b-sales-followup-dashboard.json) · [files](artifacts/dashboards/teloa.b2b-sales-followup-dashboard/1.0.0/) |
 | Digital marketing & content operations dashboard · 数字营销与内容运营看板 | `teloa.content-ops-dashboard` | Teloa | Apache-2.0 | needs-configuration | 1.0.0 | [catalog/dashboards/teloa.content-ops-dashboard.json](catalog/dashboards/teloa.content-ops-dashboard.json) · [files](artifacts/dashboards/teloa.content-ops-dashboard/1.0.0/) |
 | Software & SaaS delivery dashboard · 软件与 SaaS 产品交付看板 | `teloa.saas-delivery-dashboard` | Teloa | Apache-2.0 | needs-configuration | 1.0.0 | [catalog/dashboards/teloa.saas-delivery-dashboard.json](catalog/dashboards/teloa.saas-delivery-dashboard.json) · [files](artifacts/dashboards/teloa.saas-delivery-dashboard/1.0.0/) |
-
-## AI employees · AI 员工 (9)
-
-| Name · 名称 | ID | Source · 来源 | License · 许可 | Compatibility · 兼容 | Version · 版本 | Entry · 条目 |
-| --- | --- | --- | --- | --- | --- | --- |
-| Call Follow-up · 通话跟进员工 | `teloa.grok-call-followup` | Teloa | MIT | needs-configuration | 1.0.1 | [catalog/roles/teloa.grok-call-followup.json](catalog/roles/teloa.grok-call-followup.json) · [files](artifacts/roles/teloa.grok-call-followup/1.0.1/) |
-| Competitor Watch · 竞品监测员工 | `teloa.grok-competitor-watch` | Teloa | MIT | needs-configuration | 1.0.2 | [catalog/roles/teloa.grok-competitor-watch.json](catalog/roles/teloa.grok-competitor-watch.json) · [files](artifacts/roles/teloa.grok-competitor-watch/1.0.2/) |
-| Content Remix · 内容改编员工 | `teloa.grok-content-remix` | Teloa | MIT | needs-configuration | 1.0.2 | [catalog/roles/teloa.grok-content-remix.json](catalog/roles/teloa.grok-content-remix.json) · [files](artifacts/roles/teloa.grok-content-remix/1.0.2/) |
-| Feature Ask Collator · 需求归集员工 | `teloa.grok-feature-ask-collator` | Teloa | MIT | needs-configuration | 1.0.1 | [catalog/roles/teloa.grok-feature-ask-collator.json](catalog/roles/teloa.grok-feature-ask-collator.json) · [files](artifacts/roles/teloa.grok-feature-ask-collator/1.0.1/) |
-| Launch Coordinator · 发布协调员工 | `teloa.grok-launch-coordinator` | Teloa | MIT | needs-configuration | 1.0.1 | [catalog/roles/teloa.grok-launch-coordinator.json](catalog/roles/teloa.grok-launch-coordinator.json) · [files](artifacts/roles/teloa.grok-launch-coordinator/1.0.1/) |
-| Meeting Prep · 会前简报员工 | `teloa.grok-meeting-prep` | Teloa | MIT | needs-configuration | 1.0.1 | [catalog/roles/teloa.grok-meeting-prep.json](catalog/roles/teloa.grok-meeting-prep.json) · [files](artifacts/roles/teloa.grok-meeting-prep/1.0.1/) |
-| Newsletter Desk · 简报编辑员工 | `teloa.grok-newsletter-desk` | Teloa | MIT | needs-configuration | 1.0.2 | [catalog/roles/teloa.grok-newsletter-desk.json](catalog/roles/teloa.grok-newsletter-desk.json) · [files](artifacts/roles/teloa.grok-newsletter-desk/1.0.2/) |
-| Product Performance · 产品性能调查员工 | `teloa.grok-product-performance` | Teloa | MIT | needs-configuration | 1.0.1 | [catalog/roles/teloa.grok-product-performance.json](catalog/roles/teloa.grok-product-performance.json) · [files](artifacts/roles/teloa.grok-product-performance/1.0.1/) |
-| Outbound · 外联研究员工 | `teloa.grok-sales-outbound` | Teloa | MIT | needs-configuration | 1.0.1 | [catalog/roles/teloa.grok-sales-outbound.json](catalog/roles/teloa.grok-sales-outbound.json) · [files](artifacts/roles/teloa.grok-sales-outbound/1.0.1/) |
 
 ## Skills · 技能 (93)
 
@@ -132,7 +132,7 @@ _由 `catalog/` 自动生成，请勿手改。在线浏览与搜索：https://ma
 | Skill creator · 技能创建器 | `openai.skill-creator` | Teloa · from GitHub openai/skills | Apache-2.0 | verified | 1.0.0 | [catalog/skills/openai.skill-creator.json](catalog/skills/openai.skill-creator.json) · [files](artifacts/skills/openai.skill-creator/1.0.0/) |
 | Dashboard designer · 看板设计 | `teloa.dashboard-designer` | Teloa | Apache-2.0 | verified | 1.1.0 | [catalog/skills/teloa.dashboard-designer.json](catalog/skills/teloa.dashboard-designer.json) · [files](artifacts/skills/teloa.dashboard-designer/1.1.0/) |
 
-## Connectors · 连接器 (6)
+## App connections · 应用连接 (6)
 
 | Name · 名称 | ID | Source · 来源 | License · 许可 | Compatibility · 兼容 | Version · 版本 | Entry · 条目 |
 | --- | --- | --- | --- | --- | --- | --- |
