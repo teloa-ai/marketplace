@@ -2,7 +2,7 @@
 
 [English](README.md) · 简体中文
 
-这里是 Teloa 官方市场的目录源，收录经过 Teloa 审核、许可清楚、版本固定的方案、AI 同事、技能、连接器与模型引用。本仓库是市场的唯一事实源，投稿、审核与合并都在这里进行。
+这里是 Teloa 官方市场的目录源，收录经过 Teloa 审核、许可清楚、版本固定的 AI 员工、AI 团队、技能、应用连接、业务看板与模型引用。本仓库是市场的唯一事实源，投稿、审核与合并都在这里进行。
 
 在线浏览与搜索：**https://market.teloa.ai** · 全部条目：[INDEX.md](INDEX.md)
 
@@ -19,14 +19,16 @@
 
 | 路径 | 内容 |
 | --- | --- |
-| `catalog/<类型>/<id>.json` | 一个条目一份，格式 `teloa.market-catalog-entry/v1`。`<类型>` 只能是 `solutions`、`roles`、`skills`、`connectors`、`models`，且必须与条目 `kind` 一致。上游技能同样放在 `catalog/skills/`，以 `delivery: upstream` 区分。 |
-| `artifacts/<类型>/<id>/<version>/` | Teloa 托管并安装的文件，只有 `solutions`、`roles`、`skills`、`connectors` 四类。每个版本目录自带 `LICENSE` 或 `LICENSE.txt`。上游条目与模型引用没有工件。 |
+| `catalog/<类型>/<id>.json` | 一个条目一份，格式 `teloa.market-catalog-entry/v1`。六个目录为 `solutions`、`dashboards`、`roles`、`skills`、`connectors`、`models`，依次对应 `kind: solution`、`dashboard`、`role`、`skill`、`connector`、`model`。上游技能同样放在 `catalog/skills/`，以 `delivery: upstream` 区分。 |
+| `artifacts/<类型>/<id>/<version>/` | Teloa 托管并安装的文件，包括 `solutions`、`dashboards`、`roles`、`skills`、`connectors` 五类。每个版本目录自带 `LICENSE` 或 `LICENSE.txt`。上游条目与模型引用没有工件。 |
 | `reviews/<类型>/` | 审核与核对记录，例如连接器配方核对。 |
 | `INDEX.md`、`NOTICE` | 由 `node tools/validate.mjs --write` 从 `catalog/` 生成，合并后由 `.github/workflows/generate.yml` 运行。请勿手改，也不要在 PR 里改。 |
 | `catalog-version.txt` | 目录版本，合并后由 `.github/workflows/generate.yml` 递增，并同时写入 `CHANGELOG.md` 一节。 |
 | `tools/validate.mjs` | 由 Teloa 源码仓生成的单文件校验器。 |
 
 条目 ID 形如 `ecosystem.resource`，例如 `openai.skill-creator`。发布后 ID 与文件名不再改变。
+
+市场有 **AI 员工**、**AI 团队**、**应用**和 **SKILL** 四个独立的主要浏览入口。它们按使用方式组织固定资源，不改动目录技术类型。当前 AI 团队使用 `solution` 包，团队入口也展示业务看板；应用按声明的固定组成组织技能与应用连接；SKILL 提供技能的独立浏览与添加入口。详见[产品入口与目录类型的对应关系](CONTRIBUTING.md#产品入口与目录类型)。
 
 ## 条目包含什么
 
@@ -47,7 +49,7 @@
 
 ## 在 Teloa 中添加
 
-1. 在 Teloa 工作台打开「市场」，按名称、用途或条目 ID 搜索。也可以在对话里直接告诉任意同事，例如「在市场里搜索并添加 `teloa.soc`」，Teloa 会先给出确认卡，确认后才添加。
+1. 在 Teloa 工作台打开「市场」，按名称、用途或条目 ID 搜索。也可以在对话里直接告诉任意同事，例如「在市场里搜索并添加 `teloa.grok-marketing-team`」，Teloa 会先给出确认卡，确认后才添加。
 2. 点「添加」。Teloa 按条目固定的摘要逐文件核对；上游条目从固定来源逐文件拉取，同样核对。
 3. 内置条目（`delivery: builtin`）无需添加。模型引用在「设置 · 模型」里配置；本地语音模型在市场的模型分类里准备。
 

@@ -3,7 +3,7 @@
 // Built by Teloa market tooling from fixed public core inputs.
 // Validation rules have one maintained tooling source; this file is a generated distribution.
 // Source commit: e902350a01d1a66247c05769578fad1040f5eb24
-// Tool input sha256: d22568b2ab36c1c6aafc569183a64578293dab4d64f7ae9ac639601a2a011e36
+// Tool input sha256: b8d3e5e9ab1eb5644e9a35db2314232d412e48f2a6b81eb408a61c93903a2c31
 // Usage: node tools/validate.mjs [--write | --pr | --index-out <dir>] [--format text|json|github]   (--write regenerates INDEX.md and NOTICE; --pr skips them for pull requests; --index-out writes the unsigned indexes after strict validation; json/github for automated review)
 import { access, lstat, mkdir, readFile, readdir, realpath, writeFile } from "node:fs/promises";
 import { basename, dirname, isAbsolute, join, relative, resolve, sep } from "node:path";
@@ -6474,11 +6474,11 @@ const upstreamLabel = (upstream) => upstream.kind === "clawhub" ? `ClawHub ${ups
 const upstreamLocation = (upstream) => upstream.kind === "clawhub" ? `ClawHub ${upstream.owner}/${upstream.slug} version ${upstream.version}` : `https://github.com/${upstream.repository.owner}/${upstream.repository.repo}/tree/${upstream.commit}/${upstream.path}`;
 const cell = (value) => String(value).replaceAll(/[|\[\]\\]/g, (match) => "\\" + match).replaceAll("\n", " ");
 const SECTIONS = [
-	["solution", "Solutions · 方案"],
-	["dashboard", "Business dashboards · 业务看板"],
 	["role", "AI employees · AI 员工"],
+	["solution", "AI teams · AI 团队"],
+	["dashboard", "Business dashboards · 业务看板"],
 	["skill", "Skills · 技能"],
-	["connector", "Connectors · 连接器"],
+	["connector", "App connections · 应用连接"],
 	["model", "Models · 模型"]
 ];
 /** INDEX.md：按类型分节的全条目表（名称、ID、来源、许可、兼容状态、版本、条目文件链接）。 */

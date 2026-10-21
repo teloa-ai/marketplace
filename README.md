@@ -2,7 +2,7 @@
 
 English · [简体中文](README.zh-CN.md)
 
-This repository is the catalog behind the Teloa official marketplace: solutions, AI teammates, skills, connectors and model references that Teloa has reviewed, whose licenses are clear and whose versions are pinned. It is the single source of truth for the marketplace. Submissions, reviews and merges happen here.
+This repository is the catalog behind the Teloa official marketplace: AI employees, AI teams, skills, app connections, business dashboards and model references that Teloa has reviewed, whose licenses are clear and whose versions are pinned. It is the single source of truth for the marketplace. Submissions, reviews and merges happen here.
 
 Browse and search online: **https://market.teloa.ai** · Full entry list: [INDEX.md](INDEX.md)
 
@@ -19,14 +19,16 @@ Browse and search online: **https://market.teloa.ai** · Full entry list: [INDEX
 
 | Path | Content |
 | --- | --- |
-| `catalog/<type>/<id>.json` | One file per entry, format `teloa.market-catalog-entry/v1`. `<type>` is one of `solutions`, `roles`, `skills`, `connectors`, `models` and must match the entry's `kind`. Upstream skills live in `catalog/skills/` too and are marked `delivery: upstream`. |
-| `artifacts/<type>/<id>/<version>/` | Files that Teloa hosts and installs, for `solutions`, `roles`, `skills` and `connectors`. Every version directory ships its own `LICENSE` or `LICENSE.txt`. Upstream entries and model references have no artifacts. |
+| `catalog/<type>/<id>.json` | One file per entry, format `teloa.market-catalog-entry/v1`. The six directories are `solutions`, `dashboards`, `roles`, `skills`, `connectors` and `models`, corresponding to `kind: solution`, `dashboard`, `role`, `skill`, `connector` and `model`. Upstream skills live in `catalog/skills/` too and are marked `delivery: upstream`. |
+| `artifacts/<type>/<id>/<version>/` | Files that Teloa hosts and installs, for `solutions`, `dashboards`, `roles`, `skills` and `connectors`. Every version directory ships its own `LICENSE` or `LICENSE.txt`. Upstream entries and model references have no artifacts. |
 | `reviews/<type>/` | Review and verification records, for example connector recipe checks. |
 | `INDEX.md`, `NOTICE` | Generated from `catalog/` by `node tools/validate.mjs --write`, run after merge by `.github/workflows/generate.yml`. Do not edit by hand or in pull requests. |
 | `catalog-version.txt` | Catalog version, bumped after merge by `.github/workflows/generate.yml` together with a `CHANGELOG.md` section. |
 | `tools/validate.mjs` | Single-file validator generated from the Teloa source repository. |
 
 Entry IDs follow `ecosystem.resource`, for example `openai.skill-creator`. IDs and file names never change once published.
+
+The marketplace has four independent main views: **AI employees**, **AI teams**, **Apps** and **SKILL**. They organize fixed resources for browsing without renaming catalog types. Current AI teams use `solution` packages, and the team view also includes business dashboards. Apps organizes skills and app connections from their declared fixed composition; SKILL provides an independent view for browsing and adding skills. See the [product-view and catalog-type mapping](CONTRIBUTING.md#product-navigation-and-catalog-types).
 
 ## What an entry records
 
@@ -47,7 +49,7 @@ Entry IDs follow `ecosystem.resource`, for example `openai.skill-creator`. IDs a
 
 ## Adding an entry in Teloa
 
-1. Open **Marketplace** in the Teloa workbench and search by name, purpose or entry ID. You can also tell any teammate in a conversation, for example "search the marketplace and add `teloa.soc`"; Teloa shows a confirmation card before anything is added.
+1. Open **Marketplace** in the Teloa workbench and search by name, purpose or entry ID. You can also tell any teammate in a conversation, for example "search the marketplace and add `teloa.grok-marketing-team`"; Teloa shows a confirmation card before anything is added.
 2. Click **Add**. Teloa verifies every file against the entry's pinned digests. Upstream entries are fetched file by file from their pinned source and verified the same way.
 3. Built-in entries (`delivery: builtin`) need no adding. Model references are configured under **Settings · Models**; the local speech model is prepared from the model category of the marketplace.
 
