@@ -49,7 +49,7 @@ The marketplace's main views are **AI employees**, **AI teams** and **Apps**. Th
 
 ## Adding an entry in Teloa
 
-1. Open **Marketplace** in the Teloa workbench and search by name, purpose or entry ID. You can also tell any teammate in a conversation, for example "search the marketplace and add `teloa.soc`"; Teloa shows a confirmation card before anything is added.
+1. Open **Marketplace** in the Teloa workbench and search by name, purpose or entry ID. You can also tell any teammate in a conversation, for example "search the marketplace and add `teloa.grok-marketing-team`"; Teloa shows a confirmation card before anything is added.
 2. Click **Add**. Teloa verifies every file against the entry's pinned digests. Upstream entries are fetched file by file from their pinned source and verified the same way.
 3. Built-in entries (`delivery: builtin`) need no adding. Model references are configured under **Settings · Models**; the local speech model is prepared from the model category of the marketplace.
 
