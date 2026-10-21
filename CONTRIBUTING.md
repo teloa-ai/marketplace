@@ -10,6 +10,21 @@ This market is maintained as one Teloa official catalog. It does not expose othe
 
 Contributions are welcome through pull requests to this repository. One pull request adds one entry or one new version of an entry.
 
+### Product navigation and catalog types
+
+The marketplace has three main browsing views: **AI employees**, **AI teams** and **Apps**. Product labels and the fixed catalog format serve different purposes:
+
+| Catalog `kind` | Directory | Product presentation |
+| --- | --- | --- |
+| `role` | `roles` | AI employee |
+| `solution` | `solutions` | AI team for the current reviewed team packages; the underlying package format can describe broader business resources |
+| `dashboard` | `dashboards` | Business dashboard, also browsable from AI teams |
+| `skill` | `skills` | Skill; available in Apps on its own or within a declared fixed app package |
+| `connector` | `connectors` | App connection; grouped with its declared fixed app package when applicable |
+| `model` | `models` | Model reference, available through resource-type browsing |
+
+Apps combine skills and declared connections by fixed plugin identity and source, not by similar names. There is no separate `app` catalog kind or `catalog/apps/` directory. A team's bundled work templates remain resources inside that package. Browsing or adding a team, app or dashboard does not itself grant permissions, connect accounts or start work.
+
 ### Before you start
 
 - **Sign off every commit** under the [Developer Certificate of Origin 1.1](https://developercertificate.org/): add `Signed-off-by: Your Name <you@example.com>` with `git commit -s`. The DCO check in CI fails without it. The requirement applies to every new contribution since the repository was published on 2026-09-27; commits before that date are Teloa's internal curation history imported from the source repository, and CI checks only the commits a pull request adds. There is no CLA. The DCO certifies that you have the right to submit the work under the license that applies to it; it is not a copyright assignment. This is the same policy as the Teloa source repository ([DCO.md](https://github.com/teloa-ai/teloa/blob/main/DCO.md)).
@@ -27,7 +42,7 @@ Contributions are welcome through pull requests to this repository. One pull req
 
 ### A pull request contains
 
-1. `catalog/<type>/<id>.json` with every field of `teloa.market-catalog-entry/v1`. `<type>` is `solutions`, `roles`, `skills`, `connectors` or `models`, and must match the entry's `kind`. Use `ecosystem.resource` for `id`, for example `openai.security-threat-model`. The file name equals the ID.
+1. `catalog/<type>/<id>.json` with every field of `teloa.market-catalog-entry/v1`. `<type>` is `solutions`, `dashboards`, `roles`, `skills`, `connectors` or `models`, corresponding to `kind: solution`, `dashboard`, `role`, `skill`, `connector` or `model`. Use `ecosystem.resource` for `id`, for example `openai.security-threat-model`. The file name equals the ID.
 2. For hosted entries, `artifacts/<type>/<id>/<version>/` with the complete files to install. Skills have exactly one `SKILL.md` at the root; its frontmatter holds only `name` and `description`, and `name` equals the entry's `skill.name`.
 3. The license file described above.
 4. For content taken from elsewhere, the pinned upstream source: the full 40-character commit and the Git blob digest of each file taken. Mark every changed file at the top of its body and list each change in `modifications`. Skills that change the original files use the structured change list described in [Derivative resources](#derivative-resources).
@@ -108,6 +123,21 @@ Use public issues by default to report malicious or unsafe resources. For potent
 
 欢迎通过 Pull Request 向本仓库投稿。一个 PR 只投一个条目或一个条目的新版本。
 
+### 产品入口与目录类型
+
+市场有 **AI 员工**、**AI 团队**和**应用**三个主要浏览入口。产品名称与固定目录格式分别承担不同作用：
+
+| 目录 `kind` | 目录名 | 产品展示 |
+| --- | --- | --- |
+| `role` | `roles` | AI 员工 |
+| `solution` | `solutions` | 当前已审团队包展示为 AI 团队；底层包格式也能描述更广的业务资源 |
+| `dashboard` | `dashboards` | 业务看板，也可从 AI 团队入口浏览 |
+| `skill` | `skills` | 技能，可作为独立应用或声明的固定应用包组成 |
+| `connector` | `connectors` | 应用连接，按声明归入对应固定应用包 |
+| `model` | `models` | 模型引用，可通过资源类型入口浏览 |
+
+应用按固定插件身份和来源组合技能与声明的连接，不因名称相似而合并。目录中没有单独的 `app` 类型或 `catalog/apps/` 目录。团队随附的工作模板仍是包内资源。浏览或添加团队、应用或看板本身不授予权限、不连接账号，也不开始工作。
+
 ### 开始之前
 
 - **每个提交都要签署** [Developer Certificate of Origin 1.1](https://developercertificate.org/)：用 `git commit -s` 加上 `Signed-off-by: 你的名字 <you@example.com>`，缺签署 CI 的 DCO 检查会失败。该要求自 2026-09-27 本仓库公开起对所有新贡献生效；此前的历史提交是 Teloa 从源码仓导入的内部整理记录，CI 只检查 PR 新增的提交。不设 CLA。签署是在证明你有权按适用的许可提交这份内容，不是转让版权。与 Teloa 源码仓的规则一致（[DCO.md](https://github.com/teloa-ai/teloa/blob/main/DCO.md)）。
@@ -125,7 +155,7 @@ Use public issues by default to report malicious or unsafe resources. For potent
 
 ### PR 需要包含
 
-1. `catalog/<类型>/<id>.json`：按 `teloa.market-catalog-entry/v1` 填写全部字段。`<类型>` 为 `solutions`、`roles`、`skills`、`connectors`、`models` 之一，且与条目 `kind` 一致。`id` 用「来源生态.资源名」，例如 `openai.security-threat-model`，文件名等于 ID。
+1. `catalog/<类型>/<id>.json`：按 `teloa.market-catalog-entry/v1` 填写全部字段。`<类型>` 为 `solutions`、`dashboards`、`roles`、`skills`、`connectors`、`models` 之一，依次对应 `kind: solution`、`dashboard`、`role`、`skill`、`connector`、`model`。`id` 用「来源生态.资源名」，例如 `openai.security-threat-model`，文件名等于 ID。
 2. 托管条目的 `artifacts/<类型>/<id>/<version>/`：实际安装的完整文件。技能根目录有且只有一个 `SKILL.md`，frontmatter 只写 `name` 与 `description`，`name` 与条目 `skill.name` 一致。
 3. 上文要求的许可文件。
 4. 取自别处的内容要写上游固定来源：完整 40 位提交与每个取用文件的 Git blob 摘要。改动过的文件在正文开头注明来源，并在条目 `modifications` 里逐条说明。改动了原版文件的技能改用结构化修改清单，见[二次开发资源](#二次开发资源)。
