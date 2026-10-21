@@ -35,6 +35,26 @@ Contributions are welcome through pull requests to this repository. One pull req
 6. Nothing outside `catalog/`, `artifacts/` and `reviews/`. Do not edit `INDEX.md`, `NOTICE`, `catalog-version.txt`, the README catalog version or `CHANGELOG.md`: they are generated after merge (see Review), so parallel pull requests never conflict. Review records use one file per entry, `reviews/<type>/<id>.json`. CI enforces this scope and reports each path outside it. Changes to `tools/`, `.github/` and the documents are made by maintainers from an `infra/*` branch of this repository (pushing one requires write access) and need code owner review; those branches may change anything except `INDEX.md`, `NOTICE` and `catalog-version.txt`. Nobody deletes `README.md` or `README.zh-CN.md`.
 7. A pull request description covering purpose and use cases, required tools and network access, how you tested, and how the entry will be upgraded.
 
+### AI employee templates
+
+AI employees use Teloa's `teloa.role/v1` import format. Its version name has not changed: structured responsibilities extend this format. [AI Worker Standard](https://github.com/teloa-ai/ai-worker-standard) describes the wider work contract; its document is not an interchangeable Teloa import file.
+
+For a catalog employee, keep `role.definition` and the fixed `role.json` in its source AI team consistent. In addition to `name`, `kind`, `duty`, `dataScope` and `executionScope`, provide all five `responsibility` arrays:
+
+| Field | Content |
+| --- | --- |
+| `triggers` | When this employee should start work |
+| `autonomousActions` | Actions within the stated job and existing grants |
+| `confirmationPoints` | Actions that need the owner's confirmation |
+| `escalationRules` | Missing information, permission failures and handoffs |
+| `deliveryChecks` | Evidence and checks required before delivery |
+
+Use concrete instructions, not a list of capabilities the host has not provided. An empty array is allowed; it does not grant unrestricted authority. Adding a template does not connect accounts, grant access to private data or enable a routine. Installed employees start paused until the owner enables them.
+
+Standalone or shared templates can also carry a validated `runtimeConfig.agentPresetId`. Model and fallback-model selections are not inherited when a template is imported: the receiving installation binds its own configured models. Do not copy runtime fields into catalog metadata that does not declare them. See the [resource format guide](https://docs.teloa.ai/en/develop/formats) and [current template reader](https://github.com/teloa-ai/teloa/blob/main/packages/contract/src/roles.ts).
+
+Keep published artifact versions immutable. A change to the installed instructions requires a new version directory, updated catalog and AI team references, and validation of that fixed composition. Keep the previous version and its license available.
+
 ### Derivative resources
 
 Use this form when you publish a skill whose files differ from a pinned original: fixes, adaptations, removals or additions. An upstream entry (`delivery: upstream`) means the listed original files are installed byte for byte; any skill whose bytes changed is a hosted entry (`delivery: install`) with `derivation`. Keep the original ID prefix and skill name (for example `anthropic.review-pr`), use a plain version without a pre-release suffix, and keep one entry per skill.
@@ -76,7 +96,7 @@ A `skill` or `work-template` resource in a `teloa.business-package/v3` solution 
 2. A maintainer reviews source, license and content, and sets the compatibility status from actual verification. Code owners for `catalog/` and `artifacts/` are listed in `.github/CODEOWNERS`.
 3. After merging, the Generate workflow (`.github/workflows/generate.yml`) bumps `catalog-version.txt`, adds a `CHANGELOG.md` section for the entries added, changed or removed, regenerates `INDEX.md`, `NOTICE` and the README catalog version, validates strictly and opens one pull request from `bot/generated-files` (submissions merged in the meantime join the same pull request). Its required checks (Catalog, Scope) come from `workflow_dispatch` runs started by the workflow; the `pull_request` run GitHub holds for approval on that pull request may be approved or ignored. Maintainers merge it with a merge commit (squash and rebase also work, because the source point is recorded in `CHANGELOG.md`). Once that is merged, a maintainer publishes the signed index to market.teloa.ai and pins the catalog into the next Teloa release.
 
-This repository is the single source of truth for the catalog. Until the sync script in the Teloa source repository (`scripts/同步官方市场.mjs --ref <commit>`, planned for the release after the marketplace goes public) is in place, maintainers copy a reviewed commit of this repository into the source repository's `marketplace/` by hand and record the commit id there; the source repository does not accept direct catalog changes.
+This repository is the catalog's single source of truth. Teloa releases pin a reviewed catalog commit and verify the resource bytes; the marketplace site is generated from the same fixed source. Publishing a newer online catalog does not modify an employee, AI team or skill that an owner already installed. Make catalog changes here, then update the application and site through their release process.
 
 Use public issues by default to report malicious or unsafe resources. For potentially high-impact issues, we recommend contacting [security@teloa.ai](mailto:security@teloa.ai) privately first. Keep credentials, private data, and exploit details out of public issues and pull requests; see [SECURITY.md](SECURITY.md).
 
@@ -112,6 +132,26 @@ Use public issues by default to report malicious or unsafe resources. For potent
 5. stdio 连接器（npm 包）：工件里随附完整依赖锁定 `package-lock.json`（lockfile v3，根只精确依赖配方包，每个包带 sha512 integrity、只从 `https://registry.npmjs.org/` 取）。宿主安装时按它 `npm ci --ignore-scripts` 并逐条核对，锁与配方不一致拒绝安装。换依赖树须递增条目版本。
 6. 只改 `catalog/`、`artifacts/`、`reviews/`。不要改 `INDEX.md`、`NOTICE`、`catalog-version.txt`、README 目录版本与 `CHANGELOG.md`：它们在合并后统一生成（见审核流程），并行的 PR 因此不会互相冲突。审查记录每个条目一个文件：`reviews/<类型>/<id>.json`。CI 强制这一范围，并逐个指出越界路径。`tools/`、`.github/` 与文档的改动由维护者从本仓库的 `infra/*` 分支提交（推送该分支需要写权限），并须代码所有者审查；这类分支可以改除 `INDEX.md`、`NOTICE`、`catalog-version.txt` 之外的任何文件。任何 PR 都不得删除 `README.md`、`README.zh-CN.md`。
 7. PR 描述写清：用途与适用场景、依赖的工具与是否联网、你如何测试、以后如何升级。
+
+### AI 员工模板
+
+AI 员工使用 Teloa 的 `teloa.role/v1` 导入格式。格式名没有变化，结构化职责是在此格式中扩充的。[AI Worker Standard](https://github.com/teloa-ai/ai-worker-standard) 描述更完整的工作合同，其标准文档不能直接当作 Teloa 导入文件。
+
+目录员工的 `role.definition` 须与来源 AI 团队中固定版本的 `role.json` 保持一致。除 `name`、`kind`、`duty`、`dataScope` 和 `executionScope` 外，还须提供 `responsibility` 的五组数组：
+
+| 字段 | 内容 |
+| --- | --- |
+| `triggers` | 何时开始工作 |
+| `autonomousActions` | 岗位与现有授权范围内的自主动作 |
+| `confirmationPoints` | 需要本人确认的动作 |
+| `escalationRules` | 资料不足、权限失败与交接处理 |
+| `deliveryChecks` | 交付前须核对的证据与结果 |
+
+写清实际工作规则，不罗列宿主尚未提供的能力。允许使用空数组，但空数组不授予无限权限。添加模板不会连接账号、授权私人资料或启用持续计划；安装后的员工保持暂停，由本人另行启用。
+
+独立或分享模板还可携带通过校验的 `runtimeConfig.agentPresetId`。导入时不继承模板的首选和备用模型选择，由接收实例绑定本人已配置的模型。不要将运行字段复制进未声明这些字段的目录元数据。详见[资源格式说明](https://docs.teloa.ai/develop/formats)与[当前模板读取器](https://github.com/teloa-ai/teloa/blob/main/packages/contract/src/roles.ts)。
+
+已发布工件版本保持不变。修改实际安装的工作规则时，须新增版本目录、更新目录和 AI 团队引用，并验证这份固定组成；保留旧版本与许可文件。
 
 ### 二次开发资源
 
@@ -154,6 +194,6 @@ Use public issues by default to report malicious or unsafe resources. For potent
 2. 维护者人工核对来源、许可与内容，按实际验证结果填写兼容状态。`catalog/` 与 `artifacts/` 的负责人见 `.github/CODEOWNERS`。
 3. 合入后 Generate 工作流（`.github/workflows/generate.yml`）递增 `catalog-version.txt`，在 `CHANGELOG.md` 加一节列出新增、变更、移除的条目，重新生成 `INDEX.md`、`NOTICE` 与 README 目录版本，严格校验后从 `bot/generated-files` 开一个 PR（期间合入的其他投稿并入同一个 PR）。该 PR 的必需检查（Catalog、Scope）由工作流发起的 `workflow_dispatch` 运行满足；GitHub 在该 PR 上「等待审批」的 `pull_request` 运行可批准也可忽略。维护者以 merge commit 方式合并该 PR（squash、rebase 也能正确工作，因为来源点记录在 `CHANGELOG.md` 中）。该 PR 合并后，由维护者把签名索引发布到 market.teloa.ai，并在下一个 Teloa 版本中固定目录快照。
 
-本仓库是目录的唯一事实源。Teloa 源码仓的同步脚本（`scripts/同步官方市场.mjs --ref <commit>`，排在市场仓公开后的下一个发行）落地前，维护者手工把本仓库某个已审核提交复制进源码仓的 `marketplace/` 并记录提交号；源码仓不再直接改目录。
+本仓库是目录的唯一事实源。Teloa 发行版固定已审核的目录提交并核对资源字节，市场站也从同一份固定来源生成。发布新版在线目录不会修改本人已经安装的员工、AI 团队或技能。目录改动先在此仓维护，再按应用与站点的发行流程更新。
 
 发现恶意或不安全的资源，默认公开提 Issue；如可能造成重大影响，建议先私下联系 [security@teloa.ai](mailto:security@teloa.ai)。不要将凭据、隐私和漏洞利用细节写入公开 Issue 或 PR，详见 [SECURITY.md](SECURITY.md)。
