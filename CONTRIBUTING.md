@@ -66,9 +66,11 @@ For a catalog employee, keep `role.definition` and the fixed `role.json` in its 
 
 Use concrete instructions, not a list of capabilities the host has not provided. An empty array is allowed; it does not grant unrestricted authority. Adding a template does not connect accounts, grant access to private data or enable a routine. Installed employees start paused until the owner enables them.
 
-Standalone or shared templates can also carry a validated `runtimeConfig.agentPresetId`. Model and fallback-model selections are not inherited when a template is imported: the receiving installation binds its own configured models. Do not copy runtime fields into catalog metadata that does not declare them. See the [resource format guide](https://docs.teloa.ai/en/develop/formats) and [current template reader](https://github.com/teloa-ai/teloa/blob/main/packages/contract/src/roles.ts).
+Standalone role imports can carry a validated `runtimeConfig.agentPresetId`. Employee bodies inside `teloa.template-share/v2` packages reject `runtimeConfig`; package resource links describe methods and materials separately. Model and fallback-model selections are not inherited when a template is imported: the receiving installation binds its own configured models. Do not copy runtime fields into catalog metadata that does not declare them. See the [resource format guide](https://docs.teloa.ai/en/develop/formats) and [current template reader](https://github.com/teloa-ai/teloa/blob/main/packages/contract/src/roles.ts).
 
 Keep published artifact versions immutable. A change to the installed instructions requires a new version directory, updated catalog and AI team references, and validation of that fixed composition. Keep the previous version and its license available.
+
+For complete authoring examples, see [AI employees](https://docs.teloa.ai/en/develop/employees), [AI teams](https://docs.teloa.ai/en/develop/teams), [apps](https://docs.teloa.ai/en/develop/apps) and [SKILLs](https://docs.teloa.ai/en/develop/skills). [Sharing and receiving](https://docs.teloa.ai/en/guides/sharing) covers file export, public links, setup, official review and revocation. Publishing a share link does not list it in this catalog.
 
 ### Derivative resources
 
@@ -179,9 +181,11 @@ AI 员工使用 Teloa 的 `teloa.role/v1` 导入格式。格式名没有变化�
 
 写清实际工作规则，不罗列宿主尚未提供的能力。允许使用空数组，但空数组不授予无限权限。添加模板不会连接账号、授权私人资料或启用持续计划；安装后的员工保持暂停，由本人另行启用。
 
-独立或分享模板还可携带通过校验的 `runtimeConfig.agentPresetId`。导入时不继承模板的首选和备用模型选择，由接收实例绑定本人已配置的模型。不要将运行字段复制进未声明这些字段的目录元数据。详见[资源格式说明](https://docs.teloa.ai/develop/formats)与[当前模板读取器](https://github.com/teloa-ai/teloa/blob/main/packages/contract/src/roles.ts)。
+独立岗位导入可携带通过校验的 `runtimeConfig.agentPresetId`；`teloa.template-share/v2` 分享包内的员工正文不接受 `runtimeConfig`，方法与资料另由资源关系描述。导入时不继承模板的首选和备用模型选择，由接收实例绑定本人已配置的模型。不要将运行字段复制进未声明这些字段的目录元数据。详见[资源格式说明](https://docs.teloa.ai/develop/formats)与[当前模板读取器](https://github.com/teloa-ai/teloa/blob/main/packages/contract/src/roles.ts)。
 
 已发布工件版本保持不变。修改实际安装的工作规则时，须新增版本目录、更新目录和 AI 团队引用，并验证这份固定组成；保留旧版本与许可文件。
+
+完整作者示例见[AI 员工](https://docs.teloa.ai/develop/employees)、[AI 团队](https://docs.teloa.ai/develop/teams)、[应用](https://docs.teloa.ai/develop/apps)与[SKILL](https://docs.teloa.ai/develop/skills)。[分享与接收](https://docs.teloa.ai/guides/sharing)说明文件导出、公开链接、接收配置、官方审核与撤销；生成分享链接不等于收录到本目录。
 
 ### 二次开发资源
 

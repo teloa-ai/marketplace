@@ -51,9 +51,13 @@
 
 1. 在 Teloa 工作台打开「市场」，按名称、用途或条目 ID 搜索。也可以在对话里直接告诉任意同事，例如「在市场里搜索并添加 `teloa.grok-marketing-team`」，Teloa 会先给出确认卡，确认后才添加。
 2. 点「添加」。Teloa 按条目固定的摘要逐文件核对；上游条目从固定来源逐文件拉取，同样核对。
-3. 内置条目（`delivery: builtin`）无需添加。模型引用在「设置 · 模型」里配置；本地语音模型在市场的模型分类里准备。
+3. 内置条目（`delivery: builtin`）无需添加。模型引用在「设置 · 模型」里配置；本地语音识别在「设置 > 语音服务」准备；本地聊天与资料检索模型在「设置 > 本地模型」管理。
 
 标为 `unsupported` 的条目不能添加。market.teloa.ai 的每个条目页都有「在 Teloa 中使用」，一键复制一句可直接发到对话里的指令。
+
+## 开发与分享资源
+
+按[AI 员工](https://docs.teloa.ai/develop/employees)、[AI 团队](https://docs.teloa.ai/develop/teams)、[应用](https://docs.teloa.ai/develop/apps)或[SKILL](https://docs.teloa.ai/develop/skills)开始，下载与社区版 0.2.4 匹配的完整示例。[分享与接收](https://docs.teloa.ai/guides/sharing)覆盖离线文件、在线链接、接收配置、官方审核与撤销。发布分享链接与目录上架分别处理；贡献目录资源按[投稿规范](CONTRIBUTING.md)操作。
 
 ## 许可
 

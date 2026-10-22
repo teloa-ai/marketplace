@@ -51,9 +51,13 @@ The marketplace has four independent main views: **AI employees**, **AI teams**,
 
 1. Open **Marketplace** in the Teloa workbench and search by name, purpose or entry ID. You can also tell any teammate in a conversation, for example "search the marketplace and add `teloa.grok-marketing-team`"; Teloa shows a confirmation card before anything is added.
 2. Click **Add**. Teloa verifies every file against the entry's pinned digests. Upstream entries are fetched file by file from their pinned source and verified the same way.
-3. Built-in entries (`delivery: builtin`) need no adding. Model references are configured under **Settings · Models**; the local speech model is prepared from the model category of the marketplace.
+3. Built-in entries (`delivery: builtin`) need no adding. Model references are configured under **Settings · Models**; prepare local speech recognition under **Settings > Voice services**, and local chat or retrieval models under **Settings > Local models**.
 
 Entries marked `unsupported` cannot be added. Each entry page on market.teloa.ai has a one-click "Use in Teloa" instruction you can paste into a conversation.
+
+## Develop and share resources
+
+Start with [AI employees](https://docs.teloa.ai/en/develop/employees), [AI teams](https://docs.teloa.ai/en/develop/teams), [apps](https://docs.teloa.ai/en/develop/apps) or [SKILLs](https://docs.teloa.ai/en/develop/skills). Downloadable examples match Community 0.2.4. Follow [Sharing and receiving](https://docs.teloa.ai/en/guides/sharing) for offline files, online links, receiver setup, official review and revocation. Share publication and catalog listing are separate; catalog contributions follow [CONTRIBUTING](CONTRIBUTING.md).
 
 ## Licensing
 
